@@ -13,19 +13,20 @@ const PROJECTS: MediaCardItem[] = [
     media: { kind: "image", src: "/projects/website.png", alt: "Website" },
   },
   {
-    id: "002",
-    type: "independent",
-    eyebrow: "CAD",
-    title: "3D Printed Interactive Brain Model",
-    blurb: "A high school personal project, where I designed an accurate model of the brain, including the various gyri and sulci through Maya, and added physical labels as well.",
-    href: "/projects/brain",
-    tags: ["CAD", "Maya", "Neuroscience","Anatomical Modeling"],
-    media: {
-  kind: "image",
-  src: "/projects/brain.png",
-  alt: "3D printed brain model",
-},
+  id: "002",
+  type: "independent",
+  eyebrow: "CAD",
+  title: "3D Printed Interactive Brain Model",
+  blurb: "A high school personal project, where I designed an accurate model of the brain, including the various gyri and sulci through Maya, and added physical labels as well.",
+  href: "/projects/brain",
+  tags: ["CAD", "Maya", "Neuroscience", "Anatomical Modeling"],
+  media: {
+    kind: "image",
+    src: "/projects/brain.png",
+    alt: "3D printed brain model",
   },
+}
+
   // Example of a course project later:
   // { id:"003", type:"course", ... }
 
