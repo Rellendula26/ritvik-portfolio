@@ -21,10 +21,10 @@ const PROJECTS: MediaCardItem[] = [
     href: "/projects/brain",
     tags: ["CAD", "Maya", "Neuroscience","Anatomical Modeling"],
     media: {
-      kind: "image",
-      src: "/projects/brain.png",
-      alt: "Brain Model",
-    },
+  kind: "image",
+  src: "/projects/brain.png",
+  alt: "3D printed brain model",
+},
   },
   // Example of a course project later:
   // { id:"003", type:"course", ... }
@@ -40,7 +40,7 @@ const PROJECTS: MediaCardItem[] = [
     media: {
       kind: "image",
       src: "/projects/brain.png",
-      alt: "Brain Model",
+      alt: "OIDD Model",
     },
   },
 ];
