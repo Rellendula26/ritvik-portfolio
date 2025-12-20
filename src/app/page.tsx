@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { Mail } from "lucide-react";
+
 
 function Accent({ children }: { children: React.ReactNode }) {
   return (
@@ -38,15 +40,17 @@ export default function Home() {
             teach <span className="font-medium">me new skills</span>.
           </p>
 
-          <p className="mt-9 text-sm text-zinc-600">
-            Let&apos;s connect:{" "}
-            <a
-              className="font-medium text-amber-800 hover:text-amber-900"
-              href="mailto:rellen26@seas.upenn.edu"
-            >
-              rellen26@seas.upenn.edu
-            </a>
-          </p>
+          <div className="mt-9 flex items-center gap-2 text-sm text-zinc-600">
+  <Mail className="h-4 w-4 text-amber-800" />
+  <span>Let&apos;s connect:</span>
+  <a
+    href="mailto:rellen26@seas.upenn.edu"
+    className="font-medium text-amber-800 hover:text-amber-900 hover:underline"
+  >
+    rellen26@seas.upenn.edu
+  </a>
+</div>
+
         </section>
 
         {/* Right */}
