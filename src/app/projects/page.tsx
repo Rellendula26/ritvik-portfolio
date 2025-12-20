@@ -28,6 +28,21 @@ const PROJECTS: MediaCardItem[] = [
   },
   // Example of a course project later:
   // { id:"003", type:"course", ... }
+
+  {
+    id: "003",
+    type: "course",
+    eyebrow: "Data Analysis",
+    title: "A Data Analysis Exploration into Environmental & Socioeconomic Factors on Poor Health Outcomes",
+    blurb: "A final presentation for my STAT 7770 course, where we analyzed the influence of various socioeconomic factors on health, utilizing numerous python libraries such as pandas, seaborn, numpy, etc. ",
+    href: "/projects/brain",
+    tags: ["Python", "Numpy", "Pandas","Data Pre-Processing","Decision Trees"],
+    media: {
+      kind: "image",
+      src: "/projects/brain.png",
+      alt: "Brain Model",
+    },
+  },
 ];
 
 export default function ProjectsPage() {
@@ -36,7 +51,7 @@ export default function ProjectsPage() {
       <main className="mx-auto w-full max-w-6xl px-8 py-14">
         <MediaCardGrid
           title="Projects"
-          subtitle="Useful tools, playful experiments, and polished builds."
+          subtitle="Everyday projects and random experiments."
           items={PROJECTS}
           columns={2}
           filters={[
