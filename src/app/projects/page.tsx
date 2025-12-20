@@ -39,7 +39,7 @@ const PROJECTS: MediaCardItem[] = [
     tags: ["Python", "Numpy", "Pandas","Data Pre-Processing","Decision Trees"],
     media: {
       kind: "image",
-      src: "/projects/brain.png",
+      src: "/projects/OIDD.png",
       alt: "OIDD Model",
     },
   },
