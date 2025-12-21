@@ -11,12 +11,13 @@ function Badge({ children }: { children: React.ReactNode }) {
 }
 
 function ActionLink({ label, href }: LinkItem) {
+  const external = href.startsWith("http");
   return (
     <a
       href={href}
       className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-800 hover:bg-zinc-50"
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
     >
       {label}
     </a>
@@ -24,17 +25,22 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 export default function Page() {
-  const title = "3D Printed Interactive Brain Model";
+  const title =
+    "A Data Analysis Exploration into Environmental & Socioeconomic Factors on Poor Health Outcomes";
   const subtitle =
-    "A CAD + fabrication project exploring anatomical modeling and physical interaction.";
-  const coverSrc = "/projects/brain.png"; // must exist in /public
+    "A course capstone project exploring how environmental and socioeconomic variables relate to public health outcomes, combining machine learning with data visualization in Python.";
+  const coverSrc = "/projects/OIDD.png";
 
-  const badges = ["Independent", "CAD", "2023"];
+  const repoUrl =
+    "https://github.com/Rellendula26/PersonalPortfolio-RitvikEllendula-/blob/Highlights/Ritvik_Ellendula%20OIDD%204770%20Final%20Project%20(2).ipynb";
+  const presentationPath = "/presentations/oiddfinal.html";
+
+  const badges = ["Course", "Python", "Machine Learning"];
   const actions: LinkItem[] = [
-    { label: "GALLERY", href: "#gallery" },
+    { label: "PRESENTATION", href: "#presentation" },
+    { label: "SOURCE CODE", href: repoUrl },
     { label: "WRITEUP", href: "#overview" },
-    // { label: "DEMO", href: "https://..." },
-    // { label: "GITHUB", href: "https://..." },
+    { label: "GALLERY", href: "#gallery" },
   ];
 
   return (
@@ -58,7 +64,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Hero media */}
+        {/* Hero */}
         <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
           <div className="relative h-[320px] w-full md:h-[420px]">
             <Image
@@ -72,7 +78,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Info strip */}
+        {/* Action strip */}
         <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
           <span className="inline-flex items-center rounded-full bg-amber-200 px-3 py-1 text-xs font-semibold text-zinc-900">
             PROJECT CASE STUDY
@@ -86,9 +92,8 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Content grid */}
+      {/* Content */}
       <section className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
-        {/* Left: sections */}
         <div className="lg:col-span-2">
           <div id="overview" className="space-y-10">
             <div>
@@ -96,8 +101,11 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write 5–8 lines: what it is, why it matters, and what you built.
-                Keep it readable and concrete.
+                This project focused on analyzing how environmental and
+                socioeconomic factors correlate with health outcomes. I used
+                Python-based data pipelines, machine learning models, and
+                visualization tools to build a clear, presentation-driven
+                narrative from real datasets.
               </p>
             </div>
 
@@ -106,9 +114,9 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Modeled anatomical structures in CAD/Maya with attention to proportions.</li>
-                <li>Iterated prints for tolerances, supports, and assembly fit.</li>
-                <li>Designed interaction (labels, modular parts, or mechanisms).</li>
+                <li>Cleaned and engineered features from multiple datasets.</li>
+                <li>Trained and evaluated models to identify meaningful trends.</li>
+                <li>Translated technical results into a business-style presentation.</li>
               </ul>
             </div>
 
@@ -117,24 +125,34 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Example: reduced print failures by X% via support redesign.</li>
-                <li>Example: produced final assembly with N components and M-hour print time.</li>
+                <li>Identified key variables associated with adverse health outcomes.</li>
+                <li>Delivered a polished, insight-driven presentation grounded in data.</li>
               </ul>
             </div>
 
-            <div>
+            {/* Presentation */}
+            <section id="presentation">
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
-                LESSONS + NEXT STEPS
+                PRESENTATION
               </h2>
-              <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (tolerances, slicing settings, material choice).</li>
-                <li>What you’d do next (electronics, sensors, higher-res prints, better UX).</li>
-              </ul>
-            </div>
+
+              <div className="mt-4 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+                <iframe
+                  src={presentationPath}
+                  title="OIDD Final Presentation"
+                  className="h-[650px] w-full"
+                />
+              </div>
+
+              <div className="mt-3 flex gap-2">
+                <ActionLink label="OPEN FULLSCREEN" href={presentationPath} />
+                <ActionLink label="SOURCE CODE" href={repoUrl} />
+              </div>
+            </section>
           </div>
         </div>
 
-        {/* Right: sticky meta card */}
+        {/* Sidebar */}
         <aside className="lg:col-span-1">
           <div className="sticky top-24 rounded-3xl border border-zinc-200 bg-white/70 p-5 shadow-sm backdrop-blur">
             <h3 className="text-sm font-semibold tracking-widest text-zinc-900">
@@ -144,28 +162,38 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Designer / Builder</dd>
+                <dd className="font-medium">Data Analyst</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">2–3 weeks</dd>
+                <dt className="text-zinc-500">Context</dt>
+                <dd className="font-medium">Course Capstone</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
-                  {["Maya", "3D Printing", "Slicing", "Iteration"].map((t) => (
-                    <Badge key={t}>{t}</Badge>
-                  ))}
+                  {["Python", "Pandas", "NumPy", "Seaborn", "Matplotlib"].map(
+                    (t) => (
+                      <Badge key={t}>{t}</Badge>
+                    )
+                  )}
                 </dd>
               </div>
             </dl>
 
-            <div className="mt-6">
+            <div className="mt-6 space-y-2">
               <a
                 href="/projects"
-                className="text-sm font-medium text-amber-800 hover:text-amber-900 hover:underline"
+                className="block text-sm font-medium text-amber-800 hover:underline"
               >
                 ← Back to Projects
+              </a>
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="block text-sm font-medium text-zinc-700 hover:underline"
+              >
+                View on GitHub →
               </a>
             </div>
           </div>
@@ -178,19 +206,13 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/brain.png", "/projects/website.png"].map((src) => (
+          {["/projects/OIDD.png"].map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"
             >
               <div className="relative h-64 w-full">
-                <Image
-                  src={src}
-                  alt="Project image"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
+                <Image src={src} alt="Project image" fill className="object-cover" />
               </div>
             </div>
           ))}
@@ -199,3 +221,4 @@ export default function Page() {
     </main>
   );
 }
+

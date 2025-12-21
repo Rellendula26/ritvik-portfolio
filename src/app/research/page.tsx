@@ -5,11 +5,11 @@ const RESEARCH: MediaCardItem[] = [
     id: "001",
     type: "affiliated",
     eyebrow: "Brain-Computer Interfaces",
-    title: "EEG-to-Image Generation for Brain Injury Rehabilitation (ArXiv)",
+    title: "EEG-to-Image Generation for Brain Injury Communication (ArXiv)",
     blurb:
       "I conducted a group research project under the Harvard Medical School. To summarize, we assessed different machine and deep learning methods of generating images via EEG signals, building off of StableDiffusion and DreamDiffusion and utilizing methods such as CLIP (Contrastive Language Image Pre-Training).",
     href: "/research/dreamdiffusion",
-    tags: ["EEG Signal Processing", "Diffusion Models", "PyTorch", "Machine Learning", "NumPy"],
+    tags: ["EEG Signal Processing", "Diffusion Models", "PyTorch", "Machine Learning", "NumPy","Deep Learning"],
     media: { kind: "image", src: "/research/dreamdiffusion.png", alt: "DreamDiffusion preview" },
   },
   {
@@ -20,7 +20,7 @@ const RESEARCH: MediaCardItem[] = [
     blurb:
       "I worked under a professor at Wayne State University, assessing numerous studies on historic redlining and analyzing adverse health outcomes associated with different HOLC grading levels.",
     href: "/research/redlining",
-    tags: ["Meta Analysis", "Statistical Analysis", "Health Equity", "Epidemiology"],
+    tags: ["Meta Analysis", "Statistical Analysis", "Health Equity", "Epidemiology","Redlining"],
     media: { kind: "image", src: "/research/redlining.png", alt: "Redlining Image" },
   },
   {

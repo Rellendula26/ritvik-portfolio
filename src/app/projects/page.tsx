@@ -24,7 +24,7 @@ const PROJECTS: MediaCardItem[] = [
     tags: ["CAD", "Maya", "Neuroscience", "Anatomical Modeling"],
     media: {
       kind: "image",
-      src: "/projects/brain.png",
+      src: "/projects/bin.png",
       alt: "3D printed brain model",
     },
   },
@@ -40,7 +40,7 @@ const PROJECTS: MediaCardItem[] = [
       "A Data Analysis Exploration into Environmental & Socioeconomic Factors on Poor Health Outcomes",
     blurb:
       "A final presentation for my STAT 7770 course, where we analyzed the influence of various socioeconomic factors on health, utilizing numerous python libraries such as pandas, seaborn, numpy, etc.",
-    href: "/projects/oidd",
+    href: "/projects/OIDD",
     tags: [
       "Python",
       "NumPy",

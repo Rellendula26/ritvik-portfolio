@@ -24,12 +24,12 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 export default function Page() {
-  const title = "3D Printed Interactive Brain Model";
+  const title = "Machine Learning for Muscular Dystrophy Diagnosis";
   const subtitle =
-    "A CAD + fabrication project exploring anatomical modeling and physical interaction.";
-  const coverSrc = "/projects/brain.png"; // must exist in /public
+    "This project utilized the NCBI Gene Expression Omnibus (GEO) as a dataset for assessing the diagnostic power of various classic machine learning methods towards Muscular Dystrophy.";
+  const coverSrc = "/research/muscular-dystrophy.png"; // must exist in /public
 
-  const badges = ["Independent", "CAD", "2023"];
+  const badges = ["Independent", "Bioinformatics","Data Pre-Processing","Machine Learning","Numpy","Gene Expression Omnibus(GEO)"];
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
@@ -153,7 +153,7 @@ export default function Page() {
               <div>
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
-                  {["Maya", "3D Printing", "Slicing", "Iteration"].map((t) => (
+                  {["Bioinformatics","Data Pre-Processing","Machine Learning","Numpy","Gene Expression Omnibus(GEO)"].map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </dd>

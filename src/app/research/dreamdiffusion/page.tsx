@@ -24,12 +24,12 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 export default function Page() {
-  const title = "3D Printed Interactive Brain Model";
+  const title = "EEG-to-Image Generation for Brain Injury Rehabilitation (ArXiv)";
   const subtitle =
-    "A CAD + fabrication project exploring anatomical modeling and physical interaction.";
-  const coverSrc = "/projects/brain.png"; // must exist in /public
+    "A research mentorship project under professors at Harvard Medical School with the purpose of image generation from EEG data & signals. Pre-print on ArXiv";
+  const coverSrc = "/research/dreamdiffusion.png"; // must exist in /public
 
-  const badges = ["Independent", "CAD", "2023"];
+  const badges = ["EEG Signal Processing", "Deep Learning"];
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
@@ -153,7 +153,7 @@ export default function Page() {
               <div>
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
-                  {["Maya", "3D Printing", "Slicing", "Iteration"].map((t) => (
+                  {["Harvard Medical School", "EEG Signal Processing", "Deep Learning","Machine Learning", "Diffusion Models"].map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </dd>
@@ -178,7 +178,7 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/brain.png", "/projects/website.png"].map((src) => (
+          {["/projects/bin.png", "/projects/website.png"].map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"

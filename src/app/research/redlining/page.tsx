@@ -24,12 +24,12 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 export default function Page() {
-  const title = "3D Printed Interactive Brain Model";
+  const title = "Epidemiology Research";
   const subtitle =
-    "A CAD + fabrication project exploring anatomical modeling and physical interaction.";
-  const coverSrc = "/projects/brain.png"; // must exist in /public
+    "A research project done under the mentorship of a Wayne State University epidemiology professor, exploring a neighborhood's HOLC(Home Owner's Loan Corporation) status and relevant adverse public health impacts. Publication on Journal of Public Health.";
+  const coverSrc = "/research/redlining.png"; // must exist in /public
 
-  const badges = ["Independent", "CAD", "2023"];
+  const badges = ["Affiliate", "Wayne State University", "Data Analysis", "Meta-Analysis", "Redlining", "Health Equity", "Public Health"];
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
@@ -153,7 +153,7 @@ export default function Page() {
               <div>
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
-                  {["Maya", "3D Printing", "Slicing", "Iteration"].map((t) => (
+                  {["Data Analysis", "Meta-Analysis", "Redlining", "Health Equity", "Public Health"].map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </dd>

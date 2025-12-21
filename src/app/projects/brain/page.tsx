@@ -27,9 +27,9 @@ export default function Page() {
   const title = "3D Printed Interactive Brain Model";
   const subtitle =
     "A CAD + fabrication project exploring anatomical modeling and physical interaction.";
-  const coverSrc = "/projects/brain.png"; // must exist in /public
+  const coverSrc = "/projects/bin.png"; // must exist in /public
 
-  const badges = ["Independent", "CAD", "2023"];
+  const badges = ["Independent", "CAD", "Maya"];
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
@@ -178,7 +178,7 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/brain.png", "/projects/website.png"].map((src) => (
+          {["/projects/bin.png", "/projects/website.png"].map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"
