@@ -105,7 +105,8 @@ export default function Page() {
                 socioeconomic factors correlate with health outcomes. I used
                 Python-based data pipelines, machine learning models, and
                 visualization tools to build a clear, presentation-driven
-                narrative from real datasets.
+                narrative from real datasets. Being a capstone, this involved developing a strong fundamental understanding of 
+                Python, and then advancing into different relevant specific modules for visualization and statistical analysis. 
               </p>
             </div>
 
@@ -114,9 +115,9 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Cleaned and engineered features from multiple datasets.</li>
-                <li>Trained and evaluated models to identify meaningful trends.</li>
-                <li>Translated technical results into a business-style presentation.</li>
+                <li>Imported and standardized county-level public health datasets using Pandas, handling missing values and distributional data skews.</li>
+                <li>Utilized classical machine learning frameworks such as data pre-processing, and decision tree models based on extracted features and relevant variables.</li>
+                <li>Added different methods of data visualization through heatmaps, distribution plots, and state-based comparisons</li>
               </ul>
             </div>
 
@@ -125,8 +126,8 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Identified key variables associated with adverse health outcomes.</li>
-                <li>Delivered a polished, insight-driven presentation grounded in data.</li>
+                <li>Identified key variables associated with adverse health outcomes, exploring them from a professional data and statistical perspective.</li>
+                <li>Delivered a polished, insight-driven presentation, utilizing numerous Python modules and libraries and visualizations to possibly be used for policymaker analysis</li>
               </ul>
             </div>
 

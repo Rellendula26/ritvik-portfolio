@@ -33,6 +33,8 @@ export default function Page() {
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
+    { label: "RESEARCH PAPER", href: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5374800" },
+    { label: "GITHUB", href: "https://github.com/Rellendula26/PersonalPortfolio-RitvikEllendula-/blob/Highlights/Econometrics_Project.ipynb" },
     // { label: "DEMO", href: "https://..." },
     // { label: "GITHUB", href: "https://..." },
   ];
@@ -96,8 +98,7 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write 5–8 lines: what it is, why it matters, and what you built.
-                Keep it readable and concrete.
+                In this project, I worked on an econometric analysis using the software R in order to investigate how remote work arrangements relate to salary outcomes in the global data science and artificial intelligence workforce, and whether this relationship varies by company size. Using over 130,000 survey responses from AI Jobs’ Data Science Salary Index, we examined whether remote, hybrid, and in-person roles are associated with meaningful wage differences across small, medium, and large firms. This question matters as remote work becomes a permanent feature of the post-pandemic labor market and challenges classical economic theories around compensating wage differentials. Rather than relying on anecdotal claims, this study uses large-scale empirical evidence to assess whether remote work meaningfully alters compensation structures in modern tech labor markets
               </p>
             </div>
 
@@ -106,9 +107,11 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Modeled anatomical structures in CAD/Maya with attention to proportions.</li>
-                <li>Iterated prints for tolerances, supports, and assembly fit.</li>
-                <li>Designed interaction (labels, modular parts, or mechanisms).</li>
+                <li>Helped clean, subset, and structure a large-scale salary dataset (132k+ observations), filtering data to 2024–2025 to control for inflationary effects.</li>
+                <li>Created operational definitions for key categorical variables, including remote work ratio (in-person, hybrid, remote) and company size (small, medium, large).</li>
+                <li>Implemented Welch’s ANOVA in R to test for differences in mean salary across multiple groups while relaxing the homogeneity-of-variance assumption.</li>
+                <li>Interpreted F-statistics, p-values, and partial eta squared effect sizes, distinguishing statistical significance from practical significance.</li>
+                <li>Collaborated with coauthors to write and revise the full research paper, with emphasis on clear interpretation of results and economic implications</li>
               </ul>
             </div>
 
@@ -117,8 +120,9 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Example: reduced print failures by X% via support redesign.</li>
-                <li>Example: produced final assembly with N components and M-hour print time.</li>
+                <li>Found that remote work status, company size, and their interaction are statistically significant predictors of salary, based on Welch’s ANOVA results.</li>
+                <li>Challenged classical interpretations of compensating wage differentials, suggesting the modern tech labor market has largely equilibrated around remote work.</li>
+                <li>Contributed to a completed academic pre-print published in SSRN that contextualizes remote work within modern labor efficiency and wage equity discussions</li>
               </ul>
             </div>
 
@@ -127,8 +131,8 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (tolerances, slicing settings, material choice).</li>
-                <li>What you’d do next (electronics, sensors, higher-res prints, better UX).</li>
+                <li>Gained hands-on experience applying econometric reasoning to real-world labor data, rather than idealized textbook scenarios.</li>
+                <li>Extend the analysis using longitudinal or panel data to study within-individual salary changes over time and/or apply advanced econometric analysis.</li>
               </ul>
             </div>
           </div>
@@ -144,11 +148,11 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Designer / Builder</dd>
+                <dd className="font-medium">Econometrics Researcher</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">2–3 weeks</dd>
+                <dd className="font-medium">5-7 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
@@ -162,10 +166,10 @@ export default function Page() {
 
             <div className="mt-6">
               <a
-                href="/projects"
+                href="/research"
                 className="text-sm font-medium text-amber-800 hover:text-amber-900 hover:underline"
               >
-                ← Back to Projects
+                ← Back to Research
               </a>
             </div>
           </div>
@@ -178,7 +182,7 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/brain.png", "/projects/website.png"].map((src) => (
+          {["/projects/bin.png", "/projects/website.png"].map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"

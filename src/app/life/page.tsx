@@ -1,5 +1,7 @@
 import MediaCardGrid, { type MediaCardItem } from "@/components/MediaCardGrid";
 
+const SHOW_LIFE_PAGE = process.env.NODE_ENV !== "production";
+
 const LIFE: MediaCardItem[] = [
   {
     id: "001",
@@ -22,6 +24,8 @@ const LIFE: MediaCardItem[] = [
 ];
 
 export default function LifePage() {
+  if (!SHOW_LIFE_PAGE) return null;
+
   return (
     <div className="bg-speckle min-h-screen">
       <main className="mx-auto w-full max-w-6xl px-8 py-14">

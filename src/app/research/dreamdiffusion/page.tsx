@@ -29,10 +29,12 @@ export default function Page() {
     "A research mentorship project under professors at Harvard Medical School with the purpose of image generation from EEG data & signals. Pre-print on ArXiv";
   const coverSrc = "/research/dreamdiffusion.png"; // must exist in /public
 
-  const badges = ["EEG Signal Processing", "Deep Learning"];
+  const badges = ["Affiliated", "Harvard Medical School", "EEG Signal Processing", "Deep Learning"];
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
+    { label: "RESEARCH PAPER", href: "https://arxiv.org/abs/2407.02673" }
+
     // { label: "DEMO", href: "https://..." },
     // { label: "GITHUB", href: "https://..." },
   ];
@@ -96,8 +98,7 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write 5–8 lines: what it is, why it matters, and what you built.
-                Keep it readable and concrete.
+                 During my EEG computer-vision research internship at Harvard Medical School, I helped refine DreamDiffusion, a model designed to convert EEG signals into images. Our team resolved major environment and dependency issues that made the original GitHub version nearly impossible to run, migrating the entire pipeline into Google Colab and debugging model-architecture and computer-vision components to ensure reproducibility. This process taught me how to systematically diagnose errors within complex deep-learning systems. We also evaluated a variety of classical and deep learning approaches—including SVMs, feedforward DNNs, CNN-based encoders, and generative models such as GANs and VAEs—for EEG-to-image reconstruction. While each model captured limited aspects of the signal, they struggled to robustly map EEG data to meaningful visual representations due to EEG’s low signal-to-noise ratio, nonlinearity, and complex temporal dynamics. Understanding these limitations, and why DreamDiffusion instead leverages masked-signal pretraining and alignment within CLIP’s latent space, deeply shaped my understanding of how to design models that translate noisy biological signals into meaningful visual outputs.
               </p>
             </div>
 
@@ -106,9 +107,10 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Modeled anatomical structures in CAD/Maya with attention to proportions.</li>
-                <li>Iterated prints for tolerances, supports, and assembly fit.</li>
-                <li>Designed interaction (labels, modular parts, or mechanisms).</li>
+                <li>Refactored and debugged the DreamDiffusion codebase into a reproducible Google Colab pipeline, resolving dependencies, setup errors, and environment incompatibilities.</li>
+                <li>Implemented EEG preprocessing and representation pipelines, dealing with EEG's low signal-to-noise ratio and temporal structure </li>
+                <li>Evaluated numerous ML and Deep Learning Paradigms, and explored CLIP's multimodal latent space, enabling Stable Diffusion to generate images via EEG-Derived data. </li>
+                <li>Worked with a team of 3 other peers to write a 13-page research paper, exploring our findings and documenting the methodologies and insights we made. </li>
               </ul>
             </div>
 
@@ -117,8 +119,9 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Example: reduced print failures by X% via support redesign.</li>
-                <li>Example: produced final assembly with N components and M-hour print time.</li>
+                <li>Lowered the barrier to entry for EEG Generative Modeling via providing clean documentation, executable notebooks, and preloaded data, enabling easier experimentation for future studies.</li>
+                <li>Demonstrated diffusion-based latent-space generation is more effective for EEG-to-image generation than CNNs, GANs, VAEs, or SVM models.</li>
+                <li>Wrote a paper published to ArXiv as a pre-print.</li>
               </ul>
             </div>
 
@@ -127,8 +130,8 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (tolerances, slicing settings, material choice).</li>
-                <li>What you’d do next (electronics, sensors, higher-res prints, better UX).</li>
+                <li>Utilize University of Pennsylvania Venture Labs and other entrepreneurial sources to make this a hospital-utilized product.</li>
+                <li>Integrate wavelet-based and time-frequency features to better capture transient EEG dynamics</li>
               </ul>
             </div>
           </div>
@@ -144,11 +147,11 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Designer / Builder</dd>
+                <dd className="font-medium">Machine Learning Research Engineer</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">2–3 weeks</dd>
+                <dd className="font-medium">One Year (July 2023-July 2024) </dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
@@ -162,10 +165,10 @@ export default function Page() {
 
             <div className="mt-6">
               <a
-                href="/projects"
+                href="/research"
                 className="text-sm font-medium text-amber-800 hover:text-amber-900 hover:underline"
               >
-                ← Back to Projects
+                ← Back to Research
               </a>
             </div>
           </div>

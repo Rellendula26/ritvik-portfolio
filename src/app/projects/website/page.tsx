@@ -131,6 +131,7 @@ export default function Page() {
   <li>Built the site in React and TypeScript, which forced me to think carefully about reusability, layout consistency, and how different parts of the site should scale as more projects are added.</li>
                 <li>Structured the site using Next.js’s file-based routing system, making it easy to add new project and research pages without needing to rewrite or overconfigure anything.</li>
                 <li>Used Git and the terminal to push changes, debug broken builds, and resolve deployment issues between local and production.</li>
+                <li>Managed version control and iterative development through Git/Github.</li>
                 <li>Deployed the site through Vercel and learned how repository updates, build processes, and live deployments interact, which helped me understand how real web projects are maintained beyond just writing code.</li>
               </ul>
             </div>
@@ -141,6 +142,7 @@ export default function Page() {
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
                 <li>This project deepened my understanding of production-level web architecture using React and Next.js, particularly component-based design, the App Router, and static asset handling. Debugging routing issues, image loading failures, and deployment behavior clarified how framework-level decisions propagate through the build and CI/CD pipeline. The site now serves as an extensible Next.js codebase that I can iteratively expand as my projects and technical scope grow.</li>
+                <li>Successfully created a strong front-end project portfolio website to display future engineering and research based creations and insights.</li>
               </ul>
             </div>
 
@@ -167,7 +169,7 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Developer / Designer</dd>
+                <dd className="font-medium">Front-End Developer</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>

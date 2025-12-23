@@ -33,6 +33,8 @@ export default function Page() {
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
+    { label: "RESEARCH PAPER", href: "https://www.sciencedirect.com/science/article/pii/S0033350624004335?via%3Dihub" }
+
     // { label: "DEMO", href: "https://..." },
     // { label: "GITHUB", href: "https://..." },
   ];
@@ -96,8 +98,7 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write 5–8 lines: what it is, why it matters, and what you built.
-                Keep it readable and concrete.
+                During my epidemiology research at Wayne State University, I contributed to a systematic review examining how historic neighborhood redlining practices continue to shape contemporary health outcomes in the United States. The project investigated whether neighborhoods graded as “hazardous” by the Home Owners’ Loan Corporation (HOLC) in the 1930s experience worse health outcomes today, decades after overtly discriminatory lending practices were outlawed. By synthesizing evidence across dozens of observational studies, this work sought to determine which associations have been consistently replicated and where methodological gaps remain. The research matters because redlining represents a concrete, mappable policy mechanism through which structural racism may translate into persistent health disparities. Our final product was a rigorously documented systematic review that contextualizes modern public health outcomes within historical policy decisions .
               </p>
             </div>
 
@@ -106,9 +107,9 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Modeled anatomical structures in CAD/Maya with attention to proportions.</li>
-                <li>Iterated prints for tolerances, supports, and assembly fit.</li>
-                <li>Designed interaction (labels, modular parts, or mechanisms).</li>
+                <li>Conducted structured literature review work following PRISMA-style systematic review guidelines, extracting data from 50+ studies linking HOLC grades to adverse health outcomes.</li>
+                <li>Extracted and organized study-level details including study design, sample size, exposure definitions, outcome measures, and regression model types (e.g., logistic, Cox proportional hazards, Poisson, negative binomial).</li>
+                <li>Collaborated with a multidisciplinary team spanning epidemiology, public health, and medicine to produce a peer-reviewed manuscript.</li>
               </ul>
             </div>
 
@@ -117,8 +118,8 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Example: reduced print failures by X% via support redesign.</li>
-                <li>Example: produced final assembly with N components and M-hour print time.</li>
+                <li>Published findings in Public Health (Elsevier), contributing to evidence that historic housing policy may exert durable effects on population health decades later.</li>
+                <li>Demonstrated substantial methodological heterogeneity across the literature, including the use of 18+ different regression strategies and varied exposure comparisons, limiting direct meta-analysis.</li>
               </ul>
             </div>
 
@@ -127,8 +128,8 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (tolerances, slicing settings, material choice).</li>
-                <li>What you’d do next (electronics, sensors, higher-res prints, better UX).</li>
+                <li>Integrate more data types -- spatial, environmental, and longitudinal data -- to better understand mechanisms linking redlining to adverse, systemic health outcomes.</li>
+                <li>Explore opportunities to translate research findings into genuine policy changes and meaningful public health interventions.</li>
               </ul>
             </div>
           </div>
@@ -144,11 +145,11 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Designer / Builder</dd>
+                <dd className="font-medium">Public Health Research Assistant</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">2–3 weeks</dd>
+                <dd className="font-medium">1.5 Years (June 2023 - January 2025)</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
@@ -162,10 +163,10 @@ export default function Page() {
 
             <div className="mt-6">
               <a
-                href="/projects"
+                href="/research"
                 className="text-sm font-medium text-amber-800 hover:text-amber-900 hover:underline"
               >
-                ← Back to Projects
+                ← Back to Research
               </a>
             </div>
           </div>
@@ -178,7 +179,7 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/brain.png", "/projects/website.png"].map((src) => (
+          {["/projects/bin.png", "/projects/website.png"].map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"

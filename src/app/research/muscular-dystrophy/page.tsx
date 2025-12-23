@@ -33,6 +33,8 @@ export default function Page() {
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
+    { label: "RESEARCH PAPER", href: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4905776" },
+    { label: "GITHUB", href: "https://github.com/Rellendula26/PersonalPortfolio-RitvikEllendula-/blob/Highlights/Muscular%20Dystrophy%20Prediction.ipynb"}
     // { label: "DEMO", href: "https://..." },
     // { label: "GITHUB", href: "https://..." },
   ];
@@ -96,8 +98,7 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write 5–8 lines: what it is, why it matters, and what you built.
-                Keep it readable and concrete.
+                This project utilized classical machine learning (along with other associated steps such as pre-processing and training) with analysis and extraction of specific data from GEO. During this research project, I assessed which classical machine learning methods are best suitable for diagnosing Duchenne’s Muscular Dystrophy using the NCBI Gene Expression Omnibus (GEO). One thing I found interesting in particular was the use of biological biomarkers as inputs for computational analysis. In my work, I treated differentially expressed genes as molecular biomarkers, using statistical filtering and feature selection to isolate genes whose expression patterns were most strongly associated with pathological status, using these biomarkers to train the machine-learning model.
               </p>
             </div>
 
@@ -106,9 +107,10 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Modeled anatomical structures in CAD/Maya with attention to proportions.</li>
-                <li>Iterated prints for tolerances, supports, and assembly fit.</li>
-                <li>Designed interaction (labels, modular parts, or mechanisms).</li>
+                <li>Identified and curated two compatible gene expression microarray datasets (GSE3307, GSE6011) from GEO, ensuring overlap in gene features to enable valid dataset merging.</li>
+                <li>Trained and evaluated multiple supervised ML models—Logistic Regression, Naive Bayes, K-Nearest Neighbors, and Random Forest—using an 80/20 train-test split.</li>
+                <li>Implemented a reusable evaluation function to compute accuracy, precision, recall, and F1 score for each model, enabling systematic comparison.</li>
+                <li>Authored the full research manuscript, documenting both model performance and methodological limitations</li>
               </ul>
             </div>
 
@@ -117,8 +119,10 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Example: reduced print failures by X% via support redesign.</li>
-                <li>Example: produced final assembly with N components and M-hour print time.</li>
+                <li>Achieved over 90% accuracy using Logistic Regression and Random Forest models, with Random Forest yielding the strongest balance of precision, recall, and F1 score.</li>
+                <li>Identified a subset of genes with statistically significant associations to muscular dystrophy status, reinforcing known biological pathways while highlighting candidates for further study.</li>
+                <li>Produced a fully reproducible ML pipeline that can be adapted to other genetically driven neuromuscular disorders through utilizing GEO</li>
+                <li>Published the work as a public preprint, contributing an accessible, end-to-end example of applied machine learning in genomic diagnostics</li>
               </ul>
             </div>
 
@@ -127,8 +131,9 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (tolerances, slicing settings, material choice).</li>
-                <li>What you’d do next (electronics, sensors, higher-res prints, better UX).</li>
+                <li>Learned how data preprocessing and feature selection are used in biological ML problems, along with extracting genomic data from external datasets such as GEO</li>
+                <li>Extend the pipeline to RNA-seq data and explore modern deep learning architectures in their diagnosis efficacy.</li>
+                <li>Explore other genetic disorders that may have publicly accessible genomic data.</li>
               </ul>
             </div>
           </div>
@@ -144,11 +149,11 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Designer / Builder</dd>
+                <dd className="font-medium">Bioinformatics Machine Learning Researcher</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">2–3 weeks</dd>
+                <dd className="font-medium">4-5 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
@@ -162,10 +167,10 @@ export default function Page() {
 
             <div className="mt-6">
               <a
-                href="/projects"
+                href="/research"
                 className="text-sm font-medium text-amber-800 hover:text-amber-900 hover:underline"
               >
-                ← Back to Projects
+                ← Back to Research
               </a>
             </div>
           </div>
@@ -178,7 +183,7 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/brain.png", "/projects/website.png"].map((src) => (
+          {["/projects/bin.png", "/projects/website.png"].map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"

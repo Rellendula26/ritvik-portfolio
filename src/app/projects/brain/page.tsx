@@ -96,8 +96,9 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write 5–8 lines: what it is, why it matters, and what you built.
-                Keep it readable and concrete.
+                This project focused on creating a 3D physical render of the human brain, and incorporating some sort of labelling device/feature in order to offer more interactive resources for neuroscience education. 
+                I personally believe this matters a lot, as the brain is one of the parts of the body that is very abstract -- especially given the dense amount of information and processes that occur within it. For that reason, I strove to build a simplified, inexpensive model -- one that could potentially even be recreated for dispersion at local schools to promote more interest in neuroscience as a field. 
+                In order to accomplish this objective, I built a CAD Model of the brain in Maya, then I painted over the specific hemispheres and lobes to offer an easy-to-understand idea of what each represent, and finally added numbers and labelling with flashcards to describe each part in depth. 
               </p>
             </div>
 
@@ -106,9 +107,10 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Modeled anatomical structures in CAD/Maya with attention to proportions.</li>
-                <li>Iterated prints for tolerances, supports, and assembly fit.</li>
-                <li>Designed interaction (labels, modular parts, or mechanisms).</li>
+                <li>Prior to developing the brain model, studied the anatomy of the brain intensely, learning about the different lobes' specific functions, the spatial locations of different parts used for sensory processing, and more (stored in a research journal). </li>
+                <li>Manually modeled highly irregular, organic geometry such as gyri and sulci in Maya with respect to realistic proportions.</li>
+                <li>Optimizing mesh topology, reducing non-manifold edges, and balancing surface fidelity with printability.</li>
+                <li>Exported Maya meshes to STL, validated files with slicer software, and iterated through numerous designs.</li>
               </ul>
             </div>
 
@@ -117,18 +119,19 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Example: reduced print failures by X% via support redesign.</li>
-                <li>Example: produced final assembly with N components and M-hour print time.</li>
+                <li>Improved spatial understanding of brain anatomy especially with translation from 2D to 3D.</li>
+                <li>Developed strong skills in CAD-to-print pipelines with Maya, and explored other CAD softwares.</li>
+                <li>Created a low-cost, scalable approach to improving access to anatomical education using additive manufacturing </li>
               </ul>
             </div>
 
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
-                LESSONS + NEXT STEPS
+                NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (tolerances, slicing settings, material choice).</li>
-                <li>What you’d do next (electronics, sensors, higher-res prints, better UX).</li>
+                <li>Expanding to other more specific parts of the brain, or even human body.</li>
+                <li>Capitalizing on scalability to produce more copies and provide them to school teachers.</li>
               </ul>
             </div>
           </div>
@@ -144,11 +147,11 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Designer / Builder</dd>
+                <dd className="font-medium">Builder</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">2–3 weeks</dd>
+                <dd className="font-medium">6–8 weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
