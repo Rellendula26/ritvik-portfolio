@@ -29,7 +29,7 @@ export default function Page() {
     "A Data Analysis Exploration into Environmental & Socioeconomic Factors on Poor Health Outcomes";
   const subtitle =
     "A course capstone project exploring how environmental and socioeconomic variables relate to public health outcomes, combining machine learning with data visualization in Python.";
-  const coverSrc = "/projects/OIDD.png";
+  const coverSrc = "/projects/oidd-1.png";
 
   const repoUrl =
     "https://github.com/Rellendula26/PersonalPortfolio-RitvikEllendula-/blob/Highlights/Ritvik_Ellendula%20OIDD%204770%20Final%20Project%20(2).ipynb";

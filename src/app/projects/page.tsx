@@ -10,7 +10,11 @@ const PROJECTS: MediaCardItem[] = [
       "A custom-built personal website designed to showcase my projects and interests. Focused on interactive UI, reusable components, and production deployment using modern web tools.",
     href: "/projects/website",
     tags: ["React", "Next.js", "Frontend", "UI/UX", "Git", "Deployment"],
-    media: { kind: "image", src: "/projects/website.png", alt: "Website" },
+    media: {
+      kind: "video",
+      src: "/projects/website.mov",
+      poster: "/projects/website.jpg",
+    },
   },
 
   {
@@ -29,9 +33,6 @@ const PROJECTS: MediaCardItem[] = [
     },
   },
 
-  // Example of a course project later:
-  // { id:"004", type:"course", ... }
-
   {
     id: "003",
     type: "course",
@@ -41,17 +42,34 @@ const PROJECTS: MediaCardItem[] = [
     blurb:
       "A final presentation for my STAT 7770 course, where we analyzed the influence of various socioeconomic factors on health, utilizing numerous python libraries such as pandas, seaborn, numpy, etc.",
     href: "/projects/OIDD",
-    tags: [
-      "Python",
-      "NumPy",
-      "Pandas",
-      "Data Pre-Processing",
-      "Decision Trees",
-    ],
+    tags: ["Python", "NumPy", "Pandas", "Data Pre-Processing", "Decision Trees"],
     media: {
       kind: "image",
       src: "/projects/OIDD.png",
       alt: "OIDD Model",
+    },
+  },
+
+  {
+    id: "004",
+    type: "independent",
+    eyebrow: "Audio + Signal Processing",
+    title: "Count Coach",
+    blurb:
+      "A full-stack Next.js audio analysis tool that visualizes waveforms and performs tempo inference via server-side API routes, helping dancers improve their ability to stay on beat with the music.",
+    href: "/projects/count-coach",
+    tags: [
+      "Signal Processing",
+      "Audio Analysis",
+      "Next.js",
+      "React",
+      "Full-Stack",
+      "Time-Series Data",
+    ],
+    media: {
+      kind: "video",
+      src: "/projects/count-coach-demo.mov",
+      poster: "/projects/count-coach-poster.jpg",
     },
   },
 ];
