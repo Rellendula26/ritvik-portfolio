@@ -44,7 +44,7 @@ export default function Page() {
   const title = "Personal Portfolio Website";
   const subtitle =
     "A project designed to strengthen my web development skills in React, Next.js, Node.js, Git, and cloud deployment, while offering a clean way to showcase other projects.";
-  const coverSrc = "/projects/website.png"; // must exist in /public
+  const coverSrc = "/projects/website.mp4"; // must exist in /public
 
   const badges = ["Independent", "React", "Next.js", "TypeScript"];
 
