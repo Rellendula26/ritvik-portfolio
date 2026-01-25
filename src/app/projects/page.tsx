@@ -12,7 +12,7 @@ const PROJECTS: MediaCardItem[] = [
     tags: ["React", "Next.js", "Frontend", "UI/UX", "Git", "Deployment"],
     media: {
       kind: "video",
-      src: "/projects/website.mov",
+      src: "/projects/website.mp4",
       poster: "/projects/website.jpg",
     },
   },
@@ -68,7 +68,7 @@ const PROJECTS: MediaCardItem[] = [
     ],
     media: {
       kind: "video",
-      src: "/projects/count-coach-demo.mov",
+      src: "/projects/count-coach-demo.mp4",
       poster: "/projects/count-coach-poster.jpg",
     },
   },

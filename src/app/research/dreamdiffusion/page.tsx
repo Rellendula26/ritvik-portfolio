@@ -11,12 +11,13 @@ function Badge({ children }: { children: React.ReactNode }) {
 }
 
 function ActionLink({ label, href }: LinkItem) {
+  const external = href.startsWith("http");
   return (
     <a
       href={href}
       className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-800 hover:bg-zinc-50"
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
     >
       {label}
     </a>
@@ -30,11 +31,22 @@ export default function Page() {
   const coverSrc = "/research/dreamdiffusion.png"; // must exist in /public
 
   const badges = ["Affiliated", "Harvard Medical School", "EEG Signal Processing", "Deep Learning"];
+
+  // arXiv
+  const arxivAbs = "https://arxiv.org/abs/2407.02673";
+  const arxivPdf = "https://arxiv.org/pdf/2407.02673.pdf";
+
+  // Embedded viewer URL:
+  // - #view=FitH makes it readable
+  // - &page=1 starts at first page
+  // - toolbar=1 keeps pdf controls available in most browsers
+  const embedPdfUrl = `${arxivPdf}#view=FitH&page=1&toolbar=1`;
+
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
-    { label: "RESEARCH PAPER", href: "https://arxiv.org/abs/2407.02673" }
-
+    { label: "PAPER PREVIEW", href: "#paper" },
+    { label: "RESEARCH PAPER", href: arxivAbs },
     // { label: "DEMO", href: "https://..." },
     // { label: "GITHUB", href: "https://..." },
   ];
@@ -98,7 +110,20 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                 During my EEG computer-vision research internship at Harvard Medical School, I helped refine DreamDiffusion, a model designed to convert EEG signals into images. Our team resolved major environment and dependency issues that made the original GitHub version nearly impossible to run, migrating the entire pipeline into Google Colab and debugging model-architecture and computer-vision components to ensure reproducibility. This process taught me how to systematically diagnose errors within complex deep-learning systems. We also evaluated a variety of classical and deep learning approaches—including SVMs, feedforward DNNs, CNN-based encoders, and generative models such as GANs and VAEs—for EEG-to-image reconstruction. While each model captured limited aspects of the signal, they struggled to robustly map EEG data to meaningful visual representations due to EEG’s low signal-to-noise ratio, nonlinearity, and complex temporal dynamics. Understanding these limitations, and why DreamDiffusion instead leverages masked-signal pretraining and alignment within CLIP’s latent space, deeply shaped my understanding of how to design models that translate noisy biological signals into meaningful visual outputs.
+                During my EEG computer-vision research internship at Harvard Medical School, I helped
+                refine DreamDiffusion, a model designed to convert EEG signals into images. Our team
+                resolved major environment and dependency issues that made the original GitHub version
+                nearly impossible to run, migrating the entire pipeline into Google Colab and debugging
+                model-architecture and computer-vision components to ensure reproducibility. This
+                process taught me how to systematically diagnose errors within complex deep-learning
+                systems. We also evaluated a variety of classical and deep learning approaches—including
+                SVMs, feedforward DNNs, CNN-based encoders, and generative models such as GANs and VAEs—for
+                EEG-to-image reconstruction. While each model captured limited aspects of the signal, they
+                struggled to robustly map EEG data to meaningful visual representations due to EEG’s low
+                signal-to-noise ratio, nonlinearity, and complex temporal dynamics. Understanding these
+                limitations, and why DreamDiffusion instead leverages masked-signal pretraining and alignment
+                within CLIP’s latent space, deeply shaped my understanding of how to design models that
+                translate noisy biological signals into meaningful visual outputs.
               </p>
             </div>
 
@@ -107,10 +132,22 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Refactored and debugged the DreamDiffusion codebase into a reproducible Google Colab pipeline, resolving dependencies, setup errors, and environment incompatibilities.</li>
-                <li>Implemented EEG preprocessing and representation pipelines, dealing with EEG's low signal-to-noise ratio and temporal structure </li>
-                <li>Evaluated numerous ML and Deep Learning Paradigms, and explored CLIP's multimodal latent space, enabling Stable Diffusion to generate images via EEG-Derived data. </li>
-                <li>Worked with a team of 3 other peers to write a 13-page research paper, exploring our findings and documenting the methodologies and insights we made. </li>
+                <li>
+                  Refactored and debugged the DreamDiffusion codebase into a reproducible Google Colab
+                  pipeline, resolving dependencies, setup errors, and environment incompatibilities.
+                </li>
+                <li>
+                  Implemented EEG preprocessing and representation pipelines, dealing with EEG&apos;s low
+                  signal-to-noise ratio and temporal structure
+                </li>
+                <li>
+                  Evaluated numerous ML and Deep Learning paradigms, and explored CLIP&apos;s multimodal
+                  latent space, enabling Stable Diffusion to generate images via EEG-derived data.
+                </li>
+                <li>
+                  Worked with a team of 3 other peers to write a 13-page research paper, exploring our
+                  findings and documenting the methodologies and insights we made.
+                </li>
               </ul>
             </div>
 
@@ -119,8 +156,14 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Lowered the barrier to entry for EEG Generative Modeling via providing clean documentation, executable notebooks, and preloaded data, enabling easier experimentation for future studies.</li>
-                <li>Demonstrated diffusion-based latent-space generation is more effective for EEG-to-image generation than CNNs, GANs, VAEs, or SVM models.</li>
+                <li>
+                  Lowered the barrier to entry for EEG generative modeling via providing clean documentation,
+                  executable notebooks, and preloaded data, enabling easier experimentation for future studies.
+                </li>
+                <li>
+                  Demonstrated diffusion-based latent-space generation is more effective for EEG-to-image
+                  generation than CNNs, GANs, VAEs, or SVM models.
+                </li>
                 <li>Wrote a paper published to ArXiv as a pre-print.</li>
               </ul>
             </div>
@@ -130,9 +173,43 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Utilize University of Pennsylvania Venture Labs and other entrepreneurial sources to make this a hospital-utilized product.</li>
+                <li>
+                  Utilize University of Pennsylvania Venture Labs and other entrepreneurial sources to make this
+                  a hospital-utilized product.
+                </li>
                 <li>Integrate wavelet-based and time-frequency features to better capture transient EEG dynamics</li>
               </ul>
+            </div>
+
+            {/* Paper Preview */}
+            <div id="paper" className="scroll-mt-24">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
+                  PAPER PREVIEW
+                </h2>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <ActionLink label="OPEN ON ARXIV" href={arxivAbs} />
+                  <ActionLink label="DOWNLOAD PDF" href={arxivPdf} />
+                </div>
+              </div>
+
+              <p className="mt-3 text-base leading-relaxed text-zinc-700">
+                Scroll through the preprint directly here. For citation / sharing, use the arXiv link above.
+              </p>
+
+              <div className="mt-4 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+                {/* Responsive-ish height: tall on desktop, still usable on mobile */}
+                <div className="h-[70vh] min-h-[520px] w-full">
+                  <iframe
+                    title="ArXiv Paper Preview"
+                    src="/research/dreamdiff.pdf"
+                    className="h-full w-full"
+                    loading="lazy"
+                  />
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -151,12 +228,18 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">One Year (July 2023-July 2024) </dd>
+                <dd className="font-medium">One Year (July 2023–July 2024)</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
-                  {["Harvard Medical School", "EEG Signal Processing", "Deep Learning","Machine Learning", "Diffusion Models"].map((t) => (
+                  {[
+                    "Harvard Medical School",
+                    "EEG Signal Processing",
+                    "Deep Learning",
+                    "Machine Learning",
+                    "Diffusion Models",
+                  ].map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </dd>

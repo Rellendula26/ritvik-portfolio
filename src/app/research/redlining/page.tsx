@@ -11,12 +11,13 @@ function Badge({ children }: { children: React.ReactNode }) {
 }
 
 function ActionLink({ label, href }: LinkItem) {
+  const external = href.startsWith("http");
   return (
     <a
       href={href}
       className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-800 hover:bg-zinc-50"
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
     >
       {label}
     </a>
@@ -24,19 +25,31 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 export default function Page() {
-  const title = "Epidemiology Research";
+  // ====== EDIT THESE ======
+  const title = "Redlining & Health Outcomes Research";
   const subtitle =
-    "A research project done under the mentorship of a Wayne State University epidemiology professor, exploring a neighborhood's HOLC(Home Owner's Loan Corporation) status and relevant adverse public health impacts. Publication on Journal of Public Health.";
-  const coverSrc = "/research/redlining.png"; // must exist in /public
+    "An empirical research project examining how historical redlining and neighborhood disadvantage relate to chronic disease outcomes, using public health datasets and statistical modeling.";
+  const coverSrc = "/research/redlining.png"; // put an image in /public/research/
 
-  const badges = ["Affiliate", "Wayne State University", "Data Analysis", "Meta-Analysis", "Redlining", "Health Equity", "Public Health"];
+  const badges = ["Independent", "Public Health", "Data Analysis", "Causal Inference"];
+
+  // PDF (local) — make sure this file exists at: public/research/red.pdf
+  const paperUrl = "/research/red.pdf";
+  const paperEmbedUrl = `${paperUrl}#view=FitH&page=1&toolbar=1`;
+
+  // External links (optional)
+  const fullPaperLink = "https://example.com"; // replace with your actual paper link (or leave as-is)
+  const githubLink = "https://github.com/your-repo"; // replace (or remove action below)
+
+  const galleryImages = ["/research/redlining-1.png", "/research/redlining-2.png"]; // replace with your images
+  // ========================
+
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
-    { label: "RESEARCH PAPER", href: "https://www.sciencedirect.com/science/article/pii/S0033350624004335?via%3Dihub" }
-
-    // { label: "DEMO", href: "https://..." },
-    // { label: "GITHUB", href: "https://..." },
+    { label: "PAPER PREVIEW", href: "#paper" },
+    { label: "FULL PAPER", href: fullPaperLink },
+    { label: "GITHUB", href: githubLink },
   ];
 
   return (
@@ -93,44 +106,103 @@ export default function Page() {
         {/* Left: sections */}
         <div className="lg:col-span-2">
           <div id="overview" className="space-y-10">
+            {/* Overview */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                During my epidemiology research at Wayne State University, I contributed to a systematic review examining how historic neighborhood redlining practices continue to shape contemporary health outcomes in the United States. The project investigated whether neighborhoods graded as “hazardous” by the Home Owners’ Loan Corporation (HOLC) in the 1930s experience worse health outcomes today, decades after overtly discriminatory lending practices were outlawed. By synthesizing evidence across dozens of observational studies, this work sought to determine which associations have been consistently replicated and where methodological gaps remain. The research matters because redlining represents a concrete, mappable policy mechanism through which structural racism may translate into persistent health disparities. Our final product was a rigorously documented systematic review that contextualizes modern public health outcomes within historical policy decisions .
+                Write a crisp, technical overview here: what question you asked,
+                what data you used, what methods you applied, and what you found.
+                Keep it readable, but make it feel like real research.
               </p>
             </div>
 
+            {/* What I Did */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Conducted structured literature review work following PRISMA-style systematic review guidelines, extracting data from 50+ studies linking HOLC grades to adverse health outcomes.</li>
-                <li>Extracted and organized study-level details including study design, sample size, exposure definitions, outcome measures, and regression model types (e.g., logistic, Cox proportional hazards, Poisson, negative binomial).</li>
-                <li>Collaborated with a multidisciplinary team spanning epidemiology, public health, and medicine to produce a peer-reviewed manuscript.</li>
+                <li>Describe dataset sourcing + cleaning + merging.</li>
+                <li>Describe modeling approach (regression, matching, fixed effects, etc.).</li>
+                <li>Describe validation, robustness checks, and interpretation.</li>
+                <li>Describe figures/tables you produced and how you communicated results.</li>
               </ul>
             </div>
 
+            {/* Results */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Published findings in Public Health (Elsevier), contributing to evidence that historic housing policy may exert durable effects on population health decades later.</li>
-                <li>Demonstrated substantial methodological heterogeneity across the literature, including the use of 18+ different regression strategies and varied exposure comparisons, limiting direct meta-analysis.</li>
+                <li>Key quantitative result (effect size, direction, significance).</li>
+                <li>What the result implies for policy / equity / intervention.</li>
+                <li>Limitations and why the result is still meaningful.</li>
               </ul>
             </div>
 
+            {/* Lessons */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Integrate more data types -- spatial, environmental, and longitudinal data -- to better understand mechanisms linking redlining to adverse, systemic health outcomes.</li>
-                <li>Explore opportunities to translate research findings into genuine policy changes and meaningful public health interventions.</li>
+                <li>What you learned technically (data issues, modeling pitfalls, inference).</li>
+                <li>Next step (better controls, panel data, new dataset, causal method).</li>
               </ul>
+            </div>
+
+            {/* Paper Preview */}
+            <div id="paper" className="scroll-mt-24">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
+                  RESEARCH PAPER
+                </h2>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <ActionLink label="VIEW FULL PAPER" href={fullPaperLink} />
+                  <ActionLink label="OPEN PDF" href={paperUrl} />
+                </div>
+              </div>
+
+              <p className="mt-3 text-base leading-relaxed text-zinc-700">
+                Scroll through the full paper directly below.
+              </p>
+
+              <div className="mt-4 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+                <div className="h-[70vh] min-h-[520px] w-full">
+                  <iframe
+                    title="Research Paper Preview"
+                    src={paperEmbedUrl}
+                    className="h-full w-full"
+                    loading="lazy"
+                  />
+                </div>
+
+                <div className="border-t border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-600">
+                  If the preview doesn&apos;t load,{" "}
+                  <a
+                    href={paperUrl}
+                    className="font-medium text-amber-800 hover:text-amber-900 hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    open the PDF
+                  </a>{" "}
+                  or{" "}
+                  <a
+                    href={fullPaperLink}
+                    className="font-medium text-amber-800 hover:text-amber-900 hover:underline"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    view the full paper
+                  </a>
+                  .
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -145,16 +217,16 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Public Health Research Assistant</dd>
+                <dd className="font-medium">Researcher</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">1.5 Years (June 2023 - January 2025)</dd>
+                <dd className="font-medium">4–8 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
-                  {["Data Analysis", "Meta-Analysis", "Redlining", "Health Equity", "Public Health"].map((t) => (
+                  {badges.map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </dd>
@@ -179,7 +251,7 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/research/redlining-1.png", "/research/redlining-2.png"].map((src) => (
+          {galleryImages.map((src) => (
             <div
               key={src}
               className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"

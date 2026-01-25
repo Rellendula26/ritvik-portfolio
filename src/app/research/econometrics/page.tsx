@@ -11,12 +11,13 @@ function Badge({ children }: { children: React.ReactNode }) {
 }
 
 function ActionLink({ label, href }: LinkItem) {
+  const external = href.startsWith("http");
   return (
     <a
       href={href}
       className="inline-flex items-center rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-800 hover:bg-zinc-50"
-      target={href.startsWith("http") ? "_blank" : undefined}
-      rel={href.startsWith("http") ? "noreferrer" : undefined}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noreferrer" : undefined}
     >
       {label}
     </a>
@@ -26,17 +27,29 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "Econometrics Labor Market Research";
   const subtitle =
-    "This research project uses R in order to answer the research question: how does the relationship between remote work and salary vary by company size in the global tech workforce. Publication on SSRN. ";
-  const coverSrc = "/research/econometrics.png"; // must exist in /public
+    "An empirical econometrics project analyzing how remote work and company size interact to shape salary outcomes in the global tech workforce. Pre-print publication.";
+
+  const coverSrc = "/research/econometrics.png";
+
+  // PDF (local)
+  const paperUrl = "/research/ecnm.pdf";
+  const paperEmbedUrl = `${paperUrl}#view=FitH&page=1&toolbar=1`;
+
+  // External links
+  const fullPaperLink =
+    "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5374800";
 
   const badges = ["Independent", "Econometrics", "R", "Data Analysis"];
+
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
-    { label: "RESEARCH PAPER", href: "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5374800" },
-    { label: "GITHUB", href: "https://github.com/Rellendula26/PersonalPortfolio-RitvikEllendula-/blob/Highlights/Econometrics_Project.ipynb" },
-    // { label: "DEMO", href: "https://..." },
-    // { label: "GITHUB", href: "https://..." },
+    { label: "PAPER PREVIEW", href: "#paper" },
+    { label: "FULL PAPER", href: fullPaperLink },
+    {
+      label: "GITHUB",
+      href: "https://github.com/Rellendula26/PersonalPortfolio-RitvikEllendula-/blob/Highlights/Econometrics_Project.ipynb",
+    },
   ];
 
   return (
@@ -60,7 +73,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Hero media */}
+        {/* Hero image */}
         <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
           <div className="relative h-[320px] w-full md:h-[420px]">
             <Image
@@ -90,55 +103,126 @@ export default function Page() {
 
       {/* Content grid */}
       <section className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-3">
-        {/* Left: sections */}
+        {/* Left column */}
         <div className="lg:col-span-2">
           <div id="overview" className="space-y-10">
+            {/* Overview */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                In this project, I worked on an econometric analysis using the software R in order to investigate how remote work arrangements relate to salary outcomes in the global data science and artificial intelligence workforce, and whether this relationship varies by company size. Using over 130,000 survey responses from AI Jobs’ Data Science Salary Index, we examined whether remote, hybrid, and in-person roles are associated with meaningful wage differences across small, medium, and large firms. This question matters as remote work becomes a permanent feature of the post-pandemic labor market and challenges classical economic theories around compensating wage differentials. Rather than relying on anecdotal claims, this study uses large-scale empirical evidence to assess whether remote work meaningfully alters compensation structures in modern tech labor markets
+                This project applies econometric methods in R to study how remote
+                work arrangements relate to salary outcomes in the global data
+                science and AI labor market, and whether this relationship varies
+                by company size. Using over 130,000 observations from AI Jobs’
+                Data Science Salary Index, we evaluate whether remote, hybrid, and
+                in-person roles are associated with meaningful wage differences
+                across firms of different scales. The analysis contributes
+                empirical evidence to ongoing debates about compensating wage
+                differentials in the post-pandemic labor market.
               </p>
             </div>
 
+            {/* What I Did */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Helped clean, subset, and structure a large-scale salary dataset (132k+ observations), filtering data to 2024–2025 to control for inflationary effects.</li>
-                <li>Created operational definitions for key categorical variables, including remote work ratio (in-person, hybrid, remote) and company size (small, medium, large).</li>
-                <li>Implemented Welch’s ANOVA in R to test for differences in mean salary across multiple groups while relaxing the homogeneity-of-variance assumption.</li>
-                <li>Interpreted F-statistics, p-values, and partial eta squared effect sizes, distinguishing statistical significance from practical significance.</li>
-                <li>Collaborated with coauthors to write and revise the full research paper, with emphasis on clear interpretation of results and economic implications</li>
+                <li>
+                  Cleaned and structured a large-scale salary dataset (132k+
+                  observations), filtering to 2024–2025 to control for inflation.
+                </li>
+                <li>
+                  Defined key categorical variables, including remote work ratio
+                  (in-person, hybrid, remote) and company size.
+                </li>
+                <li>
+                  Implemented Welch’s ANOVA in R to test salary differences while
+                  relaxing homogeneity-of-variance assumptions.
+                </li>
+                <li>
+                  Interpreted F-statistics, p-values, and effect sizes to separate
+                  statistical from practical significance.
+                </li>
+                <li>
+                  Co-authored and revised the research paper with emphasis on
+                  economic interpretation and clarity.
+                </li>
               </ul>
             </div>
 
+            {/* Results */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Found that remote work status, company size, and their interaction are statistically significant predictors of salary, based on Welch’s ANOVA results.</li>
-                <li>Challenged classical interpretations of compensating wage differentials, suggesting the modern tech labor market has largely equilibrated around remote work.</li>
-                <li>Contributed to a completed academic pre-print published in SSRN that contextualizes remote work within modern labor efficiency and wage equity discussions</li>
+                <li>
+                  Found that remote work status, company size, and their
+                  interaction are statistically significant predictors of
+                  salary.
+                </li>
+                <li>
+                  Challenged classical compensating wage differential models in
+                  the context of modern tech labor markets.
+                </li>
+                <li>
+                  Contributed to a completed academic pre-print publication.
+                </li>
               </ul>
             </div>
 
+            {/* Lessons */}
             <div>
               <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Gained hands-on experience applying econometric reasoning to real-world labor data, rather than idealized textbook scenarios.</li>
-                <li>Extend the analysis using longitudinal or panel data to study within-individual salary changes over time and/or apply advanced econometric analysis.</li>
+                <li>
+                  Developed hands-on intuition for applying econometric reasoning
+                  to real-world labor data.
+                </li>
+                <li>
+                  Extend analysis using panel data or advanced causal inference
+                  methods.
+                </li>
               </ul>
+            </div>
+
+            {/* Paper Preview */}
+            <div id="paper" className="scroll-mt-24">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
+                  RESEARCH PAPER
+                </h2>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <ActionLink label="VIEW FULL PAPER" href={fullPaperLink} />
+                  <ActionLink label="OPEN PDF" href={paperUrl} />
+                </div>
+              </div>
+
+              <p className="mt-3 text-base leading-relaxed text-zinc-700">
+                Scroll through the full paper directly below.
+              </p>
+
+              <div className="mt-4 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+                <div className="h-[70vh] min-h-[520px] w-full">
+                  <iframe
+                    title="ArXiv Paper Preview"
+                    src="/research/ecnm.pdf"
+                    className="h-full w-full"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Right: sticky meta card */}
+        {/* Right column */}
         <aside className="lg:col-span-1">
           <div className="sticky top-24 rounded-3xl border border-zinc-200 bg-white/70 p-5 shadow-sm backdrop-blur">
             <h3 className="text-sm font-semibold tracking-widest text-zinc-900">
@@ -152,7 +236,7 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">5-7 Weeks</dd>
+                <dd className="font-medium">5–7 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>
