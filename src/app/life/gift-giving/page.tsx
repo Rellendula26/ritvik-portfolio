@@ -33,17 +33,31 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 function HoverCard({ item }: { item: GalleryItem }) {
+  const isVideo = /\.(mp4|mov|webm)$/i.test(item.src);
+
   return (
     <div className="group relative overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-      {/* Image */}
+      {/* Media (image OR video) */}
       <div className="relative h-64 w-full md:h-72">
-        <Image
-          src={item.src}
-          alt={item.title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          sizes="(max-width: 768px) 100vw, 50vw"
-        />
+        {isVideo ? (
+          <video
+            src={item.src}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            muted
+            playsInline
+            loop
+            autoPlay
+            preload="metadata"
+          />
+        ) : (
+          <Image
+            src={item.src}
+            alt={item.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            sizes="(max-width: 768px) 100vw, 50vw"
+          />
+        )}
       </div>
 
       {/* Hover overlay */}
@@ -101,15 +115,21 @@ function HoverCard({ item }: { item: GalleryItem }) {
 export default function Page() {
   const title = "Compilation of 3D Printed Gifts!";
   const subtitle =
-    "Pretty much once I heard free 3D printing @ Penn, I knew the plan. \n Whether it's a friend's birthday or just a special occasion, I got into the habit of making lil' trinkets.";
+    "Pretty much once I heard free 3D printing @ Penn, I knew the plan.\nWhether it's a friend's birthday or just a special occasion, I got into the habit of making lil' trinkets.";
 
   const coverSrc = "/life/gift-giving.jpg"; // must exist in /public
 
-  const badges = ["Fusion 360", "3D Printing", "Penn", "Gift-Giving","#MYFRIENDSAREGOATED","Trinkets"];
+  const badges = [
+    "Fusion 360",
+    "3D Printing",
+    "Penn",
+    "Gift-Giving",
+    "#MYFRIENDSAREGOATED",
+    "Trinkets",
+  ];
 
   const actions: LinkItem[] = [{ label: "GALLERY", href: "#gallery" }];
 
-  // Replace these with your real images + blurbs
   const items: GalleryItem[] = [
     {
       src: "/life/gift1.png",
@@ -141,13 +161,25 @@ export default function Page() {
       tags: ["Aladdin!"],
     },
     {
-
       src: "/life/gift5_fixed.png",
       title: "Hakuna Matata",
       synopsis:
         "Gift for my friend who played Simba from the Lion King in his dance show!",
-      tags: ["TinkerCAD","Text Embossing"],
-    }
+      tags: ["TinkerCAD", "Text Embossing"],
+    },
+    {
+      src: "/life/gift6_fixed.png",
+      title: "Penn Dhamaka Logo",
+      synopsis:
+        "Couple of my friends' birthdays on Dhamaka, so I printed them V1 of our Logo!",
+      tags: ["Fusion 360", "Image Overlay", "Sketch", "Extruding"],
+    },
+    {
+      src: "/life/gift7.mp4",
+      title: "Solar Fidget Spinner",
+      synopsis: "One of my friends really likes the Sun",
+      tags: ["Fusion 360", "STL Scaling"],
+    },
   ];
 
   return (
@@ -159,7 +191,7 @@ export default function Page() {
             <h1 className="text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl">
               {title}
             </h1>
-            <p className="mt-2 max-w-2xl text-base leading-relaxed text-zinc-600">
+            <p className="mt-2 max-w-2xl whitespace-pre-line text-base leading-relaxed text-zinc-600">
               {subtitle}
             </p>
           </div>
