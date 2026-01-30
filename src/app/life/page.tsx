@@ -12,6 +12,19 @@ const LIFE: MediaCardItem[] = [
     media: { kind: "image", src: "/life/gift-giving.jpg", alt: "Gift-Giving" },
 
   },
+
+
+  {
+    id: "002",
+    eyebrow: "Dance",
+    title: "Penn Dhamaka & Dance",
+    blurb:
+      "In college, I have become extremely involved in the University of Pennsylvania's Fusion Dance Team: Penn Dhamaka. And, just overall more interested in dance as a whole..",
+    href: "/life/dance",
+    tags: ["Physical Activity", "Friends", "Competitive"],
+    media: { kind: "image", src: "/life/atl.jpg", alt: "Tamasha" },
+
+  },
 ];
 
 export default function LifePage() {

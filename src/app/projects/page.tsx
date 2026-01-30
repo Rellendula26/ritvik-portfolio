@@ -19,7 +19,7 @@ const PROJECTS: MediaCardItem[] = [
 
   {
     id: "002",
-    type: "independent",
+    type: "course",
     eyebrow: "CAD",
     title: "3D Printed Interactive Brain Model",
     blurb:
@@ -86,7 +86,7 @@ export default function ProjectsPage() {
           filters={[
             { label: "All", value: "all" },
             { label: "Independent", value: "independent" },
-            { label: "Course", value: "course" },
+            { label: "Courses", value: "course" },
           ]}
           defaultFilter="all"
           showTypePill={true}
