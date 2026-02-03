@@ -25,6 +25,18 @@ const LIFE: MediaCardItem[] = [
     media: { kind: "image", src: "/life/atl.jpg", alt: "Tamasha" },
 
   },
+
+  {
+    id: "003",
+    eyebrow: "Video Editing",
+    title: "Edits",
+    blurb:
+      "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast.",
+    href: "/life/edits",
+    tags: ["Production", "Video Editing"],
+    media: { kind: "video", src: "/life/mich.mov", alt: "Editing" },
+
+  },
 ];
 
 export default function LifePage() {
@@ -33,7 +45,7 @@ export default function LifePage() {
       <main className="mx-auto w-full max-w-6xl px-8 py-14">
         <MediaCardGrid
           title="Life"
-          subtitle="Everyday projects and random experiments."
+          subtitle="Everyday projects and random activities."
           items={LIFE}
           columns={2}
         />
