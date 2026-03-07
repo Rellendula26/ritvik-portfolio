@@ -27,16 +27,19 @@ const LIFE: MediaCardItem[] = [
   },
 
   {
-    id: "003",
-    eyebrow: "Video Editing",
-    title: "Edits",
-    blurb:
-      "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast.",
-    href: "/life/edits",
-    tags: ["Production", "Video Editing"],
-    media: { kind: "video", src: "/life/mich.mov", alt: "Editing" },
-
+  id: "003",
+  eyebrow: "Video Editing",
+  title: "Edits",
+  blurb:
+    "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast.",
+  href: "/life/edits",
+  tags: ["Production", "Video Editing"],
+  media: {
+    kind: "video",
+    src: "/life/mich.mov",
+    poster: "/life/mich.jpg",
   },
+}
 ];
 
 export default function LifePage() {
