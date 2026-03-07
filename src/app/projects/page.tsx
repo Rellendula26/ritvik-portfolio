@@ -72,6 +72,52 @@ const PROJECTS: MediaCardItem[] = [
       poster: "/projects/count-coach-poster.jpg",
     },
   },
+
+  {
+    id: "005",
+    type: "independent",
+    eyebrow: "Hardware, Circuits, and Electronics",
+    title: "Homemade Lightsaber",
+    blurb:
+      "A full-stack Next.js audio analysis tool that visualizes waveforms and performs tempo inference via server-side API routes, helping dancers improve their ability to stay on beat with the music.",
+    href: "/projects/count-coach",
+    tags: [
+      "Signal Processing",
+      "Audio Analysis",
+      "Next.js",
+      "React",
+      "Full-Stack",
+      "Time-Series Data",
+    ],
+    media: {
+      kind: "video",
+      src: "/projects/count-coach-demo.mp4",
+      poster: "/projects/count-coach-poster.jpg",
+    },
+  },
+
+  {
+    id: "006",
+    type: "clubs",
+    eyebrow: "Full-Stack Website Development",
+    title: "Penn Plates",
+    blurb:
+      "A full-stack Next.js audio analysis tool that visualizes waveforms and performs tempo inference via server-side API routes, helping dancers improve their ability to stay on beat with the music.",
+    href: "/projects/count-coach",
+    tags: [
+      "Signal Processing",
+      "Audio Analysis",
+      "Next.js",
+      "React",
+      "Full-Stack",
+      "Time-Series Data",
+    ],
+    media: {
+      kind: "video",
+      src: "/projects/count-coach-demo.mp4",
+      poster: "/projects/count-coach-poster.jpg",
+    },
+  },
 ];
 
 export default function ProjectsPage() {
@@ -87,6 +133,7 @@ export default function ProjectsPage() {
             { label: "All", value: "all" },
             { label: "Independent", value: "independent" },
             { label: "Courses", value: "course" },
+            { label: "Clubs & Organizations", value: "clubs" },
           ]}
           defaultFilter="all"
           showTypePill={true}

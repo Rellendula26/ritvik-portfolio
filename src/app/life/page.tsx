@@ -36,7 +36,7 @@ const LIFE: MediaCardItem[] = [
   tags: ["Production", "Video Editing"],
   media: {
     kind: "video",
-    src: "/life/mich.mov",
+    src: "/life/mich.mp4",
     poster: "/life/mich.jpg",
   },
 }
