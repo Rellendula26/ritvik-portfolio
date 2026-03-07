@@ -17,14 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Ritvik Ellendula | Bioengineering @ Penn",
+  title: "Ritvik Ellendula | Electrical Engineering @ Penn",
   description:
-    "Ritvik Ellendula is a Bioengineering student at the University of Pennsylvania. Projects in engineering, software, research, and creative technology.",
+    "Ritvik Ellendula is a Electrical Engineering student at the University of Pennsylvania. Projects in engineering, software, research, and creative technology.",
   metadataBase: new URL("https://ritvik-portfolio-eta.vercel.app"),
   openGraph: {
     title: "Ritvik Ellendula",
     description:
-      "Bioengineering @ Penn. Engineering, software, research, and creative projects.",
+      "Electrical Engineering @ Penn. Engineering, software, research, and creative projects.",
     url: "https://ritvik-portfolio-eta.vercel.app",
     siteName: "Ritvik Ellendula",
     images: [
@@ -48,7 +48,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-smileys text-zinc-800`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-warm-dots text-zinc-800`}
       >
         {/* Cursor */}
         <CursorDot />

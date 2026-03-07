@@ -12,7 +12,7 @@ function Accent({ children }: { children: React.ReactNode }) {
 
 export default function Home() {
   return (
-    <div className="bg-smileys min-h-screen">
+    <div className="min-h-screen">
 
       <main className="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-14 px-8 py-16 md:grid-cols-2">
         {/* Left */}
@@ -22,14 +22,14 @@ export default function Home() {
           </h1>
 
           <p className="mt-7 text-lg leading-8 text-zinc-700">
-            I&apos;m a Bioengineering student at Penn with potential minors in{" "}
+            I&apos;m an Electrical Engineering at Penn with potential minors in{" "}
             <Accent>Engineering Entrepreneurship</Accent>, <Accent>Math</Accent>,
             and <Accent>South Asian Studies</Accent>.
             <br />
             <br />
             I hope to build impactful and equitable medical device technologies.
             My projects lie at the intersection of
-            <Accent> engineering</Accent>, <Accent>software</Accent>,{" "}
+            <Accent> engineering</Accent>, <Accent>software</Accent>, and {" "}
             <Accent>research</Accent>.
           </p>
 
