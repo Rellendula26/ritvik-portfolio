@@ -19,7 +19,7 @@ const LIFE: MediaCardItem[] = [
     eyebrow: "Dance",
     title: "Penn Dhamaka & Dance",
     blurb:
-      "In college, I have become extremely involved in the University of Pennsylvania's Fusion Dance Team: Penn Dhamaka. And, just overall more interested in dance as a whole..",
+      "In college, I have become extremely involved in the University of Pennsylvania's Fusion Dance Team: Penn Dhamaka. PROJECT PAGE IN PROGRESS...",
     href: "/life/dance",
     tags: ["Physical Activity", "Friends", "Competitive"],
     media: { kind: "image", src: "/life/atl.jpg", alt: "Tamasha" },
@@ -31,7 +31,7 @@ const LIFE: MediaCardItem[] = [
   eyebrow: "Video Editing",
   title: "Edits",
   blurb:
-    "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast.",
+    "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast. PROJECT PAGE IN PROGRESS...",
   href: "/life/edits",
   tags: ["Production", "Video Editing"],
   media: {
@@ -48,7 +48,7 @@ export default function LifePage() {
       <main className="mx-auto w-full max-w-6xl px-8 py-14">
         <MediaCardGrid
           title="Life"
-          subtitle="Everyday projects and random activities."
+          subtitle="Some hobbies that add some spice to life."
           items={LIFE}
           columns={2}
         />
