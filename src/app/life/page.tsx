@@ -31,7 +31,7 @@ const LIFE: MediaCardItem[] = [
   eyebrow: "Video Editing",
   title: "Edits",
   blurb:
-    "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast. PROJECT PAGE IN PROGRESS...",
+    "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast.",
   href: "/life/edits",
   tags: ["Production", "Video Editing"],
   media: {

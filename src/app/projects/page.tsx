@@ -36,7 +36,7 @@ const PROJECTS: MediaCardItem[] = [
   {
     id: "003",
     type: "course",
-    eyebrow: "Data Analysis",
+    eyebrow: "Data Analysis/Visualization + Machine Learning ",
     title:
       "A Data Analysis Exploration into Environmental & Socioeconomic Factors on Poor Health Outcomes",
     blurb:
@@ -53,7 +53,7 @@ const PROJECTS: MediaCardItem[] = [
   {
     id: "004",
     type: "independent",
-    eyebrow: "Audio + Signal Processing",
+    eyebrow: "Web App For Audio + Signal Processing",
     title: "Count Coach",
     blurb:
       "A full-stack Next.js audio analysis tool that visualizes waveforms and performs tempo inference via server-side API routes, helping dancers improve their ability to stay on beat with the music.",
@@ -100,8 +100,8 @@ const PROJECTS: MediaCardItem[] = [
     eyebrow: "Full-Stack Website Development",
     title: "Penn Plates",
     blurb:
-      "PROJECT PAGE IN PROGRESS.. WORKING ON PROJECT THROUGH SPARK",
-    href: "/projects/count-coach",
+      "Full-Stack Web Application for University Student Usage across Penn Campus. Goal is to facilitate interaction between underclassmen and upperclassmen. Working on project through Penn SPARK.",
+    href: "/projects/pennplates",
     tags: [
       "Next.js",
       "React",
@@ -110,6 +110,27 @@ const PROJECTS: MediaCardItem[] = [
     media: {
       kind: "video",
       src: "/projects/pennplates.mp4",
+      poster: "/projects/count-coach-poster.jpg",
+    },
+  },
+
+  {
+    id: "007",
+    type: "independent",
+    eyebrow: "Full-Stack Website Development & Computer Vision",
+    title: "Bhangra Coach",
+    blurb:
+      "A full-stack computer vision tool that analyzes Bhangra dance videos using pose estimation and movement comparison, generating feedback on timing, posture, and bounce to help dancers refine their fundamentals.",
+    href: "/projects/bhangra-coach",
+    tags: [
+      "Full-Stack",
+      "MediaPipe",
+      "OpenCV",
+      "Supabase"
+    ],
+    media: {
+      kind: "video",
+      src: "/projects/coverbhangraform.mp4",
       poster: "/projects/count-coach-poster.jpg",
     },
   },
