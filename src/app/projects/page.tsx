@@ -1,3 +1,4 @@
+"use client";
 import MediaCardGrid, { type MediaCardItem } from "@/components/MediaCardGrid";
 
 const PROJECTS: MediaCardItem[] = [
@@ -79,8 +80,8 @@ const PROJECTS: MediaCardItem[] = [
     eyebrow: "Hardware, Circuits, and Electronics",
     title: "Homemade Lightsaber",
     blurb:
-      "PROJECT PAGE IN PROGRESS...",
-    href: "/projects/count-coach",
+      "Created a hardware project using Fusion 360 CAD to create a 3D printed hilt, emmitter, and battery carrier. Then, created a working electrical circuit while managing wire management and soldering.",
+    href: "/projects/saber",
     tags: [
       "Circuits",
       "CAD",
@@ -89,7 +90,7 @@ const PROJECTS: MediaCardItem[] = [
     ],
     media: {
       kind: "video",
-      src: "/projects/saber.mp4",
+      src: "projects/sabercover.mp4",
       poster: "/projects/count-coach-poster.jpg",
     },
   },
@@ -106,6 +107,7 @@ const PROJECTS: MediaCardItem[] = [
       "Next.js",
       "React",
       "Full-Stack",
+      "Supabase"
     ],
     media: {
       kind: "video",

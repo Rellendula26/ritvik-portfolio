@@ -82,6 +82,7 @@ export default function Page() {
     { label: "LIVE DEMO", href: liveUrl },
     { label: "OVERVIEW", href: "#overview" },
     { label: "V1", href: "#v1" },
+    { label: "V2", href: "#v2" },
   ];
 
   return (
@@ -109,13 +110,14 @@ export default function Page() {
                 <Badge>Web Application</Badge>
                 <Badge>Campus Used</Badge>
                 <Badge>Mini Social Media Platform</Badge>
+                <Badge>Supabase</Badge>
               </div>
 
               <p className="mt-6 max-w-2xl text-sm leading-relaxed text-zinc-700 md:text-base">
                 Penn Plates is built around a simple idea: meeting new people
                 should not require a huge event or a whole night of planning.
                 Sometimes all it takes is a meal, a small group, and a better
-                way to make that introduction happen. I'm working with this app through 
+                way to make that introduction happen. I'm working with this app through
                 Penn SPARK, a computer science club at Penn, so this is a collaboration project.
               </p>
 
@@ -140,16 +142,16 @@ export default function Page() {
                   </div>
 
                   <div className="relative h-[300px] w-full md:h-[380px]">
-  <video
-    src="/projects/pennplates.mp4"
-    className="h-full w-full object-cover object-top"
-    autoPlay
-    muted
-    loop
-    playsInline
-    preload="metadata"
-  />
-</div>
+                    <video
+                      src="/projects/pennplates.mp4"
+                      className="h-full w-full object-cover object-top"
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -175,8 +177,8 @@ export default function Page() {
           <div className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-3">
             <MiniCard
               label="Problem"
-              title="Meeting people is awkward"
-              text="A lot of campus socializing depends on big events, existing friend groups, or random luck. That creates friction for people who want a simpler way to connect."
+              title="Underclassmen don't know upperclassmen"
+              text="As an underclassmen, a big problem that I faced is not knowing many upperclassmen, which made course registration and navigating life @ Penn difficult."
             />
             <MiniCard
               label="Solution"
@@ -186,7 +188,7 @@ export default function Page() {
             <MiniCard
               label="Why it works"
               title="Small, simple, low-pressure"
-              text="The format is intentionally lightweight. You sign up, get matched, show up hungry, and the meal does the rest."
+              text="The format is intentionally lightweight. You sign up, get matched, receive messages through the backend, and you're all set!"
             />
           </div>
         </section>
@@ -196,7 +198,7 @@ export default function Page() {
           <div className="mt-4 rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]">
             <div className="grid grid-cols-1 gap-6 p-6 md:p-7 lg:grid-cols-[1.1fr_0.9fr]">
               <div>
-                <Badge tone="warm">CURRENT BUILD</Badge>
+                <Badge tone="warm">PAST BUILD</Badge>
                 <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-900">
                   Validate the core interaction first
                 </h2>
@@ -238,6 +240,46 @@ export default function Page() {
           </div>
         </section>
 
+        <section id="v2" className="mt-14">
+          <SectionLabel>V2</SectionLabel>
+          <div className="mt-4 rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]">
+            <div className="grid grid-cols-1 gap-6 p-6 md:p-7 lg:grid-cols-[1.1fr_0.9fr]">
+              <div>
+                <Badge tone="warm">CURRENT DIRECTION</Badge>
+                <h2 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-900">
+                  Adding backend functionality
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-zinc-700 md:text-base">
+                  The second version builds on the validated matching flow and starts
+                  pushing the product toward a stronger social experience. Prior, it was 
+                  manual matching, but now there is a Supabase database in order to help with matching.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="rounded-[1.35rem] border border-zinc-200 bg-zinc-50/80 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
+                    In V2
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-700">
+                    <li>Better backend</li>
+                    <li>Automatic Pairing</li>
+                  </ul>
+                </div>
+
+                <div className="rounded-[1.35rem] border border-zinc-200 bg-zinc-50/80 p-4">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
+                    Goal
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm leading-relaxed text-zinc-700">
+                    <li>Increased product independence (No longer manual additions)</li>
+                    <li>Pairing Algorithm for App's self-sustenance</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section id="demo" className="mt-14">
           <SectionLabel>Project Demo</SectionLabel>
