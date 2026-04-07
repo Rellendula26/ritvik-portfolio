@@ -23,13 +23,13 @@ const originalIdeas = [
   {
     title: "Physical design concept",
     body: "During Spring Break, I just wanted to like model with household material how it could be.",
-    image: "/images/saberfirst.png",
+    image: "/projects/saberfirst.png",   // ✅ FIXED
     alt: "Early physical design concept for the saber",
   },
   {
     title: "Whiteboard planning",
     body: "I wanted to sketch out how the initial plan could look and try building a sample circuit diagram.",
-    image: "/images/saberwhite.png",
+    image: "/projects/saberwhite.png",   // ✅ FIXED
     alt: "Whiteboard planning sketch for the saber build",
   },
 ];

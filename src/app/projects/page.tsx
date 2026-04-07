@@ -136,6 +136,27 @@ const PROJECTS: MediaCardItem[] = [
       poster: "/projects/count-coach-poster.jpg",
     },
   },
+
+  {
+  id: "008",
+  type: "independent",
+  eyebrow: "OCaml autodiff engine inspired by PyTorch",
+  title: "MiniTorch-OCaml",
+  blurb:
+    "A PyTorch-inspired automatic differentiation engine built in OCaml, with custom tensor operations, backpropagation, gradient tracking, and early neural network training support.",
+  href: "/projects/minitorch-ocaml",
+  tags: [
+    "OCaml",
+    "Autodiff",
+    "Neural Nets",
+    "Systems"
+  ],
+  media: {
+      kind: "image",
+      src: "/projects/torchiterations.png",
+      alt: "PyTorch Output",
+  },
+}
 ];
 
 export default function ProjectsPage() {
