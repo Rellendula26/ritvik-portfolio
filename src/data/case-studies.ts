@@ -44,7 +44,7 @@ export const CASE_STUDIES: Record<string, CaseStudyData> = {
     slug: "c-compiler",
     title: "C Compiler",
     positioning:
-      "A real compiler pipeline in OCaml, from tokens to x86-64 assembly, with TACKY IR between AST and codegen.",
+      "Built an OCaml-based C compiler lowering source through lexer → AST → semantic analysis → TACKY IR → x86-64 assembly, with lexical scoping, control flow, and structured IR lowering.",
     role: "Solo builder",
     timeline: "Spring 2026",
     stack: ["OCaml", "Recursive Descent", "TACKY IR", "x86-64 AT&T", "Make"],
@@ -477,7 +477,7 @@ Arduino UNO R4 WiFi — command processing
     slug: "minitorch-ocaml",
     title: "MiniTorch-OCaml",
     positioning:
-      "PyTorch-inspired autodiff in OCaml, computational graphs, reverse-mode gradients, and training loops without framework magic.",
+      "Built a PyTorch-inspired autodiff engine in OCaml — graph-based tensor ops and reverse-mode differentiation through explicit graph traversal.",
     role: "Solo builder",
     timeline: "Spring 2026",
     stack: ["OCaml", "Autodiff", "Computational Graphs", "Gradient Checking"],

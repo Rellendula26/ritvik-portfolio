@@ -120,10 +120,9 @@ export default function ProjectsPage() {
               Projects
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-stone-700">
-              A mix of things I&apos;ve built over the years. Some are serious
-              engineering deep-dives, others started as &quot;I wonder if I can
-              make this.&quot; I grouped them so the ones I&apos;m proudest of are
-              easy to find first.
+              Systems, ML, embedded, and hardware builds — grouped by how much
+              engineering depth is in each one. Featured work is compiler
+              pipelines, autodiff engines, IoT integration, and CAD + circuits.
             </p>
           </header>
 
@@ -142,21 +141,21 @@ export default function ProjectsPage() {
       </section>
 
       <TierBand
-        title="Main projects"
-        subtitle="The builds I'd probably talk about for an hour if you asked what I've been working on."
+        title="Featured engineering work"
+        subtitle="Compiler pipelines, autodiff, embedded IoT, hardware integration, and the portfolio system that documents them."
         projects={featured}
         featured
         shade="featured"
       />
       <TierBand
-        title="More builds"
-        subtitle="Still real work: apps, tools, and experiments that taught me a lot."
+        title="Supporting builds"
+        subtitle="Full-stack apps, CV pipelines, signal processing, and embedded games — still real engineering, narrower scope."
         projects={supporting}
         shade="supporting"
       />
       <TierBand
         title="Earlier work"
-        subtitle="Course projects and older experiments. Still here, just not where I'd start."
+        subtitle="Course projects and high-school builds. Preserved for context, not the first stop for technical depth."
         projects={archive}
         shade="archive"
       />

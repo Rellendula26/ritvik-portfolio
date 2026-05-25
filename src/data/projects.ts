@@ -20,7 +20,8 @@ export type ProjectVisualId =
   | "compiler-pipeline"
   | "minitorch-autodiff"
   | "snapfuel-preview"
-  | "labreach-preview";
+  | "labreach-preview"
+  | "portfolio-preview";
 
 export interface Project {
   id: string;
@@ -28,6 +29,9 @@ export interface Project {
   title: string;
   tagline: string;
   blurb: string;
+  thesis?: string;
+  bullets?: string[];
+  systemsSignal?: string;
   tier: ProjectTier;
   category: ProjectCategory;
   type: "independent" | "course" | "clubs";
@@ -41,18 +45,33 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
-  // ── TOP TIER ──────────────────────────────────────────────
+  // ── FEATURED (ordered by engineering signal) ───────────────
   {
     id: "F01",
     slug: "c-compiler",
     title: "C Compiler",
-    tagline: "Lexer → AST → TACKY IR → x86-64",
+    tagline: "OCaml · lexer → TACKY IR → x86-64",
     blurb:
-      "I'm building a real C compiler in OCaml, lexer to x86 assembly, with an IR in the middle so nested expressions actually make sense. It's the project that made compilers click for me.",
+      "A real compiler pipeline in OCaml — not calling clang, actually lowering source to stack-backed assembly.",
+    thesis:
+      "Built an OCaml-based C compiler lowering source programs through lexer → AST → semantic analysis → TACKY IR → x86-64 assembly, with support for lexical scoping, control flow, loops, and structured IR lowering.",
+    bullets: [
+      "Recursive descent parser + AST construction for nested unary ops",
+      "Semantic pass: symbol resolution, lexical scoping, break/continue loop labels",
+      "Custom TACKY IR + control-flow lowering (labels/jumps) before x86-64 codegen",
+    ],
+    systemsSignal: "Compiler pipeline · IR design · stack lowering · x86-64 emit",
     tier: "featured",
     category: "systems",
     type: "independent",
-    tags: ["OCaml", "Compilers", "x86-64", "IR", "Parsing"],
+    tags: [
+      "OCaml",
+      "Compilers",
+      "Recursive Descent",
+      "TACKY IR",
+      "x86-64",
+      "Semantic Analysis",
+    ],
     signal: "Systems",
     href: "/projects/c-compiler",
     github: "https://github.com/Rellendula26/c-compiler",
@@ -67,13 +86,27 @@ export const PROJECTS: Project[] = [
     id: "F02",
     slug: "minitorch-ocaml",
     title: "MiniTorch-OCaml",
-    tagline: "Autodiff engine from scratch",
+    tagline: "Reverse-mode autodiff in OCaml",
     blurb:
-      "PyTorch-style autodiff, but I wrote it in OCaml. Computational graphs, backprop, gradient checks, the stuff frameworks usually hide.",
+      "PyTorch-style autodiff without the framework — graphs, backprop, and gradchecks I wrote myself.",
+    thesis:
+      "Built a PyTorch-inspired autodiff engine in OCaml, modeling computations as graph-based tensor operations and implementing reverse-mode differentiation through explicit graph traversal.",
+    bullets: [
+      "Computation graph construction with typed tensor nodes and ops",
+      "Reverse-mode backprop via explicit tape traversal (not magic .backward())",
+      "OCaml modules + gradcheck harness; roadmap toward vectorized tensor backend",
+    ],
+    systemsSignal: "Autodiff engine · computation graph · ML systems in OCaml",
     tier: "featured",
     category: "ml",
     type: "independent",
-    tags: ["OCaml", "Autodiff", "ML Systems", "Neural Nets"],
+    tags: [
+      "OCaml",
+      "Autodiff",
+      "Backpropagation",
+      "Computation Graphs",
+      "Gradient Checking",
+    ],
     signal: "ML Systems",
     href: "/projects/minitorch-ocaml",
     github: "https://github.com/Rellendula26/minitorch-ocaml",
@@ -88,13 +121,28 @@ export const PROJECTS: Project[] = [
     id: "F03",
     slug: "bloombot",
     title: "BloomBot IoT",
-    tagline: "IoT robotic flower",
+    tagline: "WiFi actuators · Blynk · embedded integration",
     blurb:
-      "A robotic flower you can control from your phone, servos, LEDs, ultrasonic sensing, and way too much time debugging WiFi at 2am.",
+      "Robotic flower with servos, sensors, and Morse LEDs — debugged across power rails, WiFi, and timing at 2am.",
+    thesis:
+      "IoT robotic flower on Arduino UNO R4 WiFi: Blynk remote control, multi-servo petal actuation, LCD + ultrasonic sensing, and Morse-code LED feedback in one embedded pipeline.",
+    bullets: [
+      "Blynk virtual pins → servo sequences over WiFiS3",
+      "I2C LCD status + ultrasonic proximity events alongside motion",
+      "Power/timing debug across concurrent actuators and wireless drops",
+    ],
+    systemsSignal: "Embedded IoT · actuators · sensors · wireless control loop",
     tier: "featured",
     category: "embedded",
     type: "independent",
-    tags: ["Arduino", "IoT", "Servos", "Blynk", "Embedded C++"],
+    tags: [
+      "Arduino UNO R4 WiFi",
+      "Blynk",
+      "Servos",
+      "Ultrasonic",
+      "I2C LCD",
+      "Embedded C++",
+    ],
     signal: "Robotics",
     href: "/projects/bloombot",
     github: "https://github.com/Rellendula26/bloombot-iot",
@@ -106,27 +154,86 @@ export const PROJECTS: Project[] = [
     id: "F04",
     slug: "saber",
     title: "Lightsaber",
-    tagline: "CAD + circuits + integration",
+    tagline: "Fusion 360 CAD · LED power · soldered integration",
     blurb:
-      "CAD'd the hilt, soldered the circuit, and ended up with a lightsaber that actually glows. My hands still remember the flux fumes.",
+      "CAD-fitted hilt, LED strip segmentation, and 40+ solder joints that had to survive being swung around.",
+    thesis:
+      "Handheld lightsaber build integrating Fusion 360 CAD, 3D-printed hilt/battery packaging, LED strip power routing, and switch wiring with solder joints rated for motion.",
+    bullets: [
+      "3D-printed hilt, emitter, battery carrier with tolerance iteration",
+      "LED strip segmentation + switch path for even blade glow under load",
+      "Contact/solder reliability under flex — integration, not bench-only wiring",
+    ],
+    systemsSignal: "Hardware integration · CAD + circuits · power under motion",
     tier: "featured",
     category: "hardware",
     type: "independent",
-    tags: ["Fusion 360", "Circuits", "Soldering", "CAD", "LEDs"],
+    tags: [
+      "Fusion 360",
+      "3D Print",
+      "LED Strip",
+      "Soldering",
+      "Circuit Design",
+      "CAD",
+    ],
     signal: "Hardware",
     href: "/projects/saber",
     timeline: "2026",
     media: projectVideo("saber"),
   },
+  {
+    id: "F05",
+    slug: "website",
+    title: "Portfolio Website",
+    tagline: "Next.js · animated case studies · design system",
+    blurb:
+      "This site — reusable case-study layouts, custom project visuals, and the meta layer documenting everything else.",
+    thesis:
+      "Custom Next.js portfolio with animated project storytelling, responsive layout, and a warm visual system built in React, Tailwind, and Framer Motion.",
+    bullets: [
+      "Reusable case-study layouts + tiered project data model",
+      "Custom Framer Motion pipeline visuals for compiler/ML projects",
+      "Responsive design system deployed on Vercel with lazy media loading",
+    ],
+    systemsSignal: "Frontend systems · interaction design · content architecture",
+    tier: "featured",
+    category: "fullstack",
+    type: "independent",
+    tags: [
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "Framer Motion",
+      "TypeScript",
+      "Vercel",
+    ],
+    signal: "Full-Stack",
+    href: "/projects/website",
+    github: "https://github.com/Rellendula26/ritvik-portfolio",
+    demo: "https://ritvik-portfolio-eta.vercel.app",
+    timeline: "2025–2026",
+    media: {
+      kind: "visual",
+      visualId: "portfolio-preview",
+      alt: "Portfolio website design system preview",
+    },
+  },
 
-  // ── SECOND TIER ───────────────────────────────────────────
+  // ── SUPPORTING ─────────────────────────────────────────────
   {
     id: "S01",
     slug: "snapfuel",
     title: "SnapFuel",
-    tagline: "Photo → calories → Garmin net",
+    tagline: "Vision API → calorie JSON → user edit loop",
     blurb:
-      "Snap a meal, get a calorie estimate, fix it if the AI is wrong, and see how it stacks up against what Garmin says you burned.",
+      "Photo-first calorie tracking with honest uncertainty — AI estimates, human confirmation, Garmin-aware net calories.",
+    thesis:
+      "Full-stack meal logging: photo upload → OpenAI vision JSON → user edit → Supabase persistence with log_method tracking.",
+    bullets: [
+      "Next.js 16 + Supabase auth and meal schema",
+      "OpenAI Vision structured output with user correction flow",
+    ],
+    systemsSignal: "Full-stack · vision API · health data pipeline",
     tier: "supporting",
     category: "fullstack",
     type: "independent",
@@ -145,9 +252,16 @@ export const PROJECTS: Project[] = [
     id: "S02",
     slug: "labreach-ai",
     title: "LabReach AI",
-    tagline: "Research outreach copilot",
+    tagline: "Lab scrape → local LLM draft → Gmail review",
     blurb:
-      "Helps me write research outreach emails I'd actually send, scrape a lab page, draft with a local LLM, and review before anything goes out.",
+      "Research outreach copilot: scrape a lab page, draft with Ollama, review before anything sends.",
+    thesis:
+      "Python outreach pipeline: lab page scraping, Ollama local LLM drafts, SQLite history, Gmail API send-after-review.",
+    bullets: [
+      "Scrape + structured prompt assembly for lab-specific emails",
+      "Local LLM (Ollama) to keep drafts off cloud until reviewed",
+    ],
+    systemsSignal: "ML tooling · scraping · email automation",
     tier: "supporting",
     category: "ml",
     type: "independent",
@@ -166,9 +280,16 @@ export const PROJECTS: Project[] = [
     id: "S03",
     slug: "count-coach",
     title: "Count Coach",
-    tagline: "Audio BPM for dancers",
+    tagline: "Waveform UI · Librosa BPM · practice loops",
     blurb:
-      "I can't count beats in dance music, so I built a tool that shows waveforms and overlays a metronome. Started in Colab, shipped on Vercel.",
+      "Audio analysis for dancers — isolate a section, infer tempo, drill with a metronome overlay.",
+    thesis:
+      "Next.js audio tool: WaveSurfer range selection → server-side Librosa tempo inference → practice-focused UX.",
+    bullets: [
+      "Colab prototype → Vercel-shipped Next.js app",
+      "Range selection propagates into analysis pipeline",
+    ],
+    systemsSignal: "Signal processing · web audio · practice UX",
     tier: "supporting",
     category: "fullstack",
     type: "independent",
@@ -177,20 +298,27 @@ export const PROJECTS: Project[] = [
     href: "/projects/count-coach",
     github: "https://github.com/Rellendula26/fresh-count-coach",
     demo: "https://fresh-count-coach.vercel.app",
-    timeline: "2025 to 2026",
+    timeline: "2025–2026",
     media: projectVideo("count-coach"),
   },
   {
     id: "S04",
     slug: "arduino-tetris",
     title: "Arduino TFT Tetris",
-    tagline: "TFT handheld on Nano",
+    tagline: "SPI TFT · bare-metal game loop · piezo SFX",
     blurb:
-      "Tetris on Arduino Nano + ST7735 TFT: SPI graphics, tetromino engine, collision detection, line clearing, and debounced button controls on constrained embedded hardware.",
+      "Tetris on Arduino Nano + ST7735: SPI rendering, collision engine, debounced buttons, piezo beeps — no OS.",
+    thesis:
+      "Handheld Tetris on constrained MCU hardware: SPI framebuffer, tetromino engine, input debounce, and piezo tone() feedback.",
+    bullets: [
+      "Adafruit GFX → ST7735 SPI flush in fixed-timestep loop",
+      "Display solder bring-up + two-button dev iteration before handheld layout",
+    ],
+    systemsSignal: "Embedded · SPI graphics · real-time game loop",
     tier: "supporting",
     category: "embedded",
     type: "independent",
-    tags: ["Arduino", "C++", "SPI", "Game Dev", "Embedded"],
+    tags: ["Arduino", "C++", "SPI", "ST7735", "Embedded"],
     signal: "Embedded",
     href: "/projects/arduino-tetris",
     github: "https://github.com/Rellendula26/arduino-tetris",
@@ -201,13 +329,20 @@ export const PROJECTS: Project[] = [
     id: "S05",
     slug: "bhangra-coach",
     title: "Bhangra Coach",
-    tagline: "Pose estimation feedback",
+    tagline: "MediaPipe poses · FastAPI pipeline · Supabase",
     blurb:
-      "Computer vision dance coach: MediaPipe pose estimation, movement comparison, timing/posture/bounce feedback, full-stack with Supabase backend.",
+      "CV dance coach: pose landmarks, temporal alignment vs reference, structured feedback in a full-stack app.",
+    thesis:
+      "Full-stack dance feedback: Next.js upload flow, FastAPI + MediaPipe processing, Supabase storage for clips and references.",
+    bullets: [
+      "Frame-by-frame pose extraction and movement delta computation",
+      "Reference vs user comparison UI with coaching feedback layer",
+    ],
+    systemsSignal: "CV pipeline · full-stack · pose estimation",
     tier: "supporting",
     category: "ml",
     type: "independent",
-    tags: ["MediaPipe", "OpenCV", "Supabase", "Computer Vision"],
+    tags: ["MediaPipe", "FastAPI", "Supabase", "Computer Vision", "Next.js"],
     signal: "CV + ML",
     href: "/projects/bhangra-coach",
     github: "https://github.com/Rellendula26/bhangra-coach",
@@ -219,9 +354,16 @@ export const PROJECTS: Project[] = [
     id: "S06",
     slug: "pennplates",
     title: "Penn Plates",
-    tagline: "Campus dining social app",
+    tagline: "Campus dining social · Next.js + Supabase",
     blurb:
-      "Full-stack Penn SPARK project connecting underclassmen and upperclassmen around campus dining, Next.js + Supabase with real student usage goals.",
+      "Penn SPARK full-stack app connecting students around campus dining — real product constraints, real users.",
+    thesis:
+      "Full-stack social dining app: Next.js frontend, Supabase auth/data, designed for Penn SPARK student usage.",
+    bullets: [
+      "Auth + profile flows with Supabase RLS patterns",
+      "Product iteration from prototype to demo-ready build",
+    ],
+    systemsSignal: "Product engineering · full-stack · campus deployment",
     tier: "supporting",
     category: "fullstack",
     type: "clubs",
@@ -232,35 +374,14 @@ export const PROJECTS: Project[] = [
     media: projectVideo("pennplates"),
   },
 
-  // ── ARCHIVE (preserved, deprioritized) ──────────────────
-  {
-    id: "A01",
-    slug: "website",
-    title: "Portfolio Website",
-    tagline: "This site",
-    blurb:
-      "Custom Next.js portfolio with reusable components, case study layouts, and Vercel deployment, the meta project documenting everything else.",
-    tier: "archive",
-    category: "fullstack",
-    type: "independent",
-    tags: ["Next.js", "React", "Tailwind", "Framer Motion"],
-    signal: "Meta",
-    href: "/projects/website",
-    github: "https://github.com/Rellendula26/ritvik-portfolio",
-    timeline: "2025 to 2026",
-    media: {
-      kind: "image",
-      src: "/projects/website-cover.png",
-      alt: "Portfolio website",
-    },
-  },
+  // ── ARCHIVE (preserved) ────────────────────────────────────
   {
     id: "A02",
     slug: "brain",
     title: "3D Brain Model",
-    tagline: "Anatomical CAD",
+    tagline: "Anatomical CAD · Maya · 3D print",
     blurb:
-      "High school project: accurate gyri/sulci brain model in Maya, 3D printed with physical labels for neuroscience education.",
+      "High school neuroscience project: gyri/sulci brain model in Maya, 3D printed with physical region labels.",
     tier: "archive",
     category: "cad",
     type: "independent",
@@ -268,15 +389,15 @@ export const PROJECTS: Project[] = [
     signal: "CAD",
     href: "/projects/brain",
     timeline: "High School",
-    media: { kind: "image", src: "/projects/bin.png", alt: "3D brain model" },
+    media: { kind: "image", src: "/projects/brain.png", alt: "3D brain model" },
   },
   {
     id: "A03",
     slug: "OIDD",
     title: "Health Outcomes Analysis",
-    tagline: "STAT 7770 capstone",
+    tagline: "STAT 7770 · pandas · decision trees",
     blurb:
-      "Data analysis of socioeconomic factors on poor health outcomes, pandas, seaborn, decision trees, and visualization for OIDD course final.",
+      "Socioeconomic factors vs poor health outcomes — pandas, seaborn, and decision trees for OIDD capstone.",
     tier: "archive",
     category: "data",
     type: "course",

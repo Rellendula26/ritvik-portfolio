@@ -30,14 +30,14 @@ const STAGES = [
   },
   {
     id: "sem",
-    label: "Semantic",
-    snippet: "✓ types · scopes",
+    label: "Semantic Analysis",
+    snippet: "resolve · scope · types",
     tone: "text-sky-300/80",
   },
   {
     id: "loop",
-    label: "Loop Labels",
-    snippet: "L0: · L1:",
+    label: "Loop Labeling",
+    snippet: "break · continue · L0",
     tone: "text-rose-300/80",
   },
   {
@@ -48,14 +48,14 @@ const STAGES = [
   },
   {
     id: "asm",
-    label: "x86-64",
+    label: "x86-64 Asm",
     snippet: "notl -4(%rbp)",
     tone: "text-emerald-300/80",
   },
   {
     id: "regs",
-    label: "Registers",
-    snippet: "%eax ← 1",
+    label: "CPU Registers",
+    snippet: "%eax ← exit code",
     tone: "text-amber-400",
   },
 ] as const;
