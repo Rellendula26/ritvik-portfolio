@@ -142,7 +142,7 @@ export default function ProjectsPage() {
 
       <TierBand
         title="Featured engineering work"
-        subtitle="Compiler pipelines, autodiff, embedded IoT, hardware integration, and the portfolio system that documents them."
+        subtitle="Compiler pipelines, autodiff, embedded IoT, and hardware integration."
         projects={featured}
         featured
         shade="featured"

@@ -181,43 +181,6 @@ export const PROJECTS: Project[] = [
     timeline: "2026",
     media: projectVideo("saber"),
   },
-  {
-    id: "F05",
-    slug: "website",
-    title: "Portfolio Website",
-    tagline: "Next.js · animated case studies · design system",
-    blurb:
-      "This site — reusable case-study layouts, custom project visuals, and the meta layer documenting everything else.",
-    thesis:
-      "Custom Next.js portfolio with animated project storytelling, responsive layout, and a warm visual system built in React, Tailwind, and Framer Motion.",
-    bullets: [
-      "Reusable case-study layouts + tiered project data model",
-      "Custom Framer Motion pipeline visuals for compiler/ML projects",
-      "Responsive design system deployed on Vercel with lazy media loading",
-    ],
-    systemsSignal: "Frontend systems · interaction design · content architecture",
-    tier: "featured",
-    category: "fullstack",
-    type: "independent",
-    tags: [
-      "Next.js",
-      "React",
-      "Tailwind CSS",
-      "Framer Motion",
-      "TypeScript",
-      "Vercel",
-    ],
-    signal: "Full-Stack",
-    href: "/projects/website",
-    github: "https://github.com/Rellendula26/ritvik-portfolio",
-    demo: "https://ritvik-portfolio-eta.vercel.app",
-    timeline: "2025–2026",
-    media: {
-      kind: "visual",
-      visualId: "portfolio-preview",
-      alt: "Portfolio website design system preview",
-    },
-  },
 
   // ── SUPPORTING ─────────────────────────────────────────────
   {
@@ -376,6 +339,27 @@ export const PROJECTS: Project[] = [
 
   // ── ARCHIVE (preserved) ────────────────────────────────────
   {
+    id: "A01",
+    slug: "website",
+    title: "Portfolio Website",
+    tagline: "This site",
+    blurb:
+      "Custom Next.js portfolio with reusable components, case study layouts, and Vercel deployment — the meta project documenting everything else.",
+    tier: "archive",
+    category: "fullstack",
+    type: "independent",
+    tags: ["Next.js", "React", "Tailwind", "Framer Motion"],
+    signal: "Meta",
+    href: "/projects/website",
+    github: "https://github.com/Rellendula26/ritvik-portfolio",
+    timeline: "2025–2026",
+    media: {
+      kind: "image",
+      src: "/projects/website-cover.png",
+      alt: "Portfolio website",
+    },
+  },
+  {
     id: "A02",
     slug: "brain",
     title: "3D Brain Model",
@@ -389,7 +373,11 @@ export const PROJECTS: Project[] = [
     signal: "CAD",
     href: "/projects/brain",
     timeline: "High School",
-    media: { kind: "image", src: "/projects/brain.png", alt: "3D brain model" },
+    media: {
+      kind: "image",
+      src: "/projects/brain-1.png",
+      alt: "3D printed interactive brain model with region labels",
+    },
   },
   {
     id: "A03",

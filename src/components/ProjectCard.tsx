@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -100,11 +100,10 @@ export default function ProjectCard({
                 className="transition duration-500 group-hover:scale-[1.01]"
               />
             ) : project.media.kind === "image" ? (
-              <Image
+              <ProjectMediaImage
                 src={project.media.src}
                 alt={project.media.alt}
-                fill
-                className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                className="object-cover object-center transition duration-500 group-hover:scale-[1.03]"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
