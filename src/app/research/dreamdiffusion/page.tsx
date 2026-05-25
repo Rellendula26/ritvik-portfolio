@@ -116,8 +116,8 @@ export default function Page() {
                 nearly impossible to run, migrating the entire pipeline into Google Colab and debugging
                 model-architecture and computer-vision components to ensure reproducibility. This
                 process taught me how to systematically diagnose errors within complex deep-learning
-                systems. We also evaluated a variety of classical and deep learning approaches—including
-                SVMs, feedforward DNNs, CNN-based encoders, and generative models such as GANs and VAEs—for
+                systems. We also evaluated a variety of classical and deep learning approaches, including
+                SVMs, feedforward DNNs, CNN-based encoders, and generative models such as GANs and VAEs, for
                 EEG-to-image reconstruction. While each model captured limited aspects of the signal, they
                 struggled to robustly map EEG data to meaningful visual representations due to EEG’s low
                 signal-to-noise ratio, nonlinearity, and complex temporal dynamics. Understanding these
@@ -228,7 +228,7 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">One Year (July 2023–July 2024)</dd>
+                <dd className="font-medium">One Year (July 2023 to July 2024)</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>

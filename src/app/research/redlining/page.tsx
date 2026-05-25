@@ -33,7 +33,7 @@ export default function Page() {
 
   const badges = ["Independent", "Public Health", "Data Analysis", "Causal Inference"];
 
-  // PDF (local) — make sure this file exists at: public/research/red.pdf
+  // PDF (local), make sure this file exists at: public/research/red.pdf
   const paperUrl = "/research/red.pdf";
   const paperEmbedUrl = `${paperUrl}#view=FitH&page=1&toolbar=1`;
 
@@ -221,7 +221,7 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">4–8 Weeks</dd>
+                <dd className="font-medium">4 to 8 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>

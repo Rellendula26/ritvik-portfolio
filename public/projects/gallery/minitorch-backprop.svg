@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#070707"/>
+  <text x="60" y="70" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="13">reverse-mode backprop</text>
+  <text x="60" y="120" fill="#78716c" font-family="ui-monospace, monospace" font-size="17">loss.backward()</text>
+  <text x="60" y="170" fill="#c4b5fd" font-family="ui-monospace, monospace" font-size="16">L/y ’ L/w ’ L/x</text>
+  <path d="M640 120 L520 200 L400 260 L280 300 L160 340" fill="none" stroke="#a78bfa" stroke-width="2" stroke-dasharray="6 4"/>
+  <circle cx="640" cy="120" r="8" fill="#a78bfa"/>
+  <circle cx="160" cy="340" r="8" fill="#f59e0b"/>
+  <text x="60" y="400" fill="#fda4af" font-family="ui-monospace, monospace" font-size="15">gradients flow backward</text>
+</svg>

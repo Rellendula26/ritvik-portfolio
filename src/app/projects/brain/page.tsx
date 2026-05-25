@@ -151,7 +151,7 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">6–8 weeks</dd>
+                <dd className="font-medium">6 to 8 weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>

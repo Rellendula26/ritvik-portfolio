@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#070707"/>
+  <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">forward pass</text>
+  <text x="60" y="120" fill="#78716c" font-family="ui-monospace, monospace" font-size="17">let y = x * w + b</text>
+  <rect x="60" y="200" width="40" height="120" fill="#f59e0b" opacity="0.5" rx="4"/>
+  <rect x="110" y="240" width="40" height="80" fill="#f59e0b" opacity="0.65" rx="4"/>
+  <rect x="160" y="220" width="40" height="100" fill="#f59e0b" opacity="0.75" rx="4"/>
+  <rect x="210" y="180" width="40" height="140" fill="#f59e0b" opacity="0.85" rx="4"/>
+  <rect x="260" y="160" width="40" height="160" fill="#f59e0b" rx="4"/>
+  <text x="60" y="380" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="15">loss: 0.42</text>
+</svg>

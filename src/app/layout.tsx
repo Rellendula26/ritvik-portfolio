@@ -1,30 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CursorDot from "@/components/CursorDot";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const fraunces = Fraunces({
+  variable: "--font-display",
   subsets: ["latin"],
+  display: "swap",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Ritvik Ellendula | Electrical Engineering @ Penn",
   description:
-    "Ritvik Ellendula is a Electrical Engineering student at the University of Pennsylvania. Projects in engineering, software, research, and creative technology.",
+    "Ritvik Ellendula builds at the intersection of engineering, software, and research. Portfolio of projects in medtech, embedded systems, and hardware.",
   metadataBase: new URL("https://ritvik-portfolio-eta.vercel.app"),
   openGraph: {
     title: "Ritvik Ellendula",
     description:
-      "Electrical Engineering @ Penn. Engineering, software, research, and creative projects.",
+      "Engineering, software, research, and creative projects.",
     url: "https://ritvik-portfolio-eta.vercel.app",
     siteName: "Ritvik Ellendula",
     images: [
@@ -48,20 +50,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-warm-dots text-zinc-800`}
+        className={`${plusJakarta.variable} ${fraunces.variable} antialiased bg-engineering text-stone-800`}
       >
-        {/* Cursor */}
         <CursorDot />
-
-        {/* Global Nav */}
         <Navbar />
-
-        {/* Page Content */}
-        <main className="min-h-[calc(100vh-200px)]">
-          {children}
-        </main>
-
-        {/* Global Footer */}
+        <main className="min-h-[calc(100vh-200px)]">{children}</main>
         <Footer />
       </body>
     </html>

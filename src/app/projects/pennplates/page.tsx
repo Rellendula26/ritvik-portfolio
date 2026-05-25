@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import LazyVideo from "@/components/LazyVideo";
+import { PROJECT_CARD_VIDEOS } from "@/data/project-media";
 
 type LinkItem = { label: string; href: string };
 
@@ -76,7 +78,8 @@ export default function Page() {
     "A social dining platform that helps Penn students meet new people through small-group dining hall meals.";
 
   const liveUrl = "https://www.pennplates.org/";
-  const heroImage = "/projects/pennplates-cover.png";
+  const heroVideo = PROJECT_CARD_VIDEOS.pennplates;
+  const galleryImages = ["/projects/website-1.png", "/projects/website-2.png"];
 
   const actions: LinkItem[] = [
     { label: "LIVE DEMO", href: liveUrl },
@@ -142,14 +145,11 @@ export default function Page() {
                   </div>
 
                   <div className="relative h-[300px] w-full md:h-[380px]">
-                    <video
-                      src="/projects/pennplates.mp4"
+                    <LazyVideo
+                      src={heroVideo.src}
+                      poster={heroVideo.poster}
                       className="h-full w-full object-cover object-top"
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
+                      playWhenVisible
                     />
                   </div>
                 </div>

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0a0a0a"/>
+  <rect x="250" y="60" width="300" height="380" rx="16" fill="#111" stroke="#444"/>
+  <rect x="270" y="80" width="260" height="300" fill="#000"/>
+  <g fill="#f59e0b">
+    <rect x="310" y="100" width="20" height="20"/><rect x="330" y="100" width="20" height="20"/><rect x="350" y="100" width="20" height="20"/>
+    <rect x="310" y="140" width="20" height="20"/><rect x="370" y="140" width="20" height="20"/>
+    <rect x="330" y="180" width="20" height="20"/><rect x="350" y="180" width="20" height="20"/><rect x="370" y="180" width="20" height="20"/>
+  </g>
+  <text x="270" y="410" fill="#78716c" font-family="ui-monospace, monospace" font-size="14">ST7735 · SPI · score 1200</text>
+  <text x="60" y="460" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">ARDUINO TETRIS</text>
+</svg>

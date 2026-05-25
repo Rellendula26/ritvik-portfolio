@@ -123,9 +123,9 @@ export default function Page() {
                 Expression Omnibus (GEO) to evaluate which models are best suited
                 for diagnosing Duchenne’s Muscular Dystrophy. A core theme of the
                 work is treating differentially expressed genes as molecular
-                biomarkers—using statistical filtering and feature selection to
+                biomarkers, using statistical filtering and feature selection to
                 isolate genes whose expression patterns most strongly align with
-                pathological status—then training supervised models on those
+                pathological status, then training supervised models on those
                 biomarker signals.
               </p>
             </div>
@@ -273,7 +273,7 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">4–5 Weeks</dd>
+                <dd className="font-medium">4 to 5 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>

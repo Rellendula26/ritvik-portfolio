@@ -132,7 +132,7 @@ export default function Page() {
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
                 <li>
                   Cleaned and structured a large-scale salary dataset (132k+
-                  observations), filtering to 2024–2025 to control for inflation.
+                  observations), filtering to 2024 to 2025 to control for inflation.
                 </li>
                 <li>
                   Defined key categorical variables, including remote work ratio
@@ -236,7 +236,7 @@ export default function Page() {
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">5–7 Weeks</dd>
+                <dd className="font-medium">5 to 7 Weeks</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>

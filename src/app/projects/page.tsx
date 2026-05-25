@@ -1,183 +1,165 @@
 "use client";
-import MediaCardGrid, { type MediaCardItem } from "@/components/MediaCardGrid";
 
-const PROJECTS: MediaCardItem[] = [
-  {
-    id: "001",
-    type: "independent",
-    eyebrow: "Featured",
-    title: "Personal Portfolio Website",
-    blurb:
-      "A custom-built personal website designed to showcase my projects and interests. Focused on interactive UI, reusable components, and production deployment using modern web tools.",
-    href: "/projects/website",
-    tags: ["React", "Next.js", "Frontend", "UI/UX", "Git", "Deployment"],
-    media: {
-      kind: "video",
-      src: "/projects/website.mp4",
-      poster: "/projects/website.jpg",
-    },
-  },
+import { useMemo, useState } from "react";
+import ProjectCard from "@/components/ProjectCard";
+import {
+  FEATURED_PROJECTS,
+  SUPPORTING_PROJECTS,
+  ARCHIVE_PROJECTS,
+  type Project,
+  type ProjectCategory,
+} from "@/data/projects";
 
-  {
-    id: "002",
-    type: "course",
-    eyebrow: "CAD",
-    title: "3D Printed Interactive Brain Model",
-    blurb:
-      "A high school personal project, where I designed an accurate model of the brain, including the various gyri and sulci through Maya, and added physical labels as well.",
-    href: "/projects/brain",
-    tags: ["CAD", "Maya", "Neuroscience", "Anatomical Modeling"],
-    media: {
-      kind: "image",
-      src: "/projects/bin.png",
-      alt: "3D printed brain model",
-    },
-  },
-
-  {
-    id: "003",
-    type: "course",
-    eyebrow: "Data Analysis/Visualization + Machine Learning ",
-    title:
-      "A Data Analysis Exploration into Environmental & Socioeconomic Factors on Poor Health Outcomes",
-    blurb:
-      "A final presentation for my STAT 7770 course, where we analyzed the influence of various socioeconomic factors on health, utilizing numerous python libraries such as pandas, seaborn, numpy, etc.",
-    href: "/projects/OIDD",
-    tags: ["Python", "NumPy", "Pandas", "Data Pre-Processing", "Decision Trees"],
-    media: {
-      kind: "image",
-      src: "/projects/OIDD.png",
-      alt: "OIDD Model",
-    },
-  },
-
-  {
-    id: "004",
-    type: "independent",
-    eyebrow: "Web App For Audio + Signal Processing",
-    title: "Count Coach",
-    blurb:
-      "A full-stack Next.js audio analysis tool that visualizes waveforms and performs tempo inference via server-side API routes, helping dancers improve their ability to stay on beat with the music.",
-    href: "/projects/count-coach",
-    tags: [
-      "Signal Processing",
-      "Audio Analysis",
-      "Next.js",
-      "React",
-      "Full-Stack",
-      "Time-Series Data",
-    ],
-    media: {
-      kind: "video",
-      src: "/projects/count-coach-demo.mp4",
-      poster: "/projects/count-coach-poster.jpg",
-    },
-  },
-
-  {
-    id: "005",
-    type: "independent",
-    eyebrow: "Hardware, Circuits, and Electronics",
-    title: "Homemade Lightsaber",
-    blurb:
-      "Created a hardware project using Fusion 360 CAD to create a 3D printed hilt, emmitter, and battery carrier. Then, created a working electrical circuit while managing wire management and soldering.",
-    href: "/projects/saber",
-    tags: [
-      "Circuits",
-      "CAD",
-      "Fusion 360",
-      "Inputs & Outputs",
-    ],
-    media: {
-      kind: "video",
-      src: "projects/sabercover.mp4",
-      poster: "/projects/count-coach-poster.jpg",
-    },
-  },
-
-  {
-    id: "006",
-    type: "clubs",
-    eyebrow: "Full-Stack Website Development",
-    title: "Penn Plates",
-    blurb:
-      "Full-Stack Web Application for University Student Usage across Penn Campus. Goal is to facilitate interaction between underclassmen and upperclassmen. Working on project through Penn SPARK.",
-    href: "/projects/pennplates",
-    tags: [
-      "Next.js",
-      "React",
-      "Full-Stack",
-      "Supabase"
-    ],
-    media: {
-      kind: "video",
-      src: "/projects/pennplates.mp4",
-      poster: "/projects/count-coach-poster.jpg",
-    },
-  },
-
-  {
-    id: "007",
-    type: "independent",
-    eyebrow: "Full-Stack Website Development & Computer Vision",
-    title: "Bhangra Coach",
-    blurb:
-      "A full-stack computer vision tool that analyzes Bhangra dance videos using pose estimation and movement comparison, generating feedback on timing, posture, and bounce to help dancers refine their fundamentals.",
-    href: "/projects/bhangra-coach",
-    tags: [
-      "Full-Stack",
-      "MediaPipe",
-      "OpenCV",
-      "Supabase"
-    ],
-    media: {
-      kind: "video",
-      src: "/projects/coverbhangraform.mp4",
-      poster: "/projects/count-coach-poster.jpg",
-    },
-  },
-
-  {
-  id: "008",
-  type: "independent",
-  eyebrow: "OCaml autodiff engine inspired by PyTorch",
-  title: "MiniTorch-OCaml",
-  blurb:
-    "A PyTorch-inspired automatic differentiation engine built in OCaml, with custom tensor operations, backpropagation, gradient tracking, and early neural network training support.",
-  href: "/projects/minitorch-ocaml",
-  tags: [
-    "OCaml",
-    "Autodiff",
-    "Neural Nets",
-    "Systems"
-  ],
-  media: {
-      kind: "image",
-      src: "/projects/torchiterations.png",
-      alt: "PyTorch Output",
-  },
-}
+const FILTERS: { label: string; value: "all" | ProjectCategory }[] = [
+  { label: "All", value: "all" },
+  { label: "Systems", value: "systems" },
+  { label: "ML", value: "ml" },
+  { label: "Embedded", value: "embedded" },
+  { label: "Hardware", value: "hardware" },
+  { label: "Full-Stack", value: "fullstack" },
 ];
 
-export default function ProjectsPage() {
+const TIER_SHADES = {
+  header: "bg-[#faf8f5]",
+  featured: "bg-[#f0e8dc]",
+  supporting: "bg-[#f7f2ea]",
+  archive: "bg-[#fdfbf7]",
+} as const;
+
+function FilterChip({
+  active,
+  children,
+  onClick,
+}: {
+  active?: boolean;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) {
   return (
-    <div className="bg-speckle min-h-screen">
-      <main className="mx-auto w-full max-w-6xl px-8 py-14">
-        <MediaCardGrid
-          title="Projects"
-          subtitle="Everyday projects and random experiments."
-          items={PROJECTS}
-          columns={2}
-          filters={[
-            { label: "All", value: "all" },
-            { label: "Independent", value: "independent" },
-            { label: "Courses", value: "course" },
-            { label: "Clubs & Organizations", value: "clubs" },
-          ]}
-          defaultFilter="all"
-          showTypePill={true}
-        />
-      </main>
+    <button
+      type="button"
+      onClick={onClick}
+      className={[
+        "rounded-full border px-4 py-2 text-sm transition",
+        active
+          ? "border-stone-900 bg-stone-950 text-white"
+          : "border-stone-200 bg-white text-stone-600 hover:border-stone-300",
+      ].join(" ")}
+    >
+      {children}
+    </button>
+  );
+}
+
+function TierBand({
+  title,
+  subtitle,
+  projects,
+  featured,
+  shade,
+}: {
+  title: string;
+  subtitle: string;
+  projects: Project[];
+  featured?: boolean;
+  shade: keyof typeof TIER_SHADES;
+}) {
+  if (projects.length === 0) return null;
+
+  return (
+    <section className={`border-t border-stone-200/40 ${TIER_SHADES[shade]}`}>
+      <div className="mx-auto max-w-6xl px-6 py-16 md:px-8 md:py-20">
+        <div className="mb-8">
+          <h2 className="text-display text-2xl text-stone-950 md:text-3xl">
+            {title}
+          </h2>
+          <p className="mt-2 max-w-xl text-sm text-stone-600 md:text-base">
+            {subtitle}
+          </p>
+        </div>
+        <div
+          className={[
+            "grid gap-6",
+            featured ? "md:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3",
+          ].join(" ")}
+        >
+          {projects.map((p, i) => (
+            <ProjectCard
+              key={p.slug}
+              project={p}
+              featured={featured}
+              index={i}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function useFiltered(list: Project[], filter: "all" | ProjectCategory) {
+  return useMemo(
+    () => (filter === "all" ? list : list.filter((p) => p.category === filter)),
+    [filter, list]
+  );
+}
+
+export default function ProjectsPage() {
+  const [filter, setFilter] = useState<"all" | ProjectCategory>("all");
+
+  const featured = useFiltered(FEATURED_PROJECTS, filter);
+  const supporting = useFiltered(SUPPORTING_PROJECTS, filter);
+  const archive = useFiltered(ARCHIVE_PROJECTS, filter);
+
+  return (
+    <div className="min-h-screen">
+      <section className={TIER_SHADES.header}>
+        <div className="mx-auto max-w-6xl px-6 py-14 md:px-8 md:py-20">
+          <header className="max-w-2xl">
+            <h1 className="text-display text-4xl text-stone-950 md:text-5xl">
+              Projects
+            </h1>
+            <p className="mt-4 text-lg leading-relaxed text-stone-700">
+              A mix of things I&apos;ve built over the years. Some are serious
+              engineering deep-dives, others started as &quot;I wonder if I can
+              make this.&quot; I grouped them so the ones I&apos;m proudest of are
+              easy to find first.
+            </p>
+          </header>
+
+          <div className="mt-8 flex flex-wrap gap-2">
+            {FILTERS.map((f) => (
+              <FilterChip
+                key={f.value}
+                active={filter === f.value}
+                onClick={() => setFilter(f.value)}
+              >
+                {f.label}
+              </FilterChip>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <TierBand
+        title="Main projects"
+        subtitle="The builds I'd probably talk about for an hour if you asked what I've been working on."
+        projects={featured}
+        featured
+        shade="featured"
+      />
+      <TierBand
+        title="More builds"
+        subtitle="Still real work: apps, tools, and experiments that taught me a lot."
+        projects={supporting}
+        shade="supporting"
+      />
+      <TierBand
+        title="Earlier work"
+        subtitle="Course projects and older experiments. Still here, just not where I'd start."
+        projects={archive}
+        shade="archive"
+      />
     </div>
   );
 }

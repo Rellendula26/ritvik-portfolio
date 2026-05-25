@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import LazyVideo from "@/components/LazyVideo";
 
 export type MediaCardItem = {
   id: string; // "001"
@@ -18,7 +19,7 @@ export type MediaCardItem = {
 
   media?:
     | { kind: "image"; src: string; alt: string }
-    | { kind: "video"; src: string; poster?: string };
+    | { kind: "video"; src: string; alt: string; poster?: string };
 };
 
 type FilterOption = {
@@ -110,15 +111,12 @@ function Card({
                 priority={item.id === "001"}
               />
             ) : (
-              <video
-                className="h-full w-full object-cover transition group-hover:scale-[1.02]"
+              <LazyVideo
                 src={item.media.src}
                 poster={item.media.poster}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
+                className="h-full w-full object-cover transition group-hover:scale-[1.02]"
+                playOnHover
+                playWhenVisible={false}
               />
             )}
           </div>

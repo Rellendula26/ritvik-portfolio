@@ -204,9 +204,60 @@ export default function Page() {
       ],
       media: {
         kind: "video",
-        src: "/projects/ccv3demo.mp4",
-        alt: "Tempo result UI",
+        src: "/projects/count-coach-demo.mp4",
+        alt: "Shipped Next.js app with waveform and tempo tools",
       },
+    },
+  ];
+
+  const gallery: {
+    src: string;
+    alt: string;
+    label: string;
+    kind?: "image" | "video";
+  }[] = [
+    {
+      src: "/projects/count-coach-demo.mp4",
+      alt: "Full Count Coach app demo on Vercel",
+      label: "Shipped app demo",
+      kind: "video",
+    },
+    {
+      src: "/projects/count-coach-poster.png",
+      alt: "Count Coach project poster",
+      label: "Project poster",
+    },
+    {
+      src: "/projects/count-coach-1.png",
+      alt: "Waveform UI with loop range selection",
+      label: "Waveform UI",
+    },
+    {
+      src: "/projects/count-coach-2.png",
+      alt: "Tempo inference and practice workflow",
+      label: "Tempo workflow",
+    },
+    {
+      src: "/projects/website-1.png",
+      alt: "App screen — upload and analysis flow",
+      label: "App screen 1",
+    },
+    {
+      src: "/projects/website-2.png",
+      alt: "App screen — results and playback",
+      label: "App screen 2",
+    },
+    {
+      src: "/projects/ccv1demo.mp4",
+      alt: "V1 Google Colab prototype with file upload",
+      label: "V1 Colab prototype",
+      kind: "video",
+    },
+    {
+      src: "/projects/ccv2demo.mp4",
+      alt: "V2 Python metronome overlay pipeline",
+      label: "V2 metronome overlay",
+      kind: "video",
     },
   ];
 
@@ -233,14 +284,14 @@ export default function Page() {
 
         {/* Hero */}
         <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
-          <div className="relative h-[320px] w-full md:h-[420px]">
-            <Image
-              src={coverSrc}
-              alt={`${title} cover`}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 1000px"
-              priority
+          <div className="relative h-[320px] w-full bg-zinc-950 md:h-[420px]">
+            <video
+              src={demoVideoSrc}
+              poster={coverSrc}
+              className="h-full w-full object-cover object-top"
+              controls
+              playsInline
+              preload="metadata"
             />
           </div>
         </div>
@@ -361,7 +412,7 @@ export default function Page() {
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
                 <li>
-                  Made tempo debugging tangible—dancers can isolate a messy
+                  Made tempo debugging tangible, dancers can isolate a messy
                   transition and get a tempo anchor instantly.
                 </li>
                 <li>
@@ -483,29 +534,38 @@ export default function Page() {
           GALLERY
         </h2>
         <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {["/projects/count-coach-1.png", "/projects/count-coach-2.png"].map(
-            (src) => (
+          {gallery.map((item) => {
+            const isVideo = item.kind === "video";
+            return (
               <div
-                key={src}
+                key={item.src}
                 className="overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm"
               >
-                <div className="relative h-64 w-full">
-                  <Image
-                    src={src}
-                    alt="Count Coach gallery image"
-                    fill
-                    className="object-cover"
-                  />
+                <div className="border-b border-zinc-100 px-4 py-2 text-xs font-medium text-zinc-500">
+                  {item.label}
+                </div>
+                <div className="relative h-64 w-full bg-zinc-950 md:h-72">
+                  {isVideo ? (
+                    <video
+                      src={item.src}
+                      className="h-full w-full object-cover object-top"
+                      controls
+                      playsInline
+                      preload="metadata"
+                    />
+                  ) : (
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      className="object-cover object-top"
+                    />
+                  )}
                 </div>
               </div>
-            )
-          )}
+            );
+          })}
         </div>
-
-        <p className="mt-3 text-sm text-zinc-500">
-          Replace the gallery images with your actual screenshots (waveform UI,
-          tempo result panel, range selection, etc.).
-        </p>
       </section>
     </main>
   );

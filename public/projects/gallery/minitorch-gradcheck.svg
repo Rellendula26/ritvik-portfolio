@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#070707"/>
+  <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">gradient check · training</text>
+  <text x="60" y="120" fill="#78716c" font-family="ui-monospace, monospace" font-size="16">numerical H analytical</text>
+  <polyline points="80,320 140,280 200,250 280,200 360,150 440,120 520,95" fill="none" stroke="#f59e0b" stroke-width="3"/>
+  <text x="60" y="380" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="15">loss 0.42 ’ 0.08 </text>
+  <rect x="580" y="340" width="160" height="80" rx="8" fill="#14532d" fill-opacity="0.3" stroke="#22c55e"/>
+  <text x="610" y="390" fill="#4ade80" font-family="ui-monospace, monospace" font-size="14">grad check pass</text>
+</svg>

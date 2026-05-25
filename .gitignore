@@ -41,3 +41,10 @@ yarn-error.log*
 next-env.d.ts
 public/ritvik.jpg
 *.mov
+*.MOV
+# Raw camera exports (keep locally; commit only *-web.mp4)
+public/projects/fullsaber.MOV
+public/projects/bloombot.MP4
+public/projects/fullsaber.mp4
+public/projects/bloombot.mp4
+public/projects/fullsaber39393.mp4

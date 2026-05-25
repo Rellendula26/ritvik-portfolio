@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#070707"/>
+  <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">computation graph</text>
+  <rect x="120" y="300" width="56" height="36" rx="6" fill="#1c1917" stroke="#57534e"/><text x="138" y="324" fill="#fde68a" font-family="ui-monospace, monospace" font-size="14">x</text>
+  <rect x="220" y="300" width="56" height="36" rx="6" fill="#1c1917" stroke="#57534e"/><text x="236" y="324" fill="#fde68a" font-family="ui-monospace, monospace" font-size="14">w</text>
+  <rect x="320" y="300" width="56" height="36" rx="6" fill="#1c1917" stroke="#57534e"/><text x="338" y="324" fill="#fde68a" font-family="ui-monospace, monospace" font-size="14">b</text>
+  <rect x="280" y="220" width="48" height="36" rx="6" fill="#1c1917" stroke="#f59e0b"/><text x="296" y="244" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="14">×</text>
+  <rect x="400" y="220" width="48" height="36" rx="6" fill="#1c1917" stroke="#f59e0b"/><text x="416" y="244" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="14">+</text>
+  <rect x="520" y="160" width="64" height="36" rx="6" fill="#1c1917" stroke="#a78bfa"/><text x="542" y="184" fill="#c4b5fd" font-family="ui-monospace, monospace" font-size="14">y</text>
+  <rect x="640" y="90" width="72" height="40" rx="6" fill="#1c1917" stroke="#fb7185"/><text x="652" y="116" fill="#fda4af" font-family="ui-monospace, monospace" font-size="14">loss</text>
+  <line x1="176" y1="318" x2="280" y2="250" stroke="#f59e0b" opacity="0.5"/>
+  <line x1="276" y1="318" x2="300" y2="250" stroke="#f59e0b" opacity="0.5"/>
+  <line x1="348" y1="318" x2="420" y2="238" stroke="#f59e0b" opacity="0.5"/>
+</svg>

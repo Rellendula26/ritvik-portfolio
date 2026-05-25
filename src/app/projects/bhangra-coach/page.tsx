@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import Link from "next/link";
 
 type LinkItem = { label: string; href: string };
@@ -16,6 +16,7 @@ type SystemSection = {
     kind: "image" | "video";
     src: string;
     alt?: string;
+    poster?: string;
   };
 };
 
@@ -139,21 +140,22 @@ function SystemBlock({
 
             <div className="relative h-[240px] w-full md:h-[300px]">
               {section.media.kind === "image" ? (
-                <Image
+                <ProjectMediaImage
                   src={section.media.src}
                   alt={section.media.alt ?? section.title}
-                  fill
                   className="object-cover object-top"
                 />
               ) : (
                 <video
                   src={section.media.src}
+                  poster={section.media.poster}
                   className="h-full w-full object-cover object-top"
                   autoPlay
                   muted
                   loop
                   playsInline
-                  controls={false}
+                  controls
+                  preload="metadata"
                 />
               )}
             </div>
@@ -191,7 +193,8 @@ export default function Page() {
       tools: ["Next.js", "React", "TypeScript", "Tailwind"],
       media: {
         kind: "video",
-        src: "/projects/bcfrontend.mp4",
+        src: "/projects/coverbhangraform.mp4",
+        poster: "/projects/bc1.png",
         alt: "Frontend UI demo",
       },
     },
@@ -239,11 +242,57 @@ export default function Page() {
     },
   ];
 
-  const gallery = [
-    "/projects/bc1.png",
-    "/projects/bc2.png",
-    "/projects/bc3.png",
-    "/projects/bc4.png",
+  const gallery: {
+    src: string;
+    alt: string;
+    label: string;
+    kind?: "image" | "video";
+    poster?: string;
+  }[] = [
+    {
+      src: "/projects/coverbhangraform.mp4",
+      alt: "Bhangra Coach product walkthrough and upload flow",
+      label: "Product walkthrough",
+      kind: "video",
+      poster: "/projects/bc1.png",
+    },
+    {
+      src: "/projects/bc1.png",
+      alt: "Home screen and clip upload entry",
+      label: "Upload flow",
+    },
+    {
+      src: "/projects/bc2.png",
+      alt: "Progress tracking and practice history",
+      label: "Progress & history",
+    },
+    {
+      src: "/projects/bc3.png",
+      alt: "Clip analysis and reference comparison view",
+      label: "Clip analysis",
+    },
+    {
+      src: "/projects/bcfeedback.png",
+      alt: "Reference vs user video with coaching feedback",
+      label: "Feedback comparison",
+    },
+    {
+      src: "/projects/bcbackend.mp4",
+      alt: "FastAPI backend and pose processing pipeline",
+      label: "Backend pipeline",
+      kind: "video",
+    },
+    {
+      src: "/projects/bcsupabase.mp4",
+      alt: "Supabase storage for reference and user videos",
+      label: "Supabase storage",
+      kind: "video",
+    },
+    {
+      src: "/projects/bc4.png",
+      alt: "Implementation and codebase overview",
+      label: "Codebase",
+    },
   ];
 
   return (
@@ -303,11 +352,14 @@ export default function Page() {
                   <div className="relative h-[300px] w-full md:h-[380px]">
                     <video
                       className="h-full w-full object-cover object-top"
-                      src="/projects/bcbunch.mp4"
+                      src="/projects/coverbhangraform.mp4"
+                      poster="/projects/bc1.png"
                       autoPlay
                       muted
                       loop
                       playsInline
+                      controls
+                      preload="metadata"
                     />
                   </div>
                 </div>
@@ -331,30 +383,43 @@ export default function Page() {
           <SectionLabel>Gallery</SectionLabel>
 
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {gallery.map((src, index) => (
-              <div
-                key={src}
-                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
-              >
-                <div className="flex items-center gap-2 border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3">
-                  <span className="h-3 w-3 rounded-full bg-orange-300" />
-                  <span className="h-3 w-3 rounded-full bg-amber-300" />
-                  <span className="h-3 w-3 rounded-full bg-zinc-300" />
-                  <span className="ml-2 text-xs font-medium text-zinc-500">
-                    Screen {index + 1}
-                  </span>
-                </div>
+            {gallery.map((item) => {
+              const isVideo = item.kind === "video";
+              return (
+                <div
+                  key={item.src}
+                  className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+                >
+                  <div className="flex items-center gap-2 border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3">
+                    <span className="h-3 w-3 rounded-full bg-orange-300" />
+                    <span className="h-3 w-3 rounded-full bg-amber-300" />
+                    <span className="h-3 w-3 rounded-full bg-zinc-300" />
+                    <span className="ml-2 text-xs font-medium text-zinc-500">
+                      {item.label}
+                    </span>
+                  </div>
 
-                <div className="relative h-[280px] w-full md:h-[340px]">
-                  <Image
-                    src={src}
-                    alt={`Bhangra Coach screen ${index + 1}`}
-                    fill
-                    className="object-cover object-top"
-                  />
+                  <div className="relative h-[280px] w-full bg-zinc-950 md:h-[340px]">
+                    {isVideo ? (
+                      <video
+                        src={item.src}
+                        poster={item.poster}
+                        className="h-full w-full object-cover object-top"
+                        controls
+                        playsInline
+                        preload="metadata"
+                      />
+                    ) : (
+                      <ProjectMediaImage
+                        src={item.src}
+                        alt={item.alt}
+                        className="object-cover object-top"
+                      />
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
       </div>

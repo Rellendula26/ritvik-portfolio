@@ -53,7 +53,7 @@ export default function ResearchPage() {
       <main className="mx-auto w-full max-w-6xl px-8 py-14">
         <MediaCardGrid
           title="Research"
-          subtitle="Deep-Dives into fields that interest me."
+          subtitle="Topics I've gone deep on, from brain-computer interfaces to health equity and econometrics."
           items={RESEARCH}
           columns={2}
           filters={[
