@@ -9,7 +9,11 @@
     "start": "next start",
     "preview": "npm run build && npm start",
     "lint": "eslint",
-    "compress:video": "bash scripts/compress-project-video.sh"
+    "compress:video": "bash scripts/compress-project-video.sh",
+    "projects:intake:sync": "node scripts/sync-project-intake.mjs",
+    "projects:intake:new": "node scripts/new-project-intake.mjs",
+    "projects:intake:analyze": "node scripts/generate-project-analysis.mjs",
+    "projects:intake:import-drive": "node scripts/import-drive-media.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.38.0",
