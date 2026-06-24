@@ -218,6 +218,7 @@ export default async function ProjectDetailPage({
       src,
       alt: `${project.title} architecture ${index + 1}`,
       label: `Architecture ${index + 1}`,
+      caption: `Architecture ${index + 1}`,
     })) ?? [];
   const imageGalleryMedia =
     project.imageGallery?.map((src, index) => ({
@@ -225,6 +226,7 @@ export default async function ProjectDetailPage({
       src,
       alt: `${project.title} gallery image ${index + 1}`,
       label: `Image ${index + 1}`,
+      caption: `Image ${index + 1}`,
     })) ?? [];
   const videoGalleryMedia =
     project.videoGallery?.map((src, index) => ({
@@ -232,6 +234,7 @@ export default async function ProjectDetailPage({
       src,
       alt: `${project.title} gallery video ${index + 1}`,
       label: `Video ${index + 1}`,
+      caption: `Video ${index + 1}`,
       poster: project.thumbnail,
     })) ?? [];
 
