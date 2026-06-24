@@ -17,6 +17,8 @@ const FILTERS: { label: string; value: "all" | ProjectCategory }[] = [
   { label: "Embedded", value: "embedded" },
   { label: "Hardware", value: "hardware" },
   { label: "Full-Stack", value: "fullstack" },
+  { label: "CAD", value: "cad" },
+  { label: "Data", value: "data" },
 ];
 
 const TIER_SHADES = {
@@ -120,9 +122,9 @@ export default function ProjectsPage() {
               Projects
             </h1>
             <p className="mt-4 text-lg leading-relaxed text-stone-700">
-              Systems, ML, embedded, and hardware builds — grouped by how much
-              engineering depth is in each one. Featured work is compiler
-              pipelines, autodiff engines, IoT integration, and CAD + circuits.
+              This page is basically my engineering notebook: what I built, what
+              broke, what I changed, and what I learned while shipping things
+              across software and hardware.
             </p>
           </header>
 
@@ -149,13 +151,13 @@ export default function ProjectsPage() {
       />
       <TierBand
         title="Supporting builds"
-        subtitle="Full-stack apps, CV pipelines, signal processing, and embedded games — still real engineering, narrower scope."
+        subtitle="Smaller builds, but still real engineering: web apps, CV pipelines, signal processing experiments, and embedded games that made me sharper across different parts of the stack."
         projects={supporting}
         shade="supporting"
       />
       <TierBand
         title="Earlier work"
-        subtitle="Course projects and high-school builds. Preserved for context, not the first stop for technical depth."
+        subtitle="Course and earlier builds. I keep them here for context because they show how my approach changed over time."
         projects={archive}
         shade="archive"
       />

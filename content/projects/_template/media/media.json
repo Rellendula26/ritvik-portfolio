@@ -1,0 +1,38 @@
+{
+  "thumbnail": "thumbnails/cover.jpg",
+  "hero": "videos/demo.mp4",
+  "items": [
+    {
+      "src": "videos/demo.mp4",
+      "type": "demo",
+      "alt": "Demo clip",
+      "caption": "Main demo",
+      "featured": true,
+      "priority": 10
+    },
+    {
+      "src": "images/ui-overview.png",
+      "type": "image",
+      "alt": "UI overview",
+      "caption": "Control UI",
+      "featured": true,
+      "priority": 8
+    },
+    {
+      "src": "diagrams/architecture.png",
+      "type": "diagram",
+      "alt": "Architecture diagram",
+      "caption": "Cloud to device flow",
+      "featured": false,
+      "priority": 5
+    },
+    {
+      "src": "images/build-photo-1.jpg",
+      "type": "process",
+      "alt": "Build process photo",
+      "caption": "Bench setup",
+      "featured": false,
+      "priority": 3
+    }
+  ]
+}

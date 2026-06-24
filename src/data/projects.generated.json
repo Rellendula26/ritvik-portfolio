@@ -1,0 +1,266 @@
+[
+  {
+    "id": "INT-01",
+    "title": "Vend-A-Shoe",
+    "slug": "vend-a-shoe",
+    "featured": false,
+    "category": "embedded",
+    "status": "iterating",
+    "oneLine": "Remote vending controller that lets a user pick a bin in a Next.js dashboard and trigger a physical dispense through a Supabase command queue and Raspberry Pi worker.",
+    "overview": "A cyber-physical vending pipeline instead of a dashboard-only app.; Frontend writes `device_commands` rows to Supabase with bin-specific actions (`dispense_bin_1..4`).; Raspberry Pi worker claims pending commands, executes servo movement script, then marks command status.; Servo control supports per-bin calibration; Bin 3 needed reduced duty cycle to prevent over-rotation.",
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Raspberry Pi 4",
+      "Python",
+      "RPi.GPIO",
+      "systemd",
+      "React",
+      "Tailwind CSS",
+      "Lucide icons",
+      "Supabase JS client",
+      "Supabase Postgres schema + policies",
+      "Vercel deploy config"
+    ],
+    "githubUrl": "https://github.com/Rellendula26/vend-a-shoe",
+    "demoVideoUrl": "/projects/intake/vend-a-shoe/videos/IMG_1485.MOV",
+    "thumbnail": "/projects/placeholder-media.svg",
+    "images": [],
+    "imageGallery": [],
+    "videoGallery": [
+      "/projects/intake/vend-a-shoe/videos/IMG_1485.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_1487.mov",
+      "/projects/intake/vend-a-shoe/videos/IMG_4757.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_4840.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_4841.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5122.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5123.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5124.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5125.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5146.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5147.MOV",
+      "/projects/intake/vend-a-shoe/videos/IMG_5411.MOV"
+    ],
+    "architectureImages": [],
+    "date": "2026",
+    "buildStage": "Cloud-to-hardware prototype running; calibration and reliability iteration",
+    "keyHighlights": [
+      "Queue-based cloud-to-hardware architecture avoids exposing Pi directly to internet.",
+      "Command claiming flow reduces duplicate execution risk under polling.",
+      "Status lifecycle gives observability and post-failure diagnosis.",
+      "Includes deployment/runtime details; not just code that runs in dev.",
+      "`app/page.tsx`: command UI and Supabase insert flow for bin-specific dispense actions.",
+      "`pi_worker.py`: queue consumer loop, command claiming, action parsing, command status updates.",
+      "`servo_motor.py`: GPIO PWM motor sweep with safe return to home duty cycle.",
+      "`supabase.sql`: command queue table, indexes, RLS policies for MVP access model."
+    ],
+    "architecture": [
+      "Frontend (`app/page.tsx`): creates queue command rows in Supabase.",
+      "Queue table (`supabase.sql`): tracks `pending`, `running`, `completed`, `failed`; indexed by status/date.",
+      "Worker (`pi_worker.py`): polls oldest pending command, claims atomically via status update, executes servo script, persists outcome.",
+      "Actuation (`servo_motor.py`): PWM sweep from home to target duty and back; target can vary by bin.",
+      "Runtime (`pi-worker.service`): persistent process with restart policy and env-based config.",
+      "UI writes command rows into `device_commands` through Supabase client.",
+      "Pi worker polls oldest `pending` command, claims atomically by status transition, executes servo script, then marks `completed` or `failed`.",
+      "`supabase.sql` defines queue table, status indexes, and permissive MVP RLS policies for select/insert/update."
+    ],
+    "challenges": [
+      "Reliable internet-triggered actuation with safe state transitions.",
+      "Servo power and motion tuning under real mechanical constraints.",
+      "Keeping remote command UX clear while hardware work happens asynchronously."
+    ],
+    "lessonsLearned": [
+      "Physical systems punish \"one size fits all\" assumptions quickly.",
+      "Queue states matter; `running`/`failed` are not optional if you want to debug real hardware behavior.",
+      "Calibration hooks in software save time when mechanical behavior shifts.",
+      "Mechanical variance forces software-level calibration hooks.",
+      "State transitions make hardware workflows debuggable when remote.",
+      "Cloud intermediaries simplify security for internet-controlled devices."
+    ],
+    "technicalNotes": [
+      "Milestone 1: single-bin command flow (`dispense`) from web app to Pi script.",
+      "Milestone 2: upgraded to four-bin routing with GPIO mapping in `pi_worker.py`.",
+      "Milestone 3: calibrated Bin 3 with per-bin target duty override after over-travel.",
+      "Milestone 4: UI pass for responsive bin cards, status badges, and clearer loading/command feedback.",
+      "Decision: queue-based cloud-to-device architecture through Supabase",
+      "Why: avoids exposing Raspberry Pi directly to internet; keeps command history durable.",
+      "Tradeoff: introduces polling delay and status reconciliation complexity.",
+      "Decision: status transitions (`pending`, `running`, `completed`, `failed`)",
+      "Why: gives observability and recovery semantics for physical actions.",
+      "Tradeoff: requires extra state management in worker and UI."
+    ],
+    "nextImprovements": [
+      "Add push-based updates instead of pure polling for faster UX.",
+      "Harden RLS and command auth model beyond MVP open policies.",
+      "Add sensor feedback to verify successful dispense actions."
+    ],
+    "buildNotes": [
+      "Milestone 1: single-bin command flow (`dispense`) from web app to Pi script.",
+      "Milestone 2: upgraded to four-bin routing with GPIO mapping in `pi_worker.py`.",
+      "Milestone 3: calibrated Bin 3 with per-bin target duty override after over-travel.",
+      "Milestone 4: UI pass for responsive bin cards, status badges, and clearer loading/command feedback.",
+      "Decision: queue-based cloud-to-device architecture through Supabase",
+      "Why: avoids exposing Raspberry Pi directly to internet; keeps command history durable.",
+      "Tradeoff: introduces polling delay and status reconciliation complexity.",
+      "Decision: status transitions (`pending`, `running`, `completed`, `failed`)"
+    ],
+    "debuggingNotes": [
+      "Bin 3 over-rotated and caused unreliable dispense movement.",
+      "Root cause: one motion profile across all bins ignored mechanical variation.",
+      "Fix: added `BIN_TO_TARGET_DUTY` in worker; passed `--target-duty` into servo script for per-bin tuning.",
+      "Another issue: command model started single-lane; this broke scaling to multiple bins.",
+      "Fix: switched action parsing to `dispense_bin_n` and mapped bins to dedicated GPIO pins.",
+      "Bin 3 over-rotation was addressed with per-bin target duty override in worker + servo invocation.",
+      "System evolved from single `dispense` action to `dispense_bin_1..4` command routing with GPIO mapping.",
+      "UI iteration added responsive bin cards and stronger device-state feedback."
+    ],
+    "driveFolderUrl": "https://drive.google.com/drive/folders/1bjVGjv9jKeJ5vQp3C1figbPR06-EoTDd?usp=sharing",
+    "finalOutcome": "Current prototype supports browser-triggered, bin-specific dispense commands with observable queue states and Pi-based execution; it is a working cloud-to-hardware control loop with clear next steps around auth hardening, sensor feedback, and push updates.",
+    "intakeSourcePath": "content/projects/vend-a-shoe",
+    "localMediaImported": true,
+    "media": [
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_1485.MOV",
+        "alt": "vend-a-shoe IMG_1485.MOV",
+        "label": "IMG_1485.MOV",
+        "caption": "IMG_1485.MOV",
+        "featured": true,
+        "priority": 100,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_1487.mov",
+        "alt": "vend-a-shoe IMG_1487.mov",
+        "label": "IMG_1487.mov",
+        "caption": "IMG_1487.mov",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_4757.MOV",
+        "alt": "vend-a-shoe IMG_4757.MOV",
+        "label": "IMG_4757.MOV",
+        "caption": "IMG_4757.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_4840.MOV",
+        "alt": "vend-a-shoe IMG_4840.MOV",
+        "label": "IMG_4840.MOV",
+        "caption": "IMG_4840.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_4841.MOV",
+        "alt": "vend-a-shoe IMG_4841.MOV",
+        "label": "IMG_4841.MOV",
+        "caption": "IMG_4841.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5122.MOV",
+        "alt": "vend-a-shoe IMG_5122.MOV",
+        "label": "IMG_5122.MOV",
+        "caption": "IMG_5122.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5123.MOV",
+        "alt": "vend-a-shoe IMG_5123.MOV",
+        "label": "IMG_5123.MOV",
+        "caption": "IMG_5123.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5124.MOV",
+        "alt": "vend-a-shoe IMG_5124.MOV",
+        "label": "IMG_5124.MOV",
+        "caption": "IMG_5124.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5125.MOV",
+        "alt": "vend-a-shoe IMG_5125.MOV",
+        "label": "IMG_5125.MOV",
+        "caption": "IMG_5125.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5146.MOV",
+        "alt": "vend-a-shoe IMG_5146.MOV",
+        "label": "IMG_5146.MOV",
+        "caption": "IMG_5146.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5147.MOV",
+        "alt": "vend-a-shoe IMG_5147.MOV",
+        "label": "IMG_5147.MOV",
+        "caption": "IMG_5147.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      },
+      {
+        "kind": "video",
+        "src": "/projects/intake/vend-a-shoe/videos/IMG_5411.MOV",
+        "alt": "vend-a-shoe IMG_5411.MOV",
+        "label": "IMG_5411.MOV",
+        "caption": "IMG_5411.MOV",
+        "featured": false,
+        "priority": 8,
+        "mediaType": "video",
+        "poster": "/projects/placeholder-media.svg"
+      }
+    ],
+    "tags": [
+      "embedded",
+      "fullstack",
+      "iot",
+      "systems",
+      "intake"
+    ],
+    "signal": "Embedded + Systems"
+  }
+]

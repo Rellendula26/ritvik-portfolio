@@ -5,7 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import type { Project } from "@/data/projects";
-import { CATEGORY_LABELS } from "@/data/projects";
+import {
+  CATEGORY_LABELS,
+  PROJECT_STATUS_LABELS,
+  pickProjectPrimaryMedia,
+} from "@/data/projects";
 import { Badge } from "@/components/ui/Badge";
 import LazyVideo from "@/components/LazyVideo";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
@@ -49,8 +53,8 @@ export default function ProjectCard({
   index?: number;
 }) {
   const router = useRouter();
-  const isFeatured = featured || project.tier === "featured";
-  const showDepth = isFeatured && (project.thesis || project.bullets?.length);
+  const isFeatured = featured || project.featured;
+  const primaryMedia = pickProjectPrimaryMedia(project);
 
   function goToProject() {
     router.push(project.href);
@@ -92,25 +96,25 @@ export default function ProjectCard({
           />
         )}
 
-        {project.media && (
+        {primaryMedia && (
           <motion.div className="relative aspect-[16/9] overflow-hidden">
-            {project.media.kind === "visual" ? (
+            {primaryMedia.kind === "visual" ? (
               <ProjectCardVisual
-                visualId={project.media.visualId}
+                visualId={primaryMedia.visualId}
                 className="transition duration-500 group-hover:scale-[1.01]"
               />
-            ) : project.media.kind === "image" ? (
+            ) : primaryMedia.kind === "image" ? (
               <ProjectMediaImage
-                src={project.media.src}
-                alt={project.media.alt}
+                src={primaryMedia.src}
+                alt={primaryMedia.alt}
                 className="object-cover object-center transition duration-500 group-hover:scale-[1.03]"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
               <>
                 <LazyVideo
-                  src={project.media.src}
-                  poster={project.media.poster}
+                  src={primaryMedia.src}
+                  poster={primaryMedia.poster}
                   className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                   playOnHover={!isFeatured}
                   playWhenVisible={isFeatured}
@@ -126,7 +130,7 @@ export default function ProjectCard({
             <div
               className={[
                 "pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent",
-                project.media.kind === "visual"
+                primaryMedia.kind === "visual"
                   ? isFeatured
                     ? "from-stone-950/50 via-transparent"
                     : "from-stone-950/40 via-transparent"
@@ -166,7 +170,7 @@ export default function ProjectCard({
             >
               {project.signal}
             </span>
-            {project.timeline && (
+            {project.date && (
               <>
                 <span className={isFeatured ? "text-stone-600" : "text-stone-300"}>
                   ·
@@ -177,7 +181,7 @@ export default function ProjectCard({
                     isFeatured ? "text-stone-500" : "text-stone-400",
                   ].join(" ")}
                 >
-                  {project.timeline}
+                  {project.date}
                 </span>
               </>
             )}
@@ -206,69 +210,36 @@ export default function ProjectCard({
 
           <p
             className={[
-              "mt-1 text-sm font-medium",
+              "mt-1 line-clamp-2 text-sm font-medium",
               isFeatured ? "text-amber-200/80" : "text-amber-800/90",
             ].join(" ")}
           >
-            {project.tagline}
+            {project.oneLine}
           </p>
 
-          {showDepth ? (
-            <>
-              {project.thesis && (
-                <p
-                  className={[
-                    "mt-3 text-sm leading-relaxed",
-                    isFeatured ? "text-stone-300" : "text-stone-700",
-                  ].join(" ")}
-                >
-                  {project.thesis}
-                </p>
-              )}
-              {project.bullets && project.bullets.length > 0 && (
-                <ul
-                  className={[
-                    "mt-3 space-y-1.5 text-sm leading-snug",
-                    isFeatured ? "text-stone-400" : "text-stone-600",
-                  ].join(" ")}
-                >
-                  {project.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-2.5">
-                      <span
-                        className={[
-                          "mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full",
-                          isFeatured ? "bg-amber-400" : "bg-amber-500",
-                        ].join(" ")}
-                      />
-                      <span>{bullet}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {project.systemsSignal && (
-                <p
-                  className={[
-                    "mt-3 font-mono text-[10px] uppercase tracking-[0.14em]",
-                    isFeatured ? "text-amber-500/70" : "text-amber-800/60",
-                  ].join(" ")}
-                >
-                  Systems signal · {project.systemsSignal}
-                </p>
-              )}
-            </>
-          ) : (
+          <p
+            className={[
+              "mt-3 line-clamp-4 text-sm leading-relaxed",
+              isFeatured ? "text-stone-300" : "text-stone-700",
+            ].join(" ")}
+          >
+            {project.overview}
+          </p>
+
+          {project.challenges[0] && (
             <p
               className={[
-                "mt-3 flex-1 text-sm leading-relaxed",
-                isFeatured ? "text-stone-400" : "text-stone-600",
+                "mt-3 line-clamp-2 text-xs leading-relaxed",
+                isFeatured ? "text-amber-300/90" : "text-amber-900/80",
               ].join(" ")}
             >
-              {project.thesis ?? project.blurb}
+              <span className="font-semibold uppercase tracking-wide">Challenge: </span>
+              {project.challenges[0]}
             </p>
           )}
 
           <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.tags.slice(0, isFeatured ? 6 : 5).map((tag) => (
+            {project.techStack.slice(0, isFeatured ? 6 : 5).map((tag) => (
               <span
                 key={tag}
                 className={[
@@ -283,20 +254,43 @@ export default function ProjectCard({
             ))}
           </div>
 
-          {(project.github || project.demo) && (
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <span
+              className={[
+                "rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
+                isFeatured
+                  ? "border-white/20 bg-white/10 text-stone-200"
+                  : "border-stone-200 bg-stone-50 text-stone-600",
+              ].join(" ")}
+            >
+              {PROJECT_STATUS_LABELS[project.status]}
+            </span>
+            <span
+              className={[
+                "rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-wide",
+                isFeatured
+                  ? "border-amber-500/30 text-amber-200/90"
+                  : "border-amber-200 bg-amber-50 text-amber-800/90",
+              ].join(" ")}
+            >
+              {project.buildStage}
+            </span>
+          </div>
+
+          {(project.githubUrl || project.liveUrl) && (
             <div className="mt-4 flex flex-wrap gap-2" onClick={stopNav}>
-              {project.github && (
+              {project.githubUrl && (
                 <ExternalLink
-                  href={project.github}
+                  href={project.githubUrl}
                   label="GitHub"
                   featured={isFeatured}
                   onNavigate={stopNav}
                 />
               )}
-              {project.demo && (
+              {project.liveUrl && (
                 <ExternalLink
-                  href={project.demo}
-                  label={project.slug === "bloombot" ? "Devpost" : "Demo"}
+                  href={project.liveUrl}
+                  label={project.slug === "bloombot" ? "Devpost" : "Live"}
                   featured={isFeatured}
                   onNavigate={stopNav}
                 />
@@ -311,7 +305,7 @@ export default function ProjectCard({
                     : "border-stone-200 text-stone-600 hover:border-amber-200",
                 ].join(" ")}
               >
-                Case study
+                Engineering breakdown
               </Link>
             </div>
           )}

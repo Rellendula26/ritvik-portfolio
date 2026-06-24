@@ -1,0 +1,102 @@
+{
+  "thumbnail": "",
+  "hero": "videos/IMG_1485.MOV",
+  "items": [
+    {
+      "src": "videos/IMG_1485.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_1485.MOV",
+      "caption": "IMG_1485.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_1487.mov",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_1487.mov",
+      "caption": "IMG_1487.mov",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_4757.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_4757.MOV",
+      "caption": "IMG_4757.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_4840.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_4840.MOV",
+      "caption": "IMG_4840.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_4841.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_4841.MOV",
+      "caption": "IMG_4841.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5122.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5122.MOV",
+      "caption": "IMG_5122.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5123.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5123.MOV",
+      "caption": "IMG_5123.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5124.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5124.MOV",
+      "caption": "IMG_5124.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5125.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5125.MOV",
+      "caption": "IMG_5125.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5146.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5146.MOV",
+      "caption": "IMG_5146.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5147.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5147.MOV",
+      "caption": "IMG_5147.MOV",
+      "featured": false,
+      "priority": 8
+    },
+    {
+      "src": "videos/IMG_5411.MOV",
+      "type": "video",
+      "alt": "vend-a-shoe IMG_5411.MOV",
+      "caption": "IMG_5411.MOV",
+      "featured": false,
+      "priority": 8
+    }
+  ]
+}

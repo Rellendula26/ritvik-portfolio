@@ -1,6 +1,5 @@
-import { projectVideo } from "@/data/project-media";
+import GENERATED_INTAKE_PROJECTS from "@/data/projects.generated.json";
 
-export type ProjectTier = "featured" | "supporting" | "archive";
 export type ProjectCategory =
   | "systems"
   | "ml"
@@ -11,11 +10,6 @@ export type ProjectCategory =
   | "cad"
   | "data";
 
-export type ProjectMedia =
-  | { kind: "image"; src: string; alt: string }
-  | { kind: "video"; src: string; alt: string; poster?: string }
-  | { kind: "visual"; visualId: ProjectVisualId; alt: string };
-
 export type ProjectVisualId =
   | "compiler-pipeline"
   | "minitorch-autodiff"
@@ -23,386 +17,861 @@ export type ProjectVisualId =
   | "labreach-preview"
   | "portfolio-preview";
 
+export type ProjectStatus = "shipped" | "in-progress" | "iterating" | "archived";
+
+export type ProjectMediaType =
+  | "image"
+  | "video"
+  | "diagram"
+  | "demo"
+  | "process"
+  | "visual";
+
+export type ProjectMedia =
+  | {
+      kind: "image";
+      src: string;
+      alt: string;
+      label?: string;
+      mediaType?: Exclude<ProjectMediaType, "visual">;
+      caption?: string;
+      featured?: boolean;
+      priority?: number;
+    }
+  | {
+      kind: "video";
+      src: string;
+      alt: string;
+      label?: string;
+      poster?: string;
+      mediaType?: Exclude<ProjectMediaType, "visual">;
+      caption?: string;
+      featured?: boolean;
+      priority?: number;
+    }
+  | {
+      kind: "visual";
+      visualId: ProjectVisualId;
+      alt: string;
+      label?: string;
+      mediaType?: "visual";
+      caption?: string;
+      featured?: boolean;
+      priority?: number;
+    };
+
 export interface Project {
   id: string;
-  slug: string;
   title: string;
-  tagline: string;
-  blurb: string;
-  thesis?: string;
-  bullets?: string[];
-  systemsSignal?: string;
-  tier: ProjectTier;
+  slug: string;
+  featured: boolean;
   category: ProjectCategory;
-  type: "independent" | "course" | "clubs";
+  status: ProjectStatus;
+  oneLine: string;
+  overview: string;
+  techStack: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  demoVideoUrl?: string;
+  thumbnail: string;
+  images: string[];
+  date: string;
+  buildStage: string;
+  keyHighlights: string[];
+  architecture: string[];
+  challenges: string[];
+  lessonsLearned: string[];
+  technicalNotes: string[];
+  nextImprovements?: string[];
+  buildNotes?: string[];
+  debuggingNotes?: string[];
+  architectureImages?: string[];
+  imageGallery?: string[];
+  videoGallery?: string[];
+  driveFolderUrl?: string;
+  finalOutcome?: string;
+  intakeSourcePath?: string;
+  localMediaImported?: boolean;
+  media: ProjectMedia[];
   tags: string[];
-  signal: string;
   href: string;
-  github?: string;
-  demo?: string;
-  timeline?: string;
-  media?: ProjectMedia;
+  signal: string;
 }
 
-export const PROJECTS: Project[] = [
-  // ── FEATURED (ordered by engineering signal) ───────────────
-  {
-    id: "F01",
-    slug: "c-compiler",
+type ProjectInput = Omit<Project, "href" | "media"> & { media?: ProjectMedia[] };
+
+/**
+ * Add a new project by dropping one object in PROJECTS below.
+ * normalizeProject() auto-generates:
+ * - href from slug
+ * - media cards from demoVideoUrl/images/thumbnail
+ * so new entries usually do not need custom UI work.
+ */
+function inferImageLabel(index: number) {
+  if (index === 0) return "Build snapshot";
+  if (index === 1) return "Iteration snapshot";
+  return `Gallery ${index + 1}`;
+}
+
+const SAFE_MEDIA_FALLBACK = "/projects/placeholder-media.svg";
+
+function isTrustedProjectAsset(src: string | undefined) {
+  if (!src) return false;
+  return true;
+}
+
+function normalizeProject(input: ProjectInput): Project {
+  const safeThumbnail = input.thumbnail || SAFE_MEDIA_FALLBACK;
+  const safeImages = (input.images ?? []).filter((src) => isTrustedProjectAsset(src));
+  const safeDemoVideoUrl =
+    input.demoVideoUrl && isTrustedProjectAsset(input.demoVideoUrl)
+      ? input.demoVideoUrl
+      : undefined;
+
+  const media: ProjectMedia[] = [...(input.media ?? [])].filter((item) => {
+    if (item.kind === "visual") return true;
+    return isTrustedProjectAsset(item.src);
+  });
+
+  if (safeDemoVideoUrl && !media.some((item) => item.kind === "video" && item.src === safeDemoVideoUrl)) {
+    media.unshift({
+      kind: "video",
+      src: safeDemoVideoUrl,
+      alt: `${input.title} demo`,
+      label: "Demo",
+      poster: safeThumbnail,
+      mediaType: "demo",
+      featured: true,
+      priority: 10,
+    });
+  }
+
+  safeImages.forEach((src, index) => {
+    if (!media.some((item) => "src" in item && item.src === src)) {
+      media.push({
+        kind: "image",
+        src,
+        alt: `${input.title} media ${index + 1}`,
+        label: inferImageLabel(index),
+        mediaType: "image",
+      });
+    }
+  });
+
+  if (!media.some((item) => item.kind === "image" || item.kind === "video")) {
+    media.unshift({
+      kind: "image",
+      src: safeThumbnail,
+      alt: `${input.title} thumbnail`,
+      label: "Preview",
+      mediaType: "image",
+      featured: true,
+      priority: 1,
+    });
+  }
+
+  return {
+    ...input,
+    demoVideoUrl: safeDemoVideoUrl,
+    thumbnail: safeThumbnail,
+    images: safeImages,
+    href: `/projects/${input.slug}`,
+    media,
+  };
+}
+
+export function pickProjectPrimaryMedia(project: Project): ProjectMedia | undefined {
+  const fromExplicitHero = project.media.find(
+    (item) => item.mediaType === "demo" || item.mediaType === "visual"
+  );
+  if (fromExplicitHero) return fromExplicitHero;
+
+  const byPriority = [...project.media]
+    .filter((item) => item.featured || typeof item.priority === "number")
+    .sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+  if (byPriority.length > 0) return byPriority[0];
+
+  const thumbnailMatch = project.media.find(
+    (item) => "src" in item && item.src === project.thumbnail
+  );
+  if (thumbnailMatch) return thumbnailMatch;
+
+  const firstImage = project.media.find((item) => item.kind === "image");
+  if (firstImage) return firstImage;
+
+  const firstVideo = project.media.find((item) => item.kind === "video");
+  if (firstVideo) return firstVideo;
+
+  return project.media[0];
+}
+
+const BASE_PROJECTS: Project[] = [
+  normalizeProject({
+    id: "P01",
     title: "C Compiler",
-    tagline: "OCaml · lexer → TACKY IR → x86-64",
-    blurb:
-      "A real compiler pipeline in OCaml — not calling clang, actually lowering source to stack-backed assembly.",
-    thesis:
-      "Built an OCaml-based C compiler lowering source programs through lexer → AST → semantic analysis → TACKY IR → x86-64 assembly, with support for lexical scoping, control flow, loops, and structured IR lowering.",
-    bullets: [
-      "Recursive descent parser + AST construction for nested unary ops",
-      "Semantic pass: symbol resolution, lexical scoping, break/continue loop labels",
-      "Custom TACKY IR + control-flow lowering (labels/jumps) before x86-64 codegen",
-    ],
-    systemsSignal: "Compiler pipeline · IR design · stack lowering · x86-64 emit",
-    tier: "featured",
+    slug: "c-compiler",
+    featured: true,
     category: "systems",
-    type: "independent",
-    tags: [
-      "OCaml",
-      "Compilers",
-      "Recursive Descent",
-      "TACKY IR",
-      "x86-64",
-      "Semantic Analysis",
+    status: "iterating",
+    oneLine: "OCaml compiler pipeline from C source to x86-64 assembly.",
+    overview:
+      "I built this to stop treating compilers like magic. It started as a tiny C subset and grew into a real lexer -> parser -> IR -> codegen pipeline where I could inspect every stage.",
+    techStack: ["OCaml", "Recursive Descent", "TACKY IR", "x86-64", "Make"],
+    githubUrl: "https://github.com/Rellendula26/c-compiler",
+    thumbnail: "/projects/gallery/c-compiler-source.svg",
+    images: [
+      "/projects/gallery/c-compiler-source.svg",
+      "/projects/gallery/c-compiler-ast.svg",
+      "/projects/gallery/c-compiler-tacky.svg",
+      "/projects/gallery/c-compiler-asm.svg",
     ],
+    date: "Spring 2026",
+    buildStage: "Actively expanding language features",
+    keyHighlights: [
+      "Recursive-descent parser supporting nested unary expressions.",
+      "Custom IR lowered into stack-backed assembly with fixup passes.",
+      "Incremental tests from return literals to structured control flow.",
+    ],
+    architecture: [
+      "Lexer tokenizes source into typed tokens.",
+      "Parser builds AST, then semantic analysis resolves symbols and scopes.",
+      "TACKY IR flattens expressions before architecture-specific codegen.",
+      "Emitter outputs AT&T syntax x86-64 assembly for clang linking.",
+    ],
+    challenges: [
+      "Memory-to-memory instructions in x86 required explicit scratch-register fixups.",
+      "Nested unary operations exposed edge cases in AST lowering.",
+      "Apple Silicon workflow needed careful x86_64 target handling.",
+    ],
+    lessonsLearned: [
+      "IR is not optional once expression complexity increases.",
+      "Testing each compiler stage independently saves hours later.",
+      "Reading generated assembly is still the fastest debug loop.",
+    ],
+    technicalNotes: [
+      "Roadmap: binary operators, local variables, richer control flow, function calls.",
+      "Current priority is correctness and clean lowering, not optimization passes.",
+    ],
+    media: [
+      { kind: "visual", visualId: "compiler-pipeline", alt: "Compiler pipeline visual", label: "Pipeline visual" },
+      { kind: "image", src: "/projects/gallery/c-compiler-ast.svg", alt: "Compiler AST output", label: "AST output" },
+      { kind: "image", src: "/projects/gallery/c-compiler-asm.svg", alt: "Generated assembly output", label: "Assembly output" },
+    ],
+    tags: ["compiler", "systems", "ir", "debugging", "ocaml"],
     signal: "Systems",
-    href: "/projects/c-compiler",
-    github: "https://github.com/Rellendula26/c-compiler",
-    timeline: "2026",
-    media: {
-      kind: "visual",
-      visualId: "compiler-pipeline",
-      alt: "C compiler pipeline visualization",
-    },
-  },
-  {
-    id: "F02",
-    slug: "minitorch-ocaml",
+  }),
+  normalizeProject({
+    id: "P02",
     title: "MiniTorch-OCaml",
-    tagline: "Reverse-mode autodiff in OCaml",
-    blurb:
-      "PyTorch-style autodiff without the framework — graphs, backprop, and gradchecks I wrote myself.",
-    thesis:
-      "Built a PyTorch-inspired autodiff engine in OCaml, modeling computations as graph-based tensor operations and implementing reverse-mode differentiation through explicit graph traversal.",
-    bullets: [
-      "Computation graph construction with typed tensor nodes and ops",
-      "Reverse-mode backprop via explicit tape traversal (not magic .backward())",
-      "OCaml modules + gradcheck harness; roadmap toward vectorized tensor backend",
-    ],
-    systemsSignal: "Autodiff engine · computation graph · ML systems in OCaml",
-    tier: "featured",
+    slug: "minitorch-ocaml",
+    featured: true,
     category: "ml",
-    type: "independent",
-    tags: [
-      "OCaml",
-      "Autodiff",
-      "Backpropagation",
-      "Computation Graphs",
-      "Gradient Checking",
+    status: "iterating",
+    oneLine: "Reverse-mode autodiff engine with custom computation graphs.",
+    overview:
+      "I wanted to understand backprop beyond framework APIs, so I implemented graph nodes, reverse traversal, and gradient checks in OCaml.",
+    techStack: ["OCaml", "Autodiff", "Computation Graphs", "Gradient Checking"],
+    githubUrl: "https://github.com/Rellendula26/minitorch-ocaml",
+    thumbnail: "/projects/gallery/minitorch-graph.svg",
+    images: [
+      "/projects/gallery/minitorch-graph.svg",
+      "/projects/gallery/minitorch-forward.svg",
+      "/projects/gallery/minitorch-backprop.svg",
+      "/projects/gallery/minitorch-gradcheck.svg",
     ],
+    date: "Spring 2026",
+    buildStage: "Extending toward richer tensor operations",
+    keyHighlights: [
+      "Typed graph nodes with values, gradients, parents, and operations.",
+      "Reverse-mode engine validated against finite-difference gradchecks.",
+      "Training loops show consistent loss decrease on toy problems.",
+    ],
+    architecture: [
+      "Tensor ops construct a directed graph during forward pass.",
+      "Backward traversal propagates gradients through parent references.",
+      "Optimizer updates parameters from accumulated gradients.",
+    ],
+    challenges: [
+      "Gradient bugs were subtle and rarely obvious from forward outputs.",
+      "Type-safe abstractions had to stay flexible enough for new operations.",
+      "Keeping the API small while preserving useful experimentation loops.",
+    ],
+    lessonsLearned: [
+      "Math correctness needs numerical checks, not confidence.",
+      "Strong types catch structure issues, not calculus mistakes.",
+      "Loss curves are the practical proof that autodiff is working.",
+    ],
+    technicalNotes: [
+      "Adding new operators now always includes forward + backward + gradcheck tests.",
+      "Vectorized backend is a future step once core operator set is stable.",
+    ],
+    media: [
+      { kind: "visual", visualId: "minitorch-autodiff", alt: "MiniTorch autodiff visual", label: "Autodiff visual" },
+      { kind: "image", src: "/projects/gallery/minitorch-backprop.svg", alt: "Backprop flow", label: "Backprop flow" },
+    ],
+    tags: ["ml-systems", "autodiff", "ocaml", "backprop"],
     signal: "ML Systems",
-    href: "/projects/minitorch-ocaml",
-    github: "https://github.com/Rellendula26/minitorch-ocaml",
-    timeline: "2026",
-    media: {
-      kind: "visual",
-      visualId: "minitorch-autodiff",
-      alt: "MiniTorch autodiff computation graph",
-    },
-  },
-  {
-    id: "F03",
-    slug: "bloombot",
+  }),
+  normalizeProject({
+    id: "P03",
     title: "BloomBot IoT",
-    tagline: "WiFi actuators · Blynk · embedded integration",
-    blurb:
-      "Robotic flower with servos, sensors, and Morse LEDs — debugged across power rails, WiFi, and timing at 2am.",
-    thesis:
-      "IoT robotic flower on Arduino UNO R4 WiFi: Blynk remote control, multi-servo petal actuation, LCD + ultrasonic sensing, and Morse-code LED feedback in one embedded pipeline.",
-    bullets: [
-      "Blynk virtual pins → servo sequences over WiFiS3",
-      "I2C LCD status + ultrasonic proximity events alongside motion",
-      "Power/timing debug across concurrent actuators and wireless drops",
-    ],
-    systemsSignal: "Embedded IoT · actuators · sensors · wireless control loop",
-    tier: "featured",
+    slug: "bloombot",
+    featured: true,
     category: "embedded",
-    type: "independent",
-    tags: [
-      "Arduino UNO R4 WiFi",
-      "Blynk",
-      "Servos",
-      "Ultrasonic",
-      "I2C LCD",
-      "Embedded C++",
+    status: "shipped",
+    oneLine: "IoT robotic flower with servos, sensors, LCD, and remote control.",
+    overview:
+      "This project came from wanting something expressive and physical, not just another board demo. I integrated Blynk controls, servo choreography, sensor feedback, and display output into one system.",
+    techStack: ["Arduino UNO R4 WiFi", "Blynk", "WiFiS3", "Servos", "Ultrasonic", "I2C LCD"],
+    githubUrl: "https://github.com/Rellendula26/bloombot-iot",
+    liveUrl: "https://devpost.com/software/bloombot-8syfva",
+    demoVideoUrl: "/projects/makingbloombot.mp4",
+    thumbnail: "/projects/saberwhite.png",
+    images: ["/projects/saberwhite.png"],
+    date: "Spring 2026",
+    buildStage: "Shipped demo + iterating on next hardware revision",
+    keyHighlights: [
+      "Remote interaction over WiFi through Blynk virtual pins.",
+      "Multi-servo movement coordinated with sensor + display feedback.",
+      "Public demo and full build documentation on Devpost.",
     ],
+    architecture: [
+      "Blynk app events map to virtual pin handlers on the Arduino.",
+      "Firmware coordinates servo motion loops with sensor checks.",
+      "LCD and Morse LED signaling provide user feedback state.",
+    ],
+    challenges: [
+      "Power rails had to be stabilized to avoid brownouts during concurrent servo loads.",
+      "WiFi reliability under demo conditions needed repeated retry logic.",
+      "Timing collisions appeared when actuators and sensing ran simultaneously.",
+    ],
+    lessonsLearned: [
+      "Hardware reliability is mostly integration discipline.",
+      "Live demo confidence comes from failure-mode rehearsals.",
+      "A simple feedback channel (LCD/LED) makes debugging way easier.",
+    ],
+    technicalNotes: [
+      "Future iterations: improved enclosure, cleaner wiring harness, smoother interpolation.",
+      "I also want to map sentiment-driven inputs to movement patterns.",
+    ],
+    media: [
+      {
+        kind: "video",
+        src: "/projects/makingbloombot.mp4",
+        alt: "Building BloomBot",
+        label: "Build process",
+        poster: "/projects/saberwhite.png",
+        mediaType: "demo",
+        featured: true,
+        priority: 20,
+      },
+      { kind: "video", src: "/projects/bloombotsetup.mp4", alt: "BloomBot hardware setup", label: "Hardware setup" },
+      { kind: "video", src: "/projects/bloombotblynk.mp4", alt: "Blynk control", label: "Remote control demo" },
+      { kind: "video", src: "/projects/bloombot-web.mp4", alt: "Product demo", label: "Final interaction demo" },
+    ],
+    tags: ["iot", "embedded", "robotics", "actuators", "integration"],
     signal: "Robotics",
-    href: "/projects/bloombot",
-    github: "https://github.com/Rellendula26/bloombot-iot",
-    demo: "https://devpost.com/software/bloombot-8syfva",
-    timeline: "2026",
-    media: projectVideo("bloombot"),
-  },
-  {
-    id: "F04",
+  }),
+  normalizeProject({
+    id: "P04",
+    title: "Lightsaber Build",
     slug: "saber",
-    title: "Lightsaber",
-    tagline: "Fusion 360 CAD · LED power · soldered integration",
-    blurb:
-      "CAD-fitted hilt, LED strip segmentation, and 40+ solder joints that had to survive being swung around.",
-    thesis:
-      "Handheld lightsaber build integrating Fusion 360 CAD, 3D-printed hilt/battery packaging, LED strip power routing, and switch wiring with solder joints rated for motion.",
-    bullets: [
-      "3D-printed hilt, emitter, battery carrier with tolerance iteration",
-      "LED strip segmentation + switch path for even blade glow under load",
-      "Contact/solder reliability under flex — integration, not bench-only wiring",
-    ],
-    systemsSignal: "Hardware integration · CAD + circuits · power under motion",
-    tier: "featured",
+    featured: true,
     category: "hardware",
-    type: "independent",
-    tags: [
-      "Fusion 360",
-      "3D Print",
-      "LED Strip",
-      "Soldering",
-      "Circuit Design",
-      "CAD",
+    status: "shipped",
+    oneLine: "CAD + circuitry + soldering to ship a handheld lightsaber build.",
+    overview:
+      "I used this as a hands-on integration project: sketching, CAD, soldering, wiring, and iteration until the final object felt robust in-hand and not like a fragile prototype.",
+    techStack: ["Fusion 360", "LED Strip", "Soldering", "3D Printing", "Circuit Design"],
+    demoVideoUrl: "/projects/fullsaber-web.mp4",
+    thumbnail: "/projects/saberwhite.png",
+    images: ["/projects/saberwhite.png"],
+    date: "Spring 2026",
+    buildStage: "Shipped physical build",
+    keyHighlights: [
+      "40+ solder joints across power/signal paths.",
+      "Iterated CAD tolerances for fit and cable routing.",
+      "Integrated mechanical structure with functional electronics.",
     ],
+    architecture: [
+      "Battery and switch path drives segmented LED strip inside blade.",
+      "Printed hilt houses battery carrier, wire routing, and control switch.",
+      "Mechanical tolerances tuned to keep parts secure under motion.",
+    ],
+    challenges: [
+      "Wire management inside the hilt was harder than schematic planning.",
+      "Solder rework was needed when joint strength wasn't enough for movement.",
+      "Fit issues from early prints required repeated CAD adjustments.",
+    ],
+    lessonsLearned: [
+      "Integration and packaging can dominate project complexity.",
+      "CAD tolerance choices directly affect electrical reliability.",
+      "Build quality is what turns a cool prototype into a real artifact.",
+    ],
+    technicalNotes: [
+      "Documented each stage from whiteboard circuits to final lab testing.",
+      "Next version could be battery-optimized with a cleaner internal harness.",
+    ],
+    media: [
+      {
+        kind: "video",
+        src: "/projects/fullsaber-web.mp4",
+        alt: "Full lightsaber demo",
+        label: "Final demo",
+        poster: "/projects/saberwhite.png",
+        mediaType: "demo",
+        featured: true,
+        priority: 20,
+      },
+      { kind: "video", src: "/projects/sabercadp1.mov", alt: "CAD design process", label: "CAD iteration" },
+      { kind: "video", src: "/projects/sabersauder1.MOV", alt: "Soldering process", label: "Soldering" },
+      { kind: "video", src: "/projects/saberfirstdemo.MOV", alt: "First functional demo", label: "Early demo" },
+      { kind: "video", src: "/projects/sabersecurity.MOV", alt: "Lab testing", label: "Lab testing" },
+    ],
+    tags: ["hardware", "cad", "soldering", "mechanical-design"],
     signal: "Hardware",
-    href: "/projects/saber",
-    timeline: "2026",
-    media: projectVideo("saber"),
-  },
-
-  // ── SUPPORTING ─────────────────────────────────────────────
-  {
-    id: "S01",
-    slug: "snapfuel",
+  }),
+  normalizeProject({
+    id: "P05",
     title: "SnapFuel",
-    tagline: "Vision API → calorie JSON → user edit loop",
-    blurb:
-      "Photo-first calorie tracking with honest uncertainty — AI estimates, human confirmation, Garmin-aware net calories.",
-    thesis:
-      "Full-stack meal logging: photo upload → OpenAI vision JSON → user edit → Supabase persistence with log_method tracking.",
-    bullets: [
-      "Next.js 16 + Supabase auth and meal schema",
-      "OpenAI Vision structured output with user correction flow",
-    ],
-    systemsSignal: "Full-stack · vision API · health data pipeline",
-    tier: "supporting",
+    slug: "snapfuel",
+    featured: false,
     category: "fullstack",
-    type: "independent",
-    tags: ["Next.js", "Supabase", "OpenAI Vision", "TypeScript"],
+    status: "iterating",
+    oneLine: "Photo-first calorie logging with AI estimation and human confirmation.",
+    overview:
+      "I built SnapFuel to reduce food logging friction while keeping the user in control. The core idea is: AI suggests, user confirms, dashboard reflects confirmed values.",
+    techStack: ["Next.js", "TypeScript", "Supabase", "OpenAI Vision", "Vercel"],
+    githubUrl: "https://github.com/Rellendula26/snapfuel",
+    thumbnail: "/projects/placeholder-media.svg",
+    images: [],
+    date: "2026",
+    buildStage: "MVP shipped, improving reliability and integrations",
+    keyHighlights: [
+      "End-to-end flow from image upload to confirmed meal persistence.",
+      "Vision output structured with validation and editable review UI.",
+      "Data model supports manual + AI-assisted entries side by side.",
+    ],
+    architecture: [
+      "Client upload triggers analysis endpoint for structured meal estimation.",
+      "User review step edits calories/macros before save.",
+      "Dashboard queries confirmed records, not raw model output.",
+    ],
+    challenges: [
+      "Model confidence needed transparent communication, not fake precision.",
+      "RLS policies had to be tuned for user-specific meal access.",
+      "Timezone boundaries affect daily summaries if not handled explicitly.",
+    ],
+    lessonsLearned: [
+      "Human confirmation is the actual product feature.",
+      "Schema-first planning made API/UI integration much smoother.",
+    ],
+    technicalNotes: [
+      "Garmin-style burn integration is currently abstracted behind an interface.",
+      "Still balancing UX speed with data correctness safeguards.",
+    ],
+    media: [
+      {
+        kind: "visual",
+        visualId: "snapfuel-preview",
+        alt: "SnapFuel preview",
+        label: "Product preview",
+        mediaType: "visual",
+        featured: true,
+        priority: 12,
+      },
+    ],
+    tags: ["fullstack", "health-tech", "vision-api", "product"],
     signal: "Full-Stack",
-    href: "/projects/snapfuel",
-    github: "https://github.com/Rellendula26/snapfuel",
-    timeline: "2026",
-    media: {
-      kind: "visual",
-      visualId: "snapfuel-preview",
-      alt: "SnapFuel calorie tracking concept",
-    },
-  },
-  {
-    id: "S02",
-    slug: "labreach-ai",
+  }),
+  normalizeProject({
+    id: "P06",
     title: "LabReach AI",
-    tagline: "Lab scrape → local LLM draft → Gmail review",
-    blurb:
-      "Research outreach copilot: scrape a lab page, draft with Ollama, review before anything sends.",
-    thesis:
-      "Python outreach pipeline: lab page scraping, Ollama local LLM drafts, SQLite history, Gmail API send-after-review.",
-    bullets: [
-      "Scrape + structured prompt assembly for lab-specific emails",
-      "Local LLM (Ollama) to keep drafts off cloud until reviewed",
-    ],
-    systemsSignal: "ML tooling · scraping · email automation",
-    tier: "supporting",
+    slug: "labreach-ai",
+    featured: false,
     category: "ml",
-    type: "independent",
-    tags: ["Python", "Ollama", "Scraping", "Gmail API", "SQLite"],
+    status: "iterating",
+    oneLine: "Research outreach copilot: scrape, summarize, draft, review, then send.",
+    overview:
+      "LabReach started as a script to reduce repetitive outreach prep. I kept a human-review checkpoint as a hard requirement so automation helps without blindly sending.",
+    techStack: ["Python", "Ollama", "BeautifulSoup", "Playwright", "SQLite", "Gmail API"],
+    githubUrl: "https://github.com/Rellendula26/labreach-ai",
+    thumbnail: "/projects/website-2.png",
+    images: ["/projects/website-2.png", "/projects/website-1.png", "/projects/website-cover.png"],
+    date: "2026",
+    buildStage: "CLI pipeline working, expanding campaign tooling",
+    keyHighlights: [
+      "URL discovery pipeline for department listing pages.",
+      "Local LLM drafting option to keep sensitive content off cloud services.",
+      "Review artifacts generated before any send action.",
+    ],
+    architecture: [
+      "Scrape/extract modules feed structured profile context.",
+      "LLM stage drafts outreach text from context templates.",
+      "Campaign layer stores history and controls send scheduling.",
+    ],
+    challenges: [
+      "JS-heavy faculty pages broke simple scraping logic.",
+      "Email extraction quality varied across lab websites.",
+      "Automation required strict safeguards around send behavior.",
+    ],
+    lessonsLearned: [
+      "Speed without brakes is not useful in outreach workflows.",
+      "A review layer is both an ethics and quality requirement.",
+    ],
+    technicalNotes: [
+      "Discovery + review tooling now matters more than single-email generation.",
+      "Next step is stronger campaign observability and retry handling.",
+    ],
+    media: [{ kind: "visual", visualId: "labreach-preview", alt: "LabReach preview", label: "Workflow preview" }],
+    tags: ["ml-tools", "automation", "scraping", "workflow"],
     signal: "ML + Tools",
-    href: "/projects/labreach-ai",
-    github: "https://github.com/Rellendula26/labreach-ai",
-    timeline: "2026",
-    media: {
-      kind: "visual",
-      visualId: "labreach-preview",
-      alt: "LabReach AI outreach workflow concept",
-    },
-  },
-  {
-    id: "S03",
-    slug: "count-coach",
+  }),
+  normalizeProject({
+    id: "P07",
     title: "Count Coach",
-    tagline: "Waveform UI · Librosa BPM · practice loops",
-    blurb:
-      "Audio analysis for dancers — isolate a section, infer tempo, drill with a metronome overlay.",
-    thesis:
-      "Next.js audio tool: WaveSurfer range selection → server-side Librosa tempo inference → practice-focused UX.",
-    bullets: [
-      "Colab prototype → Vercel-shipped Next.js app",
-      "Range selection propagates into analysis pipeline",
-    ],
-    systemsSignal: "Signal processing · web audio · practice UX",
-    tier: "supporting",
+    slug: "count-coach",
+    featured: false,
     category: "fullstack",
-    type: "independent",
-    tags: ["Signal Processing", "Next.js", "Librosa", "WaveSurfer"],
+    status: "shipped",
+    oneLine: "Dance practice tool with waveform selection and BPM analysis.",
+    overview:
+      "Built from a dance practice pain point: finding the right section and tempo quickly. The app combines waveform interactions with server-side tempo analysis.",
+    techStack: ["Next.js", "WaveSurfer", "Librosa", "Python", "Vercel"],
+    githubUrl: "https://github.com/Rellendula26/fresh-count-coach",
+    liveUrl: "https://fresh-count-coach.vercel.app",
+    demoVideoUrl: "/projects/count-coach-demo.mp4",
+    thumbnail: "/projects/count-coach-poster.png",
+    images: ["/projects/count-coach-1.png", "/projects/count-coach-2.png", "/projects/count-coach-poster.png"],
+    date: "2025-2026",
+    buildStage: "Shipped and used as a personal practice tool",
+    keyHighlights: [
+      "Waveform-based segment selection tied directly to analysis calls.",
+      "Server-side BPM inference integrated into a lightweight UX.",
+      "From Colab prototype to deployed app.",
+    ],
+    architecture: [
+      "Client selects clip region and posts audio segment metadata.",
+      "Backend processing runs tempo analysis and returns practice metrics.",
+      "UI overlays tempo guidance for targeted repetition.",
+    ],
+    challenges: [
+      "Syncing waveform selection with backend analysis boundaries.",
+      "Balancing analysis latency with smooth interaction flow.",
+    ],
+    lessonsLearned: [
+      "Niche tools can be valuable if they remove repetitive friction.",
+      "UX clarity matters as much as model/output quality.",
+    ],
+    technicalNotes: [
+      "Future direction includes richer loop controls and movement-aware cues.",
+    ],
+    tags: ["signal-processing", "audio", "fullstack", "dance"],
     signal: "Signal + Web",
-    href: "/projects/count-coach",
-    github: "https://github.com/Rellendula26/fresh-count-coach",
-    demo: "https://fresh-count-coach.vercel.app",
-    timeline: "2025–2026",
-    media: projectVideo("count-coach"),
-  },
-  {
-    id: "S04",
-    slug: "arduino-tetris",
+  }),
+  normalizeProject({
+    id: "P08",
     title: "Arduino TFT Tetris",
-    tagline: "SPI TFT · bare-metal game loop · piezo SFX",
-    blurb:
-      "Tetris on Arduino Nano + ST7735: SPI rendering, collision engine, debounced buttons, piezo beeps — no OS.",
-    thesis:
-      "Handheld Tetris on constrained MCU hardware: SPI framebuffer, tetromino engine, input debounce, and piezo tone() feedback.",
-    bullets: [
-      "Adafruit GFX → ST7735 SPI flush in fixed-timestep loop",
-      "Display solder bring-up + two-button dev iteration before handheld layout",
-    ],
-    systemsSignal: "Embedded · SPI graphics · real-time game loop",
-    tier: "supporting",
+    slug: "arduino-tetris",
+    featured: false,
     category: "embedded",
-    type: "independent",
-    tags: ["Arduino", "C++", "SPI", "ST7735", "Embedded"],
+    status: "shipped",
+    oneLine: "Bare-metal handheld Tetris on Arduino Nano + ST7735 display.",
+    overview:
+      "I built this to practice embedded game loops and real hardware debugging. Everything runs on-device: rendering, input handling, collision checks, scoring, and sound cues.",
+    techStack: ["Arduino Nano", "C++", "ST7735", "SPI", "Adafruit GFX"],
+    githubUrl: "https://github.com/Rellendula26/arduino-tetris",
+    demoVideoUrl: "/projects/arduinotetris.mp4",
+    thumbnail: "/projects/tetrissettup.jpg",
+    images: ["/projects/initialmaterials.jpg", "/projects/tetrissettup.jpg", "/projects/gallery/arduino-tetris-gameplay.svg"],
+    date: "2026",
+    buildStage: "Playable prototype complete",
+    keyHighlights: [
+      "Real-time game loop with falling pieces and collision logic.",
+      "SPI display pipeline tuned for constrained hardware.",
+      "Physical button controls with debounce handling.",
+    ],
+    architecture: [
+      "Main loop handles input, state update, collision, and redraw.",
+      "Grid/tetromino state stored in compact board representation.",
+      "Piezo signals triggered on key events like line clear/lock.",
+    ],
+    challenges: [
+      "Intermittent display issues required solder-level debugging.",
+      "ST7735 initialization quirks varied by panel variant.",
+      "Rendering performance had to be tuned to keep controls responsive.",
+    ],
+    lessonsLearned: [
+      "Hardware faults and software bugs are tightly coupled in embedded work.",
+      "Prototype staging (two-button dev setup first) reduced risk a lot.",
+    ],
+    technicalNotes: [
+      "Potential upgrades: rotation polish, difficulty ramps, enclosure design.",
+    ],
+    media: [
+      { kind: "video", src: "/projects/fixingtetrissolder.mp4", alt: "Display solder fixes", label: "Display bring-up" },
+      { kind: "video", src: "/projects/twobuttonandcomputertetrist.mp4", alt: "Control prototype", label: "Control prototype" },
+    ],
+    tags: ["embedded", "game-loop", "hardware-debugging", "spi"],
     signal: "Embedded",
-    href: "/projects/arduino-tetris",
-    github: "https://github.com/Rellendula26/arduino-tetris",
-    timeline: "2026",
-    media: projectVideo("arduino-tetris"),
-  },
-  {
-    id: "S05",
-    slug: "bhangra-coach",
+  }),
+  normalizeProject({
+    id: "P09",
     title: "Bhangra Coach",
-    tagline: "MediaPipe poses · FastAPI pipeline · Supabase",
-    blurb:
-      "CV dance coach: pose landmarks, temporal alignment vs reference, structured feedback in a full-stack app.",
-    thesis:
-      "Full-stack dance feedback: Next.js upload flow, FastAPI + MediaPipe processing, Supabase storage for clips and references.",
-    bullets: [
-      "Frame-by-frame pose extraction and movement delta computation",
-      "Reference vs user comparison UI with coaching feedback layer",
-    ],
-    systemsSignal: "CV pipeline · full-stack · pose estimation",
-    tier: "supporting",
+    slug: "bhangra-coach",
+    featured: false,
     category: "ml",
-    type: "independent",
-    tags: ["MediaPipe", "FastAPI", "Supabase", "Computer Vision", "Next.js"],
-    signal: "CV + ML",
-    href: "/projects/bhangra-coach",
-    github: "https://github.com/Rellendula26/bhangra-coach",
-    demo: "https://bhangra-coach.vercel.app",
-    timeline: "2026",
-    media: projectVideo("bhangra-coach"),
-  },
-  {
-    id: "S06",
-    slug: "pennplates",
-    title: "Penn Plates",
-    tagline: "Campus dining social · Next.js + Supabase",
-    blurb:
-      "Penn SPARK full-stack app connecting students around campus dining — real product constraints, real users.",
-    thesis:
-      "Full-stack social dining app: Next.js frontend, Supabase auth/data, designed for Penn SPARK student usage.",
-    bullets: [
-      "Auth + profile flows with Supabase RLS patterns",
-      "Product iteration from prototype to demo-ready build",
+    status: "in-progress",
+    oneLine: "Computer vision dance coach with pose comparison feedback.",
+    overview:
+      "This project explores whether movement feedback can feel useful instead of robotic. The pipeline compares user dance clips against references and surfaces actionable differences.",
+    techStack: ["Next.js", "FastAPI", "MediaPipe", "Supabase", "Computer Vision"],
+    githubUrl: "https://github.com/Rellendula26/bhangra-coach",
+    liveUrl: "https://bhangra-coach.vercel.app",
+    demoVideoUrl: "/projects/coverbhangraform.mp4",
+    thumbnail: "/projects/bc1.png",
+    images: ["/projects/bc1.png"],
+    date: "2026",
+    buildStage: "Actively iterating on feedback quality",
+    keyHighlights: [
+      "Pose landmark extraction across user and reference clips.",
+      "Temporal alignment layer for movement comparison.",
+      "Full-stack upload, processing, and feedback interface.",
     ],
-    systemsSignal: "Product engineering · full-stack · campus deployment",
-    tier: "supporting",
+    architecture: [
+      "Frontend handles upload and review flow.",
+      "FastAPI service computes landmark and delta metrics.",
+      "Supabase stores clip metadata and processing outputs.",
+    ],
+    challenges: [
+      "Movement alignment is hard when tempo differs between performers.",
+      "Raw pose deltas needed interpretation to become useful coaching cues.",
+    ],
+    lessonsLearned: [
+      "Feedback UX is as important as model pipeline quality.",
+      "Domain context (dance technique) matters for feature design.",
+    ],
+    technicalNotes: ["Current focus is improving robustness across camera angles and lighting."],
+    tags: ["computer-vision", "ml", "fullstack", "product-iteration"],
+    signal: "CV + ML",
+  }),
+  normalizeProject({
+    id: "P10",
+    title: "Penn Plates",
+    slug: "pennplates",
+    featured: false,
     category: "fullstack",
-    type: "clubs",
-    tags: ["Next.js", "Supabase", "React", "Penn SPARK"],
+    status: "shipped",
+    oneLine: "Campus dining social app built through Penn SPARK.",
+    overview:
+      "A real product-focused build with practical constraints, team collaboration, and user-oriented iteration. The goal was connecting students around dining in a way that felt lightweight and usable.",
+    techStack: ["Next.js", "Supabase", "React"],
+    demoVideoUrl: "/projects/pennplates.mp4",
+    thumbnail: "/projects/website-1.png",
+    images: ["/projects/website-1.png"],
+    date: "2026",
+    buildStage: "Demo-ready build completed",
+    keyHighlights: [
+      "Auth and profile experience grounded in Supabase RLS.",
+      "Product iteration driven by student use cases.",
+    ],
+    architecture: [
+      "Next.js client with Supabase-backed auth and data access.",
+      "Feature set optimized for practical student interaction loops.",
+    ],
+    challenges: [
+      "Balancing feature ambition with limited project timeline.",
+      "Keeping UX simple while still supporting social coordination.",
+    ],
+    lessonsLearned: [
+      "Shipping on time is often a bigger challenge than coding features.",
+      "Product clarity usually beats feature density.",
+    ],
+    technicalNotes: ["Good reminder that systems thinking applies to product scope too."],
+    tags: ["fullstack", "product", "student-build"],
     signal: "Product",
-    href: "/projects/pennplates",
-    timeline: "2026",
-    media: projectVideo("pennplates"),
-  },
-
-  // ── ARCHIVE (preserved) ────────────────────────────────────
-  {
-    id: "A01",
-    slug: "website",
+  }),
+  normalizeProject({
+    id: "P11",
     title: "Portfolio Website",
-    tagline: "This site",
-    blurb:
-      "Custom Next.js portfolio with reusable components, case study layouts, and Vercel deployment — the meta project documenting everything else.",
-    tier: "archive",
+    slug: "website",
+    featured: false,
     category: "fullstack",
-    type: "independent",
-    tags: ["Next.js", "React", "Tailwind", "Framer Motion"],
+    status: "iterating",
+    oneLine: "This site, built as an evolving engineering journal.",
+    overview:
+      "I treat this as a living system instead of a static portfolio. The project section itself now runs from reusable data so future additions are faster and more consistent.",
+    techStack: ["Next.js", "React", "Tailwind", "Framer Motion"],
+    githubUrl: "https://github.com/Rellendula26/ritvik-portfolio",
+    thumbnail: "/projects/website-cover.png",
+    images: ["/projects/website-cover.png", "/projects/website-1.png", "/projects/website-2.png"],
+    date: "2025-2026",
+    buildStage: "Continuous iteration",
+    keyHighlights: [
+      "Reusable card and detail layouts across projects.",
+      "Media support for images, videos, and generated visuals.",
+      "Structured project data model for scalable updates.",
+    ],
+    architecture: [
+      "Centralized project objects power home cards, list page, and detail pages.",
+      "Components handle mixed media without custom per-project UI work.",
+    ],
+    challenges: [
+      "Keeping the site personal while scaling structure and consistency.",
+    ],
+    lessonsLearned: [
+      "A portfolio should show process, not just polished outcomes.",
+    ],
+    technicalNotes: [
+      "This system is intentionally set up so adding projects is mostly data entry.",
+    ],
+    media: [{ kind: "visual", visualId: "portfolio-preview", alt: "Portfolio preview visual", label: "Site preview" }],
+    tags: ["meta", "design-system", "documentation"],
     signal: "Meta",
-    href: "/projects/website",
-    github: "https://github.com/Rellendula26/ritvik-portfolio",
-    timeline: "2025–2026",
-    media: {
-      kind: "image",
-      src: "/projects/website-cover.png",
-      alt: "Portfolio website",
-    },
-  },
-  {
-    id: "A02",
-    slug: "brain",
+  }),
+  normalizeProject({
+    id: "P12",
     title: "3D Brain Model",
-    tagline: "Anatomical CAD · Maya · 3D print",
-    blurb:
-      "High school neuroscience project: gyri/sulci brain model in Maya, 3D printed with physical region labels.",
-    tier: "archive",
+    slug: "brain",
+    featured: false,
     category: "cad",
-    type: "independent",
-    tags: ["Maya", "CAD", "3D Print", "Neuroscience"],
+    status: "archived",
+    oneLine: "Anatomical 3D brain model built and printed from Maya.",
+    overview:
+      "An earlier project that taught me a lot about turning conceptual anatomy into tangible physical models and labels.",
+    techStack: ["Maya", "CAD", "3D Printing"],
+    thumbnail: "/projects/brain-1.png",
+    images: ["/projects/brain-1.png"],
+    date: "High School",
+    buildStage: "Archived",
+    keyHighlights: ["Modeled gyri/sulci forms and produced a physical labeled print."],
+    architecture: ["Digital sculpting workflow -> print preparation -> physical labeling."],
+    challenges: ["Maintaining anatomical clarity while keeping print geometry stable."],
+    lessonsLearned: ["Physical artifacts force precision in a different way than software."],
+    technicalNotes: ["Preserved here as early evidence of build curiosity."],
+    tags: ["cad", "3d-print", "neuroscience"],
     signal: "CAD",
-    href: "/projects/brain",
-    timeline: "High School",
-    media: {
-      kind: "image",
-      src: "/projects/brain-1.png",
-      alt: "3D printed interactive brain model with region labels",
-    },
-  },
-  {
-    id: "A03",
-    slug: "OIDD",
+  }),
+  normalizeProject({
+    id: "P13",
     title: "Health Outcomes Analysis",
-    tagline: "STAT 7770 · pandas · decision trees",
-    blurb:
-      "Socioeconomic factors vs poor health outcomes — pandas, seaborn, and decision trees for OIDD capstone.",
-    tier: "archive",
+    slug: "OIDD",
+    featured: false,
     category: "data",
-    type: "course",
-    tags: ["Python", "Pandas", "ML", "Data Viz"],
+    status: "archived",
+    oneLine: "Socioeconomic health outcomes analysis for an OIDD capstone.",
+    overview:
+      "Course project using statistical and ML tooling to analyze relationships between socioeconomic factors and poor health outcomes.",
+    techStack: ["Python", "Pandas", "Seaborn", "Decision Trees"],
+    thumbnail: "/projects/OIDD.png",
+    images: ["/projects/OIDD.png"],
+    date: "Course project",
+    buildStage: "Archived",
+    keyHighlights: ["Data cleaning, visualization, and model exploration in one analysis workflow."],
+    architecture: ["Dataset prep -> feature analysis -> model fitting -> interpretation."],
+    challenges: ["Balancing statistical rigor with interpretable outputs under course timeline."],
+    lessonsLearned: ["Communicating assumptions is as important as model performance."],
+    technicalNotes: ["Included for context, not as a flagship engineering project."],
+    tags: ["data", "analysis", "coursework"],
     signal: "Data",
-    href: "/projects/OIDD",
-    timeline: "Course",
-    media: { kind: "image", src: "/projects/OIDD.png", alt: "OIDD analysis" },
-  },
+  }),
 ];
 
-export const FEATURED_PROJECTS = PROJECTS.filter((p) => p.tier === "featured");
-export const SUPPORTING_PROJECTS = PROJECTS.filter((p) => p.tier === "supporting");
-export const ARCHIVE_PROJECTS = PROJECTS.filter((p) => p.tier === "archive");
+function normalizeIntakeProject(
+  input: Partial<Project> &
+    Pick<
+      Project,
+      | "title"
+      | "slug"
+      | "category"
+      | "status"
+      | "oneLine"
+      | "overview"
+      | "techStack"
+      | "thumbnail"
+      | "images"
+      | "date"
+      | "buildStage"
+      | "keyHighlights"
+      | "architecture"
+      | "challenges"
+      | "lessonsLearned"
+      | "technicalNotes"
+    >
+): Project {
+  return normalizeProject({
+    id: input.id ?? `I-${input.slug}`,
+    title: input.title,
+    slug: input.slug,
+    featured: input.featured ?? false,
+    category: input.category,
+    status: input.status,
+    oneLine: input.oneLine,
+    overview: input.overview,
+    techStack: input.techStack,
+    githubUrl: input.githubUrl,
+    liveUrl: input.liveUrl,
+    demoVideoUrl: input.demoVideoUrl,
+    thumbnail: input.thumbnail,
+    images: input.images,
+    date: input.date,
+    buildStage: input.buildStage,
+    keyHighlights: input.keyHighlights,
+    architecture: input.architecture,
+    challenges: input.challenges,
+    lessonsLearned: input.lessonsLearned,
+    technicalNotes: input.technicalNotes,
+    nextImprovements: input.nextImprovements,
+    buildNotes: input.buildNotes,
+    debuggingNotes: input.debuggingNotes,
+    architectureImages: input.architectureImages,
+    imageGallery: input.imageGallery,
+    videoGallery: input.videoGallery,
+    driveFolderUrl: input.driveFolderUrl,
+    finalOutcome: input.finalOutcome,
+    intakeSourcePath: input.intakeSourcePath,
+    media: input.media,
+    tags: input.tags ?? [input.category, "intake"],
+    signal: input.signal ?? "Build",
+  });
+}
+
+const INTAKE_PROJECTS: Project[] = (GENERATED_INTAKE_PROJECTS as Partial<Project>[]).map(
+  (project) =>
+    normalizeIntakeProject(
+      project as Partial<Project> &
+        Pick<
+          Project,
+          | "title"
+          | "slug"
+          | "category"
+          | "status"
+          | "oneLine"
+          | "overview"
+          | "techStack"
+          | "thumbnail"
+          | "images"
+          | "date"
+          | "buildStage"
+          | "keyHighlights"
+          | "architecture"
+          | "challenges"
+          | "lessonsLearned"
+          | "technicalNotes"
+        >
+    )
+);
+
+export const PROJECTS: Project[] = [...BASE_PROJECTS, ...INTAKE_PROJECTS];
+
+export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured);
+export const SUPPORTING_PROJECTS = PROJECTS.filter(
+  (project) => !project.featured && project.status !== "archived"
+);
+export const ARCHIVE_PROJECTS = PROJECTS.filter((project) => project.status === "archived");
 
 export function getProjectBySlug(slug: string): Project | undefined {
-  return PROJECTS.find((p) => p.slug === slug);
+  return PROJECTS.find((project) => project.slug === slug);
 }
 
 export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
@@ -414,4 +883,11 @@ export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   research: "Research",
   cad: "CAD / Design",
   data: "Data Science",
+};
+
+export const PROJECT_STATUS_LABELS: Record<ProjectStatus, string> = {
+  shipped: "Shipped",
+  "in-progress": "In progress",
+  iterating: "Iterating",
+  archived: "Archived",
 };
