@@ -116,7 +116,6 @@
       "System evolved from single `dispense` action to `dispense_bin_1..4` command routing with GPIO mapping.",
       "UI iteration added responsive bin cards and stronger device-state feedback."
     ],
-    "driveFolderUrl": "https://drive.google.com/drive/folders/1bjVGjv9jKeJ5vQp3C1figbPR06-EoTDd?usp=sharing",
     "finalOutcome": "Current prototype supports browser-triggered, bin-specific dispense commands with observable queue states and Pi-based execution; it is a working cloud-to-hardware control loop with clear next steps around auth hardening, sensor feedback, and push updates.",
     "intakeSourcePath": "content/projects/vend-a-shoe",
     "localMediaImported": true,

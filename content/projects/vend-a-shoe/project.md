@@ -22,7 +22,6 @@ tags: "embedded,fullstack,iot,systems,intake"
 - Local hardware demo; browser action -> queued command -> motor actuation.
 
 ## Google Drive Folder
-- https://drive.google.com/drive/folders/1bjVGjv9jKeJ5vQp3C1figbPR06-EoTDd?usp=sharing
 
 ## What I built
 - A cyber-physical vending pipeline instead of a dashboard-only app.
