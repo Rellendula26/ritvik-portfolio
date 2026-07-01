@@ -81,6 +81,38 @@ This command:
 2. Updates `media/media.json` with metadata entries
 3. Lets `projects:intake:sync` render local assets in cards/pages
 
+If your Drive export includes a `media-metadata.json` file, titles/captions/descriptions are
+applied automatically during import.
+
+`media-metadata.json` can be either:
+
+- object map by filename:
+
+```json
+{
+  "IMG_1485.MOV": {
+    "title": "Dispense flow demo",
+    "caption": "Bin trigger from dashboard",
+    "description": "Shows UI click, queue insert, and physical dispense response."
+  }
+}
+```
+
+- or array rows:
+
+```json
+[
+  {
+    "file": "IMG_1485.MOV",
+    "title": "Dispense flow demo",
+    "caption": "Bin trigger from dashboard",
+    "description": "Shows UI click, queue insert, and physical dispense response."
+  }
+]
+```
+
+After import, you can still edit `content/projects/<slug>/media/media.json` directly.
+
 ## Repository analysis command
 
 Run:
