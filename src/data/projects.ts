@@ -181,6 +181,9 @@ function normalizeProject(input: ProjectInput): Project {
 }
 
 export function pickProjectPrimaryMedia(project: Project): ProjectMedia | undefined {
+  const explicitVisual = project.media.find((item) => item.kind === "visual");
+  if (explicitVisual) return explicitVisual;
+
   const fromExplicitHero = project.media.find(
     (item) => item.mediaType === "demo" || item.mediaType === "visual"
   );
