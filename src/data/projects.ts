@@ -32,9 +32,11 @@ export type ProjectMedia =
       kind: "image";
       src: string;
       alt: string;
+      title?: string;
       label?: string;
       mediaType?: Exclude<ProjectMediaType, "visual">;
       caption?: string;
+      description?: string;
       featured?: boolean;
       priority?: number;
     }
@@ -42,10 +44,12 @@ export type ProjectMedia =
       kind: "video";
       src: string;
       alt: string;
+      title?: string;
       label?: string;
       poster?: string;
       mediaType?: Exclude<ProjectMediaType, "visual">;
       caption?: string;
+      description?: string;
       featured?: boolean;
       priority?: number;
     }
@@ -53,9 +57,11 @@ export type ProjectMedia =
       kind: "visual";
       visualId: ProjectVisualId;
       alt: string;
+      title?: string;
       label?: string;
       mediaType?: "visual";
       caption?: string;
+      description?: string;
       featured?: boolean;
       priority?: number;
     };
@@ -181,6 +187,9 @@ function normalizeProject(input: ProjectInput): Project {
 }
 
 export function pickProjectPrimaryMedia(project: Project): ProjectMedia | undefined {
+  const explicitVisual = project.media.find((item) => item.kind === "visual");
+  if (explicitVisual) return explicitVisual;
+
   const fromExplicitHero = project.media.find(
     (item) => item.mediaType === "demo" || item.mediaType === "visual"
   );
@@ -215,7 +224,7 @@ const BASE_PROJECTS: Project[] = [
     status: "iterating",
     oneLine: "OCaml compiler pipeline from C source to x86-64 assembly.",
     overview:
-      "I built this to stop treating compilers like magic. It started as a tiny C subset and grew into a real lexer -> parser -> IR -> codegen pipeline where I could inspect every stage.",
+      "As I gained a deeper interest in understanding lower level systems, I realized that I never understood the basis behind compilers, the actual foundation of programming. Thus, I researched what I could about compilers, and I stumbled upon Nora Sandler's book on writing compilers. Here, I learnt the principles behind developing a compiler starting with a real lexer -> parser -> IR -> codegen pipeline where I could inspect every stage. One cool thing is that the book didn't spoonfeed me the code; rather, it gave the foundations, which I had to apply to the best of my ability.",
     techStack: ["OCaml", "Recursive Descent", "TACKY IR", "x86-64", "Make"],
     githubUrl: "https://github.com/Rellendula26/c-compiler",
     thumbnail: "/projects/gallery/c-compiler-source.svg",
@@ -244,8 +253,8 @@ const BASE_PROJECTS: Project[] = [
       "Apple Silicon workflow needed careful x86_64 target handling.",
     ],
     lessonsLearned: [
-      "IR is not optional once expression complexity increases.",
-      "Testing each compiler stage independently saves hours later.",
+      "As expression increases, IR becomes everso more important.",
+      "To optimize debugging, testing each compiler stage independently is a necessity.",
       "Reading generated assembly is still the fastest debug loop.",
     ],
     technicalNotes: [
@@ -325,9 +334,9 @@ const BASE_PROJECTS: Project[] = [
     techStack: ["Arduino UNO R4 WiFi", "Blynk", "WiFiS3", "Servos", "Ultrasonic", "I2C LCD"],
     githubUrl: "https://github.com/Rellendula26/bloombot-iot",
     liveUrl: "https://devpost.com/software/bloombot-8syfva",
-    demoVideoUrl: "/projects/makingbloombot.mp4",
-    thumbnail: "/projects/saberwhite.png",
-    images: ["/projects/saberwhite.png"],
+    demoVideoUrl: "/projects/bloombotsetup.mp4",
+    thumbnail: "/projects/placeholder-media.svg",
+    images: ["/projects/placeholder-media.svg"],
     date: "Spring 2026",
     buildStage: "Shipped demo + iterating on next hardware revision",
     keyHighlights: [
@@ -357,17 +366,15 @@ const BASE_PROJECTS: Project[] = [
     media: [
       {
         kind: "video",
-        src: "/projects/makingbloombot.mp4",
+        src: "/projects/bloombotsetup.mp4",
         alt: "Building BloomBot",
         label: "Build process",
-        poster: "/projects/saberwhite.png",
+        poster: "/projects/placeholder-media.svg",
         mediaType: "demo",
         featured: true,
         priority: 20,
       },
       { kind: "video", src: "/projects/bloombotsetup.mp4", alt: "BloomBot hardware setup", label: "Hardware setup" },
-      { kind: "video", src: "/projects/bloombotblynk.mp4", alt: "Blynk control", label: "Remote control demo" },
-      { kind: "video", src: "/projects/bloombot-web.mp4", alt: "Product demo", label: "Final interaction demo" },
     ],
     tags: ["iot", "embedded", "robotics", "actuators", "integration"],
     signal: "Robotics",
@@ -383,9 +390,8 @@ const BASE_PROJECTS: Project[] = [
     overview:
       "I used this as a hands-on integration project: sketching, CAD, soldering, wiring, and iteration until the final object felt robust in-hand and not like a fragile prototype.",
     techStack: ["Fusion 360", "LED Strip", "Soldering", "3D Printing", "Circuit Design"],
-    demoVideoUrl: "/projects/fullsaber-web.mp4",
-    thumbnail: "/projects/saberwhite.png",
-    images: ["/projects/saberwhite.png"],
+    thumbnail: "/projects/placeholder-media.svg",
+    images: ["/projects/placeholder-media.svg"],
     date: "Spring 2026",
     buildStage: "Shipped physical build",
     keyHighlights: [
@@ -412,22 +418,7 @@ const BASE_PROJECTS: Project[] = [
       "Documented each stage from whiteboard circuits to final lab testing.",
       "Next version could be battery-optimized with a cleaner internal harness.",
     ],
-    media: [
-      {
-        kind: "video",
-        src: "/projects/fullsaber-web.mp4",
-        alt: "Full lightsaber demo",
-        label: "Final demo",
-        poster: "/projects/saberwhite.png",
-        mediaType: "demo",
-        featured: true,
-        priority: 20,
-      },
-      { kind: "video", src: "/projects/sabercadp1.mov", alt: "CAD design process", label: "CAD iteration" },
-      { kind: "video", src: "/projects/sabersauder1.MOV", alt: "Soldering process", label: "Soldering" },
-      { kind: "video", src: "/projects/saberfirstdemo.MOV", alt: "First functional demo", label: "Early demo" },
-      { kind: "video", src: "/projects/sabersecurity.MOV", alt: "Lab testing", label: "Lab testing" },
-    ],
+    media: [],
     tags: ["hardware", "cad", "soldering", "mechanical-design"],
     signal: "Hardware",
   }),

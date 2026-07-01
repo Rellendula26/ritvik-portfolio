@@ -79,6 +79,16 @@ function limitItems(items: string[], max: number) {
   return items.slice(0, max);
 }
 
+function MediaNotes({ media }: { media: ProjectMedia }) {
+  if (!media.caption && !media.description) return null;
+  return (
+    <div className="border-t border-zinc-200 bg-white px-4 py-3">
+      {media.caption && <p className="text-xs text-zinc-700">{media.caption}</p>}
+      {media.description && <p className="mt-1 text-xs leading-relaxed text-zinc-500">{media.description}</p>}
+    </div>
+  );
+}
+
 function Hero({ project }: { project: Project }) {
   const hero = pickProjectPrimaryMedia(project);
 
@@ -171,11 +181,7 @@ function Hero({ project }: { project: Project }) {
               />
             )}
           </div>
-          {hero?.caption && (
-            <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-              {hero.caption}
-            </p>
-          )}
+          {hero && <MediaNotes media={hero} />}
         </div>
       </div>
     </header>
@@ -391,11 +397,7 @@ export default async function ProjectDetailPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>
@@ -417,11 +419,7 @@ export default async function ProjectDetailPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>
@@ -443,11 +441,7 @@ export default async function ProjectDetailPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>
@@ -472,11 +466,7 @@ export default async function ProjectDetailPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>

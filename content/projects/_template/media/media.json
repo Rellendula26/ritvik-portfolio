@@ -6,7 +6,9 @@
       "src": "videos/demo.mp4",
       "type": "demo",
       "alt": "Demo clip",
+      "title": "Main demo flow",
       "caption": "Main demo",
+      "description": "End-to-end interaction from trigger to output.",
       "featured": true,
       "priority": 10
     },
@@ -14,7 +16,9 @@
       "src": "images/ui-overview.png",
       "type": "image",
       "alt": "UI overview",
+      "title": "Operator dashboard",
       "caption": "Control UI",
+      "description": "Dashboard layout used during live testing.",
       "featured": true,
       "priority": 8
     },
@@ -22,7 +26,9 @@
       "src": "diagrams/architecture.png",
       "type": "diagram",
       "alt": "Architecture diagram",
+      "title": "Cloud-to-device architecture",
       "caption": "Cloud to device flow",
+      "description": "Request lifecycle across frontend, queue, and worker.",
       "featured": false,
       "priority": 5
     },
@@ -30,7 +36,9 @@
       "src": "images/build-photo-1.jpg",
       "type": "process",
       "alt": "Build process photo",
+      "title": "Bench setup",
       "caption": "Bench setup",
+      "description": "Early wiring and instrumentation during calibration.",
       "featured": false,
       "priority": 3
     }

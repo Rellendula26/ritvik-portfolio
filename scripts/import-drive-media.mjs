@@ -8,6 +8,7 @@ const CONTENT_ROOT = path.join(ROOT, "content", "projects");
 
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"]);
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".m4v", ".MOV"]);
+const METADATA_FILE = "media-metadata.json";
 
 function usage() {
   console.log("Usage:");
@@ -88,6 +89,59 @@ async function loadManifest(manifestPath) {
   }
 }
 
+function toTitleFromFileName(fileName) {
+  return fileName
+    .replace(path.extname(fileName), "")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeMetadataRecord(record) {
+  if (!record || typeof record !== "object") return null;
+  return {
+    title: typeof record.title === "string" ? record.title.trim() : undefined,
+    caption: typeof record.caption === "string" ? record.caption.trim() : undefined,
+    description: typeof record.description === "string" ? record.description.trim() : undefined,
+    alt: typeof record.alt === "string" ? record.alt.trim() : undefined,
+    featured: typeof record.featured === "boolean" ? record.featured : undefined,
+    priority: typeof record.priority === "number" ? record.priority : undefined,
+    type: typeof record.type === "string" ? record.type.trim() : undefined,
+  };
+}
+
+async function loadDriveMetadata(sourceDir) {
+  const metadataPath = path.join(sourceDir, METADATA_FILE);
+  if (!(await exists(metadataPath))) return new Map();
+
+  try {
+    const parsed = JSON.parse(await fs.readFile(metadataPath, "utf8"));
+    const map = new Map();
+
+    if (Array.isArray(parsed)) {
+      for (const row of parsed) {
+        if (!row || typeof row !== "object" || typeof row.file !== "string") continue;
+        const key = path.basename(row.file).toLowerCase();
+        const normalized = normalizeMetadataRecord(row);
+        if (normalized) map.set(key, normalized);
+      }
+      return map;
+    }
+
+    if (parsed && typeof parsed === "object") {
+      for (const [fileName, record] of Object.entries(parsed)) {
+        const key = path.basename(fileName).toLowerCase();
+        const normalized = normalizeMetadataRecord(record);
+        if (normalized) map.set(key, normalized);
+      }
+    }
+
+    return map;
+  } catch {
+    return new Map();
+  }
+}
+
 async function main() {
   const [, , slugRaw, sourceRaw] = process.argv;
   if (slugRaw === "-h" || slugRaw === "--help") {
@@ -120,6 +174,7 @@ async function main() {
   await ensureDir(path.join(mediaRoot, "thumbnails"));
 
   const files = await walkFiles(sourceDir);
+  const driveMetadata = await loadDriveMetadata(sourceDir);
   const copied = [];
 
   for (const filePath of files) {
@@ -135,30 +190,49 @@ async function main() {
 
   const manifestPath = path.join(mediaRoot, "media.json");
   const manifest = await loadManifest(manifestPath);
-  const existing = new Set(
-    manifest.items.map((item) => `${item.src}|${item.type || "image"}`)
+  const existing = new Map(
+    manifest.items.map((item, index) => [`${item.src}|${item.type || "image"}`, index])
   );
 
   for (const item of copied) {
+    const metadata = driveMetadata.get(item.fileName.toLowerCase());
     const type =
-      item.bucket === "videos"
+      metadata?.type ||
+      (item.bucket === "videos"
         ? "video"
         : item.bucket === "diagrams"
           ? "diagram"
           : item.bucket === "thumbnails"
             ? "image"
-            : "image";
+            : "image");
     const src = item.relative;
     const key = `${src}|${type}`;
-    if (existing.has(key)) continue;
-    manifest.items.push({
+    const inferredTitle = toTitleFromFileName(item.fileName);
+    const title = metadata?.title || inferredTitle;
+    const caption = metadata?.caption || title;
+    const nextItem = {
       src,
       type,
-      alt: `${slug} ${item.fileName}`,
-      caption: item.fileName,
-      featured: item.bucket === "thumbnails",
-      priority: item.bucket === "thumbnails" ? 9 : item.bucket === "videos" ? 8 : 4,
-    });
+      alt: metadata?.alt || `${slug} ${title}`,
+      title,
+      caption,
+      description: metadata?.description,
+      featured: metadata?.featured ?? item.bucket === "thumbnails",
+      priority:
+        metadata?.priority ??
+        (item.bucket === "thumbnails" ? 9 : item.bucket === "videos" ? 8 : 4),
+    };
+
+    const existingIndex = existing.get(key);
+    if (typeof existingIndex === "number") {
+      manifest.items[existingIndex] = {
+        ...manifest.items[existingIndex],
+        ...nextItem,
+      };
+      continue;
+    }
+
+    manifest.items.push(nextItem);
   }
 
   if (!manifest.thumbnail) {
@@ -175,6 +249,11 @@ async function main() {
 
   console.log(`Imported ${copied.length} media file(s) into content/projects/${slug}/media`);
   console.log(`Updated media manifest: content/projects/${slug}/media/media.json`);
+  if (driveMetadata.size > 0) {
+    console.log(`Applied metadata from ${METADATA_FILE} (${driveMetadata.size} entries).`);
+  } else {
+    console.log(`Tip: add ${METADATA_FILE} in the Drive export folder for titles/captions.`);
+  }
   console.log("Next: run npm run projects:intake:sync");
 }
 

@@ -223,6 +223,9 @@ export default function ProjectCard({
               isFeatured ? "text-stone-300" : "text-stone-700",
             ].join(" ")}
           >
+            <span className={isFeatured ? "text-amber-300/90" : "text-amber-900/80"}>
+              Motivation:{" "}
+            </span>
             {project.overview}
           </p>
 
