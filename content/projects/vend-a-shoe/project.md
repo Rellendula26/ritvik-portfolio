@@ -14,7 +14,7 @@ tags: "Raspberry Pi 4, Python, Next.js, Supabase, MG996R, Onshape, GPIO, PWM, US
 # Vend-A-Shoe Intake
 
 ## Summary
-- Designed, fabricated, and shipped a client-facing electromechanical dispensing system integrating custom mechanical design, embedded control, electrical integration, and cloud connectivity.
+- Designed and shipped a client-facing electromechanical dispensing platform integrating mechanical packaging, embedded control, and cloud-connected automation.
 
 ## GitHub
 - https://github.com/Rellendula26/vend-a-shoe-backend

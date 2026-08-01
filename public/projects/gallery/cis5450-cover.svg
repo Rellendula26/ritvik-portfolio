@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0c0a09"/>
+      <stop offset="55%" stop-color="#1c1917"/>
+      <stop offset="100%" stop-color="#292524"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="18%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#f59e0b" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect width="1200" height="675" fill="url(#glow)"/>
+  <rect x="48" y="40" width="1104" height="595" rx="22" fill="#0a0a0a" stroke="#44403c" stroke-width="1.5"/>
+
+  <text x="88" y="110" fill="#f59e0b" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" letter-spacing="2">CIS 5450</text>
+  <text x="88" y="168" fill="#fafaf9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="42" font-weight="700">Loan Default Risk</text>
+  <text x="88" y="212" fill="#a8a29e" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18">Lending Club tabular ML pipeline</text>
+
+  <!-- pipeline chips -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14">
+    <rect x="88" y="280" width="150" height="44" rx="10" fill="#1c1917" stroke="#f59e0b"/>
+    <text x="163" y="308" text-anchor="middle" fill="#fde68a">1M+ loans</text>
+
+    <text x="250" y="308" fill="#57534e">-&gt;</text>
+
+    <rect x="278" y="280" width="150" height="44" rx="10" fill="#1c1917" stroke="#a8a29e"/>
+    <text x="353" y="308" text-anchor="middle" fill="#e7e5e4">drop leakage</text>
+
+    <text x="440" y="308" fill="#57534e">-&gt;</text>
+
+    <rect x="468" y="280" width="150" height="44" rx="10" fill="#1c1917" stroke="#a8a29e"/>
+    <text x="543" y="308" text-anchor="middle" fill="#e7e5e4">split first</text>
+
+    <text x="630" y="308" fill="#57534e">-&gt;</text>
+
+    <rect x="658" y="280" width="170" height="44" rx="10" fill="#1c1917" stroke="#f59e0b"/>
+    <text x="743" y="308" text-anchor="middle" fill="#fde68a">XGBoost ~0.72 AUC</text>
+  </g>
+
+  <text x="88" y="390" fill="#d6d3d1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">What mattered: column discipline, not fancy models.</text>
+  <text x="88" y="424" fill="#a8a29e" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">Post-outcome fields out. Train-only fits. Thresholds that respect cost.</text>
+
+  <rect x="88" y="480" width="220" height="36" rx="8" fill="#292524" stroke="#57534e"/>
+  <text x="198" y="504" text-anchor="middle" fill="#fafaf9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">leakage-aware ML</text>
+
+  <rect x="324" y="480" width="200" height="36" rx="8" fill="#292524" stroke="#57534e"/>
+  <text x="424" y="504" text-anchor="middle" fill="#fafaf9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">imbalanced classes</text>
+
+  <rect x="540" y="480" width="220" height="36" rx="8" fill="#292524" stroke="#57534e"/>
+  <text x="650" y="504" text-anchor="middle" fill="#fafaf9" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">decision thresholds</text>
+</svg>

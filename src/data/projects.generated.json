@@ -6,7 +6,7 @@
     "featured": true,
     "category": "embedded",
     "status": "shipped",
-    "oneLine": "Designed, fabricated, and shipped a client-facing electromechanical dispensing system integrating custom mechanical design, embedded control, electrical integration, and cloud connectivity.",
+    "oneLine": "Designed and shipped a client-facing electromechanical dispensing platform integrating mechanical packaging, embedded control, and cloud-connected automation.",
     "overview": "During my internship at BrainChild Engineering, I developed Vend-A-Shoe for a client deployment. The work meant designing a custom mechanical enclosure; integrating electrical distribution for 4 MG996R servos, 8 LED indicators, and a cooling fan across 40+ wire interconnects; writing embedded control on a Raspberry Pi; and connecting that stack to an existing frontend through a cloud command pipeline. The hardest part was not any single subsystem; it was integrating them. Packaging moved the harness; electrical changes moved the enclosure; software had to absorb real manufacturing tolerances.",
     "techStack": [
       "Raspberry Pi 4",

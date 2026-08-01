@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="420" viewBox="0 0 900 420">
+ <rect width="900" height="420" fill="#070707"/>
+ <rect x="28" y="24" width="844" height="372" rx="14" fill="#0f0f0f" stroke="#292524"/>
+ <text x="52" y="56" fill="#38bdf8" font-family="ui-monospace,monospace" font-size="13">CIS 5450 | LOAN DEFAULT RISK PIPELINE</text>
+ <text x="52" y="78" fill="#a8a29e" font-family="ui-monospace,monospace" font-size="11">leakage-safe order: split first, fit transforms on train only</text>
+
+ <g font-family="ui-monospace,monospace" font-size="11">
+  <rect x="48" y="110" width="150" height="54" rx="8" fill="#1c1917" stroke="#38bdf8"/>
+  <text x="123" y="132" text-anchor="middle" fill="#e0f2fe">Lending Club</text>
+  <text x="123" y="150" text-anchor="middle" fill="#a8a29e">1M+ loans</text>
+
+  <rect x="220" y="110" width="150" height="54" rx="8" fill="#1c1917" stroke="#22d3ee"/>
+  <text x="295" y="132" text-anchor="middle" fill="#cffafe">Clean + labels</text>
+  <text x="295" y="150" text-anchor="middle" fill="#a8a29e">drop leakage</text>
+
+  <rect x="392" y="110" width="150" height="54" rx="8" fill="#1c1917" stroke="#38bdf8"/>
+  <text x="467" y="132" text-anchor="middle" fill="#e0f2fe">EDA</text>
+  <text x="467" y="150" text-anchor="middle" fill="#a8a29e">motivate features</text>
+
+  <rect x="564" y="110" width="150" height="54" rx="8" fill="#1c1917" stroke="#22d3ee"/>
+  <text x="639" y="132" text-anchor="middle" fill="#cffafe">Split 80/20</text>
+  <text x="639" y="150" text-anchor="middle" fill="#a8a29e">stratified</text>
+
+  <rect x="736" y="110" width="120" height="54" rx="8" fill="#1c1917" stroke="#38bdf8"/>
+  <text x="796" y="132" text-anchor="middle" fill="#e0f2fe">Train fits</text>
+  <text x="796" y="150" text-anchor="middle" fill="#a8a29e">impute/scale</text>
+ </g>
+
+ <g font-family="ui-monospace,monospace" font-size="12" fill="#e7e5e4">
+  <text x="52" y="210">Models: LR -> ElasticNet -> Tree -> RF -> XGBoost (tuned ~0.7175 AUC)</text>
+  <text x="52" y="238" fill="#a8a29e">Evaluation: AUC-ROC, PR tradeoff, not accuracy on 80/20 imbalance</text>
+  <text x="52" y="266" fill="#a8a29e">Leakage removed: recoveries, total_pymnt, post-outcome fields</text>
+  <text x="52" y="294" fill="#a8a29e">Hypothesis tests: DTI, int_rate, revol_util differ by default status (p &lt; 0.0005)</text>
+  <text x="52" y="330" fill="#38bdf8">Signal: leakage-aware ML pipelines and decision-threshold thinking</text>
+  <text x="52" y="358" fill="#a8a29e">Cost simulation: threshold ` 0.5 when FN/FP dollars are asymmetric</text>
+ </g>
+</svg>

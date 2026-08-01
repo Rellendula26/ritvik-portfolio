@@ -1,37 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#070707"/>
-  <rect x="40" y="40" width="720" height="420" rx="14" fill="#0f0f0f" stroke="#292524"/>
+ <rect width="800" height="500" fill="#070707"/>
+ <rect x="40" y="40" width="720" height="420" rx="14" fill="#0f0f0f" stroke="#292524"/>
 
-  <rect x="70" y="120" width="140" height="70" rx="10" fill="#1c1917" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="140" y="150" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="13">Browser UI</text>
-  <text x="140" y="170" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">Next.js bins</text>
+ <rect x="70" y="120" width="140" height="70" rx="10" fill="#1c1917" stroke="#f59e0b" stroke-width="1.5"/>
+ <text x="140" y="150" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="13">Browser UI</text>
+ <text x="140" y="170" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">Next.js bins</text>
 
-  <rect x="260" y="120" width="160" height="70" rx="10" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
-  <text x="340" y="150" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="13">Supabase queue</text>
-  <text x="340" y="170" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">device_commands</text>
+ <rect x="260" y="120" width="160" height="70" rx="10" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
+ <text x="340" y="150" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="13">Supabase queue</text>
+ <text x="340" y="170" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">device_commands</text>
 
-  <rect x="480" y="120" width="150" height="70" rx="10" fill="#1c1917" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="555" y="150" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="13">Pi worker</text>
-  <text x="555" y="170" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">claim + execute</text>
+ <rect x="480" y="120" width="150" height="70" rx="10" fill="#1c1917" stroke="#f59e0b" stroke-width="1.5"/>
+ <text x="555" y="150" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="13">Pi worker</text>
+ <text x="555" y="170" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">claim + execute</text>
 
-  <rect x="660" y="120" width="90" height="70" rx="10" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
-  <text x="705" y="150" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="12">Servos</text>
-  <text x="705" y="168" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="10">GPIO PWM</text>
+ <rect x="660" y="120" width="90" height="70" rx="10" fill="#1c1917" stroke="#fb923c" stroke-width="1.5"/>
+ <text x="705" y="150" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="12">Servos</text>
+ <text x="705" y="168" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="10">GPIO PWM</text>
 
-  <path d="M210 155 H252" stroke="#57534e" stroke-width="2" marker-end="url(#arrow)"/>
-  <path d="M420 155 H472" stroke="#57534e" stroke-width="2" marker-end="url(#arrow)"/>
-  <path d="M630 155 H652" stroke="#57534e" stroke-width="2" marker-end="url(#arrow)"/>
+ <path d="M210 155 H252" stroke="#57534e" stroke-width="2" marker-end="url(#arrow)"/>
+ <path d="M420 155 H472" stroke="#57534e" stroke-width="2" marker-end="url(#arrow)"/>
+ <path d="M630 155 H652" stroke="#57534e" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <rect x="120" y="260" width="560" height="120" rx="12" fill="#1c1917" stroke="#44403c"/>
-  <text x="400" y="295" text-anchor="middle" fill="#e7e5e4" font-family="ui-monospace, monospace" font-size="13">status lifecycle</text>
-  <text x="400" y="325" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="14">pending � running � completed | failed</text>
-  <text x="400" y="355" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="12">Pi never exposed to the public internet</text>
+ <rect x="120" y="260" width="560" height="120" rx="12" fill="#1c1917" stroke="#44403c"/>
+ <text x="400" y="295" text-anchor="middle" fill="#e7e5e4" font-family="ui-monospace, monospace" font-size="13">status lifecycle</text>
+ <text x="400" y="325" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="14">pending -> running -> completed | failed</text>
+ <text x="400" y="355" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="12">Pi never exposed to the public internet</text>
 
-  <text x="60" y="430" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="12" opacity="0.85">VEND-A-SHOE  cloud command queue to physical dispense</text>
+ <text x="60" y="430" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="12" opacity="0.85">VEND-A-SHOE   cloud command queue to physical dispense</text>
 
-  <defs>
-    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#57534e"/>
-    </marker>
-  </defs>
+ <defs>
+  <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+   <path d="M0,0 L6,3 L0,6 Z" fill="#57534e"/>
+  </marker>
+ </defs>
 </svg>

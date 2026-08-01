@@ -1,0 +1,43 @@
+---
+description: Keep engineering case-study sections text-led and media-clean
+globs: src/data/engineering-case-study.ts,src/components/project-page/case-study/**/*.tsx,content/projects/**/*.md
+alwaysApply: false
+---
+
+# Case-study media hygiene
+
+Engineering case-study pages must read like a design review, not a media dump.
+
+## Hard limits per discipline block
+
+- Prefer **1 primary figure** (video or image).
+- Allow **at most 2** media items in a discipline section.
+- Never stack 3+ large video cards beside Goal/Design/Challenges text.
+- Text leads. Media supports one claim; it does not fill the column.
+
+## No duplicate media across sections
+
+- Each clip/image should appear in **one** discipline block only.
+- Reuse is allowed in Results only when it is evidence for a validated claim.
+- If two sections need "soldering," pick the better home (usually Manufacturing or the LED-salvage Electrical story) and give the other a different still (perfboard, CAD, wiring).
+
+## What belongs where
+
+- **Bench bring-up / PSU-only circuit** → Analog (or Electrical), one clip.
+- **Circuit inside the packaged product** → Product Engineering / Integration, not a second Analog video.
+- **Joke / travel / non-evidence clips** → Results only, clearly labeled as non-substantive; never Manufacturing or Lab testing.
+- **Airport / meme stills** never substitute for validation media.
+
+## Layout expectations
+
+- Discipline columns should stay roughly balanced: text height ≈ media height.
+- Prefer one `aspect-video` figure over a tall stack of framed players.
+- Secondary stills (if any) should be images, not a second full demo video.
+- Hero/exec summary stays skim-first; depth and extra clips live below, still capped.
+
+## Anti-patterns (do not ship)
+
+- Same soldering video in Electrical and Manufacturing.
+- Analog section with 4 stacked cards (2 videos + 2 images) dwarfing the text.
+- "Lab testing" captions on non-lab joke footage.
+- Media-first sections where the reader scrolls through players before reading Goal/Design.

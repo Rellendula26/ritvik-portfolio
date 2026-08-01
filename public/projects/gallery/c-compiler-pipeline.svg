@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+ <rect width="900" height="560" fill="#070707"/>
+ <rect x="36" y="28" width="828" height="504" rx="14" fill="#0f0f0f" stroke="#292524"/>
+ <text x="60" y="58" fill="#f59e0b" font-family="ui-monospace,monospace" font-size="13">C COMPILER PIPELINE</text>
+ <text x="60" y="78" fill="#a8a29e" font-family="ui-monospace,monospace" font-size="11">each arrow adds an invariant; removes a class of complexity</text>
+
+ <!-- column of stages -->
+ <g font-family="ui-monospace,monospace" font-size="12">
+  <rect x="70" y="100" width="200" height="36" rx="8" fill="#1c1917" stroke="#f59e0b"/>
+  <text x="170" y="123" text-anchor="middle" fill="#fde68a">C Source</text>
+
+  <path d="M170 136 V152" stroke="#57534e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="70" y="154" width="200" height="36" rx="8" fill="#1c1917" stroke="#fb923c"/>
+  <text x="170" y="177" text-anchor="middle" fill="#fdba74">Lexer -> Tokens</text>
+
+  <path d="M170 190 V206" stroke="#57534e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="70" y="208" width="200" height="36" rx="8" fill="#1c1917" stroke="#f59e0b"/>
+  <text x="170" y="231" text-anchor="middle" fill="#fde68a">Parser -> AST</text>
+
+  <path d="M170 244 V260" stroke="#57534e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="70" y="262" width="200" height="36" rx="8" fill="#1c1917" stroke="#fb923c"/>
+  <text x="170" y="285" text-anchor="middle" fill="#fdba74">Resolve / Labels</text>
+
+  <path d="M170 298 V314" stroke="#57534e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="70" y="316" width="200" height="36" rx="8" fill="#1c1917" stroke="#f59e0b"/>
+  <text x="170" y="339" text-anchor="middle" fill="#fde68a">TACKY IR</text>
+
+  <path d="M170 352 V368" stroke="#57534e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="70" y="370" width="200" height="36" rx="8" fill="#1c1917" stroke="#fb923c"/>
+  <text x="170" y="393" text-anchor="middle" fill="#fdba74">x86 + Fixups</text>
+
+  <path d="M170 406 V422" stroke="#57534e" stroke-width="2" marker-end="url(#a)"/>
+  <rect x="70" y="424" width="200" height="36" rx="8" fill="#1c1917" stroke="#f59e0b"/>
+  <text x="170" y="447" text-anchor="middle" fill="#fde68a">Assembler -> Exec</text>
+ </g>
+
+ <g font-family="ui-monospace,monospace" font-size="12" fill="#e7e5e4">
+  <text x="320" y="120">example: return ~(-2);</text>
+  <text x="320" y="150" fill="#a8a29e">tokens: return ~ ( - 2 ) ;</text>
+  <text x="320" y="180" fill="#a8a29e">AST: Return(Complement(Negate(2)))</text>
+  <text x="320" y="220" fill="#fde68a">TACKY</text>
+  <text x="320" y="242" fill="#a8a29e">tmp.0 = -2</text>
+  <text x="320" y="262" fill="#a8a29e">tmp.1 = ~tmp.0</text>
+  <text x="320" y="282" fill="#a8a29e">return tmp.1</text>
+  <text x="320" y="330" fill="#fde68a">x86 (stack + scratch fixup)</text>
+  <text x="320" y="352" fill="#a8a29e">movl $2, -4(%rbp)</text>
+  <text x="320" y="372" fill="#a8a29e">negl -4(%rbp)</text>
+  <text x="320" y="392" fill="#a8a29e">movl -4(%rbp), %r10d  ; fixup</text>
+  <text x="320" y="412" fill="#a8a29e">notl &amp; -> %eax</text>
+  <text x="320" y="460" fill="#f59e0b">invariant: each stage preserves program meaning</text>
+ </g>
+
+ <defs>
+  <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+   <path d="M0,0 L6,3 L0,6 Z" fill="#57534e"/>
+  </marker>
+ </defs>
+</svg>

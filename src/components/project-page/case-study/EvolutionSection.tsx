@@ -58,7 +58,7 @@ export default function EvolutionSection({
                   {milestone.media ? (
                     <CaseStudyMediaFrame
                       media={milestone.media}
-                      className="h-[200px] md:h-[240px]"
+                      className="aspect-video w-full"
                     />
                   ) : (
                     <div className="rounded-[1.75rem] border border-dashed border-zinc-200 bg-white/60 px-5 py-8 text-sm text-zinc-500">

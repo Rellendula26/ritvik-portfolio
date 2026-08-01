@@ -293,7 +293,13 @@ export default function ProjectCard({
               {project.liveUrl && (
                 <ExternalLink
                   href={project.liveUrl}
-                  label={project.slug === "bloombot" ? "Devpost" : "Live"}
+                  label={
+                    project.slug === "bloombot"
+                      ? "Devpost"
+                      : /youtu\.?be/i.test(project.liveUrl)
+                        ? "YouTube"
+                        : "Live"
+                  }
                   featured={isFeatured}
                   onNavigate={stopNav}
                 />

@@ -47,8 +47,8 @@ export default function ProjectHero({ project }: { project: Project }) {
   return (
     <header className="relative overflow-hidden rounded-[2.25rem] border border-zinc-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(253,186,116,0.10),transparent_28%)]" />
-      <div className="relative grid grid-cols-1 gap-8 px-6 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8">
-        <div>
+      <div className="relative grid grid-cols-1 gap-8 px-6 py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-start lg:gap-10 lg:px-8">
+        <div className="min-w-0">
           <div className="flex flex-wrap gap-2">
             <ProjectBadge>{CATEGORY_LABELS[project.category]}</ProjectBadge>
             <ProjectBadge tone="dark">{PROJECT_STATUS_LABELS[project.status]}</ProjectBadge>
@@ -88,29 +88,31 @@ export default function ProjectHero({ project }: { project: Project }) {
             </div>
           )}
 
-          <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              { label: "Date", value: project.date },
-              { label: "Focus", value: project.signal },
-              { label: "Build stage", value: project.buildStage },
-              project.disciplines && project.disciplines.length > 0
-                ? {
-                    label: "Disciplines",
-                    value: project.disciplines.join(", "),
-                  }
-                : {
-                    label: "Stack",
-                    value: project.techStack.slice(0, 2).join(", "),
-                  },
-            ].map((item) => (
+          <dl className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {(
+              [
+                { label: "Date", value: project.date },
+                { label: "Focus", value: project.signal },
+                { label: "Build stage", value: project.buildStage },
+                project.disciplines && project.disciplines.length > 0
+                  ? {
+                      label: "Disciplines",
+                      value: project.disciplines.join(" · "),
+                    }
+                  : {
+                      label: "Stack",
+                      value: project.techStack.slice(0, 2).join(", "),
+                    },
+              ] as Array<{ label: string; value: string }>
+            ).map((item) => (
               <div
                 key={item.label}
-                className="rounded-2xl border border-zinc-200 bg-zinc-50/90 px-3 py-3"
+                className="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50/90 px-2.5 py-2"
               >
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                <dt className="text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
                   {item.label}
                 </dt>
-                <dd className="mt-1 text-xs font-medium leading-snug text-zinc-900">
+                <dd className="mt-0.5 text-[11px] font-medium leading-snug text-zinc-900">
                   {item.value}
                 </dd>
               </div>
@@ -135,7 +137,9 @@ export default function ProjectHero({ project }: { project: Project }) {
                 rel="noreferrer"
                 className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
               >
-                Live demo
+                {/youtu\.?be/i.test(project.liveUrl)
+                  ? "Watch on YouTube"
+                  : "Live demo"}
               </a>
             )}
           </div>
@@ -147,36 +151,38 @@ export default function ProjectHero({ project }: { project: Project }) {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-[#070707] shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
-          <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
-            {hero?.label ?? "Project preview"}
+        <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
+          <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-[#070707] shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
+            <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
+              {hero?.label ?? "Project preview"}
+            </div>
+            <div className="relative aspect-video w-full bg-[#070707]">
+              {hero ? (
+                renderMedia(hero, true)
+              ) : (
+                <ProjectMediaImage
+                  src={project.thumbnail}
+                  alt={`${project.title} thumbnail`}
+                  priority
+                  sizes="(max-width: 768px) 100vw, 800px"
+                />
+              )}
+            </div>
+            {hero &&
+              (("caption" in hero && hero.caption) ||
+                ("description" in hero && hero.description)) && (
+                <div className="border-t border-zinc-200 bg-white px-4 py-3">
+                  {"caption" in hero && hero.caption && (
+                    <p className="text-xs text-zinc-700">{hero.caption}</p>
+                  )}
+                  {"description" in hero && hero.description && (
+                    <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+                      {hero.description}
+                    </p>
+                  )}
+                </div>
+              )}
           </div>
-          <div className="relative aspect-video w-full bg-[#070707]">
-            {hero ? (
-              renderMedia(hero, true)
-            ) : (
-              <ProjectMediaImage
-                src={project.thumbnail}
-                alt={`${project.title} thumbnail`}
-                priority
-                sizes="(max-width: 768px) 100vw, 800px"
-              />
-            )}
-          </div>
-          {hero &&
-            (("caption" in hero && hero.caption) ||
-              ("description" in hero && hero.description)) && (
-              <div className="border-t border-zinc-200 bg-white px-4 py-3">
-                {"caption" in hero && hero.caption && (
-                  <p className="text-xs text-zinc-700">{hero.caption}</p>
-                )}
-                {"description" in hero && hero.description && (
-                  <p className="mt-1 text-xs leading-relaxed text-zinc-500">
-                    {hero.description}
-                  </p>
-                )}
-              </div>
-            )}
         </div>
       </div>
     </header>

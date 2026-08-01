@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#070707"/>
-  <rect x="40" y="40" width="720" height="420" rx="12" fill="#0f0f0f" stroke="#292524"/>
-  <text x="60" y="80" fill="#78716c" font-family="ui-monospace, monospace" font-size="14">unary.c</text>
-  <text x="60" y="120" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="18">int</text>
-  <text x="100" y="120" fill="#fde68a" font-family="ui-monospace, monospace" font-size="18"> main(void) {</text>
-  <text x="80" y="160" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="20">  return ~(-2);</text>
-  <rect x="310" y="148" width="3" height="22" fill="#f59e0b"/>
-  <text x="60" y="200" fill="#78716c" font-family="ui-monospace, monospace" font-size="18">}</text>
-  <text x="60" y="380" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13" opacity="0.8">C SOURCE</text>
+ <rect width="800" height="500" fill="#070707"/>
+ <rect x="40" y="40" width="720" height="420" rx="12" fill="#0f0f0f" stroke="#292524"/>
+ <text x="60" y="80" fill="#78716c" font-family="ui-monospace, monospace" font-size="14">unary.c</text>
+ <text x="60" y="120" fill="#a78bfa" font-family="ui-monospace, monospace" font-size="18">int</text>
+ <text x="100" y="120" fill="#fde68a" font-family="ui-monospace, monospace" font-size="18"> main(void) {</text>
+ <text x="80" y="160" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="20"> return ~(-2);</text>
+ <rect x="310" y="148" width="3" height="22" fill="#f59e0b"/>
+ <text x="60" y="200" fill="#78716c" font-family="ui-monospace, monospace" font-size="18">}</text>
+ <text x="60" y="380" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13" opacity="0.8">C SOURCE</text>
 </svg>
