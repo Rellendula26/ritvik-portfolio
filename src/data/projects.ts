@@ -1,4 +1,5 @@
 import GENERATED_INTAKE_PROJECTS from "@/data/projects.generated.json";
+import { projectVideo } from "@/data/project-media";
 
 export type ProjectCategory =
   | "systems"
@@ -355,9 +356,9 @@ const BASE_PROJECTS: Project[] = [
     techStack: ["Arduino UNO R4 WiFi", "Blynk", "WiFiS3", "Servos", "Ultrasonic", "I2C LCD"],
     githubUrl: "https://github.com/Rellendula26/bloombot-iot",
     liveUrl: "https://devpost.com/software/bloombot-8syfva",
-    demoVideoUrl: "/projects/bloombotsetup.mp4",
-    thumbnail: "/projects/placeholder-media.svg",
-    images: ["/projects/placeholder-media.svg"],
+    demoVideoUrl: "/projects/bloombot-web.mp4",
+    thumbnail: "/projects/bloombot-poster.jpg",
+    images: ["/projects/bloombot-poster.jpg"],
     date: "Spring 2026",
     buildStage: "Shipped demo + iterating on next hardware revision",
     keyHighlights: [
@@ -385,17 +386,15 @@ const BASE_PROJECTS: Project[] = [
       "I also want to map sentiment-driven inputs to movement patterns.",
     ],
     media: [
+      projectVideo("bloombot"),
       {
         kind: "video",
-        src: "/projects/bloombotsetup.mp4",
+        src: "/projects/makingbloombot-web.mp4",
         alt: "Building BloomBot",
         label: "Build process",
-        poster: "/projects/placeholder-media.svg",
-        mediaType: "demo",
-        featured: true,
-        priority: 20,
+        poster: "/projects/bloombot-poster.jpg",
+        mediaType: "process",
       },
-      { kind: "video", src: "/projects/bloombotsetup.mp4", alt: "BloomBot hardware setup", label: "Hardware setup" },
     ],
     tags: ["iot", "embedded", "robotics", "actuators", "integration"],
     signal: "Robotics",
@@ -411,8 +410,9 @@ const BASE_PROJECTS: Project[] = [
     overview:
       "I used this as a hands-on integration project: sketching, CAD, soldering, wiring, and iteration until the final object felt robust in-hand and not like a fragile prototype.",
     techStack: ["Fusion 360", "LED Strip", "Soldering", "3D Printing", "Circuit Design"],
-    thumbnail: "/projects/placeholder-media.svg",
-    images: ["/projects/placeholder-media.svg"],
+    demoVideoUrl: "/projects/lightsaber/fullsaber-web.mp4",
+    thumbnail: "/projects/lightsaber/saberwhite.png",
+    images: ["/projects/lightsaber/saberwhite.png"],
     date: "Spring 2026",
     buildStage: "Shipped physical build",
     keyHighlights: [
@@ -439,7 +439,7 @@ const BASE_PROJECTS: Project[] = [
       "Documented each stage from whiteboard circuits to final lab testing.",
       "Next version could be battery-optimized with a cleaner internal harness.",
     ],
-    media: [],
+    media: [projectVideo("saber")],
     tags: ["hardware", "cad", "soldering", "mechanical-design"],
     signal: "Hardware",
   }),
