@@ -31,11 +31,21 @@ export default function ResultsValidationSection({
               <h3 className="text-lg font-semibold tracking-tight text-zinc-900">
                 {item.title}
               </h3>
-              {item.evidence && (
-                <span className="rounded-full border border-orange-200 bg-orange-50 px-3 py-1 font-mono text-[11px] font-medium text-orange-900">
-                  {item.evidence}
-                </span>
-              )}
+              {item.evidence &&
+                (item.evidenceHref ? (
+                  <a
+                    href={item.evidenceHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-orange-200 bg-orange-50 px-3 py-1 font-mono text-[11px] font-medium text-orange-900 transition hover:bg-orange-100"
+                  >
+                    {item.evidence}
+                  </a>
+                ) : (
+                  <span className="rounded-full border border-orange-200 bg-orange-50 px-3 py-1 font-mono text-[11px] font-medium text-orange-900">
+                    {item.evidence}
+                  </span>
+                ))}
             </div>
             <p className="mt-3 text-sm leading-relaxed text-zinc-700">{item.body}</p>
           </article>

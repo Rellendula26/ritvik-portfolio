@@ -280,7 +280,7 @@ export default function ProjectCard({
             </span>
           </div>
 
-          {(project.githubUrl || project.liveUrl) && (
+          {(project.githubUrl || project.liveUrl || project.youtubeUrl) && (
             <div className="mt-4 flex flex-wrap gap-2" onClick={stopNav}>
               {project.githubUrl && (
                 <ExternalLink
@@ -300,6 +300,14 @@ export default function ProjectCard({
                         ? "YouTube"
                         : "Live"
                   }
+                  featured={isFeatured}
+                  onNavigate={stopNav}
+                />
+              )}
+              {project.youtubeUrl && (
+                <ExternalLink
+                  href={project.youtubeUrl}
+                  label="Skit"
                   featured={isFeatured}
                   onNavigate={stopNav}
                 />

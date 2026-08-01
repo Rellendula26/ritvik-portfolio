@@ -199,6 +199,12 @@ export const BLOOMBOT_CASE_STUDY: EngineeringCaseStudy = {
         evidence: "Demo video + Devpost writeup",
       },
       {
+        title: "Concept skit",
+        body: "Short skit for the long-distance check-in idea: why a physical flower beats another chat ping when people are far apart.",
+        evidence: "Watch on YouTube",
+        evidenceHref: "https://www.youtube.com/watch?v=D3Kk4IFN1ps",
+      },
+      {
         title: "Integrated stack",
         body: "Proximity sensing, servo open/close, Blynk messaging, and Morse LED timing were validated together, not as isolated peripherals.",
         evidence: "Live interaction clips and build documentation",

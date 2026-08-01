@@ -97,6 +97,8 @@ export interface ValidationResult {
   title: string;
   body: string;
   evidence?: string;
+  /** When set, the evidence chip becomes a link (e.g. YouTube skit). */
+  evidenceHref?: string;
 }
 
 export interface ResultsContent {
