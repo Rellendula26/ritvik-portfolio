@@ -4,16 +4,21 @@ slug: "project-slug"
 category: "fullstack"
 status: "iterating"
 date: "2026"
-buildStage: "Intake draft"
+buildStage: "Lab Prototype"
 featured: false
-signal: "Build"
-tags: "fullstack,intake"
+signal: "Embedded Systems"
+disciplines: "Mechanical Design, Electrical Integration, Embedded Systems, Cloud Software"
+tags: "Raspberry Pi 4, Python, Onshape, GPIO, PWM"
 ---
 
 # Project Intake Template
 
+Fill this for the **hero / executive summary** (30–60 second skim).
+Follow `content/projects/EXECUTIVE_SUMMARY.md` for voice, metrics, and structure.
+For the full engineering narrative, also fill `CASE_STUDY.md` in this folder.
+
 ## Summary
-- One-line summary of the project.
+- One-liner: engineering accomplishment (designed / fabricated / shipped a system). Not a parts list.
 
 ## GitHub
 - https://github.com/yourname/repo
@@ -25,8 +30,12 @@ tags: "fullstack,intake"
 - https://drive.google.com/drive/folders/your-folder-id
 
 ## What I built
-- What the project actually does.
-- Why it is interesting.
+Short overview (~60–90 words). Context, what you owned, integration challenge. Prefer numbers (4 servos, 8 LEDs, 40+ wires) over vague adjectives.
+
+## Technical highlights
+- Highlight with a concrete metric or deliverable
+- Highlight with a concrete metric or deliverable
+- Highlight with a concrete metric or deliverable
 
 ## Tech stack
 - Next.js
@@ -34,7 +43,8 @@ tags: "fullstack,intake"
 - Supabase
 
 ## Key media
-- Mention key screenshots or clips that should be front-and-center.
+- Hero/demo video filename (under `media/videos/`):
+- Cover thumbnail (under `media/thumbnails/` or `media/images/`):
 
 ## Build process
 - Milestone 1:
@@ -50,11 +60,6 @@ tags: "fullstack,intake"
 - Bug 1:
 - Root cause:
 - Fix:
-
-## Technical highlights
-- Highlight 1
-- Highlight 2
-- Highlight 3
 
 ## Technical challenges
 - Challenge 1

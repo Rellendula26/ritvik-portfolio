@@ -224,7 +224,7 @@ export default function VideoEditingPage() {
               Compilation of learning how to make clips into resonant film.
             </h1>
             <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">
-              This page is the start of my video editing journey, and all of the different edits I'm making along the way.
+              This page is the start of my video editing journey, and all of the different edits I&apos;m making along the way.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
@@ -267,7 +267,7 @@ export default function VideoEditingPage() {
             </div>
             <h3 className="mt-2 text-lg font-semibold text-black/90">Trying techniques out</h3>
             <p className="mt-2 text-sm leading-relaxed text-black/60">
-              There are actually countless video fx out there, and everytime I watch or see a new one in action, I try to implement it (that's what I did with the opening text in the Michigan Edit)
+              There are actually countless video fx out there, and everytime I watch or see a new one in action, I try to implement it (that&apos;s what I did with the opening text in the Michigan Edit)
             </p>
           </div>
 
@@ -277,7 +277,7 @@ export default function VideoEditingPage() {
             </div>
             <h3 className="mt-2 text-lg font-semibold text-black/90">All about telling stories</h3>
             <p className="mt-2 text-sm leading-relaxed text-black/60">
-              Clips make an edit. So, I'm planning on learning strong videography techniques so the clips themselves can tell stories.
+              Clips make an edit. So, I&apos;m planning on learning strong videography techniques so the clips themselves can tell stories.
             </p>
           </div>
         </div>

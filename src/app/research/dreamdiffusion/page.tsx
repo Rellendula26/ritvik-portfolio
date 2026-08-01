@@ -36,12 +36,6 @@ export default function Page() {
   const arxivAbs = "https://arxiv.org/abs/2407.02673";
   const arxivPdf = "https://arxiv.org/pdf/2407.02673.pdf";
 
-  // Embedded viewer URL:
-  // - #view=FitH makes it readable
-  // - &page=1 starts at first page
-  // - toolbar=1 keeps pdf controls available in most browsers
-  const embedPdfUrl = `${arxivPdf}#view=FitH&page=1&toolbar=1`;
-
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },

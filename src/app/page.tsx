@@ -1,103 +1,16 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Mail } from "lucide-react";
-import EngineeringWorkbench from "@/components/lab/EngineeringWorkbench";
+import { ArrowRight } from "lucide-react";
+import HomeHero from "@/components/HomeHero";
 import ProjectCard from "@/components/ProjectCard";
 import {
   FEATURED_PROJECTS,
   SUPPORTING_PROJECTS,
 } from "@/data/projects";
 
-function Accent({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-amber-800 underline decoration-amber-300/80 underline-offset-4">
-      {children}
-    </span>
-  );
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen">
-      {/* Hero: text + photo side by side, bench centered below */}
-      <section className="mx-auto max-w-6xl px-6 pb-16 pt-10 md:px-8 md:pt-16">
-        <div className="grid items-stretch gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="flex min-h-0 flex-col justify-between">
-            <div>
-              <h1 className="text-display text-5xl font-semibold tracking-tight text-stone-950 md:text-6xl lg:text-[3.35rem] lg:leading-[1.08]">
-                Hey, I&apos;m Ritvik!
-              </h1>
-
-              <div className="mt-8 space-y-5 text-lg leading-8 text-stone-700">
-                <p>
-                  I&apos;m studying EE with potential minors in{" "}
-                  <Accent>Engineering Entrepreneurship</Accent>, <Accent>Math</Accent>,
-                  and <Accent>South Asian Studies</Accent>. I hope to build impactful, innovative, and equitable medical device technologies.
-                </p>
-
-                <p>
-                  I like creating projects and doing work that have applications in my everyday life, use a little creativity, and teach me new skills.
-                </p>
-
-                <p>
-                  If you&apos;re looking into embedded, robotics, medtech, or systems
-                  work,{" "}
-                  <Link
-                    href="/projects"
-                    className="font-medium text-amber-800 underline decoration-amber-300/80 underline-offset-4 hover:text-amber-900"
-                  >
-                    my projects
-                  </Link>{" "}
-                  are where I show what I can do. If you&apos;re just browsing, hope you enjoy some of the things I've created.
-                </p>
-              </div>
-            </div>
-
-            <a
-              href="mailto:rellen26@seas.upenn.edu"
-              data-cursor
-              className="mt-10 inline-flex items-center gap-2 text-base font-medium text-amber-800 transition hover:text-amber-900 lg:mt-12"
-            >
-              <Mail className="h-5 w-5 shrink-0" />
-              <span>
-                Let&apos;s connect:{" "}
-                <span className="underline decoration-amber-300/80 underline-offset-4">
-                  rellen26@seas.upenn.edu
-                </span>
-              </span>
-            </a>
-          </div>
-
-          <div
-            className="group relative flex min-h-[380px] md:min-h-[420px]"
-            data-cursor
-          >
-            <div className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-amber-200/20 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
-            <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-stone-200/80 bg-white p-4 shadow-md">
-              <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl">
-                <Image
-                  src="/ritvik.jpg"
-                  alt="Ritvik Ellendula"
-                  fill
-                  className="object-cover object-center transition duration-500 group-hover:scale-[1.02]"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-              <p className="mt-4 text-center text-base font-semibold text-stone-900">
-                Ritvik Ellendula
-              </p>
-              <p className="pb-1 text-center text-sm text-stone-500">
-                Building stuff I find cool.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-14 max-w-xl md:mt-16 lg:max-w-2xl" data-cursor>
-          <EngineeringWorkbench />
-        </div>
-      </section>
+      <HomeHero />
 
       {/* Featured projects: darkest band */}
       <section className="border-t border-stone-200/50 bg-[#f0e8dc]">

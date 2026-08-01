@@ -1,102 +1,158 @@
 {
-  "thumbnail": "",
-  "hero": "videos/IMG_1485.MOV",
+  "thumbnail": "thumbnails/coverCAD.jpg",
+  "hero": "videos/seconddemo.mp4",
   "items": [
     {
-      "src": "videos/IMG_1485.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_1485.MOV",
-      "caption": "IMG_1485.MOV",
+      "src": "videos/seconddemo.mp4",
+      "type": "demo",
+      "alt": "Vend-A-Shoe dispense demo",
+      "caption": "Phone trigger to physical dispense",
+      "featured": true,
+      "priority": 20
+    },
+    {
+      "src": "videos/entireworkingmodel.mp4",
+      "type": "demo",
+      "alt": "Fully working model",
+      "caption": "Assembled system running",
+      "featured": false,
+      "priority": 18
+    },
+    {
+      "src": "videos/fullvideoinitialdemo.mp4",
+      "type": "process",
+      "alt": "Extended initial demo",
+      "caption": "Longer early run",
+      "featured": false,
+      "priority": 14
+    },
+    {
+      "src": "videos/initialdemo.mp4",
+      "type": "process",
+      "alt": "Initial demo",
+      "caption": "First credible dispense",
+      "featured": false,
+      "priority": 13
+    },
+    {
+      "src": "videos/breadboardfirstmodel.mp4",
+      "type": "process",
+      "alt": "Breadboard first model",
+      "caption": "First breadboard model",
+      "featured": false,
+      "priority": 12
+    },
+    {
+      "src": "videos/fanandbreadboard.mp4",
+      "type": "process",
+      "alt": "Fan and breadboard",
+      "caption": "Bench bring-up",
+      "featured": false,
+      "priority": 11
+    },
+    {
+      "src": "videos/raspberrypimotormove.mp4",
+      "type": "process",
+      "alt": "Pi motor move",
+      "caption": "Pi GPIO motor bring-up",
+      "featured": false,
+      "priority": 10
+    },
+    {
+      "src": "videos/soldering.mp4",
+      "type": "process",
+      "alt": "Soldering protoboard",
+      "caption": "Protoboard build",
+      "featured": false,
+      "priority": 9
+    },
+    {
+      "src": "videos/CAD.mp4",
+      "type": "process",
+      "alt": "CAD walkthrough",
+      "caption": "CAD iteration",
       "featured": false,
       "priority": 8
     },
     {
-      "src": "videos/IMG_1487.mov",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_1487.mov",
-      "caption": "IMG_1487.mov",
+      "src": "images/ENTIRECAD.jpg",
+      "type": "image",
+      "alt": "Full enclosure CAD",
+      "caption": "Full enclosure CAD",
+      "featured": false,
+      "priority": 12
+    },
+    {
+      "src": "images/coverCAD.jpg",
+      "type": "image",
+      "alt": "Enclosure CAD",
+      "caption": "Custom enclosure CAD",
+      "featured": false,
+      "priority": 11
+    },
+    {
+      "src": "images/demo1.jpg",
+      "type": "image",
+      "alt": "Assembled unit",
+      "caption": "Assembled unit",
+      "featured": false,
+      "priority": 10
+    },
+    {
+      "src": "images/3dprintedextenders.jpg",
+      "type": "image",
+      "alt": "Printed extenders",
+      "caption": "Printed extenders",
+      "featured": false,
+      "priority": 9
+    },
+    {
+      "src": "images/solderedprotoboardfront.jpg",
+      "type": "image",
+      "alt": "Protoboard front",
+      "caption": "Protoboard front",
       "featured": false,
       "priority": 8
     },
     {
-      "src": "videos/IMG_4757.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_4757.MOV",
-      "caption": "IMG_4757.MOV",
+      "src": "images/solderedprotoboardback.jpg",
+      "type": "image",
+      "alt": "Protoboard back",
+      "caption": "Protoboard back",
       "featured": false,
-      "priority": 8
+      "priority": 7
     },
     {
-      "src": "videos/IMG_4840.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_4840.MOV",
-      "caption": "IMG_4840.MOV",
+      "src": "images/raspberrypi.jpg",
+      "type": "image",
+      "alt": "Raspberry Pi",
+      "caption": "Pi in assembly",
       "featured": false,
-      "priority": 8
+      "priority": 6
     },
     {
-      "src": "videos/IMG_4841.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_4841.MOV",
-      "caption": "IMG_4841.MOV",
+      "src": "images/wall-ac-dc.jpg",
+      "type": "image",
+      "alt": "Wall AC to DC converter",
+      "caption": "Wall AC to DC for protoboard, motors, LEDs, fan, and Pi",
       "featured": false,
-      "priority": 8
+      "priority": 5
     },
     {
-      "src": "videos/IMG_5122.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5122.MOV",
-      "caption": "IMG_5122.MOV",
+      "src": "images/stage1.jpg",
+      "type": "image",
+      "alt": "Stage 1",
+      "caption": "Stage 1 assembly",
       "featured": false,
-      "priority": 8
+      "priority": 4
     },
     {
-      "src": "videos/IMG_5123.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5123.MOV",
-      "caption": "IMG_5123.MOV",
+      "src": "images/motivation1.jpg",
+      "type": "process",
+      "alt": "Early bring-up",
+      "caption": "Bench bring-up",
       "featured": false,
-      "priority": 8
-    },
-    {
-      "src": "videos/IMG_5124.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5124.MOV",
-      "caption": "IMG_5124.MOV",
-      "featured": false,
-      "priority": 8
-    },
-    {
-      "src": "videos/IMG_5125.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5125.MOV",
-      "caption": "IMG_5125.MOV",
-      "featured": false,
-      "priority": 8
-    },
-    {
-      "src": "videos/IMG_5146.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5146.MOV",
-      "caption": "IMG_5146.MOV",
-      "featured": false,
-      "priority": 8
-    },
-    {
-      "src": "videos/IMG_5147.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5147.MOV",
-      "caption": "IMG_5147.MOV",
-      "featured": false,
-      "priority": 8
-    },
-    {
-      "src": "videos/IMG_5411.MOV",
-      "type": "video",
-      "alt": "vend-a-shoe IMG_5411.MOV",
-      "caption": "IMG_5411.MOV",
-      "featured": false,
-      "priority": 8
+      "priority": 3
     }
   ]
 }

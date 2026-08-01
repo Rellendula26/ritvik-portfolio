@@ -2,11 +2,17 @@
 
 import { promises as fs } from "node:fs";
 import path from "node:path";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
+
+const execFileAsync = promisify(execFile);
 
 const ROOT = process.cwd();
 const CONTENT_ROOT = path.join(ROOT, "content", "projects");
-const PUBLIC_INTAKE_ROOT = path.join(ROOT, "public", "projects", "intake");
+const PUBLIC_PROJECTS_ROOT = path.join(ROOT, "public", "projects");
+const PUBLIC_INTAKE_ROOT = path.join(PUBLIC_PROJECTS_ROOT, "intake");
 const OUTPUT_JSON = path.join(ROOT, "src", "data", "projects.generated.json");
+const CASE_STUDY_TS = path.join(ROOT, "src", "data", "engineering-case-study.ts");
 
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"]);
 const VIDEO_EXTS = new Set([".mp4", ".mov", ".webm", ".m4v", ".MOV"]);
@@ -22,6 +28,66 @@ async function exists(filePath) {
     return true;
   } catch {
     return false;
+  }
+}
+
+/** iPhone HEIC often gets renamed to .jpg; browsers cannot decode that. */
+async function looksLikeHeic(filePath) {
+  try {
+    const fh = await fs.open(filePath, "r");
+    const buf = Buffer.alloc(64);
+    await fh.read(buf, 0, 64, 0);
+    await fh.close();
+    const head = buf.toString("latin1");
+    return (
+      head.includes("ftyp") &&
+      (head.includes("heic") || head.includes("heif") || head.includes("mif1"))
+    );
+  } catch {
+    return false;
+  }
+}
+
+async function convertHeicNamedJpeg(filePath) {
+  if (!(await looksLikeHeic(filePath))) return false;
+  const tmp = `${filePath}.real.jpg`;
+  try {
+    await execFileAsync("sips", ["-s", "format", "jpeg", filePath, "--out", tmp]);
+    const stat = await fs.stat(tmp);
+    // sips can "succeed" with an EXIF-only stub (~3–4KB) when HEIC decode fails.
+    if (stat.size < 50_000) {
+      await fs.unlink(tmp);
+      console.warn(
+        `HEIC-as-jpg convert produced a tiny stub (${stat.size} bytes); left original in place: ${path.relative(ROOT, filePath)}`
+      );
+      console.warn("Re-export as a real JPEG from Photos, or run sips outside a restricted environment.");
+      return false;
+    }
+    await fs.rename(tmp, filePath);
+    console.warn(`Converted HEIC-as-jpg -> real JPEG: ${path.relative(ROOT, filePath)}`);
+    return true;
+  } catch (error) {
+    try {
+      await fs.unlink(tmp);
+    } catch {
+      /* ignore */
+    }
+    console.warn(
+      `HEIC-as-jpg detected but could not convert (macOS sips): ${path.relative(ROOT, filePath)}`
+    );
+    console.warn(String(error?.message || error));
+    return false;
+  }
+}
+
+async function normalizeJpegDir(dirPath) {
+  if (!(await exists(dirPath))) return;
+  const entries = await fs.readdir(dirPath, { withFileTypes: true });
+  for (const entry of entries) {
+    if (!entry.isFile()) continue;
+    const ext = path.extname(entry.name).toLowerCase();
+    if (ext !== ".jpg" && ext !== ".jpeg") continue;
+    await convertHeicNamedJpeg(path.join(dirPath, entry.name));
   }
 }
 
@@ -165,6 +231,53 @@ async function copyMediaBucket(sourceDir, outputDir, slug, bucketName) {
   return copied;
 }
 
+/**
+ * Case-study pages reference /projects/<slug>/<filename>.
+ * Mirror intake media there (flat) so hero/gallery and case study stay in sync.
+ * Never deletes existing files in the destination (manual drops stay put).
+ */
+async function mirrorCanonicalProjectMedia(slug, projectDir) {
+  const destRoot = path.join(PUBLIC_PROJECTS_ROOT, slug);
+  await ensureDir(destRoot);
+
+  const buckets = ["images", "videos", "diagrams", "thumbnails"];
+  let mirrored = 0;
+
+  for (const bucket of buckets) {
+    const sourceDir = path.join(projectDir, "media", bucket);
+    if (!(await exists(sourceDir))) continue;
+    const entries = await fs.readdir(sourceDir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (!entry.isFile() || entry.name.startsWith(".")) continue;
+      const ext = path.extname(entry.name).toLowerCase();
+      // Case-study public folder is browser-facing; skip camera dumps browsers choke on.
+      const allowed =
+        IMAGE_EXTS.has(ext) || ext === ".mp4" || ext === ".webm" || ext === ".m4v";
+      if (!allowed) continue;
+      await fs.copyFile(path.join(sourceDir, entry.name), path.join(destRoot, entry.name));
+      mirrored += 1;
+    }
+  }
+
+  return mirrored;
+}
+
+async function assertCaseStudyMediaExists() {
+  if (!(await exists(CASE_STUDY_TS))) return;
+  const raw = await fs.readFile(CASE_STUDY_TS, "utf8");
+  const paths = [...raw.matchAll(/src:\s*"(\/projects\/[^"]+)"/g)].map((m) => m[1]);
+  const missing = [];
+  for (const publicPath of paths) {
+    const diskPath = path.join(ROOT, "public", publicPath.replace(/^\//, ""));
+    if (!(await exists(diskPath))) missing.push(publicPath);
+  }
+  if (missing.length > 0) {
+    console.warn("\nCase study media missing on disk (black panels until fixed):");
+    for (const item of missing) console.warn(`  - ${item}`);
+    console.warn("Put files under public/projects/<slug>/ or content/.../media/ then re-sync.\n");
+  }
+}
+
 function mediaTypeToKind(mediaType) {
   if (mediaType === "video" || mediaType === "demo") return "video";
   return "image";
@@ -257,6 +370,13 @@ async function buildProjectFromFolder(slug, index) {
     slug,
     "thumbnails"
   );
+  await mirrorCanonicalProjectMedia(slug, projectDir);
+  await normalizeJpegDir(path.join(projectDir, "media", "images"));
+  await normalizeJpegDir(path.join(projectDir, "media", "thumbnails"));
+  await normalizeJpegDir(path.join(projectDir, "media", "diagrams"));
+  await normalizeJpegDir(path.join(publicProjectDir, "images"));
+  await normalizeJpegDir(path.join(publicProjectDir, "thumbnails"));
+  await normalizeJpegDir(path.join(PUBLIC_PROJECTS_ROOT, slug));
 
   const summary = section(sections, "Summary");
   const whatBuilt = section(sections, "What I built");
@@ -295,7 +415,7 @@ async function buildProjectFromFolder(slug, index) {
     ...analysisStackHardware,
   ];
   const highlights = [
-    ...listFromSection(section(sections, "Technical highlights", "What I built")),
+    ...listFromSection(section(sections, "Technical highlights")),
     ...analysisHighlights,
   ];
   const buildProcess = [
@@ -322,6 +442,13 @@ async function buildProjectFromFolder(slug, index) {
   ];
   const finalOutcome = oneLine(section(sections, "Final outcome"));
   const whatBuiltList = listFromSection(section(sections, "What I built"));
+  const whatBuiltLooksLikeBullets = /^\s*[-*]\s+/m.test(whatBuilt || "");
+  const overviewSource = whatBuiltLooksLikeBullets
+    ? collapseListToParagraph(whatBuiltList)
+    : (whatBuilt || "").trim() ||
+      collapseListToParagraph(whatBuiltList) ||
+      summary ||
+      analysisOverview.join(" ");
 
   const thumbnail =
     frontmatter.thumbnail ||
@@ -409,17 +536,12 @@ async function buildProjectFromFolder(slug, index) {
     category: frontmatter.category || "fullstack",
     status: frontmatter.status || "iterating",
     oneLine: oneLine(summary, analysisOverview[0] || `${h1 || slug} project`),
-    overview: oneLine(
-      collapseListToParagraph(whatBuiltList) ||
-        whatBuilt ||
-        summary ||
-        analysisOverview.join(" "),
-      "Build summary coming soon."
-    ),
+    overview: oneLine(overviewSource, "Build summary coming soon."),
     techStack:
       trimList(techStack, 14).length > 0
         ? trimList(techStack, 14)
         : parseCsv(frontmatter.techStack),
+    disciplines: parseCsv(frontmatter.disciplines),
     githubUrl: github || frontmatter.githubUrl,
     liveUrl: demo || frontmatter.liveUrl,
     demoVideoUrl:
@@ -496,6 +618,7 @@ async function main() {
 
   await fs.writeFile(OUTPUT_JSON, `${JSON.stringify(projects, null, 2)}\n`, "utf8");
   console.log(`Synced ${projects.length} intake project(s) -> ${path.relative(ROOT, OUTPUT_JSON)}`);
+  await assertCaseStudyMediaExists();
 }
 
 main().catch((error) => {

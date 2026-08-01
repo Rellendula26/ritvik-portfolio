@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#070707"/>
+  <rect x="40" y="40" width="720" height="420" rx="14" fill="#0f0f0f" stroke="#292524"/>
+
+  <!-- messy breadboard vibe -->
+  <rect x="180" y="140" width="440" height="220" rx="8" fill="#1c1917" stroke="#57534e"/>
+  <rect x="220" y="170" width="80" height="50" rx="4" fill="#292524" stroke="#a8a29e"/>
+  <rect x="320" y="170" width="100" height="50" rx="4" fill="#292524" stroke="#fb923c"/>
+  <rect x="450" y="170" width="120" height="50" rx="4" fill="#292524" stroke="#f59e0b"/>
+  <text x="260" y="200" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="11">IMU breakout</text>
+  <text x="370" y="200" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="11">motor driver</text>
+  <text x="510" y="200" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11">MCU board</text>
+
+  <!-- jumper lines -->
+  <path d="M260 220 V280 H370 V220" stroke="#f59e0b" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M370 220 V300 H510 V220" stroke="#fb923c" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M300 280 H480" stroke="#78716c" stroke-width="1" stroke-dasharray="3 2"/>
+
+  <!-- wheels sketch -->
+  <circle cx="280" cy="340" r="28" fill="none" stroke="#57534e" stroke-width="2"/>
+  <circle cx="520" cy="340" r="28" fill="none" stroke="#57534e" stroke-width="2"/>
+  <line x1="308" y1="340" x2="492" y2="340" stroke="#44403c"/>
+
+  <text x="400" y="120" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="13">v1  modules on a breadboard</text>
+  <text x="400" y="400" text-anchor="middle" fill="#78716c" font-family="ui-monospace, monospace" font-size="12">stood for seconds � taught almost nothing about the real plant</text>
+
+  <text x="60" y="430" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="12" opacity="0.85">EVOLUTION  week 1 bring-up</text>
+</svg>

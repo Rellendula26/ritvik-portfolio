@@ -1,10 +1,21 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 
 function isSvg(src: string) {
   return src.endsWith(".svg");
 }
 
-/** next/image does not render public SVGs reliably — use native img */
+/**
+ * Local portfolio photos (especially large iPhone JPEGs) are more reliable as
+ * native <img>. next/image optimization has been returning 400 for some of them,
+ * which tripped onError and showed "Missing media" even when the file existed.
+ */
+function preferNativeImg(src: string) {
+  return isSvg(src) || src.startsWith("/projects/");
+}
+
 export default function ProjectMediaImage({
   src,
   alt,
@@ -20,7 +31,21 @@ export default function ProjectMediaImage({
   priority?: boolean;
   fill?: boolean;
 }) {
-  if (isSvg(src)) {
+  // Track which src failed so a src change clears the error without an effect.
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const failed = failedSrc === src;
+
+  if (failed) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-[#111] px-4 text-center">
+        <p className="text-xs text-stone-400">
+          Missing media: <span className="font-mono text-stone-300">{src}</span>
+        </p>
+      </div>
+    );
+  }
+
+  if (preferNativeImg(src)) {
     if (fill) {
       return (
         // eslint-disable-next-line @next/next/no-img-element
@@ -28,12 +53,22 @@ export default function ProjectMediaImage({
           src={src}
           alt={alt}
           className={`absolute inset-0 h-full w-full ${className}`}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
+          onError={() => setFailedSrc(src)}
         />
       );
     }
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={src} alt={alt} className={className} />
+      <img
+        src={src}
+        alt={alt}
+        className={className}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        onError={() => setFailedSrc(src)}
+      />
     );
   }
 
@@ -46,6 +81,7 @@ export default function ProjectMediaImage({
         className={className}
         sizes={sizes}
         priority={priority}
+        onError={() => setFailedSrc(src)}
       />
     );
   }
@@ -59,6 +95,7 @@ export default function ProjectMediaImage({
       className={className}
       sizes={sizes}
       priority={priority}
+      onError={() => setFailedSrc(src)}
     />
   );
 }

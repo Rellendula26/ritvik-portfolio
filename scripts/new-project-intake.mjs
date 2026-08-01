@@ -103,6 +103,10 @@ async function main() {
 
   await writeFileIfMissing(path.join(projectDir, "project.md"), projectMarkdown);
   await writeFileIfMissing(
+    path.join(projectDir, "CASE_STUDY.md"),
+    await readTemplate("CASE_STUDY.md")
+  );
+  await writeFileIfMissing(
     path.join(projectDir, "media", "media.json"),
     await readTemplate("media/media.json")
   );
@@ -126,15 +130,19 @@ async function main() {
   console.log(`Created intake project scaffold at content/projects/${slug}`);
   console.log("");
   console.log("Next steps:");
+  console.log(`1) Fill content/projects/${slug}/project.md (hero / executive summary)`);
+  console.log(`2) Fill content/projects/${slug}/CASE_STUDY.md (engineering narrative)`);
   console.log(
-    `1) Drop media into content/projects/${slug}/media/{images,videos,diagrams,thumbnails}`
+    `3) Drop media into content/projects/${slug}/media/{images,videos,diagrams,thumbnails}`
   );
   console.log(
-    `   or import a downloaded Drive export with: npm run projects:intake:import-drive -- ${slug} <folder>`
+    `   or import Drive export: npm run projects:intake:import-drive -- ${slug} <folder>`
   );
-  console.log(`2) Update content/projects/${slug}/media/media.json for hero/thumbnail metadata`);
-  console.log(`3) Fill out content/projects/${slug}/project.md`);
-  console.log(`4) Run: npm run projects:intake:sync`);
+  console.log(`4) Set hero in content/projects/${slug}/media/media.json (prefer .mp4)`);
+  console.log(`5) Run: npm run projects:intake:sync`);
+  console.log(
+    `6) Optional: ask the agent to promote CASE_STUDY.md into the full case-study layout`
+  );
 }
 
 main().catch((error) => {

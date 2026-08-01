@@ -115,7 +115,7 @@ export default function ProjectCard({
                 <LazyVideo
                   src={primaryMedia.src}
                   poster={primaryMedia.poster}
-                  className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                  className="absolute inset-0 h-full w-full object-contain object-center bg-black transition duration-500 group-hover:scale-[1.01]"
                   playOnHover={!isFeatured}
                   playWhenVisible={isFeatured}
                 />
