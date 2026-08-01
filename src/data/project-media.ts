@@ -2,17 +2,18 @@ import type { ProjectMedia } from "@/data/projects";
 
 /**
  * Project card / hero videos live in public/projects/.
- * Add an entry here, drop the video in public/projects/ (.mp4 or .MOV), and set an optional poster .png.
+ * Prefer compressed *-web.mp4 (720p H.264 + faststart). Raw 4K camera exports
+ * work locally but often fail or show the poster forever on Vercel.
  */
 export const PROJECT_CARD_VIDEOS = {
   saber: {
-    src: "/projects/fullsaber-web.mp4",
-    poster: "/projects/saberwhite.png",
+    src: "/projects/lightsaber/fullsaber-web.mp4",
+    poster: "/projects/lightsaber/saberwhite.png",
     alt: "Lightsaber build demo",
   },
   bloombot: {
-    src: "/projects/makingbloombot.mp4",
-    poster: "/projects/saberwhite.png",
+    src: "/projects/bloombot-web.mp4",
+    poster: "/projects/bloombot-poster.jpg",
     alt: "BloomBot IoT build and demo",
   },
   "arduino-tetris": {
@@ -41,7 +42,7 @@ export const PROJECT_CARD_VIDEOS = {
 
 export type ProjectVideoKey = keyof typeof PROJECT_CARD_VIDEOS;
 
-/** Use in projects.ts: media: projectVideo("saber") */
+/** Use in projects.ts: media: [projectVideo("saber")] */
 export function projectVideo(key: ProjectVideoKey): ProjectMedia {
   const item = PROJECT_CARD_VIDEOS[key];
   return {
@@ -49,5 +50,9 @@ export function projectVideo(key: ProjectVideoKey): ProjectMedia {
     src: item.src,
     ...("poster" in item && item.poster ? { poster: item.poster } : {}),
     alt: item.alt,
+    label: "Demo",
+    mediaType: "demo",
+    featured: true,
+    priority: 20,
   };
 }
