@@ -2,19 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
+import ProjectHero from "@/components/project-page/ProjectHero";
+import EngineeringCaseStudyLayout from "@/components/project-page/case-study/EngineeringCaseStudyLayout";
 import {
   BackToProjects,
-  ProjectBadge,
   ProjectPageShell,
   SectionLabel,
 } from "@/components/project-page/shared";
+import { getCaseStudyBySlug } from "@/data/engineering-case-study";
 import {
-  CATEGORY_LABELS,
-  PROJECT_STATUS_LABELS,
   PROJECTS,
   getProjectBySlug,
   pickProjectPrimaryMedia,
-  type Project,
   type ProjectMedia,
 } from "@/data/projects";
 
@@ -27,7 +26,7 @@ function renderMedia(media: ProjectMedia, priority = false) {
     return (
       <video
         src={media.src}
-        className="h-full w-full object-cover object-top"
+        className="h-full w-full object-contain object-center bg-[#070707]"
         controls
         playsInline
         preload="metadata"
@@ -79,137 +78,12 @@ function limitItems(items: string[], max: number) {
   return items.slice(0, max);
 }
 
-function Hero({ project }: { project: Project }) {
-  const hero = pickProjectPrimaryMedia(project);
-
-  return (
-    <header className="relative overflow-hidden rounded-[2.25rem] border border-zinc-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(253,186,116,0.10),transparent_28%)]" />
-      <div className="relative grid grid-cols-1 gap-8 px-6 py-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:px-8">
-        <div>
-          <div className="flex flex-wrap gap-2">
-            <ProjectBadge>{CATEGORY_LABELS[project.category]}</ProjectBadge>
-            <ProjectBadge tone="dark">{PROJECT_STATUS_LABELS[project.status]}</ProjectBadge>
-            {project.featured && <ProjectBadge tone="yellow">Featured</ProjectBadge>}
-          </div>
-
-          <h1 className="text-display mt-5 text-4xl font-semibold tracking-tight text-zinc-950 md:text-5xl">
-            {project.title}
-          </h1>
-
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-600 md:text-lg">
-            {project.oneLine}
-          </p>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-700">
-            {project.overview}
-          </p>
-
-          <dl className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {[
-              { label: "Date", value: project.date },
-              { label: "Signal", value: project.signal },
-              { label: "Build stage", value: project.buildStage },
-              { label: "Stack", value: project.techStack.slice(0, 2).join(", ") },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-2xl border border-zinc-200 bg-zinc-50/90 px-3 py-3"
-              >
-                <dt className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  {item.label}
-                </dt>
-                <dd className="mt-1 text-xs font-medium leading-snug text-zinc-900">
-                  {item.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-7 flex flex-wrap gap-3">
-            {project.githubUrl && (
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
-              >
-                Source code
-              </a>
-            )}
-            {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
-              >
-                Live / demo
-              </a>
-            )}
-          </div>
-
-          <div className="mt-7 flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <ProjectBadge key={tag}>{tag}</ProjectBadge>
-            ))}
-          </div>
-        </div>
-
-        <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-[#070707] shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
-          <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
-            {hero?.label ?? "Project preview"}
-          </div>
-          <div className="relative aspect-video w-full">
-            {hero ? (
-              renderMedia(hero, true)
-            ) : (
-              <ProjectMediaImage
-                src={project.thumbnail}
-                alt={`${project.title} thumbnail`}
-                priority
-                sizes="(max-width: 768px) 100vw, 800px"
-              />
-            )}
-          </div>
-          {hero?.caption && (
-            <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-              {hero.caption}
-            </p>
-          )}
-        </div>
-      </div>
-    </header>
-  );
-}
-
-export async function generateMetadata({
-  params,
+/** Legacy insight-card layout — used until a project has an EngineeringCaseStudy. */
+function LegacyProjectPage({
+  project,
 }: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-  if (!project) return {};
-
-  return {
-    title: `${project.title} | Ritvik Ellendula`,
-    description: project.oneLine,
-  };
-}
-
-export function generateStaticParams() {
-  return PROJECTS.map((project) => ({ slug: project.slug }));
-}
-
-export default async function ProjectDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
+  project: NonNullable<ReturnType<typeof getProjectBySlug>>;
 }) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-  if (!project) notFound();
-
   const primaryMedia = pickProjectPrimaryMedia(project);
   const detailMedia = project.media.filter((item) => item !== primaryMedia);
   const architectureMedia =
@@ -241,7 +115,7 @@ export default async function ProjectDetailPage({
   return (
     <ProjectPageShell>
       <BackToProjects />
-      <Hero project={project} />
+      <ProjectHero project={project} />
 
       {process.env.NODE_ENV === "development" &&
         project.driveFolderUrl &&
@@ -458,7 +332,8 @@ export default async function ProjectDetailPage({
         <section className="mt-14">
           <SectionLabel>Media timeline</SectionLabel>
           <p className="mt-2 max-w-2xl text-sm text-zinc-600">
-            Build photos, clips, and process visuals. The goal is to show how the project evolved, not just the final screenshot.
+            Build photos, clips, and process visuals. The goal is to show how the project
+            evolved, not just the final screenshot.
           </p>
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
             {detailMedia.map((item, index) => (
@@ -484,4 +359,40 @@ export default async function ProjectDetailPage({
       )}
     </ProjectPageShell>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+  if (!project) return {};
+
+  return {
+    title: `${project.title} | Ritvik Ellendula`,
+    description: project.oneLine,
+  };
+}
+
+export function generateStaticParams() {
+  return PROJECTS.map((project) => ({ slug: project.slug }));
+}
+
+export default async function ProjectDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = getProjectBySlug(slug);
+  if (!project) notFound();
+
+  const caseStudy = getCaseStudyBySlug(slug);
+  if (caseStudy) {
+    return <EngineeringCaseStudyLayout project={project} caseStudy={caseStudy} />;
+  }
+
+  return <LegacyProjectPage project={project} />;
 }

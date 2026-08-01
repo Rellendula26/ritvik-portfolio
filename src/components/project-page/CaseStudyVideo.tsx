@@ -2,7 +2,7 @@
 export default function CaseStudyVideo({
   src,
   poster,
-  className = "h-full w-full object-cover object-top",
+  className = "h-full w-full object-contain object-center bg-[#070707]",
   autoPlay = true,
 }: {
   src: string;

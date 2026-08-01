@@ -65,11 +65,15 @@ export interface Project {
   title: string;
   slug: string;
   featured: boolean;
+  /** When true, project is listed only in local development — hidden from production builds. */
+  devOnly?: boolean;
   category: ProjectCategory;
   status: ProjectStatus;
   oneLine: string;
   overview: string;
   techStack: string[];
+  /** When set, hero meta shows these under "Disciplines" instead of Stack. */
+  disciplines?: string[];
   githubUrl?: string;
   liveUrl?: string;
   demoVideoUrl?: string;
@@ -182,7 +186,7 @@ function normalizeProject(input: ProjectInput): Project {
 
 export function pickProjectPrimaryMedia(project: Project): ProjectMedia | undefined {
   const fromExplicitHero = project.media.find(
-    (item) => item.mediaType === "demo" || item.mediaType === "visual"
+    (item) => item.kind === "visual" || item.mediaType === "demo"
   );
   if (fromExplicitHero) return fromExplicitHero;
 
@@ -253,7 +257,15 @@ const BASE_PROJECTS: Project[] = [
       "Current priority is correctness and clean lowering, not optimization passes.",
     ],
     media: [
-      { kind: "visual", visualId: "compiler-pipeline", alt: "Compiler pipeline visual", label: "Pipeline visual" },
+      {
+        kind: "visual",
+        visualId: "compiler-pipeline",
+        alt: "Compiler pipeline visual",
+        label: "Pipeline visual",
+        mediaType: "visual",
+        featured: true,
+        priority: 20,
+      },
       { kind: "image", src: "/projects/gallery/c-compiler-ast.svg", alt: "Compiler AST output", label: "AST output" },
       { kind: "image", src: "/projects/gallery/c-compiler-asm.svg", alt: "Generated assembly output", label: "Assembly output" },
     ],
@@ -306,8 +318,17 @@ const BASE_PROJECTS: Project[] = [
       "Vectorized backend is a future step once core operator set is stable.",
     ],
     media: [
-      { kind: "visual", visualId: "minitorch-autodiff", alt: "MiniTorch autodiff visual", label: "Autodiff visual" },
+      {
+        kind: "visual",
+        visualId: "minitorch-autodiff",
+        alt: "MiniTorch autodiff visual",
+        label: "Autodiff visual",
+        mediaType: "visual",
+        featured: true,
+        priority: 20,
+      },
       { kind: "image", src: "/projects/gallery/minitorch-backprop.svg", alt: "Backprop flow", label: "Backprop flow" },
+      { kind: "image", src: "/projects/gallery/minitorch-gradcheck.svg", alt: "Gradient check", label: "Gradcheck" },
     ],
     tags: ["ml-systems", "autodiff", "ocaml", "backprop"],
     signal: "ML Systems",
@@ -775,8 +796,88 @@ const BASE_PROJECTS: Project[] = [
     tags: ["data", "analysis", "coursework"],
     signal: "Data",
   }),
+  normalizeProject({
+    id: "P14",
+    title: "Drift",
+    slug: "drift-balancer",
+    featured: true,
+    devOnly: true,
+    category: "hardware",
+    status: "iterating",
+    oneLine:
+      "Two-wheel balancing robot with complementary-filtered IMU and cascade PID.",
+    overview:
+      "A multi-discipline build where chassis stiffness, star grounding, and a fixed 200 Hz control loop matter as much as the PID math. This page is the canonical engineering case-study template — realistic placeholder content that shows how future project pages should read.",
+    techStack: ["STM32", "Cascade PID", "Complementary Filter", "Custom PCB", "PETG"],
+    githubUrl: "https://github.com/Rellendula26",
+    liveUrl: "https://example.com/drift-balancer-demo",
+    thumbnail: "/projects/gallery/drift-architecture.svg",
+    images: [
+      "/projects/gallery/drift-architecture.svg",
+      "/projects/gallery/drift-chassis.svg",
+      "/projects/gallery/drift-pcb.svg",
+      "/projects/gallery/drift-control-loop.svg",
+    ],
+    date: "Template 2026",
+    buildStage: "Case-study template (placeholder)",
+    keyHighlights: [
+      "Cascade PID on a fixed 200 Hz ISR with telemetry off the critical path.",
+      "Chassis and star-ground PCB co-designed around battery CG.",
+      "Validation with hold RMS, recovery angle, and rail-dip measurements.",
+    ],
+    architecture: [
+      "IMU → complementary filter → cascade PID → PWM → H-bridge.",
+      "Mechanical spine sets CG and IMU mount stiffness.",
+      "Ring-buffered UART telemetry never blocks the control ISR.",
+    ],
+    challenges: [
+      "PWM-coupled IMU noise from shared motor return current.",
+      "Frame flex that masqueraded as sensor noise.",
+      "Gains that looked perfect on a full pack and oscillated when voltage sagged.",
+    ],
+    lessonsLearned: [
+      "Debuggability beats cleverness once the plant is real.",
+      "Battery placement is a system constraint, not a packaging detail.",
+      "Fixed-rate sampling turns tuning back into an experiment.",
+    ],
+    technicalNotes: [
+      "Placeholder diagrams — replace with real CAD, PCB, and scope captures when migrating a live project.",
+      "Use this page as the structural reference for future case studies.",
+    ],
+    media: [
+      {
+        kind: "image",
+        src: "/projects/gallery/drift-architecture.svg",
+        alt: "Drift system architecture",
+        label: "System architecture",
+        mediaType: "diagram",
+        featured: true,
+        priority: 10,
+        caption: "Sensors → estimator → cascade PID → actuators.",
+      },
+      {
+        kind: "image",
+        src: "/projects/gallery/drift-chassis.svg",
+        alt: "Drift chassis",
+        label: "Chassis v3",
+      },
+      {
+        kind: "image",
+        src: "/projects/gallery/drift-pcb.svg",
+        alt: "Drift PCB",
+        label: "PCB v2",
+      },
+    ],
+    tags: ["control", "embedded", "pcb", "mechatronics", "template"],
+    signal: "Hardware + Control",
+  }),
 ];
 
+function isProjectVisible(project: Project) {
+  // Production builds hide template/dev-only projects. Local `next dev` keeps them.
+  if (process.env.NODE_ENV === "development") return true;
+  return !project.devOnly;
+}
 function normalizeIntakeProject(
   input: Partial<Project> &
     Pick<
@@ -809,6 +910,7 @@ function normalizeIntakeProject(
     oneLine: input.oneLine,
     overview: input.overview,
     techStack: input.techStack,
+    disciplines: input.disciplines,
     githubUrl: input.githubUrl,
     liveUrl: input.liveUrl,
     demoVideoUrl: input.demoVideoUrl,
@@ -830,6 +932,7 @@ function normalizeIntakeProject(
     driveFolderUrl: input.driveFolderUrl,
     finalOutcome: input.finalOutcome,
     intakeSourcePath: input.intakeSourcePath,
+    localMediaImported: input.localMediaImported,
     media: input.media,
     tags: input.tags ?? [input.category, "intake"],
     signal: input.signal ?? "Build",
@@ -862,7 +965,9 @@ const INTAKE_PROJECTS: Project[] = (GENERATED_INTAKE_PROJECTS as Partial<Project
     )
 );
 
-export const PROJECTS: Project[] = [...BASE_PROJECTS, ...INTAKE_PROJECTS];
+export const PROJECTS: Project[] = [...BASE_PROJECTS, ...INTAKE_PROJECTS].filter(
+  isProjectVisible
+);
 
 export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured);
 export const SUPPORTING_PROJECTS = PROJECTS.filter(

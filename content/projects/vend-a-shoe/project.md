@@ -2,90 +2,74 @@
 title: "Vend-A-Shoe"
 slug: "vend-a-shoe"
 category: "embedded"
-status: "iterating"
-date: "2026"
-buildStage: "Cloud-to-hardware prototype running; calibration and reliability iteration"
-featured: false
-signal: "Embedded + Systems"
-tags: "embedded,fullstack,iot,systems,intake"
+status: "shipped"
+date: "Summer 2026"
+buildStage: "Client Deployment"
+featured: true
+signal: "Electromechanical Systems"
+disciplines: "Mechanical Design, Electrical Integration, Embedded Systems, Cloud Software"
+tags: "Raspberry Pi 4, Python, Next.js, Supabase, MG996R, Onshape, GPIO, PWM, USB-C PD, LEDs, fan, multimeter, systemd"
 ---
 
 # Vend-A-Shoe Intake
 
 ## Summary
-- Remote vending controller that lets a user pick a bin in a Next.js dashboard and trigger a physical dispense through a Supabase command queue and Raspberry Pi worker.
+- Designed, fabricated, and shipped a client-facing electromechanical dispensing system integrating custom mechanical design, embedded control, electrical integration, and cloud connectivity.
 
 ## GitHub
-- https://github.com/Rellendula26/vend-a-shoe
+- https://github.com/Rellendula26/vend-a-shoe-backend
 
 ## Demo
-- Local hardware demo; browser action -> queued command -> motor actuation.
+- https://vend-a-shoe.vercel.app/
 
 ## Google Drive Folder
-- https://drive.google.com/drive/folders/1bjVGjv9jKeJ5vQp3C1figbPR06-EoTDd?usp=sharing
+- https://drive.google.com/drive/folders/1vmhLtJWbZPy66M_R9-7Bo1iLIvf3NcxG?usp=sharing
 
 ## What I built
-- A cyber-physical vending pipeline instead of a dashboard-only app.
-- Frontend writes `device_commands` rows to Supabase with bin-specific actions (`dispense_bin_1..4`).
-- Raspberry Pi worker claims pending commands, executes servo movement script, then marks command status.
-- Servo control supports per-bin calibration; Bin 3 needed reduced duty cycle to prevent over-rotation.
+During my internship at BrainChild Engineering, I developed Vend-A-Shoe for a client deployment. The work meant designing a custom mechanical enclosure; integrating electrical distribution for 4 MG996R servos, 8 LED indicators, and a cooling fan across 40+ wire interconnects; writing embedded control on a Raspberry Pi; and connecting that stack to an existing frontend through a cloud command pipeline. The hardest part was not any single subsystem; it was integrating them. Packaging moved the harness; electrical changes moved the enclosure; software had to absorb real manufacturing tolerances.
+
+## Technical highlights
+- Designed a custom enclosure with 3D-printed fixtures and laser-cut panels for manufacturable assembly
+- Integrated 4 MG996R servos, 8 LEDs, and a fan through a centralized power-distribution architecture with Raspberry Pi GPIO control
+- Merged a new backend with an existing production frontend for remote cloud-triggered dispensing
 
 ## Tech stack
-- Next.js
-- TypeScript
-- Supabase
-- PostgreSQL
 - Raspberry Pi 4
 - Python
 - RPi.GPIO
+- MG996R
+- LEDs
+- Cooling fan
+- Next.js
+- TypeScript
+- Supabase
+- Onshape
 - systemd
+- USB-C PD
+- Bench PSU
+- Multimeter
 
 ## Key media
-- Browser bin-selection UI on desktop and mobile.
-- Physical dispense clips for each bin.
-- Wiring and power setup for servo + Pi control.
-
-## Build process
-- Milestone 1: single-bin command flow (`dispense`) from web app to Pi script.
-- Milestone 2: upgraded to four-bin routing with GPIO mapping in `pi_worker.py`.
-- Milestone 3: calibrated Bin 3 with per-bin target duty override after over-travel.
-- Milestone 4: UI pass for responsive bin cards, status badges, and clearer loading/command feedback.
+- Hero: videos/seconddemo.mp4
+- Cover still: images/coverCAD.jpg
 
 ## Architecture
-- Frontend (`app/page.tsx`): creates queue command rows in Supabase.
-- Queue table (`supabase.sql`): tracks `pending`, `running`, `completed`, `failed`; indexed by status/date.
-- Worker (`pi_worker.py`): polls oldest pending command, claims atomically via status update, executes servo script, persists outcome.
-- Actuation (`servo_motor.py`): PWM sweep from home to target duty and back; target can vary by bin.
-- Runtime (`pi-worker.service`): persistent process with restart policy and env-based config.
-
-## Bugs / debugging
-- Bin 3 over-rotated and caused unreliable dispense movement.
-- Root cause: one motion profile across all bins ignored mechanical variation.
-- Fix: added `BIN_TO_TARGET_DUTY` in worker; passed `--target-duty` into servo script for per-bin tuning.
-- Another issue: command model started single-lane; this broke scaling to multiple bins.
-- Fix: switched action parsing to `dispense_bin_n` and mapped bins to dedicated GPIO pins.
-
-## Technical highlights
-- Queue-based cloud-to-hardware architecture avoids exposing Pi directly to internet.
-- Command claiming flow reduces duplicate execution risk under polling.
-- Status lifecycle gives observability and post-failure diagnosis.
-- Includes deployment/runtime details; not just code that runs in dev.
+- Dashboard inserts bin commands into Supabase.
+- Pi worker claims, actuates, writes completed or failed.
+- Protoboard distributes servo, LED, and fan power with a common ground.
 
 ## Technical challenges
-- Reliable internet-triggered actuation with safe state transitions.
-- Servo power and motion tuning under real mechanical constraints.
-- Keeping remote command UX clear while hardware work happens asynchronously.
-
-## What changed from first version to final version
-- Initial approach: single `dispense` action and one motor profile.
-- Iterated architecture: four-bin action routing + worker-side action parser.
-- Iterated hardware logic: per-bin duty-cycle override for non-uniform mechanics.
-- Iterated UI: from simple control button to responsive, status-rich multi-bin dashboard.
+- Fitting 4 servos, 8 LEDs, a fan, harness, Pi, and power in a serviceable volume.
+- Keeping actuator and accessory current off the Pi rail.
+- LED and fan harness lengths that were never the same twice; 40+ wires to route and service.
+- Deciding whether a quiet channel was wiring, software, or dead hardware without guessing.
+- Hooking a new backend into a frontend that already existed.
 
 ## Lessons learned
-- Physical systems punish "one size fits all" assumptions quickly.
-- Queue states matter; `running`/`failed` are not optional if you want to debug real hardware behavior.
-- Calibration hooks in software save time when mechanical behavior shifts.
+- The biggest skill was debugging across systems, not inside any one of them.
+- Power supply and multimeter measurements beat intuition when rails sag and grounds float.
+- Breadboard success does not survive transport.
+- Packaging and power decide whether the software loop looks correct in the field.
 
 ## Final outcome
-- Current prototype supports browser-triggered, bin-specific dispense commands with observable queue states and Pi-based execution; it is a working cloud-to-hardware control loop with clear next steps around auth hardening, sensor feedback, and push updates.
+- Working unit shipped to the client after breadboard bring-up, protoboard permanence, wall power, and multi-bin calibration.
