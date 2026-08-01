@@ -137,9 +137,21 @@ export default function ProjectHero({ project }: { project: Project }) {
                 rel="noreferrer"
                 className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
               >
-                {/youtu\.?be/i.test(project.liveUrl)
-                  ? "Watch on YouTube"
-                  : "Live demo"}
+                {project.slug === "bloombot"
+                  ? "Devpost"
+                  : /youtu\.?be/i.test(project.liveUrl)
+                    ? "Watch on YouTube"
+                    : "Live demo"}
+              </a>
+            )}
+            {project.youtubeUrl && (
+              <a
+                href={project.youtubeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
+              >
+                Watch skit
               </a>
             )}
           </div>

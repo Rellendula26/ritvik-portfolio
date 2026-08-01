@@ -82,6 +82,8 @@ export interface Project {
   disciplines?: string[];
   githubUrl?: string;
   liveUrl?: string;
+  /** Optional second CTA for a YouTube demo/skit when liveUrl is already used. */
+  youtubeUrl?: string;
   demoVideoUrl?: string;
   thumbnail: string;
   images: string[];
@@ -388,6 +390,7 @@ const BASE_PROJECTS: Project[] = [
     techStack: ["Arduino UNO R4 WiFi", "Blynk", "WiFiS3", "Servos", "Ultrasonic", "I2C LCD"],
     githubUrl: "https://github.com/Rellendula26/bloombot-iot",
     liveUrl: "https://devpost.com/software/bloombot-8syfva",
+    youtubeUrl: "https://www.youtube.com/watch?v=D3Kk4IFN1ps",
     demoVideoUrl: "/projects/bloombot-web.mp4",
     thumbnail: "/projects/bloombot-poster.jpg",
     images: ["/projects/bloombot-poster.jpg"],
@@ -1023,6 +1026,7 @@ function normalizeIntakeProject(
     disciplines: input.disciplines,
     githubUrl: input.githubUrl,
     liveUrl: input.liveUrl,
+    youtubeUrl: input.youtubeUrl,
     demoVideoUrl: input.demoVideoUrl,
     thumbnail: input.thumbnail,
     images: input.images,
