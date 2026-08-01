@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local repo-analysis clones should not be linted as app code.
+    ".cache/**",
   ]),
 ]);
 

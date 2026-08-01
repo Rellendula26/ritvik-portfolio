@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import CaseStudyVideo from "@/components/project-page/CaseStudyVideo";
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import type { CaseStudyData } from "@/data/case-studies";
 import SystemBlock, { type SystemSection } from "@/components/project-page/SystemBlock";

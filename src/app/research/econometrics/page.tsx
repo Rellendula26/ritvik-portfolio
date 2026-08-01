@@ -33,7 +33,6 @@ export default function Page() {
 
   // PDF (local)
   const paperUrl = "/research/ecnm.pdf";
-  const paperEmbedUrl = `${paperUrl}#view=FitH&page=1&toolbar=1`;
 
   // External links
   const fullPaperLink =

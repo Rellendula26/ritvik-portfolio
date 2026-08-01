@@ -91,11 +91,14 @@ export default function HomeHeroIntro({
 
   useEffect(() => {
     if (prefersReducedMotion()) {
-      setTyped(HEADLINE.length);
-      setStarted(true);
-      setBodyVisible(true);
-      onProgress?.(1);
-      return;
+      // Defer so we don't sync-set state in the effect body (eslint + cascading render).
+      const frame = window.requestAnimationFrame(() => {
+        setTyped(HEADLINE.length);
+        setStarted(true);
+        setBodyVisible(true);
+        onProgress?.(1);
+      });
+      return () => window.cancelAnimationFrame(frame);
     }
 
     const startTimer = window.setTimeout(() => setStarted(true), 280);

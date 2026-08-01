@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 function isSvg(src: string) {
@@ -31,11 +31,9 @@ export default function ProjectMediaImage({
   priority?: boolean;
   fill?: boolean;
 }) {
-  const [failed, setFailed] = useState(false);
-
-  useEffect(() => {
-    setFailed(false);
-  }, [src]);
+  // Track which src failed so a src change clears the error without an effect.
+  const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const failed = failedSrc === src;
 
   if (failed) {
     return (
@@ -57,7 +55,7 @@ export default function ProjectMediaImage({
           className={`absolute inset-0 h-full w-full ${className}`}
           loading={priority ? "eager" : "lazy"}
           decoding="async"
-          onError={() => setFailed(true)}
+          onError={() => setFailedSrc(src)}
         />
       );
     }
@@ -69,7 +67,7 @@ export default function ProjectMediaImage({
         className={className}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
-        onError={() => setFailed(true)}
+        onError={() => setFailedSrc(src)}
       />
     );
   }
@@ -83,7 +81,7 @@ export default function ProjectMediaImage({
         className={className}
         sizes={sizes}
         priority={priority}
-        onError={() => setFailed(true)}
+        onError={() => setFailedSrc(src)}
       />
     );
   }
@@ -97,7 +95,7 @@ export default function ProjectMediaImage({
       className={className}
       sizes={sizes}
       priority={priority}
-      onError={() => setFailed(true)}
+      onError={() => setFailedSrc(src)}
     />
   );
 }
