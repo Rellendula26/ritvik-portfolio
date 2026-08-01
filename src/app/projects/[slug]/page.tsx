@@ -78,7 +78,23 @@ function limitItems(items: string[], max: number) {
   return items.slice(0, max);
 }
 
-/** Legacy insight-card layout — used until a project has an EngineeringCaseStudy. */
+function MediaNotes({ media }: { media: ProjectMedia }) {
+  if (!("caption" in media) && !("description" in media)) return null;
+  const caption = "caption" in media ? media.caption : undefined;
+  const description = "description" in media ? media.description : undefined;
+  if (!caption && !description) return null;
+
+  return (
+    <div className="border-t border-zinc-200 bg-white px-4 py-3">
+      {caption && <p className="text-xs text-zinc-700">{caption}</p>}
+      {description && (
+        <p className="mt-1 text-xs leading-relaxed text-zinc-500">{description}</p>
+      )}
+    </div>
+  );
+}
+
+/** Legacy insight-card layout; used until a project has an EngineeringCaseStudy. */
 function LegacyProjectPage({
   project,
 }: {
@@ -265,11 +281,7 @@ function LegacyProjectPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>
@@ -291,11 +303,7 @@ function LegacyProjectPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>
@@ -317,11 +325,7 @@ function LegacyProjectPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>
@@ -347,11 +351,7 @@ function LegacyProjectPage({
                 <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
                   {renderMedia(item)}
                 </div>
-                {item.caption && (
-                  <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-                    {item.caption}
-                  </p>
-                )}
+                <MediaNotes media={item} />
               </div>
             ))}
           </div>

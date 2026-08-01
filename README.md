@@ -1,57 +1,112 @@
-# Ritvik Ellendula – Portfolio
+# Ritvik Ellendula
 
-This repository contains the source code for my personal portfolio website.
+Personal portfolio website showcasing engineering projects, research, hardware systems, software tools, and experiments built throughout my time at the University of Pennsylvania.
 
-The site showcases some of my highlighted projects, experiments, and technical builds across software, hardware, and computational tools.
-
-Live site:  
-https://ritvik-portfolio-eta.vercel.app
+🌐 Live Site: https://ritvikellendula.dev
 
 ---
 
-## Overview
+## About
 
-Electrical Engineering @ Penn, and I enjoy building technical tools and experimenting with systems that combine engineering, computation, and creative applications.
+I'm Ritvik Ellendula, an Electrical Engineering student at the University of Pennsylvania interested in:
 
-Some projects featured on the site include:
+- Embedded Systems
+- Robotics
+- Human-Computer Interaction
+- Machine Learning
+- Computational Neuroscience
+- Engineering Entrepreneurship
 
-- **Count Coach** – a tool that analyzes music and detects beats to help dancers train rhythm and timing
-- **CAD MODELING PROJECTS** - projects using CAD to print a 3D replication of a brain, or for making a personal lightsaber
-- **DATA ANALYTICS CAPSTONE** Capstone project for a grad class I took
-- AND MORE TO COME...
+I enjoy building projects that exist at the intersection of software and hardware—from compilers and machine learning systems to CAD models, IoT devices, and research-driven engineering tools.
 
-The goal of the site is to serve as a living collection of things I am building and experimenting with.
+This website serves as a living portfolio documenting my technical growth, research experiences, engineering projects, and ongoing experiments.
+
+---
+
+## Featured Projects
+
+### Count Coach
+A rhythm-training tool that analyzes music and detects beats to help dancers improve timing and consistency.
+
+**Technologies**
+- Python
+- Librosa
+- Audio Signal Processing
+- Machine Learning
+
+### MiniTorch OCaml
+A lightweight deep learning framework built in OCaml featuring automatic differentiation, tensor operations, and dynamic computational graphs.
+
+**Technologies**
+- OCaml
+- Reverse-Mode Autodiff
+- Tensor Mathematics
+
+### C Compiler
+A compiler written from scratch that translates C into x86 assembly through multiple compilation stages including lexing, parsing, semantic analysis, intermediate representations, and code generation.
+
+**Technologies**
+- OCaml
+- Compiler Design
+- x86 Assembly
+
+### Vend-A-Shoe
+A cloud-connected IoT vending system that allows users to remotely actuate physical hardware through a web application.
+
+**Technologies**
+- Next.js
+- TypeScript
+- Supabase
+- Raspberry Pi
+- Embedded Systems
+
+### CAD & Product Design
+A collection of CAD projects ranging from reverse-engineered mechanical components to custom-designed products, including:
+
+- 3D Printed Brain Models
+- Custom Lightsaber Designs
+- Mechanical Adapters
+- Product Prototypes
+
+**Technologies**
+- Fusion 360
+- Onshape
+- Additive Manufacturing
+
+---
+
+## Website Features
+
+- Interactive project showcase
+- Embedded videos and project media
+- Responsive design across devices
+- Project filtering and categorization
+- GitHub and external project links
+- Modern, minimal UI built for performance
 
 ---
 
 ## Tech Stack
 
+### Frontend
 - Next.js
 - React
 - TypeScript
-- TailwindCSS
-- Vercel (deployment)
+- Tailwind CSS
+
+### Deployment
+- Vercel
+
+### Design
+- Responsive-first architecture
+- Component-based UI
+- Optimized media delivery
 
 ---
 
-## Features
+## Running Locally
 
-- Interactive project grid
-- Video previews for projects
-- Categorized project sections
-- Responsive layout for desktop and mobile
-- Media-rich project cards
-
----
-
-## Development
-
-Run locally with:
+Clone the repository:
 
 ```bash
-npm run dev
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+git clone https://github.com/Rellendula26/portfolio.git

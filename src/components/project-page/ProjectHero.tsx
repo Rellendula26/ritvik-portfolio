@@ -163,10 +163,17 @@ export default function ProjectHero({ project }: { project: Project }) {
               />
             )}
           </div>
-          {hero?.caption && (
-            <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs text-zinc-600">
-              {hero.caption}
-            </p>
+          {(hero?.caption || hero?.description) && (
+            <div className="border-t border-zinc-200 bg-white px-4 py-3">
+              {hero.caption && (
+                <p className="text-xs text-zinc-700">{hero.caption}</p>
+              )}
+              {hero.description && (
+                <p className="mt-1 text-xs leading-relaxed text-zinc-500">
+                  {hero.description}
+                </p>
+              )}
+            </div>
           )}
         </div>
       </div>
