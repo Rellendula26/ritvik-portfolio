@@ -148,3 +148,14 @@ Then run `npm run projects:intake:sync`.
 - [ ] Hardware: demo video is the hero media
 - [ ] No em dashes; voice still sounds like you
 - [ ] Case study below can carry depth; hero stays skim-first
+
+---
+
+## Case-study body media (do not ship unclean layouts)
+
+See also `.cursor/rules/case-study-media.mdc`.
+
+- Max **2** media items per discipline section; prefer **1**.
+- Never reuse the same video in two discipline blocks.
+- Text leads; a tall stack of players beside Goal/Design looks bad.
+- Joke / travel clips are Results-only and labeled non-evidence.

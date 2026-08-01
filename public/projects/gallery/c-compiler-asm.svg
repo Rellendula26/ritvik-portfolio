@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#070707"/>
-  <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">x86-64 AT&amp;T · emit</text>
-  <text x="60" y="120" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">movl $2, -4(%rbp)</text>
-  <text x="60" y="155" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">negl -4(%rbp)</text>
-  <text x="60" y="190" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">notl -4(%rbp)</text>
-  <text x="60" y="225" fill="#fde68a" font-family="ui-monospace, monospace" font-size="16">movl -4(%rbp), %eax</text>
-  <text x="60" y="320" fill="#78716c" font-family="ui-monospace, monospace" font-size="15">$ ./mycc unary.c ’ exit code 1</text>
-  <circle cx="720" cy="400" r="28" fill="#f59e0b" opacity="0.15"/>
-  <text x="695" y="406" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="14">OK</text>
+ <rect width="800" height="500" fill="#070707"/>
+ <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">x86-64 AT&amp;T -> emit</text>
+ <text x="60" y="120" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">movl $2, -4(%rbp)</text>
+ <text x="60" y="155" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">negl -4(%rbp)</text>
+ <text x="60" y="190" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">notl -4(%rbp)</text>
+ <text x="60" y="225" fill="#fde68a" font-family="ui-monospace, monospace" font-size="16">movl -4(%rbp), %eax</text>
+ <text x="60" y="320" fill="#78716c" font-family="ui-monospace, monospace" font-size="15">$ ./mycc unary.c -> exit code 1</text>
+ <circle cx="720" cy="400" r="28" fill="#f59e0b" opacity="0.15"/>
+ <text x="695" y="406" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="14">OK</text>
 </svg>

@@ -93,18 +93,29 @@ function DisciplineBlock({
         </div>
 
         {discipline.media ? (
-          <div className="flex items-center">
-            <div className="flex w-full flex-col gap-4">
-              {(Array.isArray(discipline.media)
-                ? discipline.media
-                : [discipline.media]
-              ).map((item) => (
-                <CaseStudyMediaFrame
-                  key={`${item.kind}-${item.src}-${item.label ?? item.alt}`}
-                  media={item}
-                />
-              ))}
-            </div>
+          <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
+            {(() => {
+              const items = Array.isArray(discipline.media)
+                ? discipline.media.slice(0, 2)
+                : [discipline.media];
+              return (
+                <div
+                  className={
+                    items.length > 1
+                      ? "grid w-full gap-3 sm:grid-cols-2 lg:grid-cols-1"
+                      : "flex w-full flex-col gap-3"
+                  }
+                >
+                  {items.map((item) => (
+                    <CaseStudyMediaFrame
+                      key={`${item.kind}-${item.src}-${item.label ?? item.alt}`}
+                      media={item}
+                      className={item.portrait ? undefined : "aspect-video w-full"}
+                    />
+                  ))}
+                </div>
+              );
+            })()}
           </div>
         ) : (
           <div className="hidden lg:block" />

@@ -1,47 +1,47 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#070707"/>
-  <rect x="40" y="40" width="720" height="420" rx="14" fill="#0f0f0f" stroke="#292524"/>
+ <rect width="800" height="500" fill="#070707"/>
+ <rect x="40" y="40" width="720" height="420" rx="14" fill="#0f0f0f" stroke="#292524"/>
 
-  <!-- board outline -->
-  <rect x="120" y="90" width="560" height="300" rx="12" fill="#14532d" stroke="#22c55e" stroke-width="1.5" opacity="0.35"/>
-  <rect x="120" y="90" width="560" height="300" rx="12" fill="none" stroke="#44403c" stroke-width="2"/>
+ <!-- board outline -->
+ <rect x="120" y="90" width="560" height="300" rx="12" fill="#14532d" stroke="#22c55e" stroke-width="1.5" opacity="0.35"/>
+ <rect x="120" y="90" width="560" height="300" rx="12" fill="none" stroke="#44403c" stroke-width="2"/>
 
-  <!-- pack connector -->
-  <rect x="145" y="200" width="50" height="70" rx="4" fill="#1c1917" stroke="#f59e0b"/>
-  <text x="170" y="190" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11">PACK</text>
+ <!-- pack connector -->
+ <rect x="145" y="200" width="50" height="70" rx="4" fill="#1c1917" stroke="#f59e0b"/>
+ <text x="170" y="190" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11">PACK</text>
 
-  <!-- star ground -->
-  <circle cx="230" cy="235" r="10" fill="#f59e0b"/>
-  <text x="230" y="270" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11"> GND</text>
+ <!-- star ground -->
+ <circle cx="230" cy="235" r="10" fill="#f59e0b"/>
+ <text x="230" y="270" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11">  GND</text>
 
-  <!-- H-bridges -->
-  <rect x="300" y="130" width="100" height="70" rx="6" fill="#1c1917" stroke="#fb923c"/>
-  <text x="350" y="170" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="12">H-bridge L</text>
-  <rect x="300" y="280" width="100" height="70" rx="6" fill="#1c1917" stroke="#fb923c"/>
-  <text x="350" y="320" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="12">H-bridge R</text>
+ <!-- H-bridges -->
+ <rect x="300" y="130" width="100" height="70" rx="6" fill="#1c1917" stroke="#fb923c"/>
+ <text x="350" y="170" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="12">H-bridge L</text>
+ <rect x="300" y="280" width="100" height="70" rx="6" fill="#1c1917" stroke="#fb923c"/>
+ <text x="350" y="320" text-anchor="middle" fill="#fdba74" font-family="ui-monospace, monospace" font-size="12">H-bridge R</text>
 
-  <!-- bulk caps -->
-  <rect x="420" y="145" width="24" height="40" rx="3" fill="#57534e"/>
-  <rect x="450" y="145" width="24" height="40" rx="3" fill="#57534e"/>
-  <rect x="420" y="295" width="24" height="40" rx="3" fill="#57534e"/>
-  <rect x="450" y="295" width="24" height="40" rx="3" fill="#57534e"/>
-  <text x="448" y="250" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="10">bulk</text>
+ <!-- bulk caps -->
+ <rect x="420" y="145" width="24" height="40" rx="3" fill="#57534e"/>
+ <rect x="450" y="145" width="24" height="40" rx="3" fill="#57534e"/>
+ <rect x="420" y="295" width="24" height="40" rx="3" fill="#57534e"/>
+ <rect x="450" y="295" width="24" height="40" rx="3" fill="#57534e"/>
+ <text x="448" y="250" text-anchor="middle" fill="#a8a29e" font-family="ui-monospace, monospace" font-size="10">bulk</text>
 
-  <!-- MCU / IMU domain -->
-  <rect x="520" y="150" width="130" height="180" rx="8" fill="#1c1917" stroke="#fde68a" stroke-dasharray="4 3"/>
-  <text x="585" y="180" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="12">3.3V domain</text>
-  <rect x="545" y="200" width="80" height="40" rx="4" fill="#292524" stroke="#a8a29e"/>
-  <text x="585" y="225" text-anchor="middle" fill="#e7e5e4" font-family="ui-monospace, monospace" font-size="11">MCU</text>
-  <rect x="545" y="260" width="80" height="40" rx="4" fill="#292524" stroke="#f59e0b"/>
-  <text x="585" y="285" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11">IMU</text>
+ <!-- MCU / IMU domain -->
+ <rect x="520" y="150" width="130" height="180" rx="8" fill="#1c1917" stroke="#fde68a" stroke-dasharray="4 3"/>
+ <text x="585" y="180" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="12">3.3V domain</text>
+ <rect x="545" y="200" width="80" height="40" rx="4" fill="#292524" stroke="#a8a29e"/>
+ <text x="585" y="225" text-anchor="middle" fill="#e7e5e4" font-family="ui-monospace, monospace" font-size="11">MCU</text>
+ <rect x="545" y="260" width="80" height="40" rx="4" fill="#292524" stroke="#f59e0b"/>
+ <text x="585" y="285" text-anchor="middle" fill="#fde68a" font-family="ui-monospace, monospace" font-size="11">IMU</text>
 
-  <!-- traces -->
-  <path d="M195 235 H220" stroke="#f59e0b" stroke-width="2"/>
-  <path d="M240 235 H300" stroke="#78716c" stroke-width="2"/>
-  <path d="M230 225 V165 H300" stroke="#78716c" stroke-width="1.5" fill="none"/>
-  <path d="M230 245 V315 H300" stroke="#78716c" stroke-width="1.5" fill="none"/>
-  <path d="M400 165 H520" stroke="#57534e" stroke-width="1" stroke-dasharray="3 2"/>
-  <path d="M400 315 H520 V280" stroke="#57534e" stroke-width="1" stroke-dasharray="3 2" fill="none"/>
+ <!-- traces -->
+ <path d="M195 235 H220" stroke="#f59e0b" stroke-width="2"/>
+ <path d="M240 235 H300" stroke="#78716c" stroke-width="2"/>
+ <path d="M230 225 V165 H300" stroke="#78716c" stroke-width="1.5" fill="none"/>
+ <path d="M230 245 V315 H300" stroke="#78716c" stroke-width="1.5" fill="none"/>
+ <path d="M400 165 H520" stroke="#57534e" stroke-width="1" stroke-dasharray="3 2"/>
+ <path d="M400 315 H520 V280" stroke="#57534e" stroke-width="1" stroke-dasharray="3 2" fill="none"/>
 
-  <text x="60" y="430" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="12" opacity="0.85">PCB v2  star ground, motor returns isolated from IMU reference</text>
+ <text x="60" y="430" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="12" opacity="0.85">PCB v2   star ground, motor returns isolated from IMU reference</text>
 </svg>

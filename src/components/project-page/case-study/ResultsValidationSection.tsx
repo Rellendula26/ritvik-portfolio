@@ -55,7 +55,9 @@ export default function ResultsValidationSection({
               <CaseStudyMediaFrame
                 key={`${item.kind}-${item.src}-${item.label ?? item.alt}`}
                 media={item}
-                className="h-[240px] md:h-[300px]"
+                className={
+                  item.portrait ? undefined : "aspect-video w-full"
+                }
               />
             ))}
           </div>

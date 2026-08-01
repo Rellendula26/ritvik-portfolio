@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#070707"/>
-  <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">AST · recursive descent</text>
-  <rect x="340" y="100" width="120" height="44" rx="8" fill="#1c1917" stroke="#f59e0b" stroke-opacity="0.4"/>
-  <text x="365" y="128" fill="#fde68a" font-family="ui-monospace, monospace" font-size="16">Return</text>
-  <line x1="400" y1="144" x2="400" y2="170" stroke="#57534e"/>
-  <rect x="300" y="170" width="200" height="44" rx="8" fill="#1c1917" stroke="#a78bfa" stroke-opacity="0.5"/>
-  <text x="330" y="198" fill="#c4b5fd" font-family="ui-monospace, monospace" font-size="16">Complement</text>
-  <line x1="400" y1="214" x2="400" y2="240" stroke="#57534e"/>
-  <rect x="320" y="240" width="160" height="44" rx="8" fill="#1c1917" stroke="#6ee7b7" stroke-opacity="0.5"/>
-  <text x="355" y="268" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">Negate(2)</text>
+ <rect width="800" height="500" fill="#070707"/>
+ <text x="60" y="70" fill="#f59e0b" font-family="ui-monospace, monospace" font-size="13">AST -> recursive descent</text>
+ <rect x="340" y="100" width="120" height="44" rx="8" fill="#1c1917" stroke="#f59e0b" stroke-opacity="0.4"/>
+ <text x="365" y="128" fill="#fde68a" font-family="ui-monospace, monospace" font-size="16">Return</text>
+ <line x1="400" y1="144" x2="400" y2="170" stroke="#57534e"/>
+ <rect x="300" y="170" width="200" height="44" rx="8" fill="#1c1917" stroke="#a78bfa" stroke-opacity="0.5"/>
+ <text x="330" y="198" fill="#c4b5fd" font-family="ui-monospace, monospace" font-size="16">Complement</text>
+ <line x1="400" y1="214" x2="400" y2="240" stroke="#57534e"/>
+ <rect x="320" y="240" width="160" height="44" rx="8" fill="#1c1917" stroke="#6ee7b7" stroke-opacity="0.5"/>
+ <text x="355" y="268" fill="#6ee7b7" font-family="ui-monospace, monospace" font-size="16">Negate(2)</text>
 </svg>

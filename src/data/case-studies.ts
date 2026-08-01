@@ -277,101 +277,6 @@ Arduino UNO R4 WiFi — command processing
     },
   },
 
-  snapfuel: {
-    slug: "snapfuel",
-    title: "SnapFuel",
-    positioning:
-      "Photo-first calorie tracking with honest uncertainty, AI estimates, human confirmation, Garmin-aware net calories.",
-    role: "Full-stack builder",
-    timeline: "May 2026",
-    stack: ["Next.js 16", "TypeScript", "Supabase", "OpenAI Vision", "Vercel"],
-    impact: [
-      "End-to-end: upload → vision JSON → user edit → dashboard",
-      "log_method distinguishes photo_ai vs manual entries",
-      "GarminService interface ready for real API integration",
-    ],
-    github: "https://github.com/Rellendula26/snapfuel",
-    tags: ["Next.js", "Supabase", "OpenAI", "Health Tech"],
-    signal: "Full-Stack",
-    heroImage: {
-      src: "/projects/count-coach-1.png",
-      alt: "SnapFuel meal logging interface",
-    },
-    gallery: [
-      { src: "/projects/count-coach-2.png", alt: "SnapFuel dashboard and review flow" },
-      { src: "/projects/count-coach-poster.png", alt: "SnapFuel app overview" },
-    ],
-    problem: {
-      id: "problem",
-      eyebrow: "Problem",
-      title: "Logging food is too much friction",
-      body: "Calorie apps fail when estimation is slow or opaque. I wanted snap-and-confirm flow with transparent confidence, and net calories vs burn, starting with manual Garmin import.",
-      bullets: [
-        "Manual database search breaks flow for home-cooked meals",
-        "Users need to correct AI, not trust it blindly",
-        "Net calorie view requires both intake and burn data",
-      ],
-    },
-    constraints: {
-      id: "constraints",
-      eyebrow: "Constraints",
-      title: "MVP scope decisions",
-      bullets: [
-        "Vision estimates are not lab-accurate, confidence scores required",
-        "Garmin Connect OAuth deferred; manual entry via GarminService",
-        "RLS + anon Supabase client for user routes; service role reserved",
-        "Server UTC 'today' may edge-case near midnight locally",
-      ],
-    },
-    technical: {
-      id: "technical",
-      eyebrow: "Technical Deep Dive",
-      title: "Architecture",
-      diagram: `/log → POST /api/analyze-meal (OpenAI vision)
-         → MealReviewCard (user edits)
-         → POST /api/meals (confirmed_calories)
-/dashboard → GET /api/dashboard/today
-/garmin → POST /api/garmin/manual → garmin_daily_summary`,
-      bullets: [
-        "Zod-validated vision JSON: items, macros, confidence enum",
-        "meal_items table for line-item photo meals",
-        "confirmed_calories drives dashboard totals, not raw AI output",
-        "Storage bucket meal-images with RLS policies",
-      ],
-    },
-    build: {
-      id: "build",
-      eyebrow: "Build Process",
-      title: "Shipped in one session",
-      bullets: [
-        "Schema-first: supabase/schema.sql + migration_v2.sql",
-        "Six UI components: upload, review, manual form, dashboard, etc.",
-        "Prompt engineering for structured JSON, not free text",
-        "Vercel deploy checklist: auth redirects, storage policies",
-      ],
-    },
-    results: {
-      id: "results",
-      eyebrow: "Results",
-      title: "Deployable MVP",
-      bullets: [
-        "Auth, photo log, manual log, dashboard, Garmin page working",
-        "API routes separated from UI for future mobile client",
-        "Documented limitations openly in README",
-      ],
-    },
-    lessons: {
-      id: "lessons",
-      eyebrow: "Lessons Learned",
-      title: "Confirm, don't auto-trust",
-      body: "The product insight is the edit step. AI gets you 80% there; confirmed_calories is the source of truth for analytics.",
-      bullets: [
-        "Interface boundaries (GarminService) pay off before API access",
-        "Confidence enum sets user expectations better than a single number",
-      ],
-    },
-  },
-
   "labreach-ai": {
     slug: "labreach-ai",
     title: "LabReach AI",
@@ -607,9 +512,15 @@ Arduino UNO R4 WiFi — command processing
         kind: "video",
       },
       {
+        src: "/projects/lightsaber/analogcircuit-in-saber.mp4",
+        alt: "Analog circuit running inside the lightsaber",
+        label: "In-saber analog circuit",
+        kind: "video",
+      },
+      {
         src: "/projects/lightsaber/sabersecurity.mp4",
-        alt: "Lab checkout and safety testing at Detkin",
-        label: "Lab testing",
+        alt: "Lightsaber blade carried through an airport",
+        label: "Airport bit",
         kind: "video",
       },
       {

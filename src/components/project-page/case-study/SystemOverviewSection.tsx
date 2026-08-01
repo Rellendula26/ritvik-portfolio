@@ -65,10 +65,11 @@ export default function SystemOverviewSection({
           </div>
 
           {content.diagram && (
-            <div className="flex items-center">
-              <div className="w-full">
-                <CaseStudyMediaFrame media={content.diagram} className="h-[280px] md:h-[360px]" />
-              </div>
+            <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
+              <CaseStudyMediaFrame
+                media={content.diagram}
+                className="aspect-[4/3] w-full md:aspect-video"
+              />
             </div>
           )}
         </div>
