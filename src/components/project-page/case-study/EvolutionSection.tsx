@@ -14,11 +14,11 @@ export default function EvolutionSection({
       <SectionLabel>Evolution</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Progression, not just the final result
+          How it got here
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          CAD revisions, board spins, and tuning milestones; how the system earned
-          its current shape.
+          Bench bring-up, CAD fits, soldering, and the demos in between. Not just the
+          final photo.
         </p>
       </div>
 

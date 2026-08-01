@@ -20,10 +20,10 @@ export default function ReflectionSection({
       <SectionLabel>Reflection</SectionLabel>
       <div className="mt-6 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)] md:p-8">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Honest leftovers
+          Looking back
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-zinc-500">
-          Surprises, redesigns, and open questions — the part that usually gets edited out.
+          What surprised me, what I&apos;d redo, and questions I&apos;m still chewing on.
         </p>
 
         <div className="mt-8 grid gap-5 md:grid-cols-2">

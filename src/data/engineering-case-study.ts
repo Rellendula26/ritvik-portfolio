@@ -121,11 +121,11 @@ export const ENGINEERING_NOTE_LABELS: Record<EngineeringNoteKind, string> = {
   observation: "Observation",
 };
 
-/** Canonical dummy case study — template every future project page follows. */
+/** Canonical dummy case study; template every future project page follows. */
 export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
   slug: "drift-balancer",
   motivation: {
-    why: "I kept seeing balancing robots treated as demos rather than control systems. I wanted a platform where every oscillation had a measurable cause — sensor noise, loop timing, mechanical compliance — and where fixing one subsystem didn't mask another.",
+    why: "I kept seeing balancing robots treated as demos rather than control systems. I wanted a platform where every oscillation had a measurable cause; sensor noise, loop timing, mechanical compliance; and where fixing one subsystem didn't mask another.",
     interest:
       "The interesting part wasn't 'make it stand up.' It was the coupling: battery placement changes the inertia tensor, which changes the plant model, which changes which PID gains are even reachable before the motors saturate.",
     learning:
@@ -159,7 +159,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
     dataFlow:
       "IMU → complementary filter → pitch/rate estimates → cascade PID → PWM → H-bridge → motors. Encoder ticks feed an outer position trim that slowly centers the robot on the start line.",
     controlFlow:
-      "A hardware timer ISR samples sensors and runs the controller. The main loop only handles telemetry and parameter updates — never the balance loop itself.",
+      "A hardware timer ISR samples sensors and runs the controller. The main loop only handles telemetry and parameter updates; never the balance loop itself.",
     diagram: {
       kind: "image",
       src: "/projects/gallery/drift-architecture.svg",
@@ -181,8 +181,8 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
         "Printed wheel hubs cracked at the bore after a few hard recoveries.",
       ],
       iterations: [
-        "v1: single-wall PLA plates — light, but torsional compliance polluted the plant.",
-        "v2: thicker walls + cross-rib — better, still flexed at the motor mount.",
+        "v1: single-wall PLA plates; light, but torsional compliance polluted the plant.",
+        "v2: thicker walls + cross-rib; better, still flexed at the motor mount.",
         "v3: aluminum motor brackets bolted through the plate, carbon tube as a structural spine.",
       ],
       finalImplementation:
@@ -207,7 +207,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
         "Hand-soldered H-bridge legs lifted pads after a few reworks.",
       ],
       iterations: [
-        "Breadboard + module boards — proved the control idea, lied about noise and brown-outs.",
+        "Breadboard + module boards; proved the control idea, lied about noise and brown-outs.",
         "v1 PCB: functional layout, but motor return current still crossed the IMU.",
         "v2 PCB: star ground, thicker power traces, TVS across the pack, and a ferrite on the IMU rail.",
       ],
@@ -233,8 +233,8 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
         "Updating gains mid-loop produced one-sample discontinuities that kicked the robot.",
       ],
       iterations: [
-        "Arduino-style loop() — fine for bring-up, useless for measuring phase margin.",
-        "ISR control + blocking UART — jitter returned as soon as telemetry was enabled.",
+        "Arduino-style loop(); fine for bring-up, useless for measuring phase margin.",
+        "ISR control + blocking UART; jitter returned as soon as telemetry was enabled.",
         "ISR control + ring-buffered telemetry + double-buffered params.",
       ],
       finalImplementation:
@@ -254,14 +254,14 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
       design:
         "Complementary filter (α ≈ 0.98 on gyro) for pitch. Cascade: inner rate PID → outer angle PID → slow position trim from wheel encoders. Anti-windup on every integrator. Duty cycle soft-limited before the H-bridge so saturation is visible in telemetry.",
       challenges: [
-        "Accel-only tilt was unusable under acceleration — the robot 'saw' pitch whenever it drove.",
+        "Accel-only tilt was unusable under acceleration; the robot 'saw' pitch whenever it drove.",
         "A single PID on angle fought the plant's rate dynamics and oscillated near ±8°.",
         "Position trim that was too aggressive walked the robot into a wall while 'balancing.'",
       ],
       iterations: [
-        "Accel tilt + single PID — stood for seconds, then diverged.",
-        "Complementary filter + single PID — better estimate, still oscillatory.",
-        "Cascade + anti-windup + soft duty limits — recoverable from ±12–15° on carpet.",
+        "Accel tilt + single PID; stood for seconds, then diverged.",
+        "Complementary filter + single PID; better estimate, still oscillatory.",
+        "Cascade + anti-windup + soft duty limits; recoverable from ±12–15° on carpet.",
       ],
       finalImplementation:
         "Cascade with rate P/D dominant, angle PI for bias rejection, and a position trim an order of magnitude slower. On a flat floor with a full pack, it holds ±1.2° RMS over a 60 s window.",
@@ -296,7 +296,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
       tradeoffs:
         "Kalman would be more principled and more knobs. Complementary is one α, easy to reason about in telemetry, and plenty accurate for a stiff mechanical plant at 200 Hz. Accel-only was already ruled out by the first drive test.",
       choice:
-        "Complementary filter. I can explain every term in the estimate, and when something looks wrong I know whether to blame α, gyro bias, or the mount — not a covariance matrix I hand-tuned once.",
+        "Complementary filter. I can explain every term in the estimate, and when something looks wrong I know whether to blame α, gyro bias, or the mount; not a covariance matrix I hand-tuned once.",
     },
     {
       id: "battery",
@@ -311,7 +311,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
       tradeoffs:
         "Top mount simplified harness routing but raised CG enough that ±10° recoveries saturated the motors. Rear mount created a persistent pitch bias. Centered low made wiring ugly and forced a custom cradle.",
       choice:
-        "Centered low, with the harness designed around the cradle instead of the other way around. Battery placement became a mechanical constraint that the electrical and control designs had to respect — not an afterthought.",
+        "Centered low, with the harness designed around the cradle instead of the other way around. Battery placement became a mechanical constraint that the electrical and control designs had to respect; not an afterthought.",
     },
     {
       id: "grounding",
@@ -326,7 +326,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
       tradeoffs:
         "Filtering would hide the symptom and add phase lag. Slowing PWM hurts torque response. Reworking the ground is more board spins, but it attacks the actual coupling.",
       choice:
-        "Respin for star grounding. Once motor return current stopped sharing the IMU reference, the 'mysterious' 200 Hz twitch in the estimate disappeared — and I stopped chasing it in software.",
+        "Respin for star grounding. Once motor return current stopped sharing the IMU reference, the 'mysterious' 200 Hz twitch in the estimate disappeared; and I stopped chasing it in software.",
     },
   ],
   evolution: [
@@ -383,7 +383,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
         src: "/projects/gallery/drift-control-loop.svg",
         alt: "Drift telemetry view",
         label: "Tuned system",
-        caption: "Evidence over anecdotes — the plots decided the final gains.",
+        caption: "Evidence over anecdotes; the plots decided the final gains.",
       },
     },
   ],
@@ -416,7 +416,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
         src: "/projects/gallery/drift-control-loop.svg",
         alt: "Telemetry capture during a 60s hold test",
         label: "Hold test telemetry",
-        caption: "Pitch, rate, and duty cycle over a 60 s upright hold — the plot behind the ±1.2° RMS claim.",
+        caption: "Pitch, rate, and duty cycle over a 60 s upright hold; the plot behind the ±1.2° RMS claim.",
       },
       {
         kind: "image",
@@ -430,14 +430,14 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
         src: "/projects/gallery/drift-pcb.svg",
         alt: "Scope capture of 3.3V rail during dual-motor recovery",
         label: "Rail integrity",
-        caption: "Placeholder for a scope shot of the 3.3 V rail under recovery — evidence for the <80 mV dip.",
+        caption: "Placeholder for a scope shot of the 3.3 V rail under recovery; evidence for the <80 mV dip.",
       },
     ],
     limitations: [
       "Carpet and soft mats change the effective plant enough that hardwood-tuned gains oscillate.",
-      "No automatic gyro bias calibration at boot — a long powered-down period still needs a short still-bias sample.",
+      "No automatic gyro bias calibration at boot; a long powered-down period still needs a short still-bias sample.",
       "Position trim assumes a flat floor; a sustained slope makes the robot creep downhill while 'balanced.'",
-      "This page uses placeholder diagrams — treat measurements as representative of the engineering process, not lab-certified data.",
+      "This page uses placeholder diagrams; treat measurements as representative of the engineering process, not lab-certified data.",
     ],
   },
   reflection: {
@@ -448,7 +448,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
     ],
     redesign: [
       "I'd design the battery cradle and star-ground connector as one mechanical-electrical assembly from day one.",
-      "I'd put a current sense path on each motor early — duty cycle is a weak proxy when the pack sags.",
+      "I'd put a current sense path on each motor early; duty cycle is a weak proxy when the pack sags.",
       "I'd budget a third PCB spin instead of pretending v2 would be final.",
     ],
     future: [
@@ -469,7 +469,7 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
     },
     {
       kind: "design-insight",
-      text: "Battery placement determined nearly every mechanical constraint — and quietly constrained the electrical layout too.",
+      text: "Battery placement determined nearly every mechanical constraint; and quietly constrained the electrical layout too.",
     },
     {
       kind: "observation",

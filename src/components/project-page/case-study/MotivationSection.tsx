@@ -11,10 +11,10 @@ export default function MotivationSection({
       <SectionLabel>Motivation</SectionLabel>
       <div className="mt-6 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)] md:p-8">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Why this exists
+          Why I started this
         </h2>
         <p className="mt-2 max-w-2xl text-sm text-zinc-500">
-          Context before architecture; what pulled me into the problem.
+          What pulled me in, and what I wanted to get better at.
         </p>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">

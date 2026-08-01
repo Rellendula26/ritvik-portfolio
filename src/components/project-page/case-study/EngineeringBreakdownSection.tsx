@@ -126,11 +126,11 @@ export default function EngineeringBreakdownSection({
       <SectionLabel>Engineering Breakdown</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Subsystems as case studies
+          Broken down by discipline
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          Each discipline below is its own miniature engineering story — goal, design,
-          what broke, how it evolved, and what shipped.
+          Each block covers the goal, the design, what broke, what changed, and what
+          shipped.
         </p>
       </div>
 

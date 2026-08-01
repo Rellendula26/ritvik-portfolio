@@ -14,10 +14,10 @@ export default function ResultsValidationSection({
       <SectionLabel>Results & Validation</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Evidence over marketing
+          What held up
         </h2>
         <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          What was measured, what held up, and where the system still fails honestly.
+          What worked in the end, what I can show for it, and where it&apos;s still limited.
         </p>
       </div>
 
@@ -45,10 +45,10 @@ export default function ResultsValidationSection({
       {media.length > 0 && (
         <div className="mt-8">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
-            Evidence media
+            Photos and clips
           </p>
           <p className="mt-2 max-w-2xl text-sm text-zinc-600">
-            Photos, demo clips, and instrument captures that back the measurements above.
+            The runs and stills that match the results above.
           </p>
           <div className="mt-5 grid gap-5 md:grid-cols-2">
             {media.map((item) => (

@@ -46,9 +46,9 @@ export default function EngineeringCaseStudyLayout({
       <ProjectHero project={project} />
 
       <div className="mt-4 rounded-[1.5rem] border border-orange-200/70 bg-orange-50/50 px-4 py-3 text-sm text-orange-950/90">
-        <span className="font-semibold">Engineering case study.</span>{" "}
-        The hero above is the executive summary. Everything below walks through how
-        the system was designed, what broke, and why decisions were made.
+        <span className="font-semibold">Full write-up below.</span>{" "}
+        The hero is the short version. This is the build story: what I designed, what
+        broke, and why I made the calls I did.
       </div>
 
       <AnchorNav items={CASE_STUDY_NAV} />
