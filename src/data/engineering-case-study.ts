@@ -125,7 +125,7 @@ export const ENGINEERING_NOTE_LABELS: Record<EngineeringNoteKind, string> = {
 export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
   slug: "drift-balancer",
   motivation: {
-    why: "I kept seeing balancing robots treated as demos rather than control systems. I wanted a platform where every oscillation had a measurable cause; sensor noise, loop timing, mechanical compliance; and where fixing one subsystem didn't mask another.",
+    why: "I kept seeing balancing robots treated as demos rather than control systems. I wanted a platform where every oscillation had a measurable cause (sensor noise, loop timing, mechanical compliance), and where fixing one subsystem didn't mask another.",
     interest:
       "The interesting part wasn't 'make it stand up.' It was the coupling: battery placement changes the inertia tensor, which changes the plant model, which changes which PID gains are even reachable before the motors saturate.",
     learning:
