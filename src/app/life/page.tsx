@@ -17,25 +17,23 @@ const LIFE: MediaCardItem[] = [
   {
     id: "002",
     eyebrow: "Dance",
-    title: "Penn Dhamaka & Dance",
+    title: "Dance",
     blurb:
-      "In college, I have become extremely involved in the University of Pennsylvania's Fusion Dance Team: Penn Dhamaka. PROJECT PAGE IN PROGRESS...",
+      "Penn Dhamaka competitive fusion (2026 national champs) plus the dance TikToks I post when I'm just training and messing around.",
     href: "/life/dance",
-    tags: ["Physical Activity", "Friends", "Competitive"],
-    media: { kind: "image", src: "/life/atl.jpg", alt: "Tamasha" },
-
+    tags: ["Penn Dhamaka", "Fusion", "TikTok"],
+    media: { kind: "image", src: "/life/atl.jpg", alt: "Penn Dhamaka" },
   },
-
   {
-  id: "003",
-  eyebrow: "Video Editing",
-  title: "Edits",
-  blurb:
-    "I always admired people who can create high-quality videos, and I think that's one of the coolest skills someone can have as creating cool content draws attention super fast.",
-  href: "/life/edits",
-  tags: ["Production", "Video Editing"],
-  media: { kind: "image", src: "/life/mich.jpg", alt: "Michigan video edit" },
-}
+    id: "003",
+    eyebrow: "Video Editing",
+    title: "Edits",
+    blurb:
+      "Learning editing and videography for my YouTube channel and HJA event recaps. Gear experiments include the DJI Osmo Pocket 3 and Sony ZV-1.",
+    href: "/life/edits",
+    tags: ["YouTube", "HJA", "DaVinci Resolve"],
+    media: { kind: "image", src: "/life/mich.jpg", alt: "Michigan vs Ohio State edit" },
+  },
 ];
 
 export default function LifePage() {

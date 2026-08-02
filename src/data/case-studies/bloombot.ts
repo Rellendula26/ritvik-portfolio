@@ -169,26 +169,50 @@ export const BLOOMBOT_CASE_STUDY: EngineeringCaseStudy = {
     {
       id: "b1",
       phase: "Stage 1",
-      title: "Motion bring-up",
-      description: "Prove servos and basic choreography before networking.",
+      title: "Nothing working",
+      description:
+        "Early bring-up where the bloom did not open cleanly. Useful clip because it shows how far the system was from a demo before power, wiring, and timing got honest.",
+      media: {
+        kind: "video",
+        src: "/projects/bloombot/nothing-working.mp4",
+        alt: "BloomBot early failure when motion was not working",
+        poster: "/projects/bloombot-poster.jpg",
+        label: "Nothing working",
+        caption: "The starting point: presence and intent, no reliable actuation yet.",
+      },
     },
     {
       id: "b2",
       phase: "Stage 2",
-      title: "Wireless + sensing",
-      description: "Blynk handlers and ultrasonic feedback enter the loop.",
+      title: "Motors working",
+        description:
+        "Servo open/close started behaving. Once motion was real, ultrasonic gating and WiFi paths had something worth integrating.",
+      media: {
+        kind: "video",
+        src: "/projects/bloombot/motors-working.mp4",
+        alt: "BloomBot servos opening the flower",
+        poster: "/projects/bloombot-poster.jpg",
+        label: "Motors working",
+        caption: "Coordinated servo motion for the bloom open/close.",
+      },
     },
     {
       id: "b3",
       phase: "Stage 3",
-      title: "Demo hardening",
-      description: "Retries, feedback channels, and power fixes for public presentation.",
+      title: "Wireless + sensing",
+      description: "Blynk message path, Morse LED heart, ultrasonic proximity, and LCD status enter the same loop.",
     },
     {
       id: "b4",
+      phase: "Stage 4",
+      title: "Demo hardening",
+      description: "Retries, rail margin, and failure-mode rehearsal so the public demo did not brown out mid-open.",
+    },
+    {
+      id: "b5",
       phase: "Next",
       title: "Hardware revision",
-      description: "Cleaner enclosure, harness, and smoother interpolation; optional sentiment-driven motion maps.",
+      description: "Cleaner enclosure, harness, and smoother interpolation.",
     },
   ],
   results: {
