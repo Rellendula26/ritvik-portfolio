@@ -15,13 +15,17 @@ function renderMedia(media: ProjectMedia, priority = false) {
   }
 
   if (media.kind === "video") {
+    const autoplayHero = media.mediaType === "demo" || media.featured;
     return (
       <video
         src={media.src}
         className="h-full w-full object-contain object-center bg-[#070707]"
         controls
         playsInline
-        preload="metadata"
+        muted={autoplayHero}
+        autoPlay={autoplayHero}
+        loop={autoplayHero}
+        preload={autoplayHero ? "auto" : "metadata"}
         poster={media.poster}
       />
     );
