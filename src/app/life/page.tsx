@@ -19,9 +19,9 @@ const LIFE: MediaCardItem[] = [
     eyebrow: "Dance",
     title: "Dance",
     blurb:
-      "Penn Dhamaka competitive fusion (2026 national champs) plus the dance TikToks I post when I'm just training and messing around.",
+      "Penn Dhamaka competitive fusion (2026 national champs), summer training with Furteelay / D2G, plus dance TikToks.",
     href: "/life/dance",
-    tags: ["Penn Dhamaka", "Fusion", "TikTok"],
+    tags: ["Penn Dhamaka", "D2G", "TikTok"],
     media: { kind: "image", src: "/life/atl.jpg", alt: "Penn Dhamaka" },
   },
   {
