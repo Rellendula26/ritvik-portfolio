@@ -12,24 +12,44 @@ import EvolutionSection from "@/components/project-page/case-study/EvolutionSect
 import ResultsValidationSection from "@/components/project-page/case-study/ResultsValidationSection";
 import ReflectionSection from "@/components/project-page/case-study/ReflectionSection";
 import FloatingEngineeringNotes from "@/components/project-page/case-study/FloatingEngineeringNotes";
+import {
+  EngineeringTimelineSection,
+  RootCauseAnalysesSection,
+  TransferableSkillsSection,
+  Version2PlanSection,
+} from "@/components/project-page/case-study/RetrospectiveExtrasSection";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
 
-const CASE_STUDY_NAV = [
-  { id: "motivation", label: "Motivation" },
-  { id: "system-overview", label: "System" },
-  { id: "engineering-breakdown", label: "Breakdown" },
-  { id: "design-decisions", label: "Decisions" },
-  { id: "evolution", label: "Evolution" },
-  { id: "results", label: "Results" },
-  { id: "reflection", label: "Reflection" },
-];
+function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
+  const items = [
+    { id: "motivation", label: "Motivation" },
+    { id: "system-overview", label: "System" },
+    caseStudy.timeline?.length
+      ? { id: "engineering-timeline", label: "Timeline" }
+      : null,
+    { id: "engineering-breakdown", label: "Breakdown" },
+    { id: "design-decisions", label: "Decisions" },
+    caseStudy.rootCauseAnalyses?.length
+      ? { id: "root-cause", label: "When it broke" }
+      : null,
+    { id: "evolution", label: "Evolution" },
+    caseStudy.version2Plan ? { id: "version-2", label: "Version 2" } : null,
+    { id: "results", label: "Results" },
+    caseStudy.transferableSkills?.length
+      ? { id: "transferable-skills", label: "What this built" }
+      : null,
+    { id: "reflection", label: "Reflection" },
+  ];
+
+  return items.filter((item): item is { id: string; label: string } => item !== null);
+}
 
 /**
  * Canonical engineering case-study layout.
  *
  * Hero (Executive Summary) stays first and visually unchanged.
- * Everything below is a cohesive narrative of engineering thinking.
+ * Optional retrospective blocks render when present on the case study.
  */
 export default function EngineeringCaseStudyLayout({
   project,
@@ -38,6 +58,8 @@ export default function EngineeringCaseStudyLayout({
   project: Project;
   caseStudy: EngineeringCaseStudy;
 }) {
+  const nav = buildCaseStudyNav(caseStudy);
+
   return (
     <ProjectPageShell>
       <FloatingEngineeringNotes notes={caseStudy.engineeringNotes} />
@@ -51,15 +73,27 @@ export default function EngineeringCaseStudyLayout({
         broke, and why I made the calls I did.
       </div>
 
-      <AnchorNav items={CASE_STUDY_NAV} />
+      <AnchorNav items={nav} />
 
       <div className="mt-14 space-y-16 md:space-y-20">
         <MotivationSection content={caseStudy.motivation} />
         <SystemOverviewSection content={caseStudy.systemOverview} />
+        {caseStudy.timeline?.length ? (
+          <EngineeringTimelineSection entries={caseStudy.timeline} />
+        ) : null}
         <EngineeringBreakdownSection disciplines={caseStudy.disciplines} />
         <DesignDecisionsSection decisions={caseStudy.designDecisions} />
+        {caseStudy.rootCauseAnalyses?.length ? (
+          <RootCauseAnalysesSection items={caseStudy.rootCauseAnalyses} />
+        ) : null}
         <EvolutionSection milestones={caseStudy.evolution} />
+        {caseStudy.version2Plan ? (
+          <Version2PlanSection content={caseStudy.version2Plan} />
+        ) : null}
         <ResultsValidationSection content={caseStudy.results} />
+        {caseStudy.transferableSkills?.length ? (
+          <TransferableSkillsSection skills={caseStudy.transferableSkills} />
+        ) : null}
         <ReflectionSection content={caseStudy.reflection} />
       </div>
     </ProjectPageShell>

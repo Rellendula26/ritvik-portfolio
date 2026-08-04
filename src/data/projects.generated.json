@@ -89,12 +89,7 @@
     "keyHighlights": [
       "Designed a custom enclosure with 3D-printed fixtures and laser-cut panels for manufacturable assembly",
       "Integrated 4 MG996R servos, 8 LEDs, and a fan through a centralized power-distribution architecture with Raspberry Pi GPIO control",
-      "Merged a new backend with an existing production frontend for remote cloud-triggered dispensing",
-      "`app/page.tsx`: command UI and Supabase insert flow for bin-specific dispense actions.",
-      "`pi_worker.py`: queue consumer loop, command claiming, action parsing, command status updates.",
-      "`servo_motor.py`: GPIO PWM motor sweep with safe return to home duty cycle.",
-      "`supabase.sql`: command queue table, indexes, RLS policies for MVP access model.",
-      "`pi-worker.service`: Linux service definition for persistent worker execution."
+      "Merged a new backend with an existing production frontend for remote cloud-triggered dispensing"
     ],
     "architecture": [
       "Dashboard inserts bin commands into Supabase.",
@@ -134,9 +129,9 @@
       "Worker deployment uses systemd with restart-on-failure and explicit env variables."
     ],
     "nextImprovements": [
-      "Add push-based updates instead of pure polling for faster UX.",
-      "Harden RLS and command auth model beyond MVP open policies.",
-      "Add sensor feedback to verify successful dispense actions."
+      "Custom KiCad distribution PCB with keyed connectors and branch fusing/PTCs",
+      "Incoming actuator burn-in plus closed-loop dispense sensing",
+      "Static DHCP reservation / mDNS and stronger queue auth beyond MVP"
     ],
     "buildNotes": [
       "Decision: queue-based cloud-to-device architecture through Supabase",
