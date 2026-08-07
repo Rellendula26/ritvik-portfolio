@@ -9,6 +9,14 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
  */
 export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
   slug: "vend-a-shoe",
+  executiveAssessment: {
+    shipped:
+      "Assembled, wall-powered unit with enclosure, dense harness, Pi worker, and cloud-queued multi-bin dispense delivered to the client.",
+    difficulty:
+      "Cross-layer failures (fried motors, DHCP/SSH loss, bad joints, overvoltage) shared the same “it doesn’t work” symptom until meters and substitution isolated the layer.",
+    next:
+      "KiCad distribution board with keyed connectors and branch protection, closed-loop dispense sensing, and a Version 2 sequence that freezes power and harness before packaging.",
+  },
   motivation: {
     why: "I built this at BrainChild Engineering for a client who needed a unit that could leave the lab. A breadboard demo was never the finish line.",
     interest:
@@ -56,6 +64,11 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
       label: "Control path",
       caption: "Dashboard to queue to Pi to protoboard to servos, LEDs, and fan.",
     },
+  },
+  timelineCopy: {
+    title: "How the summer actually went",
+    description:
+      "June 11 to July 28. Part-time, with one travel week in the middle (July 18–25). Dates below are reconstructed from notes and media.",
   },
   timeline: [
     {
@@ -458,6 +471,27 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
       },
     },
   ],
+  scheduleAnalysis: {
+    note: "Calendar time was dominated by harness, power permanence, and recovery—not by writing the queue worker.",
+    required: [
+      "Qualify every servo/LED/fan before trusting the software map",
+      "Bench-supply bring-up with current limit before wall power",
+      "Protoboard + labeled harness once the connector map froze",
+      "Packaging that still opens for service after transport",
+    ],
+    preventable: [
+      "Cutting wire lengths before the mounting layout was frozen",
+      "Assuming quiet motors meant bad code instead of swap-testing first",
+      "The 24 V overvoltage connection—and the recovery cost that followed",
+      "Leaving final multi-bin validation until the delivery week",
+    ],
+    organizational: [
+      "No EE mentor on-site for early power review",
+      "Protoboard and decent soldering tools not in stock at first",
+      "Travel week coincided with a power fault while I was away",
+      "Limited spare-qualified actuators when motors failed",
+    ],
+  },
   version2Plan: {
     target:
       "If I built the next unit with what I know now, I would aim for roughly 3–4 calendar weeks of part-time work instead of rediscovering the same failure modes. That only works if parts are available and the connector map freezes early.",

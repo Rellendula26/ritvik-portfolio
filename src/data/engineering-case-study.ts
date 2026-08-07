@@ -134,6 +134,12 @@ export interface TimelineEntry {
   assessment?: string;
 }
 
+/** Optional heading copy for the timeline block (avoids project-specific hardcoding). */
+export interface TimelineSectionCopy {
+  title?: string;
+  description?: string;
+}
+
 export interface RootCauseAnalysis {
   id: string;
   title: string;
@@ -188,6 +194,8 @@ export interface EngineeringCaseStudy {
   /** Optional deeper retrospective blocks (used by Vend-A-Shoe). */
   executiveAssessment?: ExecutiveAssessment;
   timeline?: TimelineEntry[];
+  /** Heading/description for the timeline section when `timeline` is present. */
+  timelineCopy?: TimelineSectionCopy;
   rootCauseAnalyses?: RootCauseAnalysis[];
   scheduleAnalysis?: ScheduleAnalysis;
   version2Plan?: Version2Plan;
