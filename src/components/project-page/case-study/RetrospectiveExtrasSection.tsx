@@ -5,6 +5,7 @@ import type {
   RootCauseAnalysis,
   ScheduleAnalysis,
   TimelineEntry,
+  TimelineSectionCopy,
   TransferableSkill,
   Version2Plan,
 } from "@/data/engineering-case-study";
@@ -45,22 +46,26 @@ export function ExecutiveAssessmentSection({
 
 export function EngineeringTimelineSection({
   entries,
+  copy,
 }: {
   entries: TimelineEntry[];
+  copy?: TimelineSectionCopy;
 }) {
   if (entries.length === 0) return null;
+
+  const title = copy?.title ?? "How the build actually went";
+  const description =
+    copy?.description ??
+    "Dates below are reconstructed from notes and media.";
 
   return (
     <section id="engineering-timeline" className="scroll-mt-28">
       <SectionLabel>Timeline</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          How the summer actually went
+          {title}
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          June 11 to July 28. Part-time, with one travel week in the middle. Dates below are
-          reconstructed from notes and media.
-        </p>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-600">{description}</p>
       </div>
 
       <ol className="relative mt-8 space-y-0 border-l border-zinc-200 pl-6">
@@ -157,7 +162,7 @@ export function ScheduleAnalysisSection({
   content: ScheduleAnalysis;
 }) {
   return (
-    <section id="what-took-time" className="scroll-mt-28">
+    <section id="schedule-analysis" className="scroll-mt-28">
       <SectionLabel>What Took Time</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
