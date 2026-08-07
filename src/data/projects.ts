@@ -517,6 +517,133 @@ const BASE_PROJECTS: Project[] = [
     signal: "Electromechanical Systems",
   }),
   normalizeProject({
+    id: "P16",
+    title: "Automatic Tennis Ball Shooter",
+    slug: "tennis-ball-shooter",
+    featured: true,
+    category: "embedded",
+    status: "shipped",
+    oneLine:
+      "Designed and fabricated a client tennis-ball launcher prototype at BrainChild Engineering integrating ESP32 wireless control, dual RS-775 flywheel drive, NEMA 17 stepper feed, MOSFET motor switching, and 12V-to-5V power regulation into a modular electromechanical system.",
+    overview:
+      "I built this at BrainChild Engineering for a client demo that had to leave USB babysitting. The work meant migrating from an Arduino Mega / Bluetooth path to an ESP32 that owned motor sequencing; driving dual RS-775 flywheels through MOSFET modules under MCU PWM instead of pot speed controllers; indexing balls with a NEMA 17 on an A4988; and splitting a fused 12 V pack so actuators stayed on the high rail while a buck fed 5 V logic. The MOSFETs are hard switches: PWM duty cycle sets average motor voltage, and the motor’s inductance / inertia smooth the pulses. Failures taught as much as the architecture: no buck at first left the ESP32 dead on battery, the stepper print was too flimsy until a denser reprint, and a PWM test oversped a motor so hard that the fuse did not open, buck / battery solder joints came off, and a wire melted. It stayed a prototype on purpose: enough for a Replit-controlled multi-motor demo, not a finished consumer launcher.",
+    techStack: [
+      "ESP32",
+      "C++",
+      "NEMA 17 Stepper",
+      "A4988",
+      "RS-775 DC Motors",
+      "MOSFET Modules",
+      "PWM",
+      "Buck Converter",
+      "Fuse Protection",
+      "Breadboard",
+      "CAD",
+      "3D Printing",
+      "Replit",
+    ],
+    disciplines: [
+      "Embedded Systems",
+      "Electrical Engineering",
+      "Mechanical Design",
+      "Power Electronics",
+      "Robotics",
+    ],
+    liveUrl:
+      "https://ee4462e9-ad7c-4104-ad14-777a0503092c-00-3mxmj40uiv8vv.worf.replit.dev/",
+    thumbnail: "/projects/tennis-ball-shooter/circuit-and-chassis.jpg",
+    images: [
+      "/projects/tennis-ball-shooter/circuit-and-chassis.jpg",
+      "/projects/tennis-ball-shooter/chassis.jpg",
+      "/projects/tennis-ball-shooter/buck-converter.jpg",
+      "/projects/tennis-ball-shooter/connection-diagram.jpg",
+      "/projects/tennis-ball-shooter/burned-wire.jpg",
+    ],
+    demoVideoUrl: "/projects/tennis-ball-shooter/demo-with-app.mp4",
+    date: "2025–2026",
+    buildStage: "Client prototype / demo",
+    keyHighlights: [
+      "Drove flywheels with MOSFET modules under ESP32 PWM so speed is duty cycle, not a half-on FET dumping heat",
+      "Split a fused 12 V pack: actuators on the high rail, bucked 5 V for ESP32 / driver logic",
+      "Survived an overspeed event where the fuse missed, buck/battery joints failed, and a wire melted, then hardened the bring-up checklist around protection and joints",
+    ],
+    architecture: [
+      "Replit UI → ESP32 → MOSFET PWM + A4988 → RS-775s / NEMA 17 → feed + launch.",
+      "12 V pack → fuse → MOSFET / VMOT; buck → 5 V for ESP32 and driver logic.",
+      "PWM hard-switches the pack across the motor; inductance averages the pulses.",
+    ],
+    challenges: [
+      "12 V pack without a buck converter left the ESP32 unable to run correctly off battery.",
+      "PWM test oversped a motor; fuse did not interrupt; buck/battery solder came off and a wire melted.",
+      "First 3D-printed stepper interface was too flimsy and poorly fastened under load.",
+    ],
+    lessonsLearned: [
+      "MOSFET PWM is on/off at high frequency. Duty cycle is average voltage to the motor, not a DC voltage inside the FET.",
+      "A fuse on the diagram is not enough if joints fail first and current has nowhere safe to go.",
+      "A soft print makes STEP/DIR look guilty. Raise infill before rewriting the ISR.",
+    ],
+    technicalNotes: [
+      "BrainChild Engineering client prototype, not production-ready.",
+      "Next: custom interface PCB, fuse/fault validation, closed-loop sensing, hardened feed mechanics.",
+    ],
+    nextImprovements: [
+      "Custom PCB for power / motor interface with deliberate fuse and flyback paths",
+      "Stuck-high MOSFET / overspeed fault testing",
+      "Closed-loop launch / feed sensing",
+    ],
+    media: [
+      {
+        kind: "video",
+        src: "/projects/tennis-ball-shooter/demo-with-app.mp4",
+        alt: "Tennis ball shooter controlled from the Replit web app",
+        label: "App demo",
+        poster: "/projects/tennis-ball-shooter/circuit-and-chassis.jpg",
+        mediaType: "demo",
+        featured: true,
+        priority: 10,
+        caption:
+          "BrainChild client demo path: Replit UI into the ESP32 launcher stack.",
+      },
+      {
+        kind: "video",
+        src: "/projects/tennis-ball-shooter/app-interface.mp4",
+        alt: "Replit TENNIS control interface on a laptop",
+        label: "Control UI",
+        mediaType: "process",
+        caption:
+          "Replit app: LIVE rail readout, pace presets, START FEED, emergency stop.",
+      },
+      {
+        kind: "video",
+        src: "/projects/tennis-ball-shooter/post-motor-overspeed.mp4",
+        alt: "Bench after motor overspeed and joint failure",
+        label: "Overspeed aftermath",
+        mediaType: "process",
+        caption:
+          "After the flywheel ran away: fuse miss, failed joints, melted conductor.",
+      },
+      {
+        kind: "image",
+        src: "/projects/tennis-ball-shooter/burned-wire.jpg",
+        alt: "Charred melted yellow wire from overspeed event",
+        label: "Melted wire",
+        mediaType: "image",
+        caption: "Insulation after the pack-side joint failed during overspeed.",
+      },
+    ],
+    tags: [
+      "ESP32",
+      "BrainChild",
+      "MOSFET",
+      "PWM",
+      "Buck Converter",
+      "Fuse",
+      "3D Printing",
+      "Robotics",
+    ],
+    signal: "Electromechanical Systems",
+  }),
+  normalizeProject({
     id: "P15",
     title: "Custom Arduino Sensor PCB",
     slug: "ultrasonic-pcb",
@@ -599,6 +726,122 @@ const BASE_PROJECTS: Project[] = [
     ],
     tags: ["kicad", "pcb", "hardware", "ultrasonic", "arduino", "gerber"],
     signal: "PCB Design",
+  }),
+  normalizeProject({
+    id: "P17",
+    title: "Afterthought",
+    slug: "afterthought",
+    featured: false,
+    category: "fullstack",
+    status: "shipped",
+    oneLine:
+      "Built a deployed personal media archive that separates perceived film quality from personal impact, captures short post-watch reflections, and organizes them into a searchable theme-based knowledge base.",
+    overview:
+      "I kept remembering that a movie was an 8/10 and forgetting why it stayed with me. Existing trackers are excellent at logging titles and scores; they lose scenes, questions, and takeaways. I designed Afterthought as a Next.js App Router product with dual-axis ratings (Overall vs Personal Impact), a hard 2–3 minute capture constraint centered on one prompt (“What stuck with you?”), browser voice notes with transcription and AI organization, TMDB-backed media identity, and a persistence boundary that runs on a seeded Zustand demo store or Supabase auth/Postgres/storage. The hard problem was not adding fields. A multi-section journal felt like homework, so I forced capture and organization apart: the user writes the thought; AI may suggest themes afterward, never overwrite the original.",
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Supabase",
+      "TMDB API",
+      "OpenAI",
+      "Zustand",
+      "Zod",
+      "React Hook Form",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "Vercel",
+    ],
+    githubUrl: "https://github.com/Rellendula26/Afterthought",
+    liveUrl: "https://afterthought-phi.vercel.app",
+    thumbnail: "/projects/afterthought/landing.jpg",
+    images: [
+      "/projects/afterthought/landing.jpg",
+      "/projects/afterthought/reflection.jpg",
+      "/projects/afterthought/movie-detail.jpg",
+      "/projects/afterthought/dashboard.jpg",
+      "/projects/afterthought/themes.jpg",
+    ],
+    date: "Summer 2026",
+    buildStage: "Deployed MVP",
+    disciplines: [
+      "Full-Stack Engineering",
+      "Product Design",
+      "Data Modeling",
+      "API Integration",
+      "AI Systems",
+    ],
+    keyHighlights: [
+      "Modeled Overall Rating and Personal Impact as independent attributes so “best films” and “films that mattered” can diverge in the library",
+      "Collapsed an 8+ section reflection editor into a 2–3 minute default flow: two scores, one primary prompt, one save; moved structure behind optional expansion and AI post-processing",
+      "Separated TMDB media identity from user-media records (ratings, reflections, voice transcripts, themes) and kept a demo-first persistence path that runs without cloud credentials",
+    ],
+    architecture: [
+      "Client: search, media detail, reflection editor, library, themes, voice capture.",
+      "App routes: TMDB normalization, OpenAI transcribe/organize (Zod-validated JSON), persistence abstraction.",
+      "TMDB identifies the title; Supabase or Zustand demo store owns the user’s relationship to it.",
+    ],
+    challenges: [
+      "A richer schema (lessons, scenes, quotes, techniques) made post-movie capture feel like a questionnaire.",
+      "Generative rewrite sounded polished and drifted from what I actually meant.",
+      "Requiring TMDB + Supabase + OpenAI keys made the portfolio demo fragile.",
+    ],
+    lessonsLearned: [
+      "Capture and organization are different jobs; mixing them kills completion.",
+      "One score collapses two different questions: quality vs personal impact.",
+      "External catalog IDs and private journal state need different ownership and lifecycles.",
+    ],
+    technicalNotes: [
+      "MVP validates interaction flow and architecture seams, not long-term retention.",
+      "Next: semantic retrieval across reflections, resurfacing, stronger multi-user cloud path.",
+    ],
+    nextImprovements: [
+      "Semantic search across reflections",
+      "Resurfacing old notes (“you wrote this six months ago”)",
+      "Unified movie + TV discovery polish",
+    ],
+    media: [
+      {
+        kind: "image",
+        src: "/projects/afterthought/landing.jpg",
+        alt: "Afterthought landing page with dual-axis rating promise",
+        label: "Product entry",
+        mediaType: "image",
+        featured: true,
+        priority: 10,
+        caption:
+          "Public landing: dual-axis promise and one-click path into the seeded demo journal.",
+      },
+      {
+        kind: "image",
+        src: "/projects/afterthought/reflection.jpg",
+        alt: "Reflection editor with Overall and Personal Impact scores",
+        label: "Reflection capture",
+        mediaType: "image",
+        caption:
+          "Default capture path after the credits: two independent scores plus “What stuck with you?”",
+      },
+      {
+        kind: "image",
+        src: "/projects/afterthought/themes.jpg",
+        alt: "Theme-based browsing of film reflections",
+        label: "Theme retrieval",
+        mediaType: "image",
+        caption:
+          "Browse by ideas such as ambition or identity once the archive exists.",
+      },
+    ],
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "TMDB",
+      "OpenAI",
+      "Zustand",
+      "Zod",
+      "Product Design",
+    ],
+    signal: "Product Systems",
   }),
   normalizeProject({
     id: "P05",
@@ -1231,7 +1474,25 @@ export const PROJECTS: Project[] = [...BASE_PROJECTS, ...INTAKE_PROJECTS].filter
   isProjectVisible
 );
 
-export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured);
+/** Homepage / featured grid order. Keep tennis after Vend-A-Shoe. */
+const FEATURED_SLUG_ORDER = [
+  "c-compiler",
+  "minitorch-ocaml",
+  "bloombot",
+  "saber",
+  "vend-a-shoe",
+  "tennis-ball-shooter",
+  "drift-balancer",
+] as const;
+
+function featuredRank(slug: string) {
+  const index = (FEATURED_SLUG_ORDER as readonly string[]).indexOf(slug);
+  return index === -1 ? FEATURED_SLUG_ORDER.length : index;
+}
+
+export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured).sort(
+  (a, b) => featuredRank(a.slug) - featuredRank(b.slug)
+);
 export const SUPPORTING_PROJECTS = PROJECTS.filter(
   (project) => !project.featured && project.status !== "archived"
 );

@@ -15,6 +15,9 @@ import { CIS5450_CASE_STUDY } from "@/data/case-studies/cis5450";
 import { ULTRASONIC_PCB_CASE_STUDY } from "@/data/case-studies/ultrasonic-pcb";
 import { PRODUCT_APP_CASE_STUDIES } from "@/data/case-studies/product-apps";
 import { WEBSITE_CASE_STUDY } from "@/data/case-studies/website";
+import { VEND_A_SHOE_CASE_STUDY } from "@/data/case-studies/vend-a-shoe";
+import { TENNIS_BALL_SHOOTER_CASE_STUDY } from "@/data/case-studies/tennis-ball-shooter";
+import { AFTERTHOUGHT_CASE_STUDY } from "@/data/case-studies/afterthought";
 
 export type EngineeringNoteKind =
   | "engineering-note"
@@ -117,6 +120,61 @@ export interface ReflectionContent {
   questions: string[];
 }
 
+/** Optional recruiter-facing assessment shown near the top of a case study. */
+export interface ExecutiveAssessment {
+  shipped: string;
+  difficulty: string;
+  next: string;
+}
+
+export interface TimelineEntry {
+  period: string;
+  work: string;
+  friction: string;
+  assessment?: string;
+}
+
+export interface RootCauseAnalysis {
+  id: string;
+  title: string;
+  symptoms: string;
+  rootCause: string;
+  method: string;
+  improvement: string;
+  media?: CaseStudyMedia;
+}
+
+export interface ScheduleAnalysis {
+  required: string[];
+  preventable: string[];
+  organizational: string[];
+  note?: string;
+}
+
+export interface Version2Phase {
+  name: string;
+  hours?: string;
+  body: string;
+}
+
+export interface Version2Upgrade {
+  area: string;
+  change: string;
+  benefit: string;
+}
+
+export interface Version2Plan {
+  target: string;
+  phases: Version2Phase[];
+  upgrades: Version2Upgrade[];
+}
+
+export interface TransferableSkill {
+  context: string;
+  evidence: string;
+  phrasing: string;
+}
+
 export interface EngineeringCaseStudy {
   slug: string;
   motivation: MotivationContent;
@@ -127,6 +185,13 @@ export interface EngineeringCaseStudy {
   results: ResultsContent;
   reflection: ReflectionContent;
   engineeringNotes: EngineeringNote[];
+  /** Optional deeper retrospective blocks (used by Vend-A-Shoe). */
+  executiveAssessment?: ExecutiveAssessment;
+  timeline?: TimelineEntry[];
+  rootCauseAnalyses?: RootCauseAnalysis[];
+  scheduleAnalysis?: ScheduleAnalysis;
+  version2Plan?: Version2Plan;
+  transferableSkills?: TransferableSkill[];
 }
 
 export const ENGINEERING_NOTE_LABELS: Record<EngineeringNoteKind, string> = {
@@ -508,484 +573,6 @@ export const DRIFT_CASE_STUDY: EngineeringCaseStudy = {
     {
       kind: "observation",
       text: "Yesterday's perfect gains on a full pack are today's oscillation on a tired pack. Voltage is part of the plant.",
-    },
-  ],
-};
-
-/** Vend-A-Shoe case study. Media lives in public/projects/vend-a-shoe/. */
-export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
-  slug: "vend-a-shoe",
-  motivation: {
-    why: "I built this at BrainChild Engineering for a client who needed a unit that could leave the lab. A breadboard demo was never the finish line.",
-    interest:
-      "BloomBot got me comfortable with servos on Arduino. This one stacked packaging, a dense harness, power distribution for motors plus eight LEDs and a fan, and a Pi that had to stay alive on a wall adapter; that mix is what pulled me in.",
-    learning:
-      "I wanted sharper instincts for debugging across systems, not inside one tidy layer. Mechanical clearance, rail voltage, GPIO maps, and queue state fail together; the useful skill is deciding which system to trust first, then proving it with a supply and a meter instead of rewriting code on a guess.",
-  },
-  systemOverview: {
-    summary:
-      "A Next.js dashboard drops bin dispense commands into Supabase. A Raspberry Pi worker claims each row, drives MG996R servos off a soldered protoboard that also feeds eight LEDs and a cooling fan, then writes completed or failed. The harness was the product as much as the queue was; enclosure, power, and dozens of connections were in the loop from the start.",
-    subsystems: [
-      {
-        name: "Enclosure & mounts",
-        role: "Onshape assembly with printed mounts, wire covers, and a laser-cut rear panel you can actually open again.",
-      },
-      {
-        name: "Power & protoboard",
-        role: "Wall AC to DC conversion into a soldered protoboard with common ground; one outlet path feeds servos, eight LEDs, the fan, and the Pi.",
-      },
-      {
-        name: "Harness",
-        role: "Forty-plus wires for motors, LED runs, fan, and control; lengths and service loops were design constraints, not cleanup.",
-      },
-      {
-        name: "Pi worker",
-        role: "Python process claims pending commands, maps bin to GPIO, runs PWM sweeps, persists status.",
-      },
-      {
-        name: "Command queue",
-        role: "Supabase device_commands with pending to running to completed or failed; the Pi never needs a public port.",
-      },
-      {
-        name: "Dashboard",
-        role: "Existing frontend kept in place; the new backend had to meet its API shape and show queue state clearly.",
-      },
-    ],
-    dataFlow:
-      "UI insert; Supabase queue; Pi claim; GPIO and PWM; servos plus eight LEDs plus fan; status write-back.",
-    controlFlow:
-      "Only the worker owns actuation. The browser never talks to GPIO; claiming by status update keeps two polls from firing the same dispense.",
-    diagram: {
-      kind: "image",
-      src: "/projects/gallery/vend-a-shoe-architecture.svg",
-      alt: "Vend-A-Shoe system architecture",
-      label: "Control path",
-      caption: "Dashboard to queue to Pi to protoboard to servos, LEDs, and fan.",
-    },
-  },
-  disciplines: [
-    {
-      id: "mechanical",
-      discipline: "Mechanical",
-      goal: "Fit the dispense mechanism, Pi, protoboard, fan, and a dense harness in a compact box that still opens for service.",
-      design:
-        "Custom Onshape enclosure; printed mounts and extenders; laser-cut rear panel. Clearances and harness paths for motors, eight LEDs, and the fan drove the layout more than the outer silhouette did.",
-      challenges: [
-        "Four servo positions plus LED runs and a fan left almost no slack once the harness existed.",
-        "Eight LEDs needed unique lengths; four per side at different heights.",
-        "Every early packing choice fought service access through a forty-plus-wire bundle.",
-      ],
-      iterations: [
-        "CAD packing against real component envelopes, including fan clearance.",
-        "Print, fit, remount cycles on brackets, covers, and extenders.",
-        "Rear panel cut so cables and rework did not mean a full teardown.",
-      ],
-      finalImplementation:
-        "Integrated mounts, organized routing, removable rear panel. It shipped as one assembly, not a pile of boards in a shell.",
-      media: [
-        {
-          kind: "image",
-          src: "/projects/vend-a-shoe/ENTIRECAD.jpg",
-          alt: "Full Vend-A-Shoe CAD assembly",
-          label: "Full enclosure CAD",
-          caption: "Packaging built around servos, LEDs, fan, Pi, and harness; not a generic box.",
-        },
-        {
-          kind: "image",
-          src: "/projects/vend-a-shoe/3dprintedextenders.jpg",
-          alt: "3D-printed mechanical extenders",
-          label: "Printed extenders",
-          caption: "Printed parts that made the dispense geometry and mounts fit the real box.",
-        },
-      ],
-    },
-    {
-      id: "electrical",
-      discipline: "Electrical",
-      goal: "Take a normal AC wall outlet, convert it to usable DC, and power the protoboard, 4 MG996R servos, 8 LEDs, the fan, and the Raspberry Pi from that one path without brownouts or sketchy grounds.",
-      design:
-        "Bench supply for bring-up; multimeter checks on rails and grounds before trusting a channel. Then a wall AC to DC converter into a soldered protoboard with common ground so the whole unit can leave the bench. This was one of the clearest electrical lessons from the internship: wall power is not just plugging something in; it is conversion, distribution, and load budgeting. Actuator and accessory current stay off the Pi GPIO path; GPIO only signals.",
-      challenges: [
-        "We planned for four motors; a few were already fried from earlier high-voltage abuse and just sat dead. Sorting wiring versus software versus dead hardware became its own debug loop.",
-        "Eight LEDs and a fan added continuous load on top of the servo harness; the wall converter and protoboard had to feed all of that plus the Pi.",
-        "Shared Pi power sagged under multi-servo moves; breadboard contacts lied; forty-plus wires made routing a design problem, not a cleanup task.",
-      ],
-      iterations: [
-        "Bench PSU for controlled bring-up; multimeter on voltage drop, continuity, and common ground before rewriting PWM code.",
-        "Swap-test motors and channels; watch LED and fan rails while servos move.",
-        "Soldered protoboard for permanence; wall AC to DC path so the packaged unit runs from a basic outlet.",
-      ],
-      finalImplementation:
-        "One wall outlet path into DC distribution on the protoboard. That rail powers the motors, eight LEDs, the fan, and the Raspberry Pi in the shipped assembly.",
-      media: [
-        {
-          kind: "image",
-          src: "/projects/vend-a-shoe/wall-ac-dc.jpg",
-          alt: "Wall AC to DC power converter for Vend-A-Shoe",
-          label: "Wall AC to DC",
-          caption:
-            "AC wall outlet into DC for the protoboard. Same path feeds the motors, 8 LEDs, fan, and Pi; an internship lesson in conversion and distribution, not cloud hardware.",
-        },
-        {
-          kind: "image",
-          src: "/projects/vend-a-shoe/solderedprotoboardfront.jpg",
-          alt: "Soldered protoboard front",
-          label: "Protoboard front",
-          caption: "Soldered permanence after the breadboard stopped being trustworthy.",
-        },
-        {
-          kind: "image",
-          src: "/projects/vend-a-shoe/solderedprotoboardback.jpg",
-          alt: "Soldered protoboard back",
-          label: "Protoboard back",
-          caption: "Common-ground distribution for servos, LEDs, fan, and Pi power; GPIO stays signal-only.",
-        },
-      ],
-    },
-    {
-      id: "embedded",
-      discipline: "Embedded",
-      goal: "Turn a queued cloud command into one clean dispense motion and a status you can trust.",
-      design:
-        "Raspberry Pi 4; Python worker; RPi.GPIO PWM. Parses dispense_bin_n, applies per-bin target duty, returns home. systemd keeps the worker up across reboot.",
-      challenges: [
-        "A silent motor looks identical to a bad pin map until you meter the rail, swap hardware, and prove which layer failed.",
-        "One shared motion profile over-rotated Bin 3.",
-        "Crashes mid-run left ambiguous state until running existed.",
-      ],
-      iterations: [
-        "Standalone scripts on the bench; channel swap tests before blaming software.",
-        "Polling worker with a single dispense action.",
-        "Four-bin map, duty overrides, systemd unit.",
-      ],
-      finalImplementation:
-        "Claim-by-status worker with bin to GPIO mapping and calibration hooks. The unit wakes into a working loop without a laptop attached.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/raspberrypimotormove.mp4",
-        alt: "Raspberry Pi driving servo motion",
-        label: "Pi motor bring-up",
-        caption: "GPIO and PWM on the Pi once the channel and the motor were both known-good.",
-      },
-    },
-    {
-      id: "cloud",
-      discipline: "Cloud & Integration",
-      goal: "Remote dispense without exposing the Pi, while keeping the frontend that already existed.",
-      design:
-        "Supabase queue as the boundary. New backend bent to the existing Next.js UI instead of rewriting the client.",
-      challenges: [
-        "API shape had to match an independently built frontend.",
-        "Polling delay versus double-fire under concurrent claims.",
-        "Cross-stack failures only showed up end to end.",
-      ],
-      iterations: [
-        "Local-only GPIO scripts.",
-        "Cloud-connected single action.",
-        "Multi-bin queue plus UI status badges.",
-      ],
-      finalImplementation:
-        "Browser click to durable row to physical dispense; completed and failed show up where you already look. The cloud path is software and queueing; wall AC to DC power lives in the electrical section.",
-    },
-  ],
-  designDecisions: [
-    {
-      id: "controller",
-      title: "Raspberry Pi 4 over Arduino / ESP32",
-      problem: "Need networking, a real OS, Python worker logic, and GPIO on one board.",
-      alternatives: ["Arduino plus a separate network module", "ESP32", "Raspberry Pi 4"],
-      tradeoffs:
-        "MCU boards win on cost and boot time. Pi wins when the control path is a long-lived worker talking to Postgres.",
-      choice:
-        "Pi 4. One platform for queue client, GPIO, and systemd; fewer failure domains during client demos.",
-    },
-    {
-      id: "power",
-      title: "Wall AC to DC into a shared protoboard rail",
-      problem:
-        "MG996Rs, eight LEDs, a fan, and the Pi need honest DC from a client-site wall outlet; a Pi USB cable cannot carry that load.",
-      alternatives: [
-        "Power everything from the Pi",
-        "Separate supplies without a shared ground",
-        "Wall AC to DC into a common-ground protoboard",
-      ],
-      tradeoffs:
-        "Pi-powered looks tidy until the first multi-servo move plus LED and fan load. Split grounds make GPIO references nasty. Wall conversion adds a part; it is what makes the unit shippable.",
-      choice:
-        "Wall AC to DC feeding the protoboard, motors, LEDs, fan, and Pi together. Bench PSU and multimeter first; outlet path second. Internship takeaway: conversion and distribution are the product, not an afterthought.",
-    },
-    {
-      id: "assembly",
-      title: "Soldered protoboard instead of breadboard or PCB",
-      problem: "Need reliability past Duponts without freezing a PCB while mounts were still moving.",
-      alternatives: ["Breadboard", "Soldered protoboard", "Custom KiCad PCB"],
-      tradeoffs:
-        "Breadboard is fast and lies. PCB is right and slow when connectors still drift daily.",
-      choice:
-        "Protoboard as temporary permanence. Next revision should be a PCB once connector positions stop moving.",
-    },
-    {
-      id: "enclosure",
-      title: "Custom enclosure over a generic box",
-      problem: "Off-the-shelf cases fight servo geometry and harness exits.",
-      alternatives: ["Generic project box", "Custom Onshape enclosure plus printed mounts"],
-      tradeoffs:
-        "Generic is faster day one. Custom costs CAD time; it buys serviceability.",
-      choice:
-        "Custom box, printed mounts, laser-cut rear panel. Packaging was a design constraint, not a shell.",
-    },
-    {
-      id: "frontend",
-      title: "Adapt backend to existing frontend",
-      problem: "UI already existed; backend and hardware were new.",
-      alternatives: ["Rewrite the frontend", "Shape the backend to the existing app"],
-      tradeoffs:
-        "Rewrite cleans the API. Adaptation keeps working UX and forces the interface to stay honest.",
-      choice:
-        "Keep the frontend. Integration bugs beat a second UI rewrite on an internship clock.",
-    },
-  ],
-  evolution: [
-    {
-      id: "e1",
-      phase: "Bring-up",
-      title: "Breadboard, four motors, and a bad assumption",
-      description:
-        "We started with four motors on a floating harness. A few would not move at all; the unanticipated part was that they had already been cooked by high-voltage abuse elsewhere. Wiring, software, and dead hardware all produce the same quiet servo. Proving which one it was became a microcosm of debugging across systems later.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/breadboardfirstmodel.mp4",
-        alt: "First breadboard Vend-A-Shoe model",
-        label: "First breadboard model",
-        caption: "Early motion tests before anyone trusted the harness.",
-      },
-    },
-    {
-      id: "e2",
-      phase: "Bench chaos",
-      title: "Fan, LEDs, supply, and meter",
-      description:
-        "Eight LEDs and a cooling fan joined the servo load while the harness grew past forty wires. Bench power supply and multimeter work made sagging rails and bad grounds visible; without that, every flake looked like a software bug.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/fanandbreadboard.mp4",
-        alt: "Breadboard bring-up with cooling fan",
-        label: "Bench bring-up",
-        caption: "Fan in the loop; meter on the rail before rewriting code.",
-      },
-    },
-    {
-      id: "e3",
-      phase: "First demo",
-      title: "Initial dispense path",
-      description:
-        "Got a short end-to-end clip once a known-good motor and a known-good channel finally lined up. That was the bar the rest of the build had to clear again after packaging.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/initialdemo.mp4",
-        alt: "Initial Vend-A-Shoe dispense demo",
-        label: "Initial demo",
-        caption: "First credible dispense before permanence and packaging.",
-      },
-    },
-    {
-      id: "e4",
-      phase: "Permanence",
-      title: "Soldered protoboard and screw terminals",
-      description:
-        "Moved signal and power for servos, LEDs, and fan onto soldered joints and Pi screw terminals so the harness survived transport and demos.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/soldering.mp4",
-        alt: "Soldering the protoboard",
-        label: "Protoboard build",
-        caption: "Breadboard habits do not survive a dense harness and a client handoff.",
-      },
-    },
-    {
-      id: "e5",
-      phase: "Packaging",
-      title: "CAD enclosure and printed mounts",
-      description:
-        "Enclosure revisions tracked real clearances once harness lengths for motors, eight LEDs, and the fan were known; mounts, covers, rear panel.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/CAD.mp4",
-        alt: "CAD enclosure walkthrough",
-        label: "CAD iteration",
-        caption: "Mounts designed around the harness, not the other way around.",
-      },
-    },
-    {
-      id: "e6",
-      phase: "Integration",
-      title: "Longer initial system run",
-      description:
-        "A longer clip of the early assembled path; useful for catching harness snags and motion that only shows up after a few cycles.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/fullvideoinitialdemo.mp4",
-        alt: "Longer initial Vend-A-Shoe demo",
-        label: "Extended initial demo",
-        caption: "More cycles; more chances for a weak joint to confess.",
-      },
-    },
-    {
-      id: "e7",
-      phase: "Ship",
-      title: "Wall power and end-to-end dispense",
-      description:
-        "Wall AC to DC cut the bench supply after the meter said the rails were honest. Multi-bin calibration and UI status closed the loop for delivery.",
-      media: {
-        kind: "video",
-        src: "/projects/vend-a-shoe/seconddemo.mp4",
-        alt: "Vend-A-Shoe dispense demo",
-        label: "Dispense demo",
-        caption: "Queued command to physical dispense on the assembled unit.",
-      },
-    },
-  ],
-  results: {
-    items: [
-      {
-        title: "Client delivery",
-        body: "Assembled unit left as a working product; enclosure, dense harness, power, and cloud-triggered dispense included.",
-        evidence: "Shipped",
-      },
-      {
-        title: "Multi-bin actuation",
-        body: "Each bin maps to its own GPIO path and motion profile; Bin 3 uses a reduced target duty after over-travel showed up in testing. Dead motors got swap-tested out before we trusted the map.",
-        evidence: "Calibrated lanes",
-      },
-      {
-        title: "Wall-powered stability",
-        body: "Wall AC to DC into a common-ground protoboard carried servos, eight LEDs, the fan, and the Pi without brownouts after bench PSU and multimeter bring-up.",
-        evidence: "Wall AC to DC",
-      },
-      {
-        title: "Remote command path",
-        body: "Dashboard enqueue; worker claim; status write-back. The Pi stays off the public internet.",
-        evidence: "Queue loop",
-      },
-    ],
-    media: [
-      {
-        kind: "video",
-        src: "/projects/vend-a-shoe/entireworkingmodel.mp4",
-        alt: "Fully working Vend-A-Shoe model",
-        label: "Working model",
-        caption: "Assembled system running the full dispense path.",
-      },
-      {
-        kind: "video",
-        src: "/projects/vend-a-shoe/seconddemo.mp4",
-        alt: "Dispense demonstration",
-        label: "Validation demo",
-        caption: "End-to-end dispense on the packaged unit.",
-      },
-      {
-        kind: "image",
-        src: "/projects/vend-a-shoe/demo1.jpg",
-        alt: "Assembled Vend-A-Shoe",
-        label: "Assembled unit",
-        caption: "Final mechanical and electrical packaging.",
-      },
-      {
-        kind: "image",
-        src: "/projects/vend-a-shoe/coverCAD.jpg",
-        alt: "Enclosure CAD cover view",
-        label: "Enclosure cover",
-        caption: "CAD that matches what shipped.",
-      },
-      {
-        kind: "image",
-        src: "/projects/vend-a-shoe/stage1.jpg",
-        alt: "Early Vend-A-Shoe assembly stage",
-        label: "Stage 1 assembly",
-        caption: "Mid-build packaging before the harness settled.",
-      },
-      {
-        kind: "image",
-        src: "/projects/vend-a-shoe/motivation1.jpg",
-        alt: "Early Vend-A-Shoe bring-up still",
-        label: "Early still",
-        caption: "Bench state before permanence.",
-      },
-      {
-        kind: "image",
-        src: "/projects/vend-a-shoe/raspberrypi.jpg",
-        alt: "Raspberry Pi in the assembly",
-        label: "Pi in place",
-        caption: "Screw-terminal harness into the Pi; reworkable, not a Dupont nest.",
-      },
-    ],
-    limitations: [
-      "No sensor confirmation of a successful drop; motion complete is not the same as item dispensed.",
-      "Protoboard wiring will not scale cleanly past this unit count.",
-      "Queue auth is still MVP-grade for a public multi-user deployment.",
-    ],
-  },
-  reflection: {
-    surprises: [
-      "The biggest lesson was how to debug across numerous systems at once. Mechanical, electrical, embedded, and cloud failures share symptoms; the work is picking a layer, measuring it, and only then moving.",
-      "Some of the four motors were already fried from high-voltage abuse; the quiet failure looked like bad wiring or bad code until a swap test and a meter reading forced the assumption to break.",
-      "Eight LEDs, a fan, and forty-plus wires ate more calendar than the PWM math; harness planning was the real schedule risk.",
-      "Bench power supply and multimeter work caught sag and ground issues that software logs never would have named correctly.",
-      "Breadboard success did not transfer; permanence changed the failure modes.",
-    ],
-    redesign: [
-      "KiCad PCB with keyed servo, LED, and fan connectors plus onboard regulation.",
-      "Closed-loop dispense sensing with an optical or limit switch.",
-      "Standardized connectors so a failed servo is a module swap, not a re-solder.",
-      "Incoming actuator burn-in so dead hardware does not masquerade as a software bug.",
-    ],
-    future: [
-      "Injection-aware enclosure consolidation.",
-      "OTA updates and basic device health.",
-      "DFM pass once the connector map freezes.",
-    ],
-    questions: [
-      "When does protoboard stop being honesty and start being technical debt?",
-      "How should power topology change when every unit also carries LEDs, fans, and dozens of harness branches?",
-      "What does maintainability look like when the first owner is not the builder?",
-    ],
-  },
-  engineeringNotes: [
-    {
-      kind: "engineering-note",
-      text: "Debugging across systems beats debugging inside one. Pick a layer, measure it, then move.",
-    },
-    {
-      kind: "engineering-note",
-      text: "A quiet servo is not a diagnosis. Wiring, software, and fried hardware all look the same until you challenge the assumption.",
-    },
-    {
-      kind: "observation",
-      text: "Bench PSU and multimeter first; rewrite the worker second.",
-    },
-    {
-      kind: "engineering-note",
-      text: "Eight LEDs, a fan, and forty-plus wires turn packaging into an electrical problem.",
-    },
-    {
-      kind: "design-insight",
-      text: "Enclosure design started from harness and service access, not from outer dimensions.",
-    },
-    {
-      kind: "observation",
-      text: "Bench power hid problems that only appeared once the unit had to run from a wall AC to DC path.",
-    },
-    {
-      kind: "design-insight",
-      text: "Wall AC to DC is conversion and load budgeting; it is what lets the protoboard, motors, LEDs, fan, and Pi share one outlet.",
-    },
-    {
-      kind: "design-insight",
-      text: "Protoboard was the right bridge between Duponts and a PCB; it was not the destination.",
-    },
-    {
-      kind: "observation",
-      text: "Integrating a new backend into an existing frontend forced the API to stay honest.",
     },
   ],
 };
@@ -1437,6 +1024,8 @@ const CASE_STUDY_BY_SLUG: Record<string, EngineeringCaseStudy> = {
   [BLOOMBOT_CASE_STUDY.slug]: BLOOMBOT_CASE_STUDY,
   [CIS5450_CASE_STUDY.slug]: CIS5450_CASE_STUDY,
   [ULTRASONIC_PCB_CASE_STUDY.slug]: ULTRASONIC_PCB_CASE_STUDY,
+  [TENNIS_BALL_SHOOTER_CASE_STUDY.slug]: TENNIS_BALL_SHOOTER_CASE_STUDY,
+  [AFTERTHOUGHT_CASE_STUDY.slug]: AFTERTHOUGHT_CASE_STUDY,
   [WEBSITE_CASE_STUDY.slug]: WEBSITE_CASE_STUDY,
   ...Object.fromEntries(PRODUCT_APP_CASE_STUDIES.map((cs) => [cs.slug, cs])),
 };
