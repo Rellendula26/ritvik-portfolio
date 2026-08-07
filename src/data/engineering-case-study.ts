@@ -16,6 +16,8 @@ import { ULTRASONIC_PCB_CASE_STUDY } from "@/data/case-studies/ultrasonic-pcb";
 import { PRODUCT_APP_CASE_STUDIES } from "@/data/case-studies/product-apps";
 import { WEBSITE_CASE_STUDY } from "@/data/case-studies/website";
 import { VEND_A_SHOE_CASE_STUDY } from "@/data/case-studies/vend-a-shoe";
+import { TENNIS_BALL_SHOOTER_CASE_STUDY } from "@/data/case-studies/tennis-ball-shooter";
+import { AFTERTHOUGHT_CASE_STUDY } from "@/data/case-studies/afterthought";
 
 export type EngineeringNoteKind =
   | "engineering-note"
@@ -1022,6 +1024,8 @@ const CASE_STUDY_BY_SLUG: Record<string, EngineeringCaseStudy> = {
   [BLOOMBOT_CASE_STUDY.slug]: BLOOMBOT_CASE_STUDY,
   [CIS5450_CASE_STUDY.slug]: CIS5450_CASE_STUDY,
   [ULTRASONIC_PCB_CASE_STUDY.slug]: ULTRASONIC_PCB_CASE_STUDY,
+  [TENNIS_BALL_SHOOTER_CASE_STUDY.slug]: TENNIS_BALL_SHOOTER_CASE_STUDY,
+  [AFTERTHOUGHT_CASE_STUDY.slug]: AFTERTHOUGHT_CASE_STUDY,
   [WEBSITE_CASE_STUDY.slug]: WEBSITE_CASE_STUDY,
   ...Object.fromEntries(PRODUCT_APP_CASE_STUDIES.map((cs) => [cs.slug, cs])),
 };
