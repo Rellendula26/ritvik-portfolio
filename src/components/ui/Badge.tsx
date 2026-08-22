@@ -13,7 +13,7 @@ export function Badge({
   };
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs tracking-wide backdrop-blur-sm ${styles[variant]}`}
+      className={`tech-chip inline-flex items-center rounded-full border px-3 py-1 text-xs tracking-wide backdrop-blur-sm transition-[transform,border-color,background-color] duration-300 motion-safe:hover:-translate-y-0.5 ${styles[variant]}`}
     >
       {children}
     </span>

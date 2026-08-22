@@ -4,12 +4,14 @@ import { useRef } from "react";
 import {
   motion,
   useMotionValue,
+  useReducedMotion,
   useSpring,
   useTransform,
 } from "framer-motion";
 
 /** Workbench with desk props; tilts with cursor (ramen-bowl style). */
 export default function EngineeringWorkbench() {
+  const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -63,8 +65,12 @@ export default function EngineeringWorkbench() {
         style={{ rotateX, rotateY, x: shiftX, y: shiftY, transformStyle: "preserve-3d" }}
       >
         <motion.div
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          animate={reduce ? undefined : { y: [0, -4, 0] }}
+          transition={
+            reduce
+              ? undefined
+              : { duration: 5, repeat: Infinity, ease: "easeInOut" }
+          }
         >
           <svg
             viewBox="0 0 360 220"

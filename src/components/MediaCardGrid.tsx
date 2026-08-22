@@ -3,7 +3,14 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import LazyVideo from "@/components/LazyVideo";
+import TechChip from "@/components/motion/TechChip";
+import {
+  revealReduced,
+  revealVariants,
+  transitionBase,
+} from "@/lib/motion";
 
 export type MediaCardItem = {
   id: string; // "001"
@@ -40,14 +47,6 @@ type Props = {
   showTypePill?: boolean; // show type on card
 };
 
-function Tag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="rounded-full border border-zinc-200 bg-white/70 px-3 py-1 text-xs text-zinc-700 backdrop-blur">
-      {children}
-    </span>
-  );
-}
-
 function Chip({
   active,
   children,
@@ -62,10 +61,10 @@ function Chip({
       type="button"
       onClick={onClick}
       className={[
-        "rounded-full border px-4 py-2 text-sm transition backdrop-blur",
+        "btn-lift rounded-full border px-4 py-2 text-sm backdrop-blur",
         active
           ? "border-zinc-300 bg-white/80 text-zinc-900 shadow-sm"
-          : "border-zinc-200 bg-white/55 text-zinc-700 hover:bg-white/75",
+          : "border-zinc-200 bg-white/55 text-zinc-700 hover:border-amber-300 hover:bg-white/75",
       ].join(" ")}
     >
       {children}
@@ -85,28 +84,35 @@ function Card({
   item,
   showTypePill,
   typeLabelMap,
+  index = 0,
 }: {
   item: MediaCardItem;
   showTypePill?: boolean;
   typeLabelMap: Record<string, string>;
+  index?: number;
 }) {
+  const reduce = useReducedMotion();
   const prettyType = item.type ? typeLabelMap[item.type] ?? item.type : null;
 
   const inner = (
     <div
       data-cursor
-      className="group overflow-hidden rounded-3xl border border-zinc-200/70 bg-white/65 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:shadow-md"
+      className="group relative overflow-hidden rounded-3xl border border-zinc-200/70 bg-white/65 shadow-sm backdrop-blur transition-[transform,box-shadow,border-color] duration-300 ease-out motion-safe:hover:-translate-y-1.5 hover:border-amber-300/80 hover:shadow-md"
     >
-      {/* MEDIA */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-amber-500 via-amber-300/80 to-transparent transition-transform duration-500 ease-out group-hover:scale-x-100"
+      />
+
       {item.media ? (
-        <div className="relative">
+        <div className="group/media relative">
           <div className="relative aspect-[16/10] w-full overflow-hidden">
             {item.media.kind === "image" ? (
               <Image
                 src={item.media.src}
                 alt={item.media.alt}
                 fill
-                className="object-cover transition group-hover:scale-[1.02]"
+                className="img-zoom object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority={item.id === "001"}
               />
@@ -114,19 +120,17 @@ function Card({
               <LazyVideo
                 src={item.media.src}
                 poster={item.media.poster}
-                className="h-full w-full object-cover transition group-hover:scale-[1.02]"
+                className="img-zoom h-full w-full object-cover"
                 playOnHover
                 playWhenVisible={false}
               />
             )}
           </div>
 
-          {/* ID chip */}
           <div className="pointer-events-none absolute left-4 top-4 rounded-full bg-white/70 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-zinc-700 backdrop-blur">
             {item.id}
           </div>
 
-          {/* optional type pill (top-right) */}
           {showTypePill && prettyType ? (
             <div className="pointer-events-none absolute right-4 top-4">
               <TypePill>{prettyType}</TypePill>
@@ -141,8 +145,7 @@ function Card({
         </div>
       )}
 
-      {/* TEXT */}
-      <div className="p-6">
+      <div className="relative p-6">
         {item.eyebrow ? (
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-600">
             {item.eyebrow}
@@ -152,7 +155,10 @@ function Card({
         <div className={item.eyebrow ? "mt-3" : "mt-2"}>
           <div className="flex items-start justify-between gap-3">
             <h2 className="text-xl font-semibold text-zinc-950">{item.title}</h2>
-            <span className="text-zinc-400 transition group-hover:text-zinc-700">
+            <span
+              className="text-zinc-400 transition-all duration-300 motion-safe:group-hover:translate-x-1 motion-safe:group-hover:-translate-y-0.5 group-hover:text-amber-700"
+              aria-hidden
+            >
               ↗
             </span>
           </div>
@@ -164,7 +170,9 @@ function Card({
           {item.tags?.length ? (
             <div className="mt-5 flex flex-wrap gap-2">
               {item.tags.slice(0, 4).map((t) => (
-                <Tag key={t}>{t}</Tag>
+                <TechChip key={t} className="rounded-full px-3 py-1 text-xs">
+                  {t}
+                </TechChip>
               ))}
             </div>
           ) : null}
@@ -173,18 +181,26 @@ function Card({
     </div>
   );
 
-  if (item.external) {
-    return (
-      <a href={item.href} target="_blank" rel="noreferrer" className="block">
-        {inner}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={item.href} className="block">
+  const wrapped = item.external ? (
+    <a href={item.href} target="_blank" rel="noreferrer" className="relative block">
+      {inner}
+    </a>
+  ) : (
+    <Link href={item.href} className="relative block">
       {inner}
     </Link>
+  );
+
+  return (
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-40px" }}
+      variants={reduce ? revealReduced : revealVariants}
+      transition={{ ...transitionBase, delay: index * 0.05 }}
+    >
+      {wrapped}
+    </motion.div>
   );
 }
 
@@ -249,12 +265,13 @@ export default function MediaCardGrid({
       ) : null}
 
       <div className={`mt-10 grid ${gridCols} gap-6`}>
-        {filteredItems.map((item) => (
+        {filteredItems.map((item, i) => (
           <Card
             key={`${item.id}-${item.title}`}
             item={item}
             showTypePill={showTypePill}
             typeLabelMap={typeLabelMap}
+            index={i}
           />
         ))}
       </div>

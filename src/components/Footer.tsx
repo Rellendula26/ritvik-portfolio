@@ -20,7 +20,7 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-amber-400 hover:text-amber-700"
+              className="btn-lift flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-700"
             >
               <Linkedin className="h-4 w-4" />
             </Link>
@@ -29,14 +29,14 @@ export default function Footer() {
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-amber-400 hover:text-amber-700"
+              className="btn-lift flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-700"
             >
               <Github className="h-4 w-4" />
             </Link>
             <Link
               href="mailto:rellen26@seas.upenn.edu"
               aria-label="Email"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 transition hover:border-amber-400 hover:text-amber-700"
+              className="btn-lift flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-700"
             >
               <Mail className="h-4 w-4" />
             </Link>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#18181b"/>
+  <rect x="360" y="200" width="480" height="280" rx="24" fill="#27272a" stroke="#a1a1aa" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="600" y="360" text-anchor="middle" fill="#fafafa" font-family="Georgia, serif" font-size="42">Stealth AI Startup</text>
+  <text x="600" y="560" text-anchor="middle" fill="#a1a1aa" font-family="ui-sans-serif, system-ui" font-size="22">AI Engineering Intern</text>
+</svg>

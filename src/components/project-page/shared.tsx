@@ -12,6 +12,19 @@ export function ProjectPageShell({ children }: { children: React.ReactNode }) {
   return (
     <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(to_bottom,#fff7ed_0%,#fffaf5_18%,#ffffff_42%,#fffaf5_100%)]">
       <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px]" />
+      {/* Faint schematic texture — decorative only */}
+      <svg
+        aria-hidden
+        className="pointer-events-none absolute right-6 top-24 hidden h-28 w-40 text-orange-400/20 md:block motion-safe:animate-hero-drift"
+        viewBox="0 0 160 112"
+        fill="none"
+      >
+        <path d="M8 56 H40 L56 40 H96" stroke="currentColor" strokeWidth="1" />
+        <circle cx="40" cy="56" r="2.5" fill="currentColor" />
+        <circle cx="96" cy="40" r="2.5" fill="currentColor" />
+        <rect x="100" y="32" width="20" height="16" rx="2" stroke="currentColor" />
+        <path d="M120 40 H148" stroke="currentColor" strokeWidth="1" />
+      </svg>
       <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-14">{children}</div>
     </main>
   );
@@ -21,7 +34,7 @@ export function BackToProjects() {
   return (
     <Link
       href="/projects"
-      className="mb-6 inline-flex items-center text-sm font-medium text-zinc-600 transition hover:text-orange-600"
+      className="btn-lift mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-zinc-600 hover:text-orange-600"
     >
       ← Back to Projects
     </Link>
@@ -45,7 +58,7 @@ export function ProjectBadge({
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide shadow-sm ${styles[tone]}`}
+      className={`tech-chip inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold tracking-wide shadow-sm transition-[transform,border-color,background-color] duration-300 motion-safe:hover:-translate-y-0.5 ${styles[tone]}`}
     >
       {children}
     </span>
@@ -59,7 +72,7 @@ export function ActionLink({ label, href }: LinkItem) {
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noreferrer" : undefined}
-      className="inline-flex items-center rounded-full border border-orange-300 bg-white/90 px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
+      className="btn-lift inline-flex items-center rounded-full border border-orange-300 bg-white/90 px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm hover:bg-orange-50"
     >
       {label}
     </a>
@@ -113,22 +126,4 @@ export function BrowserFrame({
   );
 }
 
-export function AnchorNav({
-  items,
-}: {
-  items: { id: string; label: string }[];
-}) {
-  return (
-    <nav className="mt-8 flex flex-wrap gap-2 border-t border-zinc-200/80 pt-6">
-      {items.map((item) => (
-        <a
-          key={item.id}
-          href={`#${item.id}`}
-          className="rounded-full border border-zinc-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-700 transition hover:border-orange-300 hover:bg-orange-50 hover:text-orange-900"
-        >
-          {item.label}
-        </a>
-      ))}
-    </nav>
-  );
-}
+export { default as AnchorNav } from "@/components/project-page/AnchorNav";

@@ -3,7 +3,7 @@
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
 import {
   CATEGORY_LABELS,
@@ -13,6 +13,12 @@ import {
 import { Badge } from "@/components/ui/Badge";
 import LazyVideo from "@/components/LazyVideo";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
+import TechChip from "@/components/motion/TechChip";
+import {
+  revealReduced,
+  revealVariants,
+  transitionBase,
+} from "@/lib/motion";
 
 function ExternalLink({
   href,
@@ -32,7 +38,7 @@ function ExternalLink({
       rel="noreferrer"
       onClick={onNavigate}
       className={[
-        "inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide transition",
+        "btn-lift inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
         featured
           ? "border-white/15 bg-white/10 text-stone-200 hover:bg-white/15"
           : "border-stone-200 bg-white text-stone-700 hover:border-amber-200 hover:bg-amber-50",
@@ -53,6 +59,7 @@ export default function ProjectCard({
   index?: number;
 }) {
   const router = useRouter();
+  const reduce = useReducedMotion();
   const isFeatured = featured || project.featured;
   const primaryMedia = pickProjectPrimaryMedia(project);
 
@@ -66,10 +73,11 @@ export default function ProjectCard({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial="hidden"
+      whileInView="visible"
       viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.45, delay: index * 0.06 }}
+      variants={reduce ? revealReduced : revealVariants}
+      transition={{ ...transitionBase, delay: index * 0.06 }}
     >
       <article
         role="link"
@@ -82,32 +90,45 @@ export default function ProjectCard({
           }
         }}
         className={[
-          "group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border transition-all duration-300",
+          "group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border",
+          "transition-[transform,box-shadow,border-color] duration-300 ease-out",
+          "motion-safe:hover:-translate-y-1.5",
           isFeatured
-            ? "border-stone-800/10 bg-stone-900 text-stone-100 shadow-[0_20px_60px_-20px_rgba(68,64,60,0.35)] hover:-translate-y-1 hover:shadow-[0_28px_70px_-18px_rgba(68,64,60,0.4)]"
-            : "border-stone-200/70 bg-white/90 text-stone-900 shadow-sm hover:-translate-y-1 hover:border-amber-200/80 hover:shadow-lg",
+            ? "border-stone-800/10 bg-stone-900 text-stone-100 shadow-[0_20px_60px_-20px_rgba(68,64,60,0.35)] hover:border-amber-500/25 hover:shadow-[0_28px_70px_-18px_rgba(68,64,60,0.45)]"
+            : "border-stone-200/70 bg-white/90 text-stone-900 shadow-sm hover:border-amber-300/90 hover:shadow-lg",
         ].join(" ")}
         data-cursor
       >
+        {/* Accent edge — animates in on hover */}
+        <span
+          aria-hidden
+          className={[
+            "pointer-events-none absolute inset-x-0 top-0 h-[2px] origin-left scale-x-0 bg-gradient-to-r transition-transform duration-500 ease-out group-hover:scale-x-100",
+            isFeatured
+              ? "from-amber-400 via-amber-300 to-transparent"
+              : "from-amber-500 via-amber-300/80 to-transparent",
+          ].join(" ")}
+        />
+
         {isFeatured && (
-          <motion.div
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,158,11,0.12),transparent_50%)]"
+          <div
+            className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,158,11,0.12),transparent_50%)] transition-opacity duration-500 group-hover:opacity-100"
             aria-hidden
           />
         )}
 
         {primaryMedia && (
-          <motion.div className="relative aspect-[16/9] overflow-hidden">
+          <div className="group/media relative aspect-[16/9] overflow-hidden">
             {primaryMedia.kind === "visual" ? (
               <ProjectCardVisual
                 visualId={primaryMedia.visualId}
-                className="transition duration-500 group-hover:scale-[1.01]"
+                className="img-zoom"
               />
             ) : primaryMedia.kind === "image" ? (
               <ProjectMediaImage
                 src={primaryMedia.src}
                 alt={primaryMedia.alt}
-                className="object-cover object-center transition duration-500 group-hover:scale-[1.03]"
+                className="img-zoom object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
@@ -115,7 +136,7 @@ export default function ProjectCard({
                 <LazyVideo
                   src={primaryMedia.src}
                   poster={primaryMedia.poster}
-                  className="absolute inset-0 h-full w-full object-contain object-center bg-black transition duration-500 group-hover:scale-[1.01]"
+                  className="img-zoom absolute inset-0 h-full w-full object-contain object-center bg-black"
                   playOnHover={!isFeatured}
                   playWhenVisible={isFeatured}
                 />
@@ -129,7 +150,7 @@ export default function ProjectCard({
             )}
             <div
               className={[
-                "pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent",
+                "pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent transition-opacity duration-500",
                 primaryMedia.kind === "visual"
                   ? isFeatured
                     ? "from-stone-950/50 via-transparent"
@@ -157,7 +178,7 @@ export default function ProjectCard({
             >
               {project.id}
             </span>
-          </motion.div>
+          </div>
         )}
 
         <div className="relative flex flex-1 flex-col p-5 md:p-6">
@@ -187,7 +208,7 @@ export default function ProjectCard({
             )}
           </div>
 
-          <motion.div className="flex items-start justify-between gap-3">
+          <div className="flex items-start justify-between gap-3">
             <h3
               className={[
                 "text-xl font-semibold tracking-tight md:text-2xl",
@@ -198,15 +219,17 @@ export default function ProjectCard({
             </h3>
             <span
               className={[
-                "mt-1 shrink-0 text-lg transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+                "mt-1 shrink-0 text-lg transition-all duration-300 ease-out",
+                "motion-safe:group-hover:translate-x-1 motion-safe:group-hover:-translate-y-0.5",
                 isFeatured
                   ? "text-amber-400"
-                  : "text-stone-300 group-hover:text-stone-600",
+                  : "text-stone-300 group-hover:text-amber-700",
               ].join(" ")}
+              aria-hidden
             >
               ↗
             </span>
-          </motion.div>
+          </div>
 
           <p
             className={[
@@ -243,17 +266,9 @@ export default function ProjectCard({
 
           <div className="mt-5 flex flex-wrap gap-1.5">
             {project.techStack.slice(0, isFeatured ? 6 : 5).map((tag) => (
-              <span
-                key={tag}
-                className={[
-                  "rounded-md px-2 py-0.5 text-[11px]",
-                  isFeatured
-                    ? "bg-white/10 text-stone-300"
-                    : "bg-stone-100 text-stone-600",
-                ].join(" ")}
-              >
+              <TechChip key={tag} variant={isFeatured ? "dark" : "light"}>
                 {tag}
-              </span>
+              </TechChip>
             ))}
           </div>
 
@@ -316,7 +331,7 @@ export default function ProjectCard({
                 href={project.href}
                 onClick={stopNav}
                 className={[
-                  "inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide transition",
+                  "btn-lift inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
                   isFeatured
                     ? "border-amber-500/30 text-amber-300/90 hover:bg-amber-500/10"
                     : "border-stone-200 text-stone-600 hover:border-amber-200",

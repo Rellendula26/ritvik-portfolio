@@ -20,7 +20,7 @@ export default function CaseStudyMediaFrame({
       : "aspect-video w-full");
 
   return (
-    <div className="overflow-hidden rounded-[1.75rem] border border-zinc-200 bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)]">
+    <div className="group/media overflow-hidden rounded-[1.75rem] border border-zinc-200 bg-white shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-[box-shadow,border-color,transform] duration-300 motion-safe:hover:-translate-y-0.5 hover:border-orange-200/70 hover:shadow-[0_16px_36px_rgba(0,0,0,0.08)]">
       <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
         {media.label ?? "Figure"}
       </div>
@@ -30,7 +30,7 @@ export default function CaseStudyMediaFrame({
           media.portrait ? "flex items-center justify-center px-4 py-4" : "",
         ].join(" ")}
       >
-        <div className={`relative ${frameClass}`}>
+        <div className={`relative overflow-hidden ${frameClass}`}>
           {media.kind === "video" ? (
             videoFailed ? (
               <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
@@ -55,7 +55,7 @@ export default function CaseStudyMediaFrame({
               src={media.src}
               alt={media.alt}
               sizes="(max-width: 768px) 100vw, 720px"
-              className="object-contain object-center p-2"
+              className="img-zoom object-contain object-center p-2"
             />
           )}
         </div>
