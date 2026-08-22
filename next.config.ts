@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         "**/public/projects/**/*.mp4",
         "**/public/projects/**/*.mov",
         "**/public/projects/**/*.MOV",
+        "**/public/experiences/**/*.mp4",
+        "**/public/experiences/**/*.mov",
+        "**/public/experiences/**/*.MOV",
+        "**/public/experiences/**/*.HEIC",
+        "**/public/experiences/**/*.heic",
         "**/public/presentations/**",
       ];
       config.watchOptions = {
