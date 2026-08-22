@@ -129,7 +129,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
+                className="btn-lift inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm hover:bg-orange-50"
               >
                 Source code
               </a>
@@ -139,7 +139,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
+                className="btn-lift inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm hover:bg-orange-50"
               >
                 {project.slug === "bloombot"
                   ? "Devpost"
@@ -153,7 +153,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                 href={project.youtubeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm transition hover:-translate-y-0.5 hover:bg-orange-50"
+                className="btn-lift inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm hover:bg-orange-50"
               >
                 Watch skit
               </a>

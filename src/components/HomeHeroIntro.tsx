@@ -177,7 +177,7 @@ export default function HomeHeroIntro({
         href="mailto:rellen26@seas.upenn.edu"
         data-cursor
         className={[
-          "mt-10 inline-flex items-center gap-2 text-base font-medium text-amber-800 transition hover:text-amber-900 lg:mt-12",
+          "btn-lift mt-10 inline-flex items-center gap-2 text-base font-medium text-amber-800 hover:text-amber-900 lg:mt-12",
           bodyVisible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-2",
           "duration-700 ease-out",
         ].join(" ")}

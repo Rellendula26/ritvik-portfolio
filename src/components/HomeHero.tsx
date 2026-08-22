@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import HomeHeroIntro from "@/components/HomeHeroIntro";
 import EngineeringWorkbench from "@/components/lab/EngineeringWorkbench";
+import HeroAtmosphere from "@/components/HeroAtmosphere";
 
 export default function HomeHero() {
   const [progress, setProgress] = useState(0);
@@ -13,7 +14,9 @@ export default function HomeHero() {
   const workbenchIn = progress >= 0.95;
 
   return (
-    <section className="mx-auto max-w-6xl px-6 pb-16 pt-10 md:px-8 md:pt-16">
+    <section className="relative mx-auto max-w-6xl px-6 pb-16 pt-10 md:px-8 md:pt-16">
+      <HeroAtmosphere />
+
       <div className="grid items-stretch gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="flex min-h-0 flex-col justify-between">
           <HomeHeroIntro onProgress={setProgress} />
@@ -33,13 +36,13 @@ export default function HomeHero() {
           }}
         >
           <div className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-amber-200/20 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
-          <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-stone-200/80 bg-white p-4 shadow-md">
+          <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-stone-200/80 bg-white p-4 shadow-md transition-shadow duration-500 group-hover:shadow-lg">
             <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl">
               <Image
                 src="/ritvik.jpg"
                 alt="Ritvik Ellendula"
                 fill
-                className="object-cover object-center transition duration-500 group-hover:scale-[1.02]"
+                className="img-zoom object-cover object-center"
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
               />

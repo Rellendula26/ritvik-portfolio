@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
+import { Reveal } from "@/components/motion/Reveal";
 import {
   FEATURED_PROJECTS,
   SUPPORTING_PROJECTS,
@@ -42,10 +43,10 @@ function FilterChip({
       type="button"
       onClick={onClick}
       className={[
-        "rounded-full border px-4 py-2 text-sm transition",
+        "btn-lift rounded-full border px-4 py-2 text-sm",
         active
           ? "border-stone-900 bg-stone-950 text-white"
-          : "border-stone-200 bg-white text-stone-600 hover:border-stone-300",
+          : "border-stone-200 bg-white text-stone-600 hover:border-amber-300 hover:bg-amber-50/60",
       ].join(" ")}
     >
       {children}
@@ -71,14 +72,14 @@ function TierBand({
   return (
     <section className={`border-t border-stone-200/40 ${TIER_SHADES[shade]}`}>
       <div className="mx-auto max-w-6xl px-6 py-16 md:px-8 md:py-20">
-        <div className="mb-8">
+        <Reveal className="mb-8">
           <h2 className="text-display text-2xl text-stone-950 md:text-3xl">
             {title}
           </h2>
           <p className="mt-2 max-w-xl text-sm text-stone-600 md:text-base">
             {subtitle}
           </p>
-        </div>
+        </Reveal>
         <div
           className={[
             "grid gap-6",
@@ -117,18 +118,20 @@ export default function ProjectsPage() {
     <div className="min-h-screen">
       <section className={TIER_SHADES.header}>
         <div className="mx-auto max-w-6xl px-6 py-14 md:px-8 md:py-20">
-          <header className="max-w-2xl">
-            <h1 className="text-display text-4xl text-stone-950 md:text-5xl">
-              Projects
-            </h1>
-            <p className="mt-4 text-lg leading-relaxed text-stone-700">
-              This page is basically my engineering notebook: what I built, what
-              broke, what I changed, and what I learned while shipping things
-              across software and hardware.
-            </p>
-          </header>
+          <Reveal>
+            <header className="max-w-2xl">
+              <h1 className="text-display text-4xl text-stone-950 md:text-5xl">
+                Projects
+              </h1>
+              <p className="mt-4 text-lg leading-relaxed text-stone-700">
+                This page is basically my engineering notebook: what I built, what
+                broke, what I changed, and what I learned while shipping things
+                across software and hardware.
+              </p>
+            </header>
+          </Reveal>
 
-          <div className="mt-8 flex flex-wrap gap-2">
+          <Reveal delay={0.06} className="mt-8 flex flex-wrap gap-2">
             {FILTERS.map((f) => (
               <FilterChip
                 key={f.value}
@@ -138,7 +141,7 @@ export default function ProjectsPage() {
                 {f.label}
               </FilterChip>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
