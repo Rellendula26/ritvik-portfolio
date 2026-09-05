@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750" fill="none">
+  <rect width="1200" height="750" fill="#0c0a09"/>
+  <rect x="80" y="90" width="1040" height="570" rx="28" fill="#1c1917" stroke="#44403c" stroke-width="2"/>
+  <text x="120" y="160" fill="#f59e0b" font-family="ui-sans-serif,system-ui" font-size="18" font-weight="600" letter-spacing="4">POWER ELECTRONICS</text>
+  <text x="120" y="230" fill="#fafaf9" font-family="Georgia,serif" font-size="52">PER Design Challenge</text>
+  <text x="120" y="280" fill="#a8a29e" font-family="ui-sans-serif,system-ui" font-size="22">Sensor monitor · threshold logic · buck regulation</text>
+  <g stroke="#f59e0b" stroke-width="2.5" fill="none">
+    <rect x="120" y="360" width="140" height="70" rx="12"/>
+    <rect x="300" y="360" width="140" height="70" rx="12"/>
+    <rect x="480" y="360" width="140" height="70" rx="12"/>
+    <rect x="660" y="360" width="140" height="70" rx="12"/>
+    <rect x="840" y="360" width="140" height="70" rx="12"/>
+    <path d="M260 395 H300 M440 395 H480 M620 395 H660 M800 395 H840"/>
+  </g>
+  <text x="190" y="402" text-anchor="middle" fill="#e7e5e4" font-size="14" font-family="ui-sans-serif,system-ui">12 V</text>
+  <text x="370" y="402" text-anchor="middle" fill="#e7e5e4" font-size="14" font-family="ui-sans-serif,system-ui">Sense</text>
+  <text x="550" y="402" text-anchor="middle" fill="#e7e5e4" font-size="14" font-family="ui-sans-serif,system-ui">Compare</text>
+  <text x="730" y="402" text-anchor="middle" fill="#e7e5e4" font-size="14" font-family="ui-sans-serif,system-ui">Logic</text>
+  <text x="910" y="402" text-anchor="middle" fill="#e7e5e4" font-size="14" font-family="ui-sans-serif,system-ui">Indicate</text>
+  <text x="120" y="520" fill="#78716c" font-size="16" font-family="ui-sans-serif,system-ui">Recruitment challenge · independent analysis</text>
+</svg>
