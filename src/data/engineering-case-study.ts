@@ -18,6 +18,8 @@ import { WEBSITE_CASE_STUDY } from "@/data/case-studies/website";
 import { VEND_A_SHOE_CASE_STUDY } from "@/data/case-studies/vend-a-shoe";
 import { TENNIS_BALL_SHOOTER_CASE_STUDY } from "@/data/case-studies/tennis-ball-shooter";
 import { AFTERTHOUGHT_CASE_STUDY } from "@/data/case-studies/afterthought";
+import { PER_POWER_ELECTRONICS_CASE_STUDY } from "@/data/case-studies/per-power-electronics";
+import { HYPERLOOP_VFD_CASE_STUDY } from "@/data/case-studies/hyperloop-vfd";
 
 export type EngineeringNoteKind =
   | "engineering-note"
@@ -181,6 +183,85 @@ export interface TransferableSkill {
   phrasing: string;
 }
 
+/** Optional recruitment / design-challenge storytelling blocks. */
+export interface DesignChallengeFlowStage {
+  id: string;
+  label: string;
+}
+
+export interface DesignChallengeArchitectureBlock {
+  id: string;
+  title: string;
+  question: string;
+  body: string;
+}
+
+export interface DesignSheetComparison {
+  partA: string;
+  partB: string;
+  metrics: Array<{
+    id: string;
+    label: string;
+    whyItMatters: string;
+    /** Datasheet value; null renders as a TODO placeholder. */
+    valueA: string | null;
+    valueB: string | null;
+  }>;
+}
+
+export interface DesignVerificationRow {
+  requirement: string;
+  mechanism: string;
+  method: string;
+  /** null → TODO placeholder */
+  result: string | null;
+}
+
+export interface DesignIterationStep {
+  id: string;
+  title: string;
+  body: string;
+}
+
+export interface DesignChallengeStageCard {
+  id: string;
+  title: string;
+  what: string;
+  why: string;
+}
+
+export interface DesignChallengeExtras {
+  disclaimer: string;
+  flowTitle?: string;
+  flowStages?: DesignChallengeFlowStage[];
+  architectureTitle?: string;
+  architectureIntro?: string;
+  architectureBlocks?: DesignChallengeArchitectureBlock[];
+  schematicPlaceholder?: CaseStudyMedia;
+  datasheetComparison?: DesignSheetComparison;
+  emi?: {
+    title?: string;
+    conducted: string;
+    radiated: string;
+    context: string;
+  };
+  verificationIntro?: string;
+  verificationMedia?: CaseStudyMedia[];
+  verificationRows?: DesignVerificationRow[];
+  iterationTitle?: string;
+  iterationIntro?: string;
+  iterationSteps?: DesignIterationStep[];
+  /** Hyperloop-style stage cards */
+  stageCards?: DesignChallengeStageCard[];
+  frequencyVoltageNote?: {
+    frequency: string;
+    voltage: string;
+    pwmVsFundamental: string;
+  };
+  engineeringConsiderations?: Array<{ id: string; title: string; body: string }>;
+  showInverterSwitching?: boolean;
+}
+
 export interface EngineeringCaseStudy {
   slug: string;
   motivation: MotivationContent;
@@ -200,6 +281,8 @@ export interface EngineeringCaseStudy {
   scheduleAnalysis?: ScheduleAnalysis;
   version2Plan?: Version2Plan;
   transferableSkills?: TransferableSkill[];
+  /** Optional recruitment-challenge visuals / tables (PER, Hyperloop, …). */
+  designChallenge?: DesignChallengeExtras;
 }
 
 export const ENGINEERING_NOTE_LABELS: Record<EngineeringNoteKind, string> = {
@@ -1035,6 +1118,8 @@ const CASE_STUDY_BY_SLUG: Record<string, EngineeringCaseStudy> = {
   [TENNIS_BALL_SHOOTER_CASE_STUDY.slug]: TENNIS_BALL_SHOOTER_CASE_STUDY,
   [AFTERTHOUGHT_CASE_STUDY.slug]: AFTERTHOUGHT_CASE_STUDY,
   [WEBSITE_CASE_STUDY.slug]: WEBSITE_CASE_STUDY,
+  [PER_POWER_ELECTRONICS_CASE_STUDY.slug]: PER_POWER_ELECTRONICS_CASE_STUDY,
+  [HYPERLOOP_VFD_CASE_STUDY.slug]: HYPERLOOP_VFD_CASE_STUDY,
   ...Object.fromEntries(PRODUCT_APP_CASE_STUDIES.map((cs) => [cs.slug, cs])),
 };
 

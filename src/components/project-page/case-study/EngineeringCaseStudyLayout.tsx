@@ -20,6 +20,7 @@ import {
   TransferableSkillsSection,
   Version2PlanSection,
 } from "@/components/project-page/case-study/RetrospectiveExtrasSection";
+import DesignChallengeExtrasSection from "@/components/project-page/case-study/DesignChallengeExtrasSection";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
 
@@ -27,6 +28,9 @@ function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
   const items = [
     { id: "motivation", label: "Motivation" },
     { id: "system-overview", label: "System" },
+    caseStudy.designChallenge
+      ? { id: "design-challenge", label: "Deep dive" }
+      : null,
     caseStudy.executiveAssessment
       ? { id: "executive-assessment", label: "At a glance" }
       : null,
@@ -86,6 +90,9 @@ export default function EngineeringCaseStudyLayout({
       <div className="mt-14 space-y-16 md:space-y-20">
         <MotivationSection content={caseStudy.motivation} />
         <SystemOverviewSection content={caseStudy.systemOverview} />
+        {caseStudy.designChallenge ? (
+          <DesignChallengeExtrasSection content={caseStudy.designChallenge} />
+        ) : null}
         {caseStudy.executiveAssessment ? (
           <ExecutiveAssessmentSection content={caseStudy.executiveAssessment} />
         ) : null}
