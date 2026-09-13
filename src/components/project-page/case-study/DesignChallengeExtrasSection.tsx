@@ -483,6 +483,19 @@ export default function DesignChallengeExtrasSection({
         />
       ) : null}
 
+      {content.researchMedia?.length ? (
+        <div>
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+            Process notes
+          </p>
+          <div className="grid gap-5 md:grid-cols-2">
+            {content.researchMedia.map((media) => (
+              <CaseStudyMediaFrame key={media.src} media={media} />
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       {content.schematicPlaceholder ? (
         <div>
           <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
@@ -494,6 +507,14 @@ export default function DesignChallengeExtrasSection({
 
       {content.datasheetComparison ? (
         <DatasheetComparison comparison={content.datasheetComparison} />
+      ) : null}
+
+      {content.comparisonMedia?.length ? (
+        <div className="grid gap-5">
+          {content.comparisonMedia.map((media) => (
+            <CaseStudyMediaFrame key={media.src} media={media} />
+          ))}
+        </div>
       ) : null}
 
       {content.emi ? <EmiSection emi={content.emi} /> : null}
@@ -578,6 +599,19 @@ export default function DesignChallengeExtrasSection({
                 <p className="text-sm font-semibold text-zinc-950">{item.title}</p>
                 <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{item.body}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
+      {content.integrationMedia?.length ? (
+        <div>
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-500">
+            Integration evidence
+          </p>
+          <div className="grid gap-5">
+            {content.integrationMedia.map((media) => (
+              <CaseStudyMediaFrame key={media.src} media={media} />
             ))}
           </div>
         </div>

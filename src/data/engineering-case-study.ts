@@ -238,7 +238,11 @@ export interface DesignChallengeExtras {
   architectureIntro?: string;
   architectureBlocks?: DesignChallengeArchitectureBlock[];
   schematicPlaceholder?: CaseStudyMedia;
+  /** Notebook / research figures shown after the architecture blocks. */
+  researchMedia?: CaseStudyMedia[];
   datasheetComparison?: DesignSheetComparison;
+  /** Extra figures next to the datasheet comparison (e.g. IC selection pages). */
+  comparisonMedia?: CaseStudyMedia[];
   emi?: {
     title?: string;
     conducted: string;
@@ -259,6 +263,8 @@ export interface DesignChallengeExtras {
     pwmVsFundamental: string;
   };
   engineeringConsiderations?: Array<{ id: string; title: string; body: string }>;
+  /** BOM / integration / distribution diagrams after considerations. */
+  integrationMedia?: CaseStudyMedia[];
   showInverterSwitching?: boolean;
 }
 
