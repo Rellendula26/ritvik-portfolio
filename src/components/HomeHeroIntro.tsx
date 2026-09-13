@@ -14,26 +14,24 @@ const HEADLINE = "Hey, I'm Ritvik!";
 
 const PARAGRAPHS: Segment[][] = [
   [
-    { text: "I'm studying EE with potential minors in " },
-    { text: "Engineering Entrepreneurship", accent: true },
+    { text: "I study Electrical Engineering at Penn with a robotics focus. " },
+    { text: "Embedded systems", accent: true },
     { text: ", " },
-    { text: "Math", accent: true },
+    { text: "electronics", accent: true },
     { text: ", and " },
-    { text: "South Asian Studies", accent: true },
-    {
-      text: ". I hope to build impactful, innovative, and equitable medical device technologies.",
-    },
+    { text: "hardware-software integration", accent: true },
+    { text: " are where I spend most of my time." },
   ],
   [
     {
-      text: "I like creating projects and doing work that have applications in my everyday life, use a little creativity, and teach me new skills.",
+      text: "I like building systems from the bottom up: power rails, control logic, sensing, firmware, and the cloud path when needed. If something breaks, I want to know exactly which layer failed and why. Long term, I want to keep pushing toward medical and surgical robotics.",
     },
   ],
   [
-    { text: "If you're looking into embedded, robotics, medtech, or systems work, " },
+    { text: "I am especially interested in robotics and medical devices because software eventually has to move something physical. If you want the technical details, " },
     { text: "my projects", href: "/projects" },
     {
-      text: " are where I show what I can do. If you're just browsing, hope you enjoy some of the things I've created.",
+      text: " are where I document architecture decisions, debugging loops, and what changed between v1 and what actually shipped.",
     },
   ],
 ];

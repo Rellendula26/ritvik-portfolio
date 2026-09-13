@@ -25,31 +25,22 @@ function ActionLink({ label, href }: LinkItem) {
 }
 
 export default function Page() {
-  // ====== EDIT THESE ======
   const title = "Redlining & Health Outcomes Research";
   const subtitle =
-    "An empirical research project examining how historical redlining and neighborhood disadvantage relate to chronic disease outcomes, using public health datasets and statistical modeling.";
-  const coverSrc = "/research/redlining.png"; // put an image in /public/research/
+    "Literature and evidence review on how historic HOLC redlining patterns relate to present-day chronic health outcomes.";
+  const coverSrc = "/research/redlining.png";
 
   const badges = ["Independent", "Public Health", "Data Analysis", "Causal Inference"];
 
-  // PDF (local), make sure this file exists at: public/research/red.pdf
   const paperUrl = "/research/red.pdf";
   const paperEmbedUrl = `${paperUrl}#view=FitH&page=1&toolbar=1`;
-
-  // External links (optional)
-  const fullPaperLink = "https://example.com"; // replace with your actual paper link (or leave as-is)
-  const githubLink = "https://github.com/your-repo"; // replace (or remove action below)
-
-  const galleryImages = ["/research/redlining-1.png", "/research/redlining-2.png"]; // replace with your images
-  // ========================
+  const galleryImages = ["/research/redlining-1.png", "/research/redlining-2.png"];
 
   const actions: LinkItem[] = [
     { label: "GALLERY", href: "#gallery" },
     { label: "WRITEUP", href: "#overview" },
     { label: "PAPER PREVIEW", href: "#paper" },
-    { label: "FULL PAPER", href: fullPaperLink },
-    { label: "GITHUB", href: githubLink },
+    { label: "OPEN PDF", href: paperUrl },
   ];
 
   return (
@@ -112,9 +103,12 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                Write a crisp, technical overview here: what question you asked,
-                what data you used, what methods you applied, and what you found.
-                Keep it readable, but make it feel like real research.
+                This project asks a direct question: when neighborhoods were graded
+                as higher-risk under historic redlining maps, did that correlate
+                with worse health outcomes decades later? I focused on tracing
+                evidence quality across studies, separating descriptive correlation
+                from causal claims, and identifying where methods were strong
+                versus where confounders were under-controlled.
               </p>
             </div>
 
@@ -124,10 +118,10 @@ export default function Page() {
                 WHAT I DID
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Describe dataset sourcing + cleaning + merging.</li>
-                <li>Describe modeling approach (regression, matching, fixed effects, etc.).</li>
-                <li>Describe validation, robustness checks, and interpretation.</li>
-                <li>Describe figures/tables you produced and how you communicated results.</li>
+                <li>Reviewed public-health and epidemiology studies linking HOLC grade patterns to chronic disease outcomes.</li>
+                <li>Documented dataset scope, modeling choices, and control-variable strategies across papers.</li>
+                <li>Compared how different studies handled validation and confounders before drawing conclusions.</li>
+                <li>Wrote a synthesis that highlights agreement zones and high-uncertainty claims.</li>
               </ul>
             </div>
 
@@ -137,9 +131,10 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Key quantitative result (effect size, direction, significance).</li>
-                <li>What the result implies for policy / equity / intervention.</li>
-                <li>Limitations and why the result is still meaningful.</li>
+                <li>Most reviewed studies show directionally worse health outcomes in historically redlined areas.</li>
+                <li>The strongest claims came from papers that explicitly modeled socioeconomic confounders.</li>
+                <li>Result quality depends heavily on study design; not every observed disparity supports a causal statement.</li>
+                <li>TODO: add paper-specific effect sizes where available from the final write-up.</li>
               </ul>
             </div>
 
@@ -149,8 +144,8 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>What you learned technically (data issues, modeling pitfalls, inference).</li>
-                <li>Next step (better controls, panel data, new dataset, causal method).</li>
+                <li>Inference discipline matters: policy-relevant writing should distinguish correlation from causation line-by-line.</li>
+                <li>Next step is a tighter evidence table with methods, controls, and effect-size comparability across studies.</li>
               </ul>
             </div>
 
@@ -162,7 +157,6 @@ export default function Page() {
                 </h2>
 
                 <div className="flex flex-wrap items-center gap-2">
-                  <ActionLink label="VIEW FULL PAPER" href={fullPaperLink} />
                   <ActionLink label="OPEN PDF" href={paperUrl} />
                 </div>
               </div>
@@ -191,15 +185,6 @@ export default function Page() {
                   >
                     open the PDF
                   </a>{" "}
-                  or{" "}
-                  <a
-                    href={fullPaperLink}
-                    className="font-medium text-amber-800 hover:text-amber-900 hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    view the full paper
-                  </a>
                   .
                 </div>
               </div>

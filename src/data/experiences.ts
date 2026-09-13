@@ -63,13 +63,13 @@ export const EXPERIENCES: Experience[] = [
     dates: "Summer 2026",
     location: "Client / workshop builds",
     oneLiner:
-      "Designed, fabricated, and shipped client electromechanical systems spanning packaging, power, embedded control, and cloud-triggered actuation.",
+      "Built client electromechanical systems that had to leave the bench: enclosure, power distribution, embedded control, and cloud-triggered actuation.",
     overview:
-      "At BrainChild I owned hardware that had to leave the bench for real client demos and handoffs. The work cut across mechanical packaging, electrical distribution, embedded control, and cloud command queues. The hard part was never one subsystem alone; packaging moved the harness, electrical changes moved the enclosure, and software had to absorb manufacturing tolerances under internship deadlines.",
+      "At BrainChild, I worked on builds that had to run in front of clients; not just in a lab corner. Most failures crossed subsystem boundaries, so the job was integration discipline: mechanical packaging, electrical rails, embedded logic, and cloud command paths that stayed aligned under time pressure.",
     highlights: [
-      "Shipped Vend-A-Shoe: custom enclosure, wall AC→DC / USB-C PD path, Raspberry Pi control, and a cloud dispense queue for a client unit.",
-      "Prototyped an automatic tennis-ball launcher on ESP32 with dual RS-775 flywheels, NEMA 17 feed, and MOSFET PWM switching for a phone-driven demo.",
-      "Debugged failures that stacked across mechanical clearance, current budget, and software state instead of staying isolated.",
+      "Shipped Vend-A-Shoe: web command queue to Raspberry Pi worker to servo actuation on a packaged client unit.",
+      "Built a tennis-ball launcher prototype on ESP32 with dual RS-775 flywheels, NEMA 17 feed, and PWM-switched MOSFET drive.",
+      "Debugged cross-layer failures across power, mechanical fit, and software state instead of guessing in one subsystem.",
     ],
     focus: [
       "Electromechanical",
@@ -143,13 +143,13 @@ export const EXPERIENCES: Experience[] = [
     dates: "Internship",
     location: "Plymouth, MI · SNSPD systems",
     oneLiner:
-      "Hands-on lab work around superconducting nanowire single-photon detectors, high-speed pulse measurement, and fiber / optical test setups.",
+      "Worked on SNSPD test benches: fiber setup, optical attenuation, and pulse capture on GHz oscilloscopes.",
     overview:
-      "Quantum Opus builds turnkey Opus One™ systems: superconducting nanowire single-photon detectors (SNSPDs) with push-button cryogenics, used by teams at places like NASA, NIST, and national labs. Their detectors also supported Artemis II optical communications on the ground side, helping receive high-rate laser downlinks from cislunar space. In the lab I worked around that hardware stack: fiber paths, optical attenuation, and GHz-class scopes capturing detector pulses.",
+      "SNSPDs detect single photons with tight timing precision; they are used where weak optical signals still need reliable detection. At Quantum Opus I worked on the bench side of that stack: preparing fiber paths, configuring optical attenuation, and measuring detector pulse behavior on high-bandwidth scopes. I am careful here about scope: I supported testing and measurement work; I did not design the full detector hardware.",
     highlights: [
-      "Brought up and probed SNSPD / pulse-readout paths on lab benches with fiber interconnects and optical attenuator modules.",
-      "Captured and interpreted nanosecond-scale detector pulses on GHz oscilloscopes (including LeCroy WaveMaster and Tektronix scopes) while debugging live signal chains.",
-      "Worked inside a company whose Opus One detectors supported Artemis II space-to-ground laser communications for HD video from the lunar vicinity.",
+      "Set up and probed SNSPD readout paths with fiber interconnects and optical attenuator modules.",
+      "Captured nanosecond-scale pulses on LeCroy and Tektronix scopes during live bench debugging.",
+      "Observed how detector test workflows connect to real deployment requirements, including optical communications use cases.",
     ],
     focus: [
       "SNSPD",
@@ -266,20 +266,20 @@ export const EXPERIENCES: Experience[] = [
   },
   {
     slug: "penn-adapt",
-    org: "Penn ADAPT",
+    org: "Penn ADAPT xLab",
     role: "Hardware Engineer · ADAPTLab",
     kind: "role",
     track: "club",
     dates: "Current",
     location: "Assistive tech · HMS collaboration",
     oneLiner:
-      "Building an assistive button with ADAPTLab so disabled students can type through presses that map to space, tab, and other keyboard actions.",
+      "Building an assistive input button so 1 reliable press maps to keyboard actions like space and tab.",
     overview:
-      "On Penn ADAPT's ADAPTLab team I work as a hardware engineer on an accessibility button for disabled students, in collaboration with HMS schools. The idea is simple to say and hard to get right: one physical press should become a reliable keyboard action (space, tab, and similar), so typing is possible without a full conventional keyboard. That means thinking about switch debounce, mapping, and a path that actually works for the students using it.",
+      "In Penn ADAPT xLab, I work on hardware for an accessibility button used by disabled students. The requirement sounds simple: one button press should always produce the intended key action. The engineering is in debounce behavior, switch feel, firmware mapping, and reliability across real usage patterns.",
     highlights: [
-      "Hardware engineering on an assistive input button for disabled students in an HMS schools collaboration.",
-      "Mapping physical presses to keyboard actions such as space and tab so typing can happen through the button.",
-      "Working inside ADAPTLab's product loop: accessibility constraints first, then the electrical and firmware details that make presses trustworthy.",
+      "Hardware and integration work on an assistive input device in an HMS-school collaboration.",
+      "Mapped physical button presses to keyboard actions such as space and tab.",
+      "Iterated around accessibility constraints first, then electrical and firmware details.",
     ],
     focus: [
       "Assistive hardware",

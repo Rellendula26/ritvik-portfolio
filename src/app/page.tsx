@@ -22,9 +22,9 @@ export default function Home() {
           <Reveal>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-medium text-amber-800">Recent work</p>
+                <p className="text-sm font-medium text-amber-800">Core engineering work</p>
                 <h2 className="text-display mt-2 text-3xl text-stone-950 md:text-4xl">
-                  Projects I&apos;m especially proud of
+                  Embedded, robotics, and systems builds
                 </h2>
               </div>
               <Link
@@ -50,12 +50,12 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-20 md:px-8">
           <Reveal>
             <div>
-              <p className="text-sm font-medium text-amber-800/90">Also worth a look</p>
+              <p className="text-sm font-medium text-amber-800/90">More project work</p>
               <h2 className="text-display mt-2 text-2xl text-stone-950 md:text-3xl">
                 More builds
               </h2>
               <p className="mt-2 max-w-xl text-base text-stone-600">
-                Apps, tools, and experiments that still taught me a lot.
+                Supporting projects, research tools, and experiments that shaped how I build.
               </p>
             </div>
           </Reveal>
@@ -124,15 +124,15 @@ export default function Home() {
                 What I&apos;m usually thinking about
               </p>
               <p className="text-display mt-4 max-w-3xl text-2xl leading-snug text-white md:text-3xl">
-                How can I create things that can provide utility to life? Whether its practical application or just fun usage.
+                I like systems where code leaves the screen: queued commands, control loops, sensors, and physical mechanisms that have to work under real constraints.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {[
-                  "Medical devices",
-                  "Embedded & robotics",
-                  "Systems & compilers",
-                  "Machine learning",
-                  "Dance & music",
+                  "Electrical Engineering @ Penn",
+                  "Robotics",
+                  "Embedded systems",
+                  "Electronics and power",
+                  "Compilers and systems",
                 ].map((t) => (
                   <TechChip key={t} variant="soft" className="rounded-full px-4 py-1.5 text-sm">
                     {t}

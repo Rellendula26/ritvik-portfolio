@@ -27,7 +27,7 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "EEG-to-Image Generation for Brain Injury Rehabilitation (ArXiv)";
   const subtitle =
-    "A research mentorship project under professors at Harvard Medical School with the purpose of image generation from EEG data & signals. Pre-print on ArXiv";
+    "Research mentorship with Harvard Medical School on EEG-to-image generation, reproducibility, and model comparison. Preprint on arXiv.";
   const coverSrc = "/research/dreamdiffusion.png"; // must exist in /public
 
   const badges = ["Affiliated", "Harvard Medical School", "EEG Signal Processing", "Deep Learning"];
@@ -104,20 +104,13 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                During my EEG computer-vision research internship at Harvard Medical School, I helped
-                refine DreamDiffusion, a model designed to convert EEG signals into images. Our team
-                resolved major environment and dependency issues that made the original GitHub version
-                nearly impossible to run, migrating the entire pipeline into Google Colab and debugging
-                model-architecture and computer-vision components to ensure reproducibility. This
-                process taught me how to systematically diagnose errors within complex deep-learning
-                systems. We also evaluated a variety of classical and deep learning approaches, including
-                SVMs, feedforward DNNs, CNN-based encoders, and generative models such as GANs and VAEs, for
-                EEG-to-image reconstruction. While each model captured limited aspects of the signal, they
-                struggled to robustly map EEG data to meaningful visual representations due to EEG’s low
-                signal-to-noise ratio, nonlinearity, and complex temporal dynamics. Understanding these
-                limitations, and why DreamDiffusion instead leverages masked-signal pretraining and alignment
-                within CLIP’s latent space, deeply shaped my understanding of how to design models that
-                translate noisy biological signals into meaningful visual outputs.
+                I worked on getting the DreamDiffusion pipeline into a state that others could actually run.
+                The original repository had dependency conflicts and environment drift, so I helped migrate
+                the workflow to Google Colab and debug architecture-level failures. We also compared
+                approaches across SVMs, feedforward networks, CNN encoders, GANs, and VAEs for EEG-to-image
+                reconstruction. The central technical issue stayed the same: EEG is noisy, nonlinear, and
+                temporally complex, so naive mappings from signal to image collapse quickly. That is why the
+                CLIP-aligned diffusion approach mattered in this project.
               </p>
             </div>
 
@@ -135,7 +128,7 @@ export default function Page() {
                   signal-to-noise ratio and temporal structure
                 </li>
                 <li>
-                  Evaluated numerous ML and Deep Learning paradigms, and explored CLIP&apos;s multimodal
+                  Evaluated multiple ML and deep-learning paradigms, and explored CLIP&apos;s multimodal
                   latent space, enabling Stable Diffusion to generate images via EEG-derived data.
                 </li>
                 <li>
@@ -151,8 +144,7 @@ export default function Page() {
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
                 <li>
-                  Lowered the barrier to entry for EEG generative modeling via providing clean documentation,
-                  executable notebooks, and preloaded data, enabling easier experimentation for future studies.
+                  Produced a reproducible Colab workflow with setup fixes, cleaner docs, and runnable notebooks.
                 </li>
                 <li>
                   Demonstrated diffusion-based latent-space generation is more effective for EEG-to-image
@@ -167,10 +159,7 @@ export default function Page() {
                 LESSONS + NEXT STEPS
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>
-                  Utilize University of Pennsylvania Venture Labs and other entrepreneurial sources to make this
-                  a hospital-utilized product.
-                </li>
+                <li>Keep this as a research workflow; avoid over-claiming product readiness.</li>
                 <li>Integrate wavelet-based and time-frequency features to better capture transient EEG dynamics</li>
               </ul>
             </div>

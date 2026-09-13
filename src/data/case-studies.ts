@@ -205,7 +205,7 @@ return tmp.1`,
       id: "problem",
       eyebrow: "Overview",
       title: "Expressive robotics through motion and light",
-      body: "BloomBot explores physical computing through a robotic flower that responds dynamically to remote input — combining actuator control, sensor integration, and IoT infrastructure into one interactive hardware experience.",
+      body: "BloomBot explores physical computing through a robotic flower that responds dynamically to remote input, combining actuator control, sensor integration, and IoT infrastructure into one interactive hardware experience.",
       bullets: [
         "WiFi-enabled IoT control using Blynk",
         "Servo-driven petal animations with multi-servo sync",
@@ -231,7 +231,7 @@ return tmp.1`,
       title: "Wireless interaction pipeline",
       diagram: `User (Blynk app)
       ↓ WiFi
-Arduino UNO R4 WiFi — command processing
+Arduino UNO R4 WiFi; command processing
       ├→ Servo motors (petal animations)
       ├→ I2C LCD (status / messages)
       ├→ LEDs (Morse-code signaling)
@@ -376,7 +376,7 @@ Arduino UNO R4 WiFi — command processing
     slug: "minitorch-ocaml",
     title: "MiniTorch-OCaml",
     positioning:
-      "Built a PyTorch-inspired autodiff engine in OCaml — graph-based tensor ops and reverse-mode differentiation through explicit graph traversal.",
+      "Built a PyTorch-inspired autodiff engine in OCaml, with graph-based tensor ops and reverse-mode differentiation through explicit graph traversal.",
     role: "Solo builder",
     timeline: "Spring 2026",
     stack: ["OCaml", "Autodiff", "Computational Graphs", "Gradient Checking"],
@@ -613,7 +613,7 @@ Arduino UNO R4 WiFi — command processing
     slug: "arduino-tetris",
     title: "Arduino TFT Tetris",
     positioning:
-      "A handheld Tetris prototype on Arduino Nano + Adafruit ST7735 TFT — SPI graphics, physical buttons, collision detection, and a falling tetromino engine with no OS.",
+      "A handheld Tetris prototype on Arduino Nano + Adafruit ST7735 TFT, with SPI graphics, physical buttons, collision detection, and a falling tetromino engine with no OS.",
     role: "Solo builder · Ritvik Ellendula",
     timeline: "Spring 2026",
     stack: [
@@ -680,7 +680,7 @@ Arduino UNO R4 WiFi — command processing
       id: "problem",
       eyebrow: "Overview",
       title: "Tetris on embedded hardware",
-      body: "This project recreates a simplified Tetris on bare metal — exploring embedded systems, low-level graphics, and interactive hardware design. Game logic, rendering, collision detection, and tetromino physics all run directly on the microcontroller.",
+      body: "This project recreates a simplified Tetris on bare metal, exploring embedded systems, low-level graphics, and interactive hardware design. Game logic, rendering, collision detection, and tetromino physics all run directly on the microcontroller.",
       bullets: [
         "Real-time falling tetromino engine",
         "SPI TFT graphics rendering (Adafruit GFX + ST7735)",
@@ -714,7 +714,7 @@ Arduino UNO R4 WiFi — command processing
         "Arduino C++ · Adafruit GFX + ST7735 libraries",
         "SPI protocol for display communication",
         "Tetromino shapes as fixed grid / bitmask state",
-        "No OS — portable USB/battery breadboard architecture",
+        "No OS; portable USB/battery breadboard architecture",
       ],
     },
     build: {

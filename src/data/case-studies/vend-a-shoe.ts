@@ -472,7 +472,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
     },
   ],
   scheduleAnalysis: {
-    note: "Calendar time was dominated by harness, power permanence, and recovery—not by writing the queue worker.",
+    note: "Calendar time was dominated by harness, power permanence, and recovery; not by writing the queue worker.",
     required: [
       "Qualify every servo/LED/fan before trusting the software map",
       "Bench-supply bring-up with current limit before wall power",
@@ -482,7 +482,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
     preventable: [
       "Cutting wire lengths before the mounting layout was frozen",
       "Assuming quiet motors meant bad code instead of swap-testing first",
-      "The 24 V overvoltage connection—and the recovery cost that followed",
+      "The 24 V overvoltage connection, and the recovery cost that followed",
       "Leaving final multi-bin validation until the delivery week",
     ],
     organizational: [

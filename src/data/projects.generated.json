@@ -6,8 +6,8 @@
     "featured": true,
     "category": "embedded",
     "status": "shipped",
-    "oneLine": "Designed and shipped a client-facing electromechanical dispensing platform integrating mechanical packaging, embedded control, and cloud-connected automation.",
-    "overview": "During my internship at BrainChild Engineering, I developed Vend-A-Shoe for a client deployment. The work meant designing a custom mechanical enclosure; integrating electrical distribution for 4 MG996R servos, 8 LED indicators, and a cooling fan across 40+ wire interconnects; writing embedded control on a Raspberry Pi; and connecting that stack to an existing frontend through a cloud command pipeline. The hardest part was not any single subsystem; it was integrating them. Packaging moved the harness; electrical changes moved the enclosure; software had to absorb real manufacturing tolerances.",
+    "oneLine": "I built a physical shoe vending machine where a Next.js web app writes a command, a Raspberry Pi worker polls roughly every 1 s, and 4 MG996R servos dispense the selected shoe.",
+    "overview": "Vend-A-Shoe exists because the client needed a real unit, not a bench demo. The architecture is browser command -> Supabase queue -> Pi worker -> GPIO/PWM -> physical dispense. I integrated the enclosure, harness, power distribution, and control software so that path stayed reliable with 4 servos, 8 LEDs, and a fan in the same box. Early failures looked like software bugs; many were actually electrical and mechanical issues, including faulty servos and power mistakes. The useful debugging loop was isolating one layer at a time with a known-good actuator, a bench supply, and a meter before touching code.",
     "techStack": [
       "Raspberry Pi 4",
       "Python",
@@ -87,9 +87,9 @@
     "date": "Summer 2026",
     "buildStage": "Client Deployment",
     "keyHighlights": [
-      "Designed a custom enclosure with 3D-printed fixtures and laser-cut panels for manufacturable assembly",
-      "Integrated 4 MG996R servos, 8 LEDs, and a fan through a centralized power-distribution architecture with Raspberry Pi GPIO control",
-      "Merged a new backend with an existing production frontend for remote cloud-triggered dispensing"
+      "Built the cloud-to-hardware command path: Next.js UI insert, Supabase queue row, Pi worker poll/claim loop, then servo PWM actuation",
+      "Integrated 4 MG996R servos, 8 LEDs, and a fan with shared grounding and separate high-current planning so actuator load did not collapse the control path",
+      "Used structured fault isolation to separate software issues from faulty servos, rail problems, and packaging constraints during bring-up"
     ],
     "architecture": [
       "Dashboard inserts bin commands into Supabase.",
@@ -102,11 +102,11 @@
       "Systemd unit keeps worker process alive on boot with restart semantics and environment-based credentials."
     ],
     "challenges": [
-      "Fitting 4 servos, 8 LEDs, a fan, harness, Pi, and power in a serviceable volume.",
-      "Keeping actuator and accessory current off the Pi rail.",
-      "LED and fan harness lengths that were never the same twice; 40+ wires to route and service.",
-      "Deciding whether a quiet channel was wiring, software, or dead hardware without guessing.",
-      "Hooking a new backend into a frontend that already existed."
+      "Fitting 4 servos, 8 LEDs, a fan, harness, Pi, and power conversion into a serviceable enclosure.",
+      "Protecting logic behavior while servos pulled high current during movement peaks.",
+      "Managing 40+ wires without losing rework access or introducing branch faults.",
+      "Distinguishing software bugs from dead servos, rail sag, and mechanical drag.",
+      "Keeping backend behavior compatible with an existing frontend contract."
     ],
     "lessonsLearned": [
       "The biggest skill was debugging across systems, not inside any one of them.",
@@ -144,9 +144,9 @@
       "Why: bins have different mechanical behavior; one motion profile was not enough."
     ],
     "debuggingNotes": [
-      "Bin 3 over-rotation was addressed with per-bin target duty override in worker + servo invocation.",
-      "System evolved from single `dispense` action to `dispense_bin_1..4` command routing with GPIO mapping.",
-      "UI iteration added responsive bin cards and stronger device-state feedback."
+      "Bin 3 over-rotation was fixed with per-bin duty calibration instead of one global motion profile.",
+      "Quiet channels were tested by swapping known-good servos and known-good GPIO lanes before rewriting worker logic.",
+      "A power-side mistake damaged actuators; recovery required replacing hardware and validating each rail under load before resuming integration."
     ],
     "driveFolderUrl": "https://drive.google.com/drive/folders/1vmhLtJWbZPy66M_R9-7Bo1iLIvf3NcxG?usp=sharing",
     "finalOutcome": "Working unit shipped to the client after breadboard bring-up, protoboard permanence, wall power, and multi-bin calibration.",
