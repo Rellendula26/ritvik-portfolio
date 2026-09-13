@@ -27,7 +27,7 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "Machine Learning for Muscular Dystrophy Diagnosis";
   const subtitle =
-    "This project utilized the NCBI Gene Expression Omnibus (GEO) to evaluate the diagnostic power of classical machine learning methods for muscular dystrophy classification.";
+    "This project uses NCBI Gene Expression Omnibus (GEO) data to evaluate classical ML methods for muscular dystrophy classification.";
   const coverSrc = "/research/muscular-dystrophy.png"; // must exist in /public
 
   // PDF (local)

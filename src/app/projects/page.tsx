@@ -124,9 +124,7 @@ export default function ProjectsPage() {
                 Projects
               </h1>
               <p className="mt-4 text-lg leading-relaxed text-stone-700">
-                This page is basically my engineering notebook: what I built, what
-                broke, what I changed, and what I learned while shipping things
-                across software and hardware.
+                This is my engineering notebook: what I built, why I built it, what broke, and how I debugged it.
               </p>
             </header>
           </Reveal>
@@ -147,14 +145,14 @@ export default function ProjectsPage() {
 
       <TierBand
         title="Featured engineering work"
-        subtitle="Compiler pipelines, autodiff, embedded IoT, and hardware integration."
+        subtitle="Physical systems first: robotics, embedded control, electronics, and low-level systems."
         projects={featured}
         featured
         shade="featured"
       />
       <TierBand
         title="Supporting builds"
-        subtitle="Smaller builds, but still real engineering: web apps, CV pipelines, signal processing experiments, and embedded games that made me sharper across different parts of the stack."
+        subtitle="Smaller projects that still taught me something specific about architecture, debugging, or system behavior."
         projects={supporting}
         shade="supporting"
       />

@@ -118,6 +118,13 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       title: "Threshold path on the page",
       description:
         "Built the sensing → compare → logic → indicate story before locking the power stage.",
+      media: {
+        kind: "image",
+        src: "/projects/per-power-electronics/notes-task-a-preview.jpg",
+        alt: "Prep notes for the monitoring circuit",
+        label: "Paper plan",
+        portrait: true,
+      },
     },
     {
       id: "e2",
@@ -125,6 +132,12 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       title: "Transient check",
       description:
         "Ran CircuitLab transient analysis to see indicator timing against the intended behavior.",
+      media: {
+        kind: "image",
+        src: "/projects/per-power-electronics/transient-analysis.jpg",
+        alt: "Transient analysis waveform",
+        label: "CircuitLab transient",
+      },
     },
     {
       id: "e3",
@@ -132,6 +145,12 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       title: "Requirement mismatch",
       description:
         "Caught that the response-time wording was a maximum, not a minimum delay, and revised understanding/design.",
+      media: {
+        kind: "image",
+        src: "/projects/per-power-electronics/schematic.jpg",
+        alt: "Final CircuitLab schematic",
+        label: "Revised schematic",
+      },
     },
   ],
   results: {
@@ -155,17 +174,23 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
     media: [
       {
         kind: "image",
-        src: "/projects/per-power-electronics/transient-analysis.png",
+        src: "/projects/per-power-electronics/transient-analysis.jpg",
         alt: "CircuitLab transient analysis waveform for the PER sensor-monitor circuit",
         label: "Transient analysis",
         caption:
           "CircuitLab transient analysis from the submission package. Read timing from the plot; do not invent numbers here.",
       },
+      {
+        kind: "image",
+        src: "/projects/per-power-electronics/schematic.jpg",
+        alt: "Final CircuitLab schematic",
+        label: "Schematic",
+      },
     ],
     limitations: [
-      "Datasheet comparison cells are placeholders until exact LM5164 / LMR33630 numbers are entered.",
-      "CircuitLab schematic export still needs to replace the schematic placeholder asset.",
-      "Pass/fail interpretation of response time is intentionally unmarked until you confirm the readout.",
+      "Datasheet comparison cells are filled from my Task C write-up; re-check against the latest datasheet revision when needed.",
+      "Pass/fail interpretation of response time is intentionally unmarked until the transient readout is confirmed.",
+      "Challenge-circuit rail used a 7805; the LMR33630 recommendation is for a sensor/DAQ PCB use case.",
     ],
   },
   reflection: {
@@ -174,9 +199,8 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       "A circuit can look correct in simulation while still failing a written timing requirement if the requirement is misread.",
     ],
     redesign: [
-      "Fill datasheet metric cells with the real comparison numbers.",
-      "Swap the schematic placeholder for the CircuitLab export.",
-      "Record measured response time and pass/fail next to the waveform.",
+      "Annotate the transient plot with cursor readouts for response time.",
+      "Keep the 7805 vs LMR33630 distinction explicit so the page never looks inconsistent.",
     ],
     future: [
       "Bring the same datasheet-driven buck review into other automotive / drivetrain boards.",
@@ -253,12 +277,30 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
     ],
     schematicPlaceholder: {
       kind: "image",
-      src: "/projects/per-power-electronics/schematic-placeholder.svg",
-      alt: "Placeholder for CircuitLab schematic",
-      label: "Schematic placeholder",
+      src: "/projects/per-power-electronics/schematic.jpg",
+      alt: "CircuitLab schematic for the sensor-monitoring indicator circuit",
+      label: "CircuitLab schematic",
       caption:
-        "TODO: replace with CircuitLab schematic export (schematic.png) in this folder.",
+        "12 V → 7805 rail, brake/current comparator windows, logic aggregation, RC timing, latch, and LED indicator.",
     },
+    researchMedia: [
+      {
+        kind: "image",
+        src: "/projects/per-power-electronics/notes-task-a-preview.jpg",
+        alt: "Handwritten prep notes for the monitoring circuit",
+        label: "Task A prep notes",
+        caption: "Paper planning before the CircuitLab schematic.",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/per-power-electronics/notes-task-b-preview.jpg",
+        alt: "Handwritten buck converter research notes",
+        label: "Task B prep notes",
+        caption: "Divider vs linear vs buck, ON/OFF paths, and duty-cycle knobs.",
+        portrait: true,
+      },
+    ],
     datasheetComparison: {
       partA: "LM5164",
       partB: "LMR33630",
@@ -267,58 +309,107 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
           id: "eff",
           label: "Efficiency",
           whyItMatters: "Less energy wasted as heat in a packed enclosure.",
-          valueA: null,
-          valueB: null,
+          valueA: "High (no matched 12–17→5 V / 0.5 A curve in sheet)",
+          valueB: "5 V curves published; >95% peak claimed",
+        },
+        {
+          id: "rdson",
+          label: "MOSFET R_DS(on)",
+          whyItMatters:
+            "Lower switch resistance reduces conduction loss as load current rises (P = I²R).",
+          valueA: "HS 725 mΩ · LS 330 mΩ",
+          valueB: "HS 75 mΩ · LS 50 mΩ (VQFN)",
         },
         {
           id: "iout",
           label: "Output-current capability / headroom",
           whyItMatters:
             "Provides margin when MCU, sensors, or CAN circuitry create transient loads.",
-          valueA: null,
-          valueB: null,
+          valueA: "1 A class part (challenge shortlist)",
+          valueB: "3 A class part (challenge shortlist)",
         },
         {
           id: "transient",
           label: "Transient response",
           whyItMatters:
             "Determines how well the 5 V rail stays regulated when load current suddenly changes.",
-          valueA: null,
-          valueB: null,
+          valueA: "External L/C dominated",
+          valueB: "External L/C dominated",
         },
         {
           id: "ripple",
           label: "Output-voltage ripple",
           whyItMatters:
             "Excessive supply noise can affect sensitive analog measurements.",
-          valueA: null,
-          valueB: null,
+          valueA: "Passives + f_s set the result",
+          valueB: "Higher f_s options help smaller passives",
         },
         {
           id: "emi",
           label: "EMI behavior",
           whyItMatters:
             "Fast switching edges can inject noise into nearby sensor and communication circuitry.",
-          valueA: null,
-          valueB: null,
+          valueA: "CISPR 25 Class 5 documented",
+          valueB: "Low EMI / HotRod package claimed",
+        },
+        {
+          id: "fs",
+          label: "Switching frequency",
+          whyItMatters:
+            "Higher frequency can shrink L and C; it also raises switching loss and EMI risk.",
+          valueA: "Adjustable up to 1 MHz",
+          valueB: "Fixed options: 400 kHz / 1.4 MHz / 2.1 MHz",
         },
         {
           id: "footprint",
           label: "PCB footprint",
           whyItMatters: "Matters in tightly packaged automotive electronics.",
-          valueA: null,
-          valueB: null,
+          valueA: "SO PowerPAD ~4.9 × 6 mm",
+          valueB: "VQFN ~3 × 2 mm",
+        },
+        {
+          id: "cost",
+          label: "Unit cost (approx.)",
+          whyItMatters: "BOM pressure on a multi-board vehicle program.",
+          valueA: "~$4.50",
+          valueB: "~$3 (Detkin stock caveat for LM)",
         },
         {
           id: "thermal",
           label: "Thermal behavior",
           whyItMatters:
             "Heat that has nowhere to go becomes a reliability and layout problem.",
-          valueA: null,
-          valueB: null,
+          valueA: "Package + conduction loss story",
+          valueB: "Lower R_DS(on) helps conduction heat",
         },
       ],
     },
+    comparisonMedia: [
+      {
+        kind: "image",
+        src: "/projects/per-power-electronics/buck-research.jpg",
+        alt: "One-page buck converter research write-up",
+        label: "Task B · buck research",
+        caption: "Duty cycle, ON/OFF energy path, and switching-frequency tradeoffs.",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/per-power-electronics/ic-selection-p01.jpg",
+        alt: "IC selection comparison page for LM5164 vs LMR33630",
+        label: "Task C · IC selection",
+        caption: "Use-case-weighted comparison; recommended LMR33630 for this board.",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/per-power-electronics/ic-selection-p02.jpg",
+        alt: "IC selection conclusion page",
+        label: "Task C · decision",
+        caption: "Final pick with EMI counterargument kept explicit.",
+        portrait: true,
+      },
+    ],
     emi: {
       conducted:
         "Switching disturbances travel through PCB traces, supply rails, or ground and show up as rail bounce or reference noise.",
@@ -332,7 +423,7 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
     verificationMedia: [
       {
         kind: "image",
-        src: "/projects/per-power-electronics/transient-analysis.png",
+        src: "/projects/per-power-electronics/transient-analysis.jpg",
         alt: "CircuitLab transient analysis for response timing",
         label: "CircuitLab transient",
         caption: "Primary simulation evidence from the challenge submission.",

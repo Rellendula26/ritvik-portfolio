@@ -25,8 +25,8 @@ export default function WorkInProgressPage({
           </h1>
 
           <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-zinc-600">
-            Project page work in progress — case study, gallery, and walkthrough
-            coming soon.
+            Project page work in progress; case study, gallery, and walkthrough
+            are coming soon.
           </p>
 
           {description && (

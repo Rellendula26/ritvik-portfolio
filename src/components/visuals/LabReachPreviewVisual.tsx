@@ -57,7 +57,7 @@ export default function LabReachPreviewVisual({
           <div className="mt-2 rounded-lg border border-violet-500/20 bg-violet-500/[0.05] px-2 py-1.5">
             <p className="font-mono text-[7px] text-stone-500">draft preview</p>
             <p className="mt-0.5 font-mono text-[8px] leading-snug text-stone-300">
-              Dear Prof. Chen — I read your work on…
+              Dear Prof. Chen; I read your work on...
             </p>
             <p className="mt-1 font-mono text-[7px] text-amber-500/70">
               --confirm-send required

@@ -168,7 +168,7 @@ export default function HardwareBuildLayout({ config }: { config: HardwareBuildC
           What the build required
         </h2>
         <p className="mt-3 max-w-2xl text-base text-zinc-600">
-          The hands-on skills that turned the concept into a working object.
+          The technical work that turned the concept into a working object.
         </p>
 
         <div className="mt-8 grid gap-5 md:grid-cols-3">

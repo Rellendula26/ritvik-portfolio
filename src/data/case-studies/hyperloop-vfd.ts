@@ -9,9 +9,9 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
   motivation: {
     why: "I started with limited intuition for how a variable-frequency drive actually turns fixed three-phase AC into controllable motor waveforms. I wanted a system-level map of every conversion stage and why it exists.",
     interest:
-      "The interesting part was the chain: rectify, store energy on a DC link, then switch that bus with PWM so the motor sees a controllable fundamental—not memorizing a block diagram.",
+      "The interesting part was the chain: rectify, store energy on a DC link, then switch that bus with PWM so the motor sees a controllable fundamental; not memorizing a block diagram.",
     learning:
-      "I wanted to separate PWM carrier frequency from fundamental output frequency, and to see losses, ratings, EMI, and protection as first-class design concerns—not afterthoughts once the motor spins in a slide deck.",
+      "I wanted to separate PWM carrier frequency from fundamental output frequency, and to see losses, ratings, EMI, and protection as first-class design concerns; not afterthoughts once the motor spins in a slide deck.",
   },
   systemOverview: {
     summary:
@@ -38,6 +38,14 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       "480 V 3φ AC → rectifier → DC link → PWM inverter → variable-frequency 3φ AC → motor.",
     controlFlow:
       "PWM commands decide switch states; switch states decide which DC rail each phase sees over time.",
+    diagram: {
+      kind: "image",
+      src: "/projects/hyperloop-vfd/pages/submission-p03.jpg",
+      alt: "Hand-drawn VFD schematic: rectifier, DC link, MOSFET inverter, motor",
+      label: "Notebook VFD map",
+      caption: "AC → DC → AC drawn as one continuous power path.",
+      portrait: true,
+    },
   },
   disciplines: [
     {
@@ -56,6 +64,13 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       ],
       finalImplementation:
         "Documented rectifier + DC-link roles as the front half of the VFD chain.",
+      media: {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p04.jpg",
+        alt: "Notes on DC filtering capacitors and transistor switching",
+        label: "DC filter + switching",
+        portrait: true,
+      },
     },
     {
       id: "inverter",
@@ -73,6 +88,13 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       ],
       finalImplementation:
         "Stage cards plus switching demo for intuition, not a full circuit simulator.",
+      media: {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p02.jpg",
+        alt: "Notes explaining why AC must be converted to control motor frequency",
+        label: "Why AC → DC → AC",
+        portrait: true,
+      },
     },
   ],
   designDecisions: [
@@ -86,7 +108,7 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
         "Rectify to a DC bus, then synthesize controllable three-phase with PWM",
       ],
       tradeoffs:
-        "The extra conversion stages add semiconductors, capacitors, losses, and EMI work—but they buy waveform control.",
+        "The extra conversion stages add semiconductors, capacitors, losses, and EMI work; they buy waveform control.",
       choice:
         "Use the DC bus as an energy buffer and let the inverter synthesize the motor waveform.",
     },
@@ -112,6 +134,13 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       title: "Draw the energy path",
       description:
         "Forced every stage to answer what enters, what leaves, and why the stage exists.",
+      media: {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p01.jpg",
+        alt: "Opening notebook page for the Hyperloop VFD challenge",
+        label: "Kickoff notes",
+        portrait: true,
+      },
     },
     {
       id: "e2",
@@ -119,6 +148,13 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       title: "Connect PWM to switch states",
       description:
         "Linked abstract PWM talk to high-side / low-side conduction paths on a three-phase bridge.",
+      media: {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p04.jpg",
+        alt: "Six-switch bridge and PWM pulse-width sketches",
+        label: "Switching notes",
+        portrait: true,
+      },
     },
     {
       id: "e3",
@@ -126,6 +162,12 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       title: "Add the non-ideal list",
       description:
         "Losses, thermal, ratings, ripple, EMI, and protection as first-class considerations.",
+      media: {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/diagram-480v-p01.jpg",
+        alt: "480 V distribution block diagram from generator through VFD to motor",
+        label: "480 V distribution map",
+      },
     },
   ],
   results: {
@@ -133,7 +175,7 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       {
         title: "System-level VFD map",
         body: "Clear story from 480 V three-phase AC through rectifier, DC link, inverter, and motor.",
-        evidence: "Power-flow diagram",
+        evidence: "Notebook + diagram",
       },
       {
         title: "PWM vs fundamental distinction",
@@ -141,15 +183,42 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
         evidence: "Frequency / voltage section",
       },
       {
-        title: "No invented numbers",
-        body: "Ratings and measured results are left as considerations / TODOs rather than fake datasheet claims.",
-        evidence: "Engineering considerations",
+        title: "Integration BOM thinking",
+        body: "Went beyond the power stage into protection, enclosure, and peripheral selection for a real drive install.",
+        evidence: "BOM pages",
+      },
+    ],
+    media: [
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/diagram-480v-p01.jpg",
+        alt: "480 V three-phase distribution diagram",
+        label: "480 V path",
+        caption: "Generator → disconnect → distribution → VFD / indicator branches with PE.",
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/diagram-120v-p01.jpg",
+        alt: "120 V control-power distribution diagram",
+        label: "120 V control path",
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p09.jpg",
+        alt: "Bill of materials table for VFD integration",
+        label: "BOM · parts",
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p11.jpg",
+        alt: "Bill of materials design justifications",
+        label: "BOM · why",
       },
     ],
     limitations: [
-      "No proprietary challenge figures are reproduced on this page.",
+      "Challenge prompt pages are not reproduced here; only my notes, diagrams, and BOM work.",
       "Switching demo is educational, not a SPICE-accurate model.",
-      "Specific device ratings remain to be filled if you want datasheet callouts later.",
+      "Full 14-page submission PDF is split into page images for the site rather than hosted as one large download.",
     ],
   },
   reflection: {
@@ -158,8 +227,8 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
       "PWM frequency and fundamental frequency answer different questions.",
     ],
     redesign: [
-      "Add annotated waveform screenshots if you want measurement evidence on-page.",
-      "Optionally drop in a hand-drawn or CAD inverter diagram under public/projects/hyperloop-vfd/.",
+      "Call out which notebook pages map to rectifier vs inverter vs BOM more explicitly in captions.",
+      "Add a short thermal/clearance note next to the enclosure BOM rows.",
     ],
     future: [
       "Carry the same stage-by-stage 'why' habit into other power-electronics learning.",
@@ -213,6 +282,36 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
         title: "Inverter synthesis",
         question: "How does control show up electrically?",
         body: "Switch states and PWM decide the effective voltage/frequency content delivered to the motor.",
+      },
+    ],
+    researchMedia: [
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p01.jpg",
+        alt: "Hyperloop VFD kickoff notes",
+        label: "Kickoff",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p03.jpg",
+        alt: "Full hand-drawn VFD power path",
+        label: "Power path",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p05.jpg",
+        alt: "Additional VFD notebook page",
+        label: "Notebook",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p06.jpg",
+        alt: "Additional VFD notebook page",
+        label: "Notebook",
+        portrait: true,
       },
     ],
     stageCards: [
@@ -307,6 +406,33 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
         id: "protect",
         title: "Protection",
         body: "Overcurrent, overvoltage, and desat-style protections are part of the design, not a bumper sticker.",
+      },
+    ],
+    integrationMedia: [
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/diagram-480v-p01.jpg",
+        alt: "480 V distribution diagram",
+        label: "480 V integration",
+        caption: "Generator through disconnect, fusing, VFD, motor, and PE bonding.",
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p09.jpg",
+        alt: "VFD peripherals bill of materials",
+        label: "BOM",
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p10.jpg",
+        alt: "BOM continuation page",
+        label: "BOM continued",
+      },
+      {
+        kind: "image",
+        src: "/projects/hyperloop-vfd/pages/submission-p12.jpg",
+        alt: "BOM justification continuation",
+        label: "Justifications",
       },
     ],
   },

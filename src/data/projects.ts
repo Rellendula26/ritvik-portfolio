@@ -731,13 +731,13 @@ const BASE_PROJECTS: Project[] = [
     id: "P18",
     title: "PER Power Electronics Design Challenge",
     slug: "per-power-electronics",
-    featured: false,
+    featured: true,
     category: "hardware",
     status: "shipped",
     oneLine:
-      "Designed and analyzed a sensor-monitoring circuit and evaluated buck-converter architectures for an automotive electrical environment.",
+      "Built a 12 V sensor-monitoring circuit with comparator thresholds, logic gating, and timing analysis; then compared buck regulators for 12-17 V to 5 V conversion.",
     overview:
-      "Independent engineering work for Penn Electric Racing's recruitment process—not PER vehicle hardware. Brake and current thresholds feed comparator and logic stages that drive an indicator under a response-time requirement, while a buck stage is judged on efficiency, headroom, ripple, EMI, and packaging instead of 'outputs 5 V' alone.",
+      "Independent engineering work for Penn Electric Racing's recruitment process; this is not PER vehicle hardware. I built and analyzed a threshold/logic/timing circuit where brake and current conditions must both be true before an indicator trips. The hard part was requirement interpretation and power-stage reasoning: 0.5 s behavior had to match spec language, and regulator choice had to include ripple, EMI, transient headroom, and thermal limits, not only nominal 5 V output.",
     techStack: [
       "Power Electronics",
       "Circuit Design",
@@ -749,8 +749,9 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/per-power-electronics/cover.svg",
     images: [
       "/projects/per-power-electronics/cover.svg",
-      "/projects/per-power-electronics/transient-analysis.png",
-      "/projects/per-power-electronics/schematic-placeholder.svg",
+      "/projects/per-power-electronics/schematic.jpg",
+      "/projects/per-power-electronics/transient-analysis.jpg",
+      "/projects/per-power-electronics/ic-selection-p01.jpg",
     ],
     date: "Fall 2026",
     buildStage: "Recruitment design challenge",
@@ -760,9 +761,9 @@ const BASE_PROJECTS: Project[] = [
       "Engineering Design Challenge",
     ],
     keyHighlights: [
-      "Sensor-threshold monitor with concurrent logic and indicator timing",
-      "Buck selection framed around efficiency, ripple, EMI, and load headroom",
-      "Requirement check after an initial response-time misread",
+      "Comparator path converts brake/current analog signals into digital threshold decisions before logic gating",
+      "Timing analysis centered on the 0.5 s response constraint and caught an early requirement misread",
+      "Buck selection compared LM5164 vs LMR33630 around current headroom, ripple, EMI behavior, and package/thermal tradeoffs",
     ],
     architecture: [
       "12 V automotive-style supply into regulated low-voltage rail.",
@@ -803,7 +804,7 @@ const BASE_PROJECTS: Project[] = [
     oneLine:
       "Analyzed a three-phase variable-frequency drive from AC rectification through DC-link energy storage and PWM inverter control.",
     overview:
-      "Independent engineering analysis for Penn Hyperloop's recruitment process—not Hyperloop vehicle hardware. Maps 480 V three-phase AC through a diode rectifier, DC link, and PWM inverter so motor frequency/voltage control is understandable as a chain of energy conversions, with PWM carrier kept distinct from fundamental output frequency.",
+      "Independent engineering analysis for Penn Hyperloop's recruitment process; this is not Hyperloop vehicle hardware. Maps 480 V three-phase AC through a diode rectifier, DC link, and PWM inverter so motor frequency/voltage control is understandable as a chain of energy conversions, with PWM carrier kept distinct from fundamental output frequency.",
     techStack: [
       "Power Electronics",
       "VFD",
@@ -813,7 +814,12 @@ const BASE_PROJECTS: Project[] = [
       "Power Semiconductors",
     ],
     thumbnail: "/projects/hyperloop-vfd/cover.svg",
-    images: ["/projects/hyperloop-vfd/cover.svg"],
+    images: [
+      "/projects/hyperloop-vfd/cover.svg",
+      "/projects/hyperloop-vfd/pages/diagram-480v-p01.jpg",
+      "/projects/hyperloop-vfd/pages/submission-p03.jpg",
+      "/projects/hyperloop-vfd/pages/submission-p09.jpg",
+    ],
     date: "Fall 2026",
     buildStage: "Recruitment design challenge",
     disciplines: [
@@ -1439,7 +1445,7 @@ const BASE_PROJECTS: Project[] = [
     oneLine:
       "Two-wheel balancing robot with complementary-filtered IMU and cascade PID.",
     overview:
-      "A multi-discipline build where chassis stiffness, star grounding, and a fixed 200 Hz control loop matter as much as the PID math. This page is the canonical engineering case-study template — realistic placeholder content that shows how future project pages should read.",
+      "A multi-discipline build where chassis stiffness, star grounding, and a fixed 200 Hz control loop matter as much as the PID math. This page is the canonical engineering case-study template; realistic placeholder content that shows how future project pages should read.",
     techStack: ["STM32", "Cascade PID", "Complementary Filter", "Custom PCB", "PETG"],
     githubUrl: "https://github.com/Rellendula26",
     liveUrl: "https://example.com/drift-balancer-demo",
@@ -1473,7 +1479,7 @@ const BASE_PROJECTS: Project[] = [
       "Fixed-rate sampling turns tuning back into an experiment.",
     ],
     technicalNotes: [
-      "Placeholder diagrams — replace with real CAD, PCB, and scope captures when migrating a live project.",
+      "Placeholder diagrams; replace with real CAD, PCB, and scope captures when migrating a live project.",
       "Use this page as the structural reference for future case studies.",
     ],
     media: [
@@ -1602,14 +1608,15 @@ export const PROJECTS: Project[] = [...BASE_PROJECTS, ...INTAKE_PROJECTS].filter
   isProjectVisible
 );
 
-/** Homepage / featured grid order. Keep tennis after Vend-A-Shoe. */
+/** Homepage featured order: lead with strongest robotics/systems work. */
 const FEATURED_SLUG_ORDER = [
-  "c-compiler",
-  "minitorch-ocaml",
-  "bloombot",
-  "saber",
   "vend-a-shoe",
+  "c-compiler",
+  "per-power-electronics",
   "tennis-ball-shooter",
+  "saber",
+  "bloombot",
+  "minitorch-ocaml",
   "drift-balancer",
 ] as const;
 

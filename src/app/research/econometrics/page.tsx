@@ -180,8 +180,7 @@ export default function Page() {
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
                 <li>
-                  Developed hands-on intuition for applying econometric reasoning
-                  to real-world labor data.
+                  Built practical intuition for applying econometric reasoning to labor-market data.
                 </li>
                 <li>
                   Extend analysis using panel data or advanced causal inference
