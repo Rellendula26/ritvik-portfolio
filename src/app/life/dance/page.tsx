@@ -142,9 +142,7 @@ export default function DancePage() {
               Dance
             </h1>
             <p className="mt-2 max-w-2xl text-base leading-relaxed text-zinc-600">
-              Competitive South Asian fusion with Penn Dhamaka during the school year, summer
-              training with Furteelay / D2G, plus the shorter clips I post when I am just messing
-              around. Different rooms. Same obsession with getting cleaner.
+              {`I dance with Penn Dhamaka during the school year. It's competitive South Asian fusion. Over the summer I train with Furteelay / D2G. I also post shorter clips when I'm just messing around. Different rooms. I'm still trying to get cleaner.`}
             </p>
           </div>
 
@@ -193,12 +191,42 @@ export default function DancePage() {
               Penn Dhamaka
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
-              Penn&apos;s all-male South Asian fusion team. Bollywood, Bhangra, hip-hop, late
-              practices, and a nationals run that ended with Dhamaka&apos;s first Desi Dance
-              Network title.
+              {`Penn's all-male South Asian fusion team. Bollywood, Bhangra, hip-hop, and late practices. In April 2026 we won Dhamaka's first Desi Dance Network title.`}
             </p>
           </div>
           <Badge>Competed</Badge>
+        </div>
+
+        <div className="mt-8 grid items-start gap-6 md:grid-cols-[240px_1fr]">
+          <div className="relative aspect-[9/16] w-full max-w-[240px] overflow-hidden rounded-3xl bg-black shadow-sm">
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src="https://www.youtube.com/embed/3XWLiLnrdSQ"
+              title="Penn Dhamaka at Diwali in Times Square"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              loading="lazy"
+            />
+          </div>
+          <div className="max-w-xl pt-1">
+            <p className="text-xs font-semibold tracking-[0.22em] text-zinc-500">
+              TIMES SQUARE
+            </p>
+            <h3 className="mt-2 text-lg font-semibold text-zinc-900">
+              Diwali at Times Square
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+              {`Here's a video from Times Square with Penn Dhamaka. Diwali at Times Square, October 24, 2026. It's a short, not the full set.`}
+            </p>
+            <a
+              href="https://www.youtube.com/shorts/3XWLiLnrdSQ"
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex text-sm font-medium text-amber-800 hover:underline"
+            >
+              Open on YouTube →
+            </a>
+          </div>
         </div>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3">
@@ -206,8 +234,7 @@ export default function DancePage() {
             <p className="text-xs font-semibold tracking-[0.22em] text-zinc-500">TEAM</p>
             <h3 className="mt-2 text-lg font-semibold text-zinc-900">Penn Dhamaka</h3>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-              Main competitive lane for me in college. Technique, staging, and surviving a long
-              circuit season together.
+              {`This is the team I compete with during the school year.`}
             </p>
           </div>
           <div className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm">
@@ -339,12 +366,10 @@ export default function DancePage() {
               WHY IT MATTERED
             </p>
             <h3 className="mt-2 text-xl font-semibold tracking-tight text-zinc-900">
-              Training without the scoreboard
+              Practice, not a score
             </h3>
             <p className="mt-3 text-sm leading-relaxed text-zinc-600">
-              Summer was less about medals and more about staying sharp between college seasons.
-              Furteelay / D2G gave me another standard to chase: cleaner footwork, tighter group
-              timing, and reps in a dedicated Bhangra academy environment.
+              {`Summer was practice. I wanted the footwork cleaner and the group timing tighter before the next college season.`}
             </p>
             <div className="mt-5 flex flex-wrap gap-2">
               <ActionLink
@@ -366,8 +391,7 @@ export default function DancePage() {
             TikTok · @ritcrazymovie
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
-            Separate from team seasons. This is where I post dance TikToks, freestyles, and shorter
-            form experiments.
+            {`Separate from the team. Shorter clips and freestyles, the stuff I post when I'm messing around.`}
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <a

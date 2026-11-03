@@ -16,23 +16,24 @@ const PARAGRAPHS: Segment[][] = [
   [
     { text: "I'm an electrical engineering student at Penn. I'm interested in " },
     { text: "embedded systems", accent: true },
-    { text: ", " },
-    { text: "electronics", accent: true },
-    { text: ", and " },
+    { text: " and " },
     { text: "robotics", accent: true },
     { text: ", especially " },
     { text: "medical and surgical robotics", accent: true },
+    { text: "." },
+  ],
+  [
     {
-      text: ". I like tracing a system from the circuit or the sensor through to what it physically does.",
+      text: "I like working through something difficult and gradually figuring it out. That's part of why I do endurance sports: stay patient when progress is slow. Engineering gives me that same feeling, and a chance to build something someone else can use.",
     },
   ],
   [
     {
-      text: "The pages here are ",
+      text: "I made this site to keep a record of the work, not just the finished version. The ",
     },
-    { text: "the builds", href: "/projects" },
+    { text: "projects", href: "/projects" },
     {
-      text: ", the roles, and the labs. Working through a hard problem is the part I like, particularly when someone can use the result. Endurance sports ask for the same kind of patience.",
+      text: " include the decisions and the setbacks.",
     },
   ],
 ];
@@ -151,7 +152,7 @@ export default function HomeHeroIntro({
       </h1>
 
       <div
-        className="mt-8 min-h-[8.5rem] space-y-5 text-lg leading-8 text-stone-700 md:min-h-[7.5rem]"
+        className="mt-8 min-h-[14rem] space-y-5 text-lg leading-8 text-stone-700 md:min-h-[12rem]"
         aria-busy={!bodyVisible}
       >
         {PARAGRAPHS.map((segments, paragraphIndex) => (

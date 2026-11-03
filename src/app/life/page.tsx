@@ -19,7 +19,7 @@ const LIFE: MediaCardItem[] = [
     eyebrow: "Dance",
     title: "Dance",
     blurb:
-      "Penn Dhamaka competitive fusion (2026 national champs), summer training with Furteelay / D2G, plus dance TikToks.",
+      "I dance with Penn Dhamaka during the school year, train with Furteelay / D2G in the summer, and post shorter clips when I'm messing around.",
     href: "/life/dance",
     tags: ["Penn Dhamaka", "D2G", "TikTok"],
     media: { kind: "image", src: "/life/atl.jpg", alt: "Penn Dhamaka" },
@@ -33,6 +33,15 @@ const LIFE: MediaCardItem[] = [
     href: "/life/edits",
     tags: ["YouTube", "HJA", "DaVinci Resolve"],
     media: { kind: "image", src: "/life/mich.jpg", alt: "Michigan vs Ohio State edit" },
+  },
+  {
+    id: "004",
+    eyebrow: "Endurance",
+    title: "Running and swimming",
+    blurb:
+      "Two half marathons: 2nd at Trenton in 1:19:59, then the Philly Love Run in 1:23:36. I also swam 2 miles in open water.",
+    href: "/life/endurance",
+    tags: ["Half marathon", "Open water"],
   },
 ];
 

@@ -129,7 +129,7 @@ export default function ProjectsPage() {
                 Projects
               </h1>
               <p className="mt-4 text-lg leading-relaxed text-stone-700">
-                This is my engineering notebook: what I built, why I built it, what broke, and how I debugged it.
+                Unfinished work is first: the Serpent arm and boards, the AddLab printer, the 360° imager, and the bionic arm. The finished builds include Vend-A-Shoe, the C compiler, and the lightsaber.
               </p>
             </header>
           </Reveal>

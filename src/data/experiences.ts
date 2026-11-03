@@ -525,17 +525,17 @@ export const EXPERIENCES: Experience[] = [
   },
   {
     slug: "stealth-startup",
-    org: "Delia AI Interviewer",
-    shortName: "Delia",
+    org: "Stealth Startup",
+    shortName: "Stealth Startup",
     role: "AI Engineering Intern",
     kind: "internship",
     track: "industry",
     dates: "Apr. 2026 – Jun. 2026",
-    location: "Remote · Penn Innovation Award Winner",
+    location: "Remote",
     oneLiner:
-      "I worked on Delia's interview avatar, mostly how long it took to start. Next.js, WebRTC, Pipecat, and Tavus. Startup went from 30 seconds to 7.",
+      "I worked on a live interview avatar, mostly how long it took to start. Next.js, WebRTC, Pipecat, and Tavus. Startup went from 30 seconds to 7.",
     overview:
-      "AI Engineering Intern at a stealth AI startup in Philadelphia (Penn Innovation Award Winner). The work focused on a live conversational avatar stack where startup latency and session reliability mattered in production. I profiled the critical path across Next.js, Pipecat Cloud, Daily WebRTC, Tavus, and LLM/TTS services, then redesigned session init so the avatar and first speech came up faster and more reliably.",
+      "AI engineering intern at a stealth startup. The product was a live conversational avatar. I profiled startup across Next.js, Pipecat Cloud, Daily WebRTC, Tavus, and the LLM and TTS services, then changed session init so the avatar and first speech came up faster.",
     highlights: [
       "Instrumented and profiled a latency-sensitive conversational AI pipeline spanning Next.js, Pipecat Cloud, Daily WebRTC, Tavus, and LLM/TTS services to isolate critical-path startup bottlenecks.",
       "Redesigned session initialization through asynchronous preconnection, connection-state synchronization, and WebRTC sequencing.",
@@ -550,7 +550,7 @@ export const EXPERIENCES: Experience[] = [
       "Latency",
     ],
     about: [
-      "Delia AI Interviewer is a conversational interview product.",
+      "A stealth startup. The product was a live conversational avatar.",
     ],
     roleParagraphs: [
       [
