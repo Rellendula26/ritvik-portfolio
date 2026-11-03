@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import CoverFrame from "@/components/media/CoverFrame";
 import ExperienceCard from "@/components/ExperienceCard";
 import HomeHero from "@/components/HomeHero";
 import ProjectCard from "@/components/ProjectCard";
 import { Reveal } from "@/components/motion/Reveal";
 import TechChip from "@/components/motion/TechChip";
+import { COURSES, courseHref } from "@/data/coursework";
 import { FEATURED_EXPERIENCES } from "@/data/experiences";
 import {
   FEATURED_PROJECTS,
+  MAJOR_PROJECTS,
   SUPPORTING_PROJECTS,
 } from "@/data/projects";
 
@@ -15,6 +18,25 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <HomeHero />
+
+      <section className="border-t border-stone-200/50 bg-[#faf6f0]">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
+          <Reveal>
+            <p className="text-sm font-medium text-amber-800">Current work</p>
+            <h2 className="text-display mt-2 text-3xl text-stone-950 md:text-4xl">
+              Serpent, GRASP, and ADAPT
+            </h2>
+            <p className="mt-2 max-w-xl text-base text-stone-600">
+              {`Serpent's arm and the logic and power boards have photos and notes. The bionic arm page has the September schematics. The AddLab printer page has the toolhead, the carousel clip, and the encoder drawing. The 360° imager page has the line-sensor bench and the flicker test. None of this work is finished.`}
+            </p>
+          </Reveal>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {MAJOR_PROJECTS.filter((project) => !project.featured).map((project, i) => (
+              <ProjectCard key={project.slug} project={project} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Featured projects: darkest band */}
       <section className="border-t border-stone-200/50 bg-[#f0e8dc]">
@@ -115,6 +137,60 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="border-t border-stone-200/50 bg-[#f7f1e8]">
+        <div className="mx-auto max-w-6xl px-6 py-16 md:px-8 md:py-20">
+          <Reveal>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-medium text-amber-800">Penn labs</p>
+                <h2 className="text-display mt-2 text-3xl text-stone-950 md:text-4xl">
+                  Coursework
+                </h2>
+                <p className="mt-2 max-w-2xl text-base leading-relaxed text-stone-600">
+                  Measured devices and the circuits around them. The numbers below are the ones in the lab reports.
+                </p>
+              </div>
+              <Link
+                href="/coursework"
+                className="btn-lift inline-flex items-center gap-1 text-sm font-medium text-amber-800 hover:text-amber-900"
+              >
+                All coursework
+                <ArrowRight className="btn-arrow h-4 w-4" />
+              </Link>
+            </div>
+          </Reveal>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {COURSES.map((course) => (
+              <Link
+                key={course.slug}
+                href={courseHref(course.slug)}
+                className="flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200/80 bg-white/80 shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+              >
+                {course.cover ? (
+                  <div className="p-3 pb-0">
+                    <CoverFrame media={course.cover} sizes="(max-width: 768px) 100vw, 50vw" className="rounded-xl" />
+                  </div>
+                ) : null}
+                <div className="flex flex-1 flex-col p-6">
+                <p className="text-sm font-medium text-amber-800">
+                  {course.code}
+                  {course.semester ? ` · ${course.semester}` : ""}
+                </p>
+                <h3 className="text-display mt-1 text-2xl text-stone-950">{course.title}</h3>
+                {course.highlights?.length ? (
+                  <ul className="mt-4 space-y-2 text-base leading-relaxed text-stone-700">
+                    {course.highlights.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : null}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Lightest band */}
       <section className="border-t border-stone-200/30 bg-[#fdfbf7]">
         <div className="mx-auto max-w-6xl px-6 py-20 pb-24 md:px-8">
@@ -124,7 +200,7 @@ export default function Home() {
                 What I&apos;m usually thinking about
               </p>
               <p className="text-display mt-4 max-w-3xl text-2xl leading-snug text-white md:text-3xl">
-                I like systems where code leaves the screen: queued commands, control loops, sensors, and physical mechanisms that have to work under real constraints.
+                I keep coming back to a command, a sensor, and a motor or a rail that has to do what the code asked.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {[

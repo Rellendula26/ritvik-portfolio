@@ -7,7 +7,7 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
   slug: "per-power-electronics",
   motivation: {
-    why: "I wanted to prove I could turn a written electrical requirement into a circuit that monitors sensor thresholds, makes a logic decision, and drives an indicator under real timing and automotive supply constraints.",
+    why: "Penn Electric Racing's recruiting problem asked for a circuit that watches two sensors, decides when both conditions are true, and lights an indicator inside a written time window. The supply is an automotive-style 12 V rail.",
     interest:
       "The interesting part was not drawing a schematic. It was deciding how threshold detection, logic, timing, and a 5 V rail from a noisy ~12 V vehicle supply should fit together without inventing convenience that the environment will punish.",
     learning:
@@ -94,7 +94,7 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       tradeoffs:
         "A tiny or cheap part can still heat the board, ring the rail, or couple noise into analog paths.",
       choice:
-        "Score candidates on system metrics first. Exact datasheet numbers remain TODO placeholders until filled from the sheets.",
+        "Score candidates on system metrics first. I have not copied exact datasheet numbers into this page.",
     },
     {
       id: "timing-requirement",
@@ -162,13 +162,13 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       },
       {
         title: "Measured response time",
-        body: "Exact measured value still needs to be filled from the simulation readout.",
-        evidence: "TODO · measured response",
+        body: "I have not written down a measured response time from the simulation readout.",
+        evidence: "No measured time recorded",
       },
       {
         title: "Requirement check",
-        body: "Pass/fail against the written response requirement is left as an explicit TODO so the page never invents a result.",
-        evidence: "TODO · pass/fail",
+        body: "I have not marked the revised timing pass or fail against the written window.",
+        evidence: "No pass or fail recorded",
       },
     ],
     media: [
@@ -445,7 +445,7 @@ export const PER_POWER_ELECTRONICS_CASE_STUDY: EngineeringCaseStudy = {
       {
         requirement: "5 V rail suitable for sensing/logic under automotive input",
         mechanism: "Buck regulation stage",
-        method: "Datasheet comparison + (TODO) rail simulation",
+        method: "Datasheet comparison. No rail simulation is recorded.",
         result: null,
       },
     ],

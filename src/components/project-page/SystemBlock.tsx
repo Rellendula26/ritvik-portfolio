@@ -26,7 +26,7 @@ export default function SystemBlock({
   return (
     <section
       id={section.id}
-      className="relative scroll-mt-28 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+      className="relative scroll-mt-40 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.10),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(253,186,116,0.08),transparent_24%)]" />
       <div

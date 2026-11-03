@@ -13,15 +13,46 @@ export default function MotivationSection({
 }) {
   const reduce = useReducedMotion();
 
+  if (content.narrative) {
+    return (
+      <section id="motivation" className="scroll-mt-36">
+        <SectionLabel>Context</SectionLabel>
+        <h2 className="text-display mt-3 text-3xl font-semibold tracking-tight text-zinc-950">
+          What this is for
+        </h2>
+        <div className="mt-4 max-w-3xl space-y-4 text-base leading-relaxed text-zinc-800">
+          {content.narrative.split("\n\n").map((paragraph) => (
+            <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+          ))}
+        </div>
+        {content.requirements && content.requirements.length > 0 ? (
+          <div className="mt-6 max-w-3xl">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.16em] text-amber-900">
+              Requirements
+            </h3>
+            <ul className="mt-3 space-y-2 text-base leading-relaxed text-zinc-800">
+              {content.requirements.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </section>
+    );
+  }
+
   return (
-    <section id="motivation" className="scroll-mt-28">
+    <section id="motivation" className="scroll-mt-36">
       <Reveal>
         <SectionLabel>Motivation</SectionLabel>
         <div className="mt-6 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)] md:p-8">
           <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
             Why I started this
           </h2>
-          <p className="mt-2 max-w-2xl text-sm text-zinc-500">
+          <p className="mt-2 max-w-2xl text-base text-zinc-500">
             What pulled me in, and what I wanted to get better at.
           </p>
 
@@ -45,9 +76,7 @@ export default function MotivationSection({
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-800">
                   {item.label}
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-zinc-700">
-                  {item.body}
-                </p>
+                <p className="mt-3 text-base leading-relaxed text-zinc-700">{item.body}</p>
               </motion.div>
             ))}
           </motion.div>

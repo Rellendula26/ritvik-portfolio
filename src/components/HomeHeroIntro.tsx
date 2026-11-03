@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Mail } from "lucide-react";
+import SocialLinks from "@/components/SocialLinks";
 
 type Segment = {
   text: string;
@@ -14,24 +14,25 @@ const HEADLINE = "Hey, I'm Ritvik!";
 
 const PARAGRAPHS: Segment[][] = [
   [
-    { text: "I study Electrical Engineering at Penn with a robotics focus. " },
-    { text: "Embedded systems", accent: true },
+    { text: "I'm an electrical engineering student at Penn. I'm interested in " },
+    { text: "embedded systems", accent: true },
     { text: ", " },
     { text: "electronics", accent: true },
     { text: ", and " },
-    { text: "hardware-software integration", accent: true },
-    { text: " are where I spend most of my time." },
-  ],
-  [
+    { text: "robotics", accent: true },
+    { text: ", especially " },
+    { text: "medical and surgical robotics", accent: true },
     {
-      text: "I like building systems from the bottom up: power rails, control logic, sensing, firmware, and the cloud path when needed. If something breaks, I want to know exactly which layer failed and why. Long term, I want to keep pushing toward medical and surgical robotics.",
+      text: ". I like tracing a system from the circuit or the sensor through to what it physically does.",
     },
   ],
   [
-    { text: "I am especially interested in robotics and medical devices because software eventually has to move something physical. If you want the technical details, " },
-    { text: "my projects", href: "/projects" },
     {
-      text: " are where I document architecture decisions, debugging loops, and what changed between v1 and what actually shipped.",
+      text: "The pages here are ",
+    },
+    { text: "the builds", href: "/projects" },
+    {
+      text: ", the roles, and the labs. Working through a hard problem is the part I like, particularly when someone can use the result. Endurance sports ask for the same kind of patience.",
     },
   ],
 ];
@@ -150,7 +151,7 @@ export default function HomeHeroIntro({
       </h1>
 
       <div
-        className="mt-8 min-h-[12.5rem] space-y-5 text-lg leading-8 text-stone-700 md:min-h-[13.5rem]"
+        className="mt-8 min-h-[8.5rem] space-y-5 text-lg leading-8 text-stone-700 md:min-h-[7.5rem]"
         aria-busy={!bodyVisible}
       >
         {PARAGRAPHS.map((segments, paragraphIndex) => (
@@ -171,24 +172,16 @@ export default function HomeHeroIntro({
         ))}
       </div>
 
-      <a
-        href="mailto:rellen26@seas.upenn.edu"
-        data-cursor
+      <div
         className={[
-          "btn-lift mt-10 inline-flex items-center gap-2 text-base font-medium text-amber-800 hover:text-amber-900 lg:mt-12",
+          "mt-10 lg:mt-12",
           bodyVisible ? "opacity-100 translate-y-0" : "pointer-events-none opacity-0 translate-y-2",
-          "duration-700 ease-out",
+          "transition-[opacity,transform] duration-700 ease-out",
         ].join(" ")}
         style={{ transitionDelay: bodyVisible ? "520ms" : "0ms" }}
       >
-        <Mail className="h-5 w-5 shrink-0" />
-        <span>
-          Let&apos;s connect:{" "}
-          <span className="underline decoration-amber-300/80 underline-offset-4">
-            rellen26@seas.upenn.edu
-          </span>
-        </span>
-      </a>
+        <SocialLinks />
+      </div>
     </div>
   );
 }

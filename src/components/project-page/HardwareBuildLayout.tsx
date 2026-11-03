@@ -124,7 +124,7 @@ export default function HardwareBuildLayout({ config }: { config: HardwareBuildC
         </div>
       </header>
 
-      <section id="ideas" className="mt-14 scroll-mt-28">
+      <section id="ideas" className="mt-14 scroll-mt-40">
         <SectionLabel>Original ideas</SectionLabel>
         <h2 className="text-display mt-3 text-3xl font-semibold text-zinc-950 md:text-4xl">
           Where the build started
@@ -162,7 +162,7 @@ export default function HardwareBuildLayout({ config }: { config: HardwareBuildC
         </div>
       </section>
 
-      <section id="skills" className="mt-14 scroll-mt-28">
+      <section id="skills" className="mt-14 scroll-mt-40">
         <SectionLabel>Major skills</SectionLabel>
         <h2 className="text-display mt-3 text-3xl font-semibold text-zinc-950 md:text-4xl">
           What the build required
@@ -202,7 +202,7 @@ export default function HardwareBuildLayout({ config }: { config: HardwareBuildC
         </div>
       </section>
 
-      <section id="final" className="mt-14 scroll-mt-28">
+      <section id="final" className="mt-14 scroll-mt-40">
         <SectionLabel>Final product</SectionLabel>
         <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_1.05fr] lg:items-start">
           <div>
@@ -246,7 +246,7 @@ export default function HardwareBuildLayout({ config }: { config: HardwareBuildC
       </section>
 
       {config.gallery && config.gallery.length > 0 && (
-        <section id="gallery" className="mt-16 scroll-mt-28">
+        <section id="gallery" className="mt-16 scroll-mt-40">
           <SectionLabel>Gallery</SectionLabel>
           <div className="mt-6 grid gap-5 md:grid-cols-2">
             {config.gallery.map((item, index) => {

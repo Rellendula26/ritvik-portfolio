@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -10,7 +9,7 @@ import {
   experienceHref,
   type Experience,
 } from "@/data/experiences";
-import LazyVideo from "@/components/LazyVideo";
+import CoverFrame from "@/components/media/CoverFrame";
 import {
   revealReduced,
   revealVariants,
@@ -19,34 +18,6 @@ import {
 
 function cx(...classes: Array<string | false | undefined>) {
   return classes.filter(Boolean).join(" ");
-}
-
-function CoverMedia({ experience }: { experience: Experience }) {
-  const { cover } = experience;
-
-  if (cover.kind === "video") {
-    return (
-      <LazyVideo
-        src={cover.src}
-        poster={cover.poster}
-        className="img-zoom absolute inset-0 h-full w-full object-cover object-center"
-        playOnHover
-      />
-    );
-  }
-
-  const isSvg = cover.src.endsWith(".svg");
-
-  return (
-    <Image
-      src={cover.src}
-      alt={cover.alt}
-      fill
-      unoptimized={isSvg}
-      sizes="(max-width: 768px) 100vw, 42vw"
-      className="img-zoom object-cover object-center"
-    />
-  );
 }
 
 export default function ExperienceCard({
@@ -88,8 +59,8 @@ export default function ExperienceCard({
         className={cx(
           "group relative grid cursor-pointer overflow-hidden rounded-2xl border border-stone-200/80 bg-white/85",
           "shadow-sm transition-[transform,box-shadow,border-color] duration-300 ease-out",
-          "motion-safe:hover:-translate-y-1 hover:border-amber-300/90 hover:shadow-lg",
-          "md:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)]"
+          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700",
+          "md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)]"
         )}
       >
         <span
@@ -97,24 +68,21 @@ export default function ExperienceCard({
           className="pointer-events-none absolute inset-y-0 left-0 w-[3px] origin-top scale-y-0 bg-amber-700 transition-transform duration-500 ease-out group-hover:scale-y-100"
         />
 
-        <div className="relative aspect-[16/10] overflow-hidden bg-stone-900 md:aspect-auto md:min-h-[220px]">
-          <CoverMedia experience={experience} />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-stone-950/45 via-transparent to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-white/10" />
-          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-            <span className="rounded-sm bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-800 backdrop-blur">
-              {kindLabel}
-            </span>
-            <span className="rounded-sm bg-amber-50/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-950 backdrop-blur">
-              {experience.track === "club" ? "Club" : "Org"}
-            </span>
-            <span className="rounded-sm bg-stone-950/70 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-100 backdrop-blur">
-              {experience.dates}
-            </span>
-          </div>
+        <div className="p-3 md:p-4">
+          <CoverFrame
+            media={experience.cover}
+            sizes="(max-width: 768px) 100vw, 40vw"
+            className="rounded-xl"
+          />
         </div>
 
         <div className="flex flex-col justify-center px-5 py-6 md:px-8 md:py-8">
           <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-800">
+            {kindLabel}
+            <span className="text-stone-300"> · </span>
+            <span className="text-stone-500">{experience.dates}</span>
+          </p>
+          <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-500">
             {trackLabel}
             {experience.location ? ` · ${experience.location}` : ""}
           </p>
@@ -129,7 +97,7 @@ export default function ExperienceCard({
           </p>
 
           <div className="mt-6 flex items-center gap-2 text-sm font-medium text-amber-800 transition-colors group-hover:text-amber-950">
-            Read role
+            Open this role
             <ArrowRight className="btn-arrow h-4 w-4" />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { SectionLabel } from "@/components/project-page/shared";
 import CaseStudyMediaFrame from "@/components/project-page/case-study/CaseStudyMediaFrame";
+import FlowDiagram from "@/components/project-page/case-study/FlowDiagram";
 import type { SystemOverviewContent } from "@/data/engineering-case-study";
 
 export default function SystemOverviewSection({
@@ -8,7 +9,7 @@ export default function SystemOverviewSection({
   content: SystemOverviewContent;
 }) {
   return (
-    <section id="system-overview" className="scroll-mt-28">
+    <section id="system-overview" className="scroll-mt-36">
       <SectionLabel>System Overview</SectionLabel>
       <div className="relative mt-6 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.08),transparent_28%)]" />
@@ -17,7 +18,7 @@ export default function SystemOverviewSection({
             <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
               How the system fits together
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-zinc-700">{content.summary}</p>
+            <p className="mt-4 text-base leading-relaxed text-zinc-800">{content.summary}</p>
 
             <div className="mt-7 space-y-3">
               {content.subsystems.map((subsystem, index) => (
@@ -30,7 +31,7 @@ export default function SystemOverviewSection({
                   </span>
                   <div>
                     <p className="text-sm font-semibold text-zinc-900">{subsystem.name}</p>
-                    <p className="mt-1 text-sm leading-relaxed text-zinc-600">
+                    <p className="mt-1 text-base leading-relaxed text-zinc-700">
                       {subsystem.role}
                     </p>
                   </div>
@@ -45,7 +46,7 @@ export default function SystemOverviewSection({
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-900">
                       Data flow
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-amber-950/90">
+                    <p className="mt-2 text-base leading-relaxed text-amber-950/90">
                       {content.dataFlow}
                     </p>
                   </div>
@@ -55,7 +56,7 @@ export default function SystemOverviewSection({
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
                       Control flow
                     </p>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-700">
+                    <p className="mt-2 text-base leading-relaxed text-zinc-700">
                       {content.controlFlow}
                     </p>
                   </div>
@@ -73,6 +74,16 @@ export default function SystemOverviewSection({
             </div>
           )}
         </div>
+        {(content.signalPath?.length || content.powerPath?.length) && (
+          <div className="relative space-y-6 border-t border-zinc-200 px-6 py-6 md:px-8">
+            {content.signalPath?.length ? (
+              <FlowDiagram title="Signal path" steps={content.signalPath} />
+            ) : null}
+            {content.powerPath?.length ? (
+              <FlowDiagram title="Power path" steps={content.powerPath} />
+            ) : null}
+          </div>
+        )}
       </div>
     </section>
   );

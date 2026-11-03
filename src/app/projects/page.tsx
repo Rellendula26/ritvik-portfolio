@@ -5,6 +5,7 @@ import ProjectCard from "@/components/ProjectCard";
 import { Reveal } from "@/components/motion/Reveal";
 import {
   FEATURED_PROJECTS,
+  MAJOR_PROJECTS,
   SUPPORTING_PROJECTS,
   ARCHIVE_PROJECTS,
   type Project,
@@ -110,6 +111,10 @@ function useFiltered(list: Project[], filter: "all" | ProjectCategory) {
 export default function ProjectsPage() {
   const [filter, setFilter] = useState<"all" | ProjectCategory>("all");
 
+  const current = useFiltered(
+    MAJOR_PROJECTS.filter((project) => !project.featured),
+    filter
+  );
   const featured = useFiltered(FEATURED_PROJECTS, filter);
   const supporting = useFiltered(SUPPORTING_PROJECTS, filter);
   const archive = useFiltered(ARCHIVE_PROJECTS, filter);
@@ -143,6 +148,12 @@ export default function ProjectsPage() {
         </div>
       </section>
 
+      <TierBand
+        title="Current work"
+        subtitle="Serpent, GRASP, and ADAPT. The Serpent pages, the bionic arm, the AddLab printer, and the 360° imager have notes. The work is ongoing."
+        projects={current}
+        shade="header"
+      />
       <TierBand
         title="Featured engineering work"
         subtitle="Physical systems first: robotics, embedded control, electronics, and low-level systems."

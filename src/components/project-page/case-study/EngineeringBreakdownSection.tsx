@@ -10,16 +10,21 @@ function DisciplineBlock({
   index: number;
 }) {
   const reverse = index % 2 === 1;
+  const hasMedia = Boolean(discipline.media);
 
   return (
     <article
       id={discipline.id}
-      className="relative scroll-mt-28 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+      className="relative scroll-mt-36 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.08),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(253,186,116,0.06),transparent_24%)]" />
       <div
-        className={`relative grid gap-6 p-5 md:p-7 lg:grid-cols-[1.05fr_0.95fr] ${
-          reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""
+        className={`relative grid gap-6 p-5 md:p-7 ${
+          hasMedia
+            ? `lg:grid-cols-[1.05fr_0.95fr] ${
+                reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""
+              }`
+            : ""
         }`}
       >
         <div>
@@ -41,14 +46,14 @@ function DisciplineBlock({
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
                 Goal
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-700">{discipline.goal}</p>
+              <p className="mt-2 text-base leading-relaxed text-zinc-700">{discipline.goal}</p>
             </div>
 
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
                 Design
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-700">{discipline.design}</p>
+              <p className="mt-2 text-base leading-relaxed text-zinc-700">{discipline.design}</p>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -56,7 +61,7 @@ function DisciplineBlock({
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
                   Challenges
                 </p>
-                <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-zinc-700">
+                <ul className="mt-3 space-y-2.5 text-base leading-relaxed text-zinc-700">
                   {discipline.challenges.map((item) => (
                     <li key={item} className="flex gap-3">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
@@ -70,7 +75,7 @@ function DisciplineBlock({
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
                   Iterations
                 </p>
-                <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-zinc-700">
+                <ul className="mt-3 space-y-2.5 text-base leading-relaxed text-zinc-700">
                   {discipline.iterations.map((item) => (
                     <li key={item} className="flex gap-3">
                       <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-400" />
@@ -85,7 +90,7 @@ function DisciplineBlock({
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-amber-900">
                 Final implementation
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-amber-950/90">
+              <p className="mt-2 text-base leading-relaxed text-amber-950/90">
                 {discipline.finalImplementation}
               </p>
             </div>
@@ -96,7 +101,7 @@ function DisciplineBlock({
           <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
             {(() => {
               const items = Array.isArray(discipline.media)
-                ? discipline.media.slice(0, 2)
+                ? discipline.media.slice(0, 3)
                 : [discipline.media];
               return (
                 <div
@@ -117,9 +122,7 @@ function DisciplineBlock({
               );
             })()}
           </div>
-        ) : (
-          <div className="hidden lg:block" />
-        )}
+        ) : null}
       </div>
     </article>
   );
@@ -133,15 +136,14 @@ export default function EngineeringBreakdownSection({
   if (disciplines.length === 0) return null;
 
   return (
-    <section id="engineering-breakdown" className="scroll-mt-28">
+    <section id="engineering-breakdown" className="scroll-mt-40">
       <SectionLabel>Engineering Breakdown</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
           Broken down by discipline
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          Each block covers the goal, the design, what broke, what changed, and what
-          shipped.
+        <p className="mt-2 text-base leading-relaxed text-zinc-600">
+          Each block is the requirement, how that part works, what I checked, and what is still open.
         </p>
       </div>
 

@@ -16,7 +16,7 @@ export default function CaseStudyMediaFrame({
   const frameClass =
     className ??
     (media.portrait
-      ? "mx-auto aspect-[9/16] max-h-[420px] w-full max-w-[240px] md:max-h-[480px] md:max-w-[280px]"
+      ? "mx-auto aspect-[9/16] max-h-[560px] w-full max-w-[320px] md:max-w-[380px]"
       : "aspect-video w-full");
 
   return (
@@ -26,8 +26,9 @@ export default function CaseStudyMediaFrame({
       </div>
       <div
         className={[
-          "relative bg-[#070707]",
-          media.portrait ? "flex items-center justify-center px-4 py-4" : "",
+          "relative",
+          media.kind === "image" ? "bg-[#f7f1e8]" : "bg-[#1c1917]",
+          media.portrait ? "flex items-center justify-center px-3 py-3" : "",
         ].join(" ")}
       >
         <div className={`relative overflow-hidden ${frameClass}`}>
@@ -42,7 +43,9 @@ export default function CaseStudyMediaFrame({
             ) : (
               <video
                 src={media.src}
-                className="h-full w-full object-contain object-center"
+                className={`h-full w-full object-center ${
+                  media.fit === "cover" ? "object-cover" : "object-contain"
+                }`}
                 controls
                 playsInline
                 preload="metadata"
@@ -55,13 +58,15 @@ export default function CaseStudyMediaFrame({
               src={media.src}
               alt={media.alt}
               sizes="(max-width: 768px) 100vw, 720px"
-              className="img-zoom object-contain object-center p-2"
+              className={`img-zoom object-center ${
+                media.fit === "cover" ? "object-cover" : "object-contain p-2"
+              }`}
             />
           )}
         </div>
       </div>
       {media.caption && (
-        <p className="border-t border-zinc-200 bg-white px-4 py-3 text-xs leading-relaxed text-zinc-600">
+        <p className="border-t border-zinc-200 bg-white px-4 py-3 text-base leading-relaxed text-zinc-700">
           {media.caption}
         </p>
       )}

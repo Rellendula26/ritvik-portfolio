@@ -11,7 +11,6 @@ import DesignDecisionsSection from "@/components/project-page/case-study/DesignD
 import EvolutionSection from "@/components/project-page/case-study/EvolutionSection";
 import ResultsValidationSection from "@/components/project-page/case-study/ResultsValidationSection";
 import ReflectionSection from "@/components/project-page/case-study/ReflectionSection";
-import FloatingEngineeringNotes from "@/components/project-page/case-study/FloatingEngineeringNotes";
 import {
   EngineeringTimelineSection,
   ExecutiveAssessmentSection,
@@ -21,13 +20,17 @@ import {
   Version2PlanSection,
 } from "@/components/project-page/case-study/RetrospectiveExtrasSection";
 import DesignChallengeExtrasSection from "@/components/project-page/case-study/DesignChallengeExtrasSection";
+import ContributionSection from "@/components/project-page/case-study/ContributionSection";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
+import { getExperience } from "@/data/experiences";
+import Link from "next/link";
 
 function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
   const items = [
     { id: "motivation", label: "Motivation" },
     { id: "system-overview", label: "System" },
+    caseStudy.contribution ? { id: "contribution", label: "My part" } : null,
     caseStudy.designChallenge
       ? { id: "design-challenge", label: "Deep dive" }
       : null,
@@ -57,6 +60,24 @@ function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
   return items.filter((item): item is { id: string; label: string } => item !== null);
 }
 
+function ExperienceLink({ slug }: { slug?: string }) {
+  if (!slug) return null;
+  const experience = getExperience(slug);
+  if (!experience) return null;
+  return (
+    <p className="mt-4 text-sm text-stone-600">
+      Part of{" "}
+      <Link
+        href={`/experiences/${experience.slug}`}
+        className="font-medium text-amber-800 underline decoration-amber-300/80 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+      >
+        {experience.org}
+      </Link>
+      , {experience.role}.
+    </p>
+  );
+}
+
 /**
  * Canonical engineering case-study layout.
  *
@@ -74,22 +95,18 @@ export default function EngineeringCaseStudyLayout({
 
   return (
     <ProjectPageShell>
-      <FloatingEngineeringNotes notes={caseStudy.engineeringNotes} />
-
       <BackToProjects />
       <ProjectHero project={project} />
-
-      <div className="mt-4 rounded-[1.5rem] border border-orange-200/70 bg-orange-50/50 px-4 py-3 text-sm text-orange-950/90">
-        <span className="font-semibold">Full write-up below.</span>{" "}
-        The hero is the short version. This is the build story: what I designed, what
-        broke, and why I made the calls I did.
-      </div>
+      <ExperienceLink slug={project.experienceSlug} />
 
       <AnchorNav items={nav} />
 
-      <div className="mt-14 space-y-16 md:space-y-20">
+      <div className="mt-10 space-y-12 md:space-y-14">
         <MotivationSection content={caseStudy.motivation} />
         <SystemOverviewSection content={caseStudy.systemOverview} />
+        {caseStudy.contribution ? (
+          <ContributionSection content={caseStudy.contribution} />
+        ) : null}
         {caseStudy.designChallenge ? (
           <DesignChallengeExtrasSection content={caseStudy.designChallenge} />
         ) : null}

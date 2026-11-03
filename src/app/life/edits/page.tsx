@@ -85,7 +85,7 @@ function Section({
   id?: string;
 }) {
   return (
-    <section id={id} className="mx-auto w-full max-w-6xl scroll-mt-24 px-5 py-10">
+    <section id={id} className="mx-auto w-full max-w-6xl scroll-mt-40 px-5 py-10">
       <div className="mb-6">
         {eyebrow ? (
           <div className="mb-2 text-xs font-semibold tracking-[0.25em] text-black/50">

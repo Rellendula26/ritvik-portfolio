@@ -632,7 +632,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
         src: "/projects/vend-a-shoe/coverCAD.jpg",
         alt: "Enclosure CAD cover view",
         label: "Enclosure cover",
-        caption: "CAD that matches what shipped.",
+        caption: "CAD of the enclosure, matched to the unit I built.",
       },
       {
         kind: "image",

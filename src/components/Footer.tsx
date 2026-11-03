@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Github, Linkedin, Mail } from "lucide-react";
+import SocialLinks from "@/components/SocialLinks";
 
 export default function Footer() {
   return (
@@ -14,33 +13,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Link
-              href="https://www.linkedin.com/in/ritvik-ellendula-a74b67226/"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="LinkedIn"
-              className="btn-lift flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-700"
-            >
-              <Linkedin className="h-4 w-4" />
-            </Link>
-            <Link
-              href="https://github.com/Rellendula26"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub"
-              className="btn-lift flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-700"
-            >
-              <Github className="h-4 w-4" />
-            </Link>
-            <Link
-              href="mailto:rellen26@seas.upenn.edu"
-              aria-label="Email"
-              className="btn-lift flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 text-zinc-500 hover:border-amber-400 hover:text-amber-700"
-            >
-              <Mail className="h-4 w-4" />
-            </Link>
-          </div>
+          <SocialLinks />
         </div>
 
         <p className="mt-10 text-center text-xs text-zinc-400">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 
 function isSvg(src: string) {
@@ -23,6 +24,7 @@ export default function ProjectMediaImage({
   sizes = "(max-width: 768px) 100vw, 520px",
   priority = false,
   fill = true,
+  expandable = false,
 }: {
   src: string;
   alt: string;
@@ -30,36 +32,31 @@ export default function ProjectMediaImage({
   sizes?: string;
   priority?: boolean;
   fill?: boolean;
+  /** Opens the image uncropped. Use for schematics and plots. */
+  expandable?: boolean;
 }) {
   // Track which src failed so a src change clears the error without an effect.
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
   const failed = failedSrc === src;
 
-  if (failed) {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center bg-[#111] px-4 text-center">
-        <p className="text-xs text-stone-400">
-          Missing media: <span className="font-mono text-stone-300">{src}</span>
-        </p>
-      </div>
-    );
+  if (failed || !src) {
+    return null;
   }
 
+  let image;
   if (preferNativeImg(src)) {
-    if (fill) {
-      return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={src}
-          alt={alt}
-          className={`absolute inset-0 h-full w-full ${className}`}
-          loading={priority ? "eager" : "lazy"}
-          decoding="async"
-          onError={() => setFailedSrc(src)}
-        />
-      );
-    }
-    return (
+    image = fill ? (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt={alt}
+        className={`absolute inset-0 h-full w-full ${className}`}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        onError={() => setFailedSrc(src)}
+      />
+    ) : (
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={src}
@@ -70,10 +67,8 @@ export default function ProjectMediaImage({
         onError={() => setFailedSrc(src)}
       />
     );
-  }
-
-  if (fill) {
-    return (
+  } else if (fill) {
+    image = (
       <Image
         src={src}
         alt={alt}
@@ -84,18 +79,57 @@ export default function ProjectMediaImage({
         onError={() => setFailedSrc(src)}
       />
     );
+  } else {
+    image = (
+      <Image
+        src={src}
+        alt={alt}
+        width={1200}
+        height={800}
+        className={className}
+        sizes={sizes}
+        priority={priority}
+        onError={() => setFailedSrc(src)}
+      />
+    );
   }
 
+  if (!expandable) return image;
+
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={1200}
-      height={800}
-      className={className}
-      sizes={sizes}
-      priority={priority}
-      onError={() => setFailedSrc(src)}
-    />
+    <>
+      {image}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="absolute bottom-3 right-3 z-10 rounded-full border border-stone-200 bg-white/95 px-3 py-1 text-xs font-medium text-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+      >
+        Enlarge
+      </button>
+      {open
+        ? createPortal(
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={alt}
+              className="fixed inset-0 z-[80] flex items-center justify-center bg-stone-950/80 p-4"
+            >
+              <button
+                type="button"
+                aria-label="Close enlarged image"
+                className="absolute inset-0"
+                onClick={() => setOpen(false)}
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={alt}
+                className="relative max-h-[90vh] max-w-[92vw] object-contain"
+              />
+            </div>,
+            document.body
+          )
+        : null}
+    </>
   );
 }

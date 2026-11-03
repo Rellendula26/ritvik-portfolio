@@ -16,7 +16,7 @@ export const BLOOMBOT_CASE_STUDY: EngineeringCaseStudy = {
   },
   systemOverview: {
     summary:
-      "BloomBot is an Arduino UNO R4 WiFi flower for remote check-ins. Walk close and ultrasonics trigger servos to open the bloom. Send a message over Blynk and an LED heart inside blinks that text in Morse. LCD status keeps the interaction readable. The application is connection at a distance. The engineering is keeping those loops honest together.",
+      "BloomBot is an Arduino UNO R4 WiFi flower for remote check-ins. Walk close and an ultrasonic sensor drives servos that open the bloom. A Blynk message blinks out in Morse on an LED heart. An LCD shows state when I don't have a laptop on the floor. WiFi, the sensor, and the servos share one board, and the servo peaks can brown the rail out.",
     subsystems: [
       {
         name: "Wireless control plane",

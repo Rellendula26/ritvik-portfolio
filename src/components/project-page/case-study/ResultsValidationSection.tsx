@@ -17,14 +17,14 @@ export default function ResultsValidationSection({
   const reduce = useReducedMotion();
 
   return (
-    <section id="results" className="scroll-mt-28">
+    <section id="results" className="scroll-mt-40">
       <Reveal>
         <SectionLabel>Results & Validation</SectionLabel>
         <div className="mt-3 max-w-2xl">
           <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
             What held up
           </h2>
-          <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+          <p className="mt-2 text-base leading-relaxed text-zinc-600">
             What worked in the end, what I can show for it, and where it&apos;s still limited.
           </p>
         </div>
@@ -63,7 +63,7 @@ export default function ResultsValidationSection({
                   </span>
                 ))}
             </div>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-700">{item.body}</p>
+            <p className="mt-3 text-base leading-relaxed text-zinc-700">{item.body}</p>
           </motion.article>
         ))}
       </motion.div>
@@ -99,7 +99,7 @@ export default function ResultsValidationSection({
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
               Limitations
             </p>
-            <ul className="mt-4 space-y-2.5 text-sm leading-relaxed text-zinc-700">
+            <ul className="mt-4 space-y-2.5 text-base leading-relaxed text-zinc-700">
               {content.limitations.map((item) => (
                 <li key={item} className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-500" />
