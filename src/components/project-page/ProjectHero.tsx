@@ -31,11 +31,14 @@ function renderMedia(media: ProjectMedia, priority = false) {
     );
   }
 
+  const contain = media.fit === "contain" || media.mediaType === "diagram";
   return (
     <ProjectMediaImage
       src={media.src}
       alt={media.alt}
       priority={priority}
+      expandable={contain}
+      className={contain ? "object-contain object-center bg-white" : "object-cover object-center"}
       sizes="(max-width: 768px) 100vw, 800px"
     />
   );
@@ -45,13 +48,29 @@ function renderMedia(media: ProjectMedia, priority = false) {
  * Executive Summary hero — keep visually identical to the existing project page hero.
  * Optimized for a 30–60s skim: title, motivation, media, metadata, stack, CTAs.
  */
+function isPlaceholder(src: string | undefined) {
+  return !src || src.includes("placeholder-media");
+}
+
 export default function ProjectHero({ project }: { project: Project }) {
   const hero = pickProjectPrimaryMedia(project);
+  const heroSrc = hero && "src" in hero ? hero.src : undefined;
+  const showMedia =
+    hero?.kind === "visual" ||
+    (hero && !isPlaceholder(heroSrc)) ||
+    (!hero && !isPlaceholder(project.thumbnail));
 
   return (
     <header className="relative overflow-hidden rounded-[2.25rem] border border-zinc-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.07)]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(251,146,60,0.12),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(253,186,116,0.10),transparent_28%)]" />
-      <div className="relative grid grid-cols-1 gap-8 px-6 py-10 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:items-start lg:gap-10 lg:px-8">
+      <div
+        className={[
+          "relative grid grid-cols-1 gap-8 px-6 py-10 lg:items-start lg:gap-10 lg:px-8",
+          showMedia
+            ? "lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)]"
+            : "",
+        ].join(" ")}
+      >
         <div className="min-w-0">
           <div className="flex flex-wrap gap-2">
             <ProjectBadge>{CATEGORY_LABELS[project.category]}</ProjectBadge>
@@ -66,7 +85,7 @@ export default function ProjectHero({ project }: { project: Project }) {
           <p className="mt-4 max-w-2xl font-medium leading-snug tracking-tight text-zinc-800 md:text-xl">
             {project.oneLine}
           </p>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-zinc-600">
+          <p className="mt-3 max-w-2xl text-base leading-relaxed text-zinc-700 md:text-[17px] md:leading-7">
             {project.overview}
           </p>
 
@@ -79,7 +98,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                 {project.keyHighlights.slice(0, 3).map((item) => (
                   <li
                     key={item}
-                    className="flex gap-2.5 text-sm leading-snug text-zinc-700"
+                    className="flex gap-2.5 text-base leading-snug text-zinc-800"
                   >
                     <span
                       aria-hidden
@@ -108,15 +127,21 @@ export default function ProjectHero({ project }: { project: Project }) {
                       value: project.techStack.slice(0, 2).join(", "),
                     },
               ] as Array<{ label: string; value: string }>
-            ).map((item) => (
+            )
+              .filter(
+                (item) =>
+                  item.value &&
+                  !(project.writeUp === "coming-soon" && item.label === "Build stage")
+              )
+              .map((item) => (
               <div
                 key={item.label}
                 className="min-w-0 rounded-xl border border-zinc-200 bg-zinc-50/90 px-2.5 py-2"
               >
-                <dt className="text-[9px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
                   {item.label}
                 </dt>
-                <dd className="mt-0.5 text-[11px] font-medium leading-snug text-zinc-900">
+                <dd className="mt-0.5 text-sm font-medium leading-snug text-zinc-900">
                   {item.value}
                 </dd>
               </div>
@@ -167,12 +192,19 @@ export default function ProjectHero({ project }: { project: Project }) {
           </div>
         </div>
 
+        {showMedia ? (
         <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-[#070707] shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
             <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
               {hero?.label ?? "Project preview"}
             </div>
-            <div className="relative aspect-video w-full bg-[#070707]">
+            <div
+              className={
+                hero?.kind === "video" && hero.portrait
+                  ? "relative mx-auto aspect-[9/16] max-h-[560px] w-full max-w-[320px] bg-[#1c1917]"
+                  : "relative aspect-video w-full bg-[#070707]"
+              }
+            >
               {hero ? (
                 renderMedia(hero, true)
               ) : (
@@ -189,7 +221,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                 ("description" in hero && hero.description)) && (
                 <div className="border-t border-zinc-200 bg-white px-4 py-3">
                   {"caption" in hero && hero.caption && (
-                    <p className="text-xs text-zinc-700">{hero.caption}</p>
+                    <p className="text-sm leading-relaxed text-zinc-700">{hero.caption}</p>
                   )}
                   {"description" in hero && hero.description && (
                     <p className="mt-1 text-xs leading-relaxed text-zinc-500">
@@ -200,6 +232,7 @@ export default function ProjectHero({ project }: { project: Project }) {
               )}
           </div>
         </div>
+        ) : null}
       </div>
     </header>
   );

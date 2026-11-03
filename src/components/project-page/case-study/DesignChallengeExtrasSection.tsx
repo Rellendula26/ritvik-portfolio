@@ -5,7 +5,7 @@ import { SectionLabel } from "@/components/project-page/shared";
 import CaseStudyMediaFrame from "@/components/project-page/case-study/CaseStudyMediaFrame";
 import type { DesignChallengeExtras } from "@/data/engineering-case-study";
 
-function TodoChip({ label = "TODO" }: { label?: string }) {
+function TodoChip({ label = "Not recorded" }: { label?: string }) {
   return (
     <span className="inline-flex items-center rounded-full border border-dashed border-amber-400/80 bg-amber-50 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-amber-900">
       {label}
@@ -70,7 +70,7 @@ function ArchitectureBlocks({
         {title ?? "Circuit architecture"}
       </h3>
       {intro ? (
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-600">{intro}</p>
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-600">{intro}</p>
       ) : null}
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {blocks.map((block) => (
@@ -84,7 +84,7 @@ function ArchitectureBlocks({
             <p className="mt-2 text-base font-semibold leading-snug text-zinc-950">
               {block.question}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-600">{block.body}</p>
+            <p className="mt-2 text-base leading-relaxed text-zinc-600">{block.body}</p>
           </article>
         ))}
       </div>
@@ -108,7 +108,7 @@ function DatasheetComparison({
           <span className="text-zinc-400">vs</span> {comparison.partB}
         </h3>
         <p className="mt-2 text-sm text-zinc-600">
-          Exact numbers left as placeholders until datasheet values are filled in.
+          These cells are blank on purpose. I have not copied a number from the datasheet into this table.
         </p>
       </div>
 
@@ -128,10 +128,10 @@ function DatasheetComparison({
               <tr key={metric.id} className="border-b border-zinc-100 align-top">
                 <td className="px-7 py-4 font-semibold text-zinc-900">{metric.label}</td>
                 <td className="px-4 py-4 text-zinc-700">
-                  {metric.valueA ?? <TodoChip label="TODO · datasheet" />}
+                  {metric.valueA ?? <TodoChip label="Not from the sheet" />}
                 </td>
                 <td className="px-4 py-4 text-zinc-700">
-                  {metric.valueB ?? <TodoChip label="TODO · datasheet" />}
+                  {metric.valueB ?? <TodoChip label="Not from the sheet" />}
                 </td>
                 <td className="px-7 py-4 text-zinc-600">{metric.whyItMatters}</td>
               </tr>
@@ -208,7 +208,7 @@ function EmiSection({
             </p>
           </div>
         </div>
-        <div className="space-y-4 text-sm leading-relaxed text-zinc-700">
+        <div className="space-y-4 text-base leading-relaxed text-zinc-700">
           <div>
             <p className="font-semibold text-zinc-950">Conducted noise</p>
             <p className="mt-1">{emi.conducted}</p>
@@ -250,7 +250,7 @@ function VerificationTable({
                 <td className="px-5 py-4 text-zinc-600">{row.mechanism}</td>
                 <td className="px-5 py-4 text-zinc-600">{row.method}</td>
                 <td className="px-5 py-4 text-zinc-700">
-                  {row.result ?? <TodoChip label="TODO · result" />}
+                  {row.result ?? <TodoChip label="Not recorded" />}
                 </td>
               </tr>
             ))}
@@ -271,7 +271,7 @@ function VerificationTable({
               <span className="font-semibold text-zinc-800">Method:</span> {row.method}
             </p>
             <p className="mt-2 text-xs text-zinc-700">
-              {row.result ?? <TodoChip label="TODO · result" />}
+              {row.result ?? <TodoChip label="Not recorded" />}
             </p>
           </div>
         ))}
@@ -295,7 +295,7 @@ function IterationTimeline({
         {title ?? "Iteration"}
       </h3>
       {intro ? (
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-600">{intro}</p>
+        <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-600">{intro}</p>
       ) : null}
       <ol className="relative mt-8 space-y-0 border-l-2 border-orange-300/80 pl-6">
         {steps.map((step, index) => (
@@ -304,7 +304,7 @@ function IterationTimeline({
               {index + 1}
             </span>
             <p className="text-sm font-semibold text-zinc-950">{step.title}</p>
-            <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{step.body}</p>
+            <p className="mt-1.5 text-base leading-relaxed text-zinc-600">{step.body}</p>
           </li>
         ))}
       </ol>
@@ -342,13 +342,13 @@ function StageCards({
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-zinc-500">
                     What it does
                   </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-zinc-700">{card.what}</p>
+                  <p className="mt-1.5 text-base leading-relaxed text-zinc-700">{card.what}</p>
                 </div>
                 <div className="rounded-[1.1rem] border border-orange-200/80 bg-orange-50/60 px-4 py-3">
                   <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-900">
                     Why the system needs it
                   </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-zinc-700">{card.why}</p>
+                  <p className="mt-1.5 text-base leading-relaxed text-zinc-700">{card.why}</p>
                 </div>
               </div>
             ) : null}
@@ -388,7 +388,7 @@ function InverterSwitchingDemo() {
       <h3 className="text-display mt-2 text-2xl font-semibold text-zinc-950">
         Six switches, one DC bus
       </h3>
-      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-zinc-600">
+      <p className="mt-2 max-w-2xl text-base leading-relaxed text-zinc-600">
         A three-phase bridge connects each motor phase to either the DC+ or DC− rail.
         Hover or tap a state to see the educational current-path story.
       </p>
@@ -450,7 +450,7 @@ function InverterSwitchingDemo() {
               </button>
             ))}
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-zinc-700">{current.path}</p>
+          <p className="mt-4 text-base leading-relaxed text-zinc-700">{current.path}</p>
         </div>
       </div>
     </div>
@@ -463,10 +463,10 @@ export default function DesignChallengeExtrasSection({
   content: DesignChallengeExtras;
 }) {
   return (
-    <section id="design-challenge" className="scroll-mt-28 space-y-12">
+    <section id="design-challenge" className="scroll-mt-40 space-y-12">
       <div>
         <SectionLabel>Design Challenge Deep Dive</SectionLabel>
-        <p className="mt-3 max-w-3xl rounded-[1.25rem] border border-orange-200/80 bg-orange-50/70 px-4 py-3 text-sm leading-relaxed text-orange-950/90">
+        <p className="mt-3 max-w-3xl rounded-[1.25rem] border border-orange-200/80 bg-orange-50/70 px-4 py-3 text-base leading-relaxed text-orange-950/90">
           {content.disclaimer}
         </p>
       </div>
@@ -525,7 +525,7 @@ export default function DesignChallengeExtrasSection({
             Verification
           </h3>
           {content.verificationIntro ? (
-            <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-600">
+            <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-600">
               {content.verificationIntro}
             </p>
           ) : null}
@@ -577,7 +577,7 @@ export default function DesignChallengeExtrasSection({
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-800">
                 {card.title}
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-700">{card.body}</p>
+              <p className="mt-2 text-base leading-relaxed text-zinc-700">{card.body}</p>
             </div>
           ))}
         </div>
@@ -597,7 +597,7 @@ export default function DesignChallengeExtrasSection({
                 className="rounded-[1.35rem] border border-zinc-200 bg-white px-4 py-4"
               >
                 <p className="text-sm font-semibold text-zinc-950">{item.title}</p>
-                <p className="mt-1.5 text-sm leading-relaxed text-zinc-600">{item.body}</p>
+                <p className="mt-1.5 text-base leading-relaxed text-zinc-600">{item.body}</p>
               </div>
             ))}
           </div>

@@ -165,7 +165,7 @@ export default function Page() {
             </div>
 
             {/* Paper Preview */}
-            <div id="paper" className="scroll-mt-24">
+            <div id="paper" className="scroll-mt-40">
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-sm font-semibold tracking-widest text-zinc-900">
                   PAPER PREVIEW

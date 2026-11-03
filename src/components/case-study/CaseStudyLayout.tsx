@@ -16,7 +16,7 @@ function Section({
   children?: React.ReactNode;
 }) {
   return (
-    <section id={data.id} className="scroll-mt-28">
+    <section id={data.id} className="scroll-mt-40">
       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">
         {data.eyebrow}
       </p>

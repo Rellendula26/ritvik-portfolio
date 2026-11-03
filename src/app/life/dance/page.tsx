@@ -185,7 +185,7 @@ export default function DancePage() {
       </header>
 
       {/* Season 1: Penn Dhamaka */}
-      <section id="season-dhamaka" className="mt-14 scroll-mt-24">
+      <section id="season-dhamaka" className="mt-14 scroll-mt-40">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <SeasonLabel>2025–2026 · COLLEGE SEASON</SeasonLabel>
@@ -236,7 +236,7 @@ export default function DancePage() {
           </div>
         </div>
 
-        <div id="nationals" className="mt-10 scroll-mt-24">
+        <div id="nationals" className="mt-10 scroll-mt-40">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
               <h3 className="text-sm font-semibold tracking-widest text-zinc-900">
@@ -256,7 +256,7 @@ export default function DancePage() {
           </div>
         </div>
 
-        <div id="qualifiers" className="mt-10 scroll-mt-24">
+        <div id="qualifiers" className="mt-10 scroll-mt-40">
           <h3 className="text-sm font-semibold tracking-widest text-zinc-900">
             QUALIFYING COMPETITIONS
           </h3>
@@ -272,7 +272,7 @@ export default function DancePage() {
       </section>
 
       {/* Season 2: Summer Furteelay / D2G */}
-      <section id="season-summer" className="mt-16 scroll-mt-24">
+      <section id="season-summer" className="mt-16 scroll-mt-40">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <SeasonLabel>SUMMER 2026 · TRAINING</SeasonLabel>
@@ -357,7 +357,7 @@ export default function DancePage() {
         </div>
       </section>
 
-      <section id="tiktok" className="mt-16 scroll-mt-24">
+      <section id="tiktok" className="mt-16 scroll-mt-40">
         <div className="rounded-[2rem] border border-zinc-200 bg-white p-7 shadow-sm md:p-9">
           <p className="text-xs font-semibold tracking-[0.22em] text-zinc-500">
             PERSONAL CLIPS

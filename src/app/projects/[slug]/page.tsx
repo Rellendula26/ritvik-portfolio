@@ -10,12 +10,15 @@ import {
   SectionLabel,
 } from "@/components/project-page/shared";
 import { getCaseStudyBySlug } from "@/data/engineering-case-study";
+import { getExperience } from "@/data/experiences";
 import {
   PROJECTS,
   getProjectBySlug,
   pickProjectPrimaryMedia,
+  type Project,
   type ProjectMedia,
 } from "@/data/projects";
+import Link from "next/link";
 
 function renderMedia(media: ProjectMedia, priority = false) {
   if (media.kind === "visual") {
@@ -35,11 +38,14 @@ function renderMedia(media: ProjectMedia, priority = false) {
     );
   }
 
+  const contain = media.fit === "contain" || media.mediaType === "diagram";
   return (
     <ProjectMediaImage
       src={media.src}
       alt={media.alt}
       priority={priority}
+      expandable={contain}
+      className={contain ? "object-contain object-center bg-white" : "object-cover object-center"}
       sizes="(max-width: 768px) 100vw, 800px"
     />
   );
@@ -94,6 +100,36 @@ function MediaNotes({ media }: { media: ProjectMedia }) {
   );
 }
 
+function ExperienceBacklink({ slug }: { slug: string }) {
+  const experience = getExperience(slug);
+  if (!experience) return null;
+  return (
+    <p className="mt-4 text-sm text-stone-600">
+      Part of{" "}
+      <Link
+        href={`/experiences/${experience.slug}`}
+        className="font-medium text-amber-800 underline decoration-amber-300/80 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+      >
+        {experience.org}
+      </Link>
+      , {experience.role}.
+    </p>
+  );
+}
+
+function ComingSoonProject({ project }: { project: Project }) {
+  return (
+    <ProjectPageShell>
+      <BackToProjects />
+      <ProjectHero project={project} />
+      {project.experienceSlug ? (
+        <ExperienceBacklink slug={project.experienceSlug} />
+      ) : null}
+      <p className="mt-8 max-w-xl text-sm text-stone-500">Full write-up coming soon.</p>
+    </ProjectPageShell>
+  );
+}
+
 /** Legacy insight-card layout; used until a project has an EngineeringCaseStudy. */
 function LegacyProjectPage({
   project,
@@ -132,6 +168,9 @@ function LegacyProjectPage({
     <ProjectPageShell>
       <BackToProjects />
       <ProjectHero project={project} />
+      {project.experienceSlug ? (
+        <ExperienceBacklink slug={project.experienceSlug} />
+      ) : null}
 
       {process.env.NODE_ENV === "development" &&
         project.driveFolderUrl &&
@@ -388,6 +427,10 @@ export default async function ProjectDetailPage({
   const { slug } = await params;
   const project = getProjectBySlug(slug);
   if (!project) notFound();
+
+  if (project.writeUp === "coming-soon") {
+    return <ComingSoonProject project={project} />;
+  }
 
   const caseStudy = getCaseStudyBySlug(slug);
   if (caseStudy) {

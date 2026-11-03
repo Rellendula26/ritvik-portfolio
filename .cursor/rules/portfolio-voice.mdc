@@ -1,0 +1,39 @@
+---
+description: Voice for visitor-facing portfolio copy. Use whenever writing or editing text a visitor reads.
+globs: src/data/experiences.ts,src/data/projects.ts,src/data/coursework.ts,src/data/case-studies/**/*.ts,src/app/**/page.tsx,src/components/HomeHeroIntro.tsx,src/components/Footer.tsx
+alwaysApply: false
+---
+
+# Portfolio voice
+
+Personal, clear, curious, technically specific. First person. Write like Ritvik explaining the work to another engineer, not like a college essay or a company bio.
+
+Before rewriting a page, name what sounds generic or repeated. Keep the facts. Replace vague lines with specifics the source actually supports. If the source does not have the detail, flag the gap. Do not fill it.
+
+## How to write
+
+- Familiar words for the work. Keep the technical term when it explains the engineering (ADS1291, debounce, chip select).
+- Contractions when they sound natural.
+- A specific action, observation, or decision beats an abstract claim.
+- Match his real ownership. Name other people when the source names them. Do not upgrade "I worked on" to "I designed" or "we shipped."
+- Projects can be different lengths. A short true description is enough.
+- Motivation or reflection only when he supplied it. A paragraph can just describe the thing.
+- Headings stay short: "What I worked on," "The circuit," "Testing." Do not retitle shared layout headings for one page.
+- Change wording only. Leave layout, links, media, and behavior alone.
+
+## Do not
+
+- Em dashes.
+- Corporate language, forced metaphors, motivational closers.
+- These phrases, or close variants: "real-world constraints," "seamless integration," "keeping things honest," "leaving the bench," "this reinforced the importance of."
+- Invented anecdotes, feelings, failures, results, or design rationale.
+- Repeating the same disclaimer or the same fact in every section.
+
+```
+Bad: This reinforced the importance of seamless integration under real-world constraints.
+Good: The switch chatters. Debounce has to turn that into one space or tab.
+```
+
+## Approved examples
+
+None yet. After Ritvik approves a revised experience page and project page, paste those passages here and match them. Do not treat an unapproved draft as the house style.

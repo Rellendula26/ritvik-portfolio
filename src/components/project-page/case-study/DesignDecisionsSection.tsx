@@ -9,73 +9,48 @@ export default function DesignDecisionsSection({
   if (decisions.length === 0) return null;
 
   return (
-    <section id="design-decisions" className="scroll-mt-28">
+    <section id="design-decisions" className="scroll-mt-40">
       <SectionLabel>Key Design Decisions</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
           Calls I actually made
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+        <p className="mt-2 text-base leading-relaxed text-zinc-600">
           What else was on the table, what I picked, and why it still made sense once
           the hardware was real.
         </p>
       </div>
 
-      <div className="mt-8 space-y-5">
-        {decisions.map((decision, index) => (
+      <div className="mt-6 overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+        <div className="hidden grid-cols-[minmax(0,1.1fr)_minmax(0,1.15fr)_minmax(0,1.15fr)_minmax(0,1.3fr)] gap-4 border-b border-zinc-200 bg-[#f7f1e8] px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-zinc-600 lg:grid">
+          <p>Decision</p>
+          <p>Problem</p>
+          <p>Alternatives</p>
+          <p>Tradeoff and choice</p>
+        </div>
+        {decisions.map((decision) => (
           <article
             key={decision.id}
-            className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)] md:p-7"
+            className="grid gap-3 border-t border-zinc-200 px-4 py-4 first:border-t-0 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.15fr)_minmax(0,1.15fr)_minmax(0,1.3fr)] lg:gap-4 lg:first:border-t"
           >
-            <div className="flex flex-wrap items-start gap-3">
-              <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-zinc-800 bg-zinc-900 text-xs font-semibold text-white">
-                {String(index + 1).padStart(2, "0")}
+            <h3 className="text-base font-semibold text-zinc-950">{decision.title}</h3>
+            <p className="text-base leading-relaxed text-zinc-700">
+              <span className="mb-1 block text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 lg:hidden">
+                Problem
               </span>
-              <h3 className="text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl">
-                {decision.title}
-              </h3>
-            </div>
-
-            <div className="mt-6 grid gap-5 lg:grid-cols-2">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  The problem
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-700">
-                  {decision.problem}
-                </p>
-
-                <p className="mt-5 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  Alternatives considered
-                </p>
-                <ul className="mt-2 space-y-2 text-sm leading-relaxed text-zinc-700">
-                  {decision.alternatives.map((alt) => (
-                    <li key={alt} className="flex gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-zinc-400" />
-                      <span>{alt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-4">
-                <div className="rounded-[1.35rem] border border-zinc-200 bg-zinc-50/80 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
-                    Tradeoffs
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-zinc-700">
-                    {decision.tradeoffs}
-                  </p>
-                </div>
-                <div className="rounded-[1.35rem] border border-orange-200 bg-orange-50/60 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-900">
-                    Why I chose this
-                  </p>
-                  <p className="mt-2 text-sm leading-relaxed text-orange-950/90">
-                    {decision.choice}
-                  </p>
-                </div>
-              </div>
+              {decision.problem}
+            </p>
+            <ul className="space-y-1.5 text-base leading-relaxed text-zinc-700">
+              <li className="text-xs font-semibold uppercase tracking-[0.14em] text-zinc-500 lg:hidden">
+                Alternatives
+              </li>
+              {decision.alternatives.map((alt) => (
+                <li key={alt}>{alt}</li>
+              ))}
+            </ul>
+            <div className="space-y-2 text-base leading-relaxed text-zinc-800">
+              <p>{decision.tradeoffs}</p>
+              <p className="font-medium text-zinc-950">{decision.choice}</p>
             </div>
           </article>
         ))}

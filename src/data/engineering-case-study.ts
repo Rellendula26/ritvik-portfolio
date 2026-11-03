@@ -20,6 +20,11 @@ import { TENNIS_BALL_SHOOTER_CASE_STUDY } from "@/data/case-studies/tennis-ball-
 import { AFTERTHOUGHT_CASE_STUDY } from "@/data/case-studies/afterthought";
 import { PER_POWER_ELECTRONICS_CASE_STUDY } from "@/data/case-studies/per-power-electronics";
 import { HYPERLOOP_VFD_CASE_STUDY } from "@/data/case-studies/hyperloop-vfd";
+import { LOGIC_PCB_CASE_STUDY } from "@/data/case-studies/logic-pcb";
+import { LEADER_FOLLOWER_CASE_STUDY } from "@/data/case-studies/leader-follower";
+import { MULTIMODAL_PRINTER_CASE_STUDY } from "@/data/case-studies/multimodal-printer";
+import { BIONIC_ARM_CASE_STUDY } from "@/data/case-studies/bionic-arm";
+import { UAV_IMAGER_CASE_STUDY } from "@/data/case-studies/uav-imager";
 
 export type EngineeringNoteKind =
   | "engineering-note"
@@ -35,6 +40,7 @@ export type CaseStudyMedia =
       caption?: string;
       /** Taller frame for phone-shot / vertical subject matter. */
       portrait?: boolean;
+      fit?: "cover" | "contain";
     }
   | {
       kind: "video";
@@ -45,6 +51,7 @@ export type CaseStudyMedia =
       caption?: string;
       /** Taller frame for phone-shot / vertical subject matter. */
       portrait?: boolean;
+      fit?: "cover" | "contain";
     };
 
 export interface EngineeringNote {
@@ -52,10 +59,18 @@ export interface EngineeringNote {
   text: string;
 }
 
+export interface FlowNode {
+  title: string;
+  detail: string;
+}
+
 export interface MotivationContent {
   why: string;
   interest: string;
   learning: string;
+  /** One interview-style narrative. When set, the three cards are not shown. */
+  narrative?: string;
+  requirements?: string[];
 }
 
 export interface Subsystem {
@@ -69,6 +84,16 @@ export interface SystemOverviewContent {
   dataFlow?: string;
   controlFlow?: string;
   diagram?: CaseStudyMedia;
+  /** Ordered signal path. Rendered as a diagram, separate from power. */
+  signalPath?: FlowNode[];
+  /** Ordered power path. Only include rails the source actually names. */
+  powerPath?: FlowNode[];
+}
+
+export interface ContributionContent {
+  summary: string;
+  mine: string[];
+  alreadyThere: string[];
 }
 
 export interface DisciplineBreakdown {
@@ -149,6 +174,10 @@ export interface RootCauseAnalysis {
   rootCause: string;
   method: string;
   improvement: string;
+  /** Other faults that would have looked the same. */
+  alsoConsidered?: string;
+  /** Checks that are still proposed, not completed. */
+  notYet?: string;
   media?: CaseStudyMedia;
 }
 
@@ -275,6 +304,8 @@ export interface EngineeringCaseStudy {
   disciplines: DisciplineBreakdown[];
   designDecisions: DesignDecision[];
   evolution: EvolutionMilestone[];
+  /** What I did, set against hardware and software that was already there. */
+  contribution?: ContributionContent;
   results: ResultsContent;
   reflection: ReflectionContent;
   engineeringNotes: EngineeringNote[];
@@ -1126,6 +1157,11 @@ const CASE_STUDY_BY_SLUG: Record<string, EngineeringCaseStudy> = {
   [WEBSITE_CASE_STUDY.slug]: WEBSITE_CASE_STUDY,
   [PER_POWER_ELECTRONICS_CASE_STUDY.slug]: PER_POWER_ELECTRONICS_CASE_STUDY,
   [HYPERLOOP_VFD_CASE_STUDY.slug]: HYPERLOOP_VFD_CASE_STUDY,
+  [LOGIC_PCB_CASE_STUDY.slug]: LOGIC_PCB_CASE_STUDY,
+  [LEADER_FOLLOWER_CASE_STUDY.slug]: LEADER_FOLLOWER_CASE_STUDY,
+  [MULTIMODAL_PRINTER_CASE_STUDY.slug]: MULTIMODAL_PRINTER_CASE_STUDY,
+  [BIONIC_ARM_CASE_STUDY.slug]: BIONIC_ARM_CASE_STUDY,
+  [UAV_IMAGER_CASE_STUDY.slug]: UAV_IMAGER_CASE_STUDY,
   ...Object.fromEntries(PRODUCT_APP_CASE_STUDIES.map((cs) => [cs.slug, cs])),
 };
 

@@ -16,7 +16,7 @@ export function ExecutiveAssessmentSection({
   content: ExecutiveAssessment;
 }) {
   return (
-    <section id="executive-assessment" className="scroll-mt-28">
+    <section id="executive-assessment" className="scroll-mt-40">
       <SectionLabel>At a Glance</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
@@ -36,7 +36,7 @@ export function ExecutiveAssessmentSection({
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-800">
               {item.label}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-700">{item.body}</p>
+            <p className="mt-3 text-base leading-relaxed text-zinc-700">{item.body}</p>
           </div>
         ))}
       </div>
@@ -59,13 +59,13 @@ export function EngineeringTimelineSection({
     "Dates below are reconstructed from notes and media.";
 
   return (
-    <section id="engineering-timeline" className="scroll-mt-28">
+    <section id="engineering-timeline" className="scroll-mt-40">
       <SectionLabel>Timeline</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
           {title}
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">{description}</p>
+        <p className="mt-2 text-base leading-relaxed text-zinc-600">{description}</p>
       </div>
 
       <ol className="relative mt-8 space-y-0 border-l border-zinc-200 pl-6">
@@ -75,9 +75,9 @@ export function EngineeringTimelineSection({
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-800">
               {entry.period}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-800">{entry.work}</p>
+            <p className="mt-2 text-base leading-relaxed text-zinc-800">{entry.work}</p>
             {entry.friction ? (
-              <p className="mt-2 text-sm leading-relaxed text-zinc-500">
+              <p className="mt-2 text-base leading-relaxed text-zinc-500">
                 <span className="font-medium text-zinc-700">What slowed it: </span>
                 {entry.friction}
               </p>
@@ -97,52 +97,64 @@ export function RootCauseAnalysesSection({
   if (items.length === 0) return null;
 
   return (
-    <section id="root-cause" className="scroll-mt-28">
+    <section id="root-cause" className="scroll-mt-40">
       <SectionLabel>When It Broke</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Failures that looked the same until I measured
+          What failed
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-          A quiet motor, a dead SSH session, and a bad joint all feel like “it just does not
-          work.” The job was proving which layer actually failed.
-        </p>
       </div>
 
-      <div className="mt-8 grid gap-5 lg:grid-cols-2">
+      <div className="mt-8 space-y-10">
         {items.map((item) => (
           <article
             key={item.id}
-            className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+            className="border-t border-zinc-200 pt-6"
           >
-            <h3 className="text-xl font-semibold tracking-tight text-zinc-900">
+            <h3 className="text-2xl font-semibold tracking-tight text-zinc-950">
               {item.title}
             </h3>
-            <dl className="mt-5 space-y-4 text-sm leading-relaxed">
+            <dl className="mt-5 max-w-3xl space-y-5 text-base leading-relaxed">
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
                   What I saw
                 </dt>
-                <dd className="mt-1.5 text-zinc-700">{item.symptoms}</dd>
+                <dd className="mt-1.5 text-zinc-800">{item.symptoms}</dd>
+              </div>
+              {item.alsoConsidered ? (
+                <div>
+                  <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                    What else could look like that
+                  </dt>
+                  <dd className="mt-1.5 text-zinc-800">{item.alsoConsidered}</dd>
+                </div>
+              ) : null}
+              <div>
+                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                  What I checked
+                </dt>
+                <dd className="mt-1.5 text-zinc-800">{item.method}</dd>
               </div>
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  What it actually was
+                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                  What that narrowed it to
                 </dt>
-                <dd className="mt-1.5 text-zinc-700">{item.rootCause}</dd>
+                <dd className="mt-1.5 text-zinc-800">{item.rootCause}</dd>
               </div>
               <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
-                  How I isolated it
+                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
+                  What I took from it
                 </dt>
-                <dd className="mt-1.5 text-zinc-700">{item.method}</dd>
+                <dd className="mt-1.5 text-zinc-800">{item.improvement}</dd>
               </div>
-              <div className="rounded-[1.25rem] border border-orange-200 bg-orange-50/60 p-4">
-                <dt className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-900">
-                  What I would do next time
-                </dt>
-                <dd className="mt-1.5 text-orange-950/90">{item.improvement}</dd>
-              </div>
+              {item.notYet ? (
+                <div className="rounded-xl border border-amber-200 bg-amber-50/70 px-4 py-3">
+                  <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">
+                    Checks I have not run
+                  </dt>
+                  <dd className="mt-1.5 text-zinc-800">{item.notYet}</dd>
+                </div>
+              ) : null}
             </dl>
             {item.media ? (
               <div className="mt-5">
@@ -162,14 +174,14 @@ export function ScheduleAnalysisSection({
   content: ScheduleAnalysis;
 }) {
   return (
-    <section id="schedule-analysis" className="scroll-mt-28">
+    <section id="schedule-analysis" className="scroll-mt-40">
       <SectionLabel>What Took Time</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
           Where the calendar went
         </h2>
         {content.note ? (
-          <p className="mt-2 text-sm leading-relaxed text-zinc-600">{content.note}</p>
+          <p className="mt-2 text-base leading-relaxed text-zinc-600">{content.note}</p>
         ) : null}
       </div>
 
@@ -200,7 +212,7 @@ export function ScheduleAnalysisSection({
             </p>
             <ul className="mt-4 space-y-3">
               {column.items.map((item) => (
-                <li key={item} className="flex gap-2.5 text-sm leading-relaxed text-zinc-700">
+                <li key={item} className="flex gap-2.5 text-base leading-relaxed text-zinc-700">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />
                   <span>{item}</span>
                 </li>
@@ -215,13 +227,13 @@ export function ScheduleAnalysisSection({
 
 export function Version2PlanSection({ content }: { content: Version2Plan }) {
   return (
-    <section id="version-2" className="scroll-mt-28">
+    <section id="version-2" className="scroll-mt-40">
       <SectionLabel>Version 2</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
           How I would build the next one
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">{content.target}</p>
+        <p className="mt-2 text-base leading-relaxed text-zinc-600">{content.target}</p>
       </div>
 
       <ol className="mt-8 space-y-3">
@@ -239,7 +251,7 @@ export function Version2PlanSection({ content }: { content: Version2Plan }) {
                 <span className="text-xs font-medium text-zinc-500">{phase.hours}</span>
               ) : null}
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-zinc-700">{phase.body}</p>
+            <p className="mt-2 text-base leading-relaxed text-zinc-700">{phase.body}</p>
           </li>
         ))}
       </ol>
@@ -257,8 +269,8 @@ export function Version2PlanSection({ content }: { content: Version2Plan }) {
               className="grid gap-2 px-5 py-4 md:grid-cols-[8rem_1fr_1fr]"
             >
               <p className="text-sm font-semibold text-zinc-900">{upgrade.area}</p>
-              <p className="text-sm leading-relaxed text-zinc-700">{upgrade.change}</p>
-              <p className="text-sm leading-relaxed text-zinc-500">{upgrade.benefit}</p>
+              <p className="text-base leading-relaxed text-zinc-700">{upgrade.change}</p>
+              <p className="text-base leading-relaxed text-zinc-500">{upgrade.benefit}</p>
             </div>
           ))}
         </div>
@@ -275,13 +287,13 @@ export function TransferableSkillsSection({
   if (skills.length === 0) return null;
 
   return (
-    <section id="transferable-skills" className="scroll-mt-28">
+    <section id="transferable-skills" className="scroll-mt-40">
       <SectionLabel>What This Built</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
           Habits I want to keep carrying
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+        <p className="mt-2 text-base leading-relaxed text-zinc-600">
           Not a résumé keyword list. These are the instincts this build forced.
         </p>
       </div>
@@ -295,8 +307,8 @@ export function TransferableSkillsSection({
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-800">
               {skill.context}
             </p>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-700">{skill.evidence}</p>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-500">{skill.phrasing}</p>
+            <p className="mt-3 text-base leading-relaxed text-zinc-700">{skill.evidence}</p>
+            <p className="mt-3 text-base leading-relaxed text-zinc-500">{skill.phrasing}</p>
           </article>
         ))}
       </div>

@@ -14,7 +14,7 @@ export default function ExperiencesPage() {
               Experiences
             </h1>
             <p className="mt-4 text-base leading-relaxed text-stone-600">
-              Internships and lab teams where I worked on physical systems, embedded control, and deployment constraints.
+              Internships and the clubs I build with. Each card opens the role: what the group does, what I worked on, and the projects that came out of it.
             </p>
           </div>
         </Reveal>

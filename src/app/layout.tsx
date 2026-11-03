@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Ritvik Ellendula",
     description:
-      "Robotics-focused Electrical Engineering portfolio: embedded systems, electronics, and software-hardware integration.",
+      "Robotics-focused electrical engineering portfolio: embedded systems, electronics, and hardware that has to move.",
     url: "https://ritvik-portfolio-eta.vercel.app",
     siteName: "Ritvik Ellendula",
     images: [

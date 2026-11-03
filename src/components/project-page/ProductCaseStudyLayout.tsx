@@ -222,7 +222,7 @@ export default function ProductCaseStudyLayout({
         ))}
       </section>
 
-      <section id="results" className="mt-14 scroll-mt-28">
+      <section id="results" className="mt-14 scroll-mt-40">
         <SectionLabel>Results & lessons</SectionLabel>
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
           <div className="rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)]">
@@ -273,7 +273,7 @@ export default function ProductCaseStudyLayout({
       </section>
 
       {gallery.length > 0 && (
-        <section id="gallery" className="mt-16 scroll-mt-28">
+        <section id="gallery" className="mt-16 scroll-mt-40">
           <SectionLabel>Gallery</SectionLabel>
           <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
             {gallery.map((item, index) => {

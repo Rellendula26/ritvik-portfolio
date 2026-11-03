@@ -44,7 +44,8 @@ export default function LazyVideo({
           setReady(true);
         }
 
-        if (autoplayInView) {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (autoplayInView && !reduceMotion) {
           void el.play().catch(() => {});
         }
       },

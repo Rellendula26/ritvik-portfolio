@@ -16,7 +16,7 @@ export default function ReflectionSection({
   if (groups.length === 0) return null;
 
   return (
-    <section id="reflection" className="scroll-mt-28">
+    <section id="reflection" className="scroll-mt-40">
       <SectionLabel>Reflection</SectionLabel>
       <div className="mt-6 overflow-hidden rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-[0_14px_40px_rgba(0,0,0,0.06)] md:p-8">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
@@ -35,7 +35,7 @@ export default function ReflectionSection({
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-800">
                 {group.label}
               </p>
-              <ul className="mt-4 space-y-3 text-sm leading-relaxed text-zinc-700">
+              <ul className="mt-4 space-y-3 text-base leading-relaxed text-zinc-700">
                 {group.items.map((item) => (
                   <li key={item} className="flex gap-3">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-orange-500" />

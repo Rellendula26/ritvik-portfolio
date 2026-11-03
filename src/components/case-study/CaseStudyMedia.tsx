@@ -56,7 +56,7 @@ export function CaseStudyGallery({
   if (images.length === 0) return null;
 
   return (
-    <section className="scroll-mt-28">
+    <section className="scroll-mt-40">
       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-zinc-500">
         {title}
       </p>

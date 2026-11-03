@@ -62,6 +62,9 @@ export default function ProjectCard({
   const reduce = useReducedMotion();
   const isFeatured = featured || project.featured;
   const primaryMedia = pickProjectPrimaryMedia(project);
+  const showMedia = Boolean(
+    primaryMedia && (primaryMedia.kind !== "image" || primaryMedia.src)
+  );
 
   function goToProject() {
     router.push(project.href);
@@ -90,7 +93,7 @@ export default function ProjectCard({
           }
         }}
         className={[
-          "group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border",
+          "group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700",
           "transition-[transform,box-shadow,border-color] duration-300 ease-out",
           "motion-safe:hover:-translate-y-1.5",
           isFeatured
@@ -117,7 +120,7 @@ export default function ProjectCard({
           />
         )}
 
-        {primaryMedia && (
+        {showMedia && primaryMedia ? (
           <div className="group/media relative aspect-[16/9] overflow-hidden">
             {primaryMedia.kind === "visual" ? (
               <ProjectCardVisual
@@ -128,7 +131,11 @@ export default function ProjectCard({
               <ProjectMediaImage
                 src={primaryMedia.src}
                 alt={primaryMedia.alt}
-                className="img-zoom object-cover object-center"
+                className={
+                  primaryMedia.fit === "contain"
+                    ? "img-zoom object-contain object-center bg-[#f7f1e8] p-2"
+                    : "img-zoom object-cover object-center"
+                }
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
             ) : (
@@ -179,7 +186,7 @@ export default function ProjectCard({
               {project.id}
             </span>
           </div>
-        )}
+        ) : null}
 
         <div className="relative flex flex-1 flex-col p-5 md:p-6">
           <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -233,39 +240,26 @@ export default function ProjectCard({
 
           <p
             className={[
-              "mt-1 line-clamp-2 text-sm font-medium",
+              "mt-1 line-clamp-3 text-sm font-medium",
               isFeatured ? "text-amber-200/80" : "text-amber-800/90",
             ].join(" ")}
           >
             {project.oneLine}
           </p>
 
-          <p
-            className={[
-              "mt-3 line-clamp-4 text-sm leading-relaxed",
-              isFeatured ? "text-stone-300" : "text-stone-700",
-            ].join(" ")}
-          >
-            <span className={isFeatured ? "text-amber-300/90" : "text-amber-900/80"}>
-              Motivation:{" "}
-            </span>
-            {project.overview}
-          </p>
-
-          {project.challenges[0] && (
+          {(project.contribution || project.keyHighlights[0]) && (
             <p
               className={[
-                "mt-3 line-clamp-2 text-xs leading-relaxed",
-                isFeatured ? "text-amber-300/90" : "text-amber-900/80",
+                "mt-3 line-clamp-2 text-sm leading-relaxed",
+                isFeatured ? "text-stone-300" : "text-stone-700",
               ].join(" ")}
             >
-              <span className="font-semibold uppercase tracking-wide">Challenge: </span>
-              {project.challenges[0]}
+              {project.contribution ?? project.keyHighlights[0]}
             </p>
           )}
 
           <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, isFeatured ? 6 : 5).map((tag) => (
+            {project.techStack.slice(0, 5).map((tag) => (
               <TechChip key={tag} variant={isFeatured ? "dark" : "light"}>
                 {tag}
               </TechChip>
@@ -283,16 +277,18 @@ export default function ProjectCard({
             >
               {PROJECT_STATUS_LABELS[project.status]}
             </span>
-            <span
-              className={[
-                "rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-wide",
-                isFeatured
-                  ? "border-amber-500/30 text-amber-200/90"
-                  : "border-amber-200 bg-amber-50 text-amber-800/90",
-              ].join(" ")}
-            >
-              {project.buildStage}
-            </span>
+            {project.writeUp === "coming-soon" ? (
+              <span
+                className={[
+                  "rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-wide",
+                  isFeatured
+                    ? "border-amber-500/30 text-amber-200/90"
+                    : "border-amber-200 bg-amber-50 text-amber-800/90",
+                ].join(" ")}
+              >
+                Write-up coming soon
+              </span>
+            ) : null}
           </div>
 
           {(project.githubUrl || project.liveUrl || project.youtubeUrl) && (

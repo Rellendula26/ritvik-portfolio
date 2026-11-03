@@ -25,7 +25,7 @@ export function ProjectPageShell({ children }: { children: React.ReactNode }) {
         <rect x="100" y="32" width="20" height="16" rx="2" stroke="currentColor" />
         <path d="M120 40 H148" stroke="currentColor" strokeWidth="1" />
       </svg>
-      <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-14">{children}</div>
+      <div className="relative mx-auto max-w-[75rem] px-5 pb-16 pt-10 sm:px-6 md:px-8">{children}</div>
     </main>
   );
 }
