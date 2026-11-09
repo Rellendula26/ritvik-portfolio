@@ -16,7 +16,9 @@ const PARAGRAPHS: Segment[][] = [
   [
     { text: "I'm an electrical engineering student at Penn. I'm interested in " },
     { text: "embedded systems", accent: true },
-    { text: " and " },
+    { text: ", " },
+    { text: "electronics", accent: true },
+    { text: ", and " },
     { text: "robotics", accent: true },
     { text: ", especially " },
     { text: "medical and surgical robotics", accent: true },

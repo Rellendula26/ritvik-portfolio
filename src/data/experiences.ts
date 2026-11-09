@@ -218,7 +218,7 @@ export const EXPERIENCES: Experience[] = [
     highlights: [
       "AddLab printer: reassemble the Aerotech toolhead and split the Arduino sketch into stepper, encoder, and PID files.",
       "Nozzle axis: a 5:1 geared NEMA 17, an A4988, an AS5600, and an Arduino Uno on a 24 V motor supply.",
-      "ModLab imager: a TSL1401 line sensor on an nRF54L15. Lines come off the bench. The rotation is still ahead.",
+      "ModLab imager: a TSL1401 line sensor on an nRF54L15. One scan is 128 values. The hardware readout and the Bluetooth stream are in the source and have not been run on this board. A later flash never took.",
     ],
     focus: ["AddLab", "Nozzle rotation", "AS5600", "UAV imaging"],
     externalHref: "https://www.grasp.upenn.edu/",
@@ -258,7 +258,7 @@ export const EXPERIENCES: Experience[] = [
       {
         title: "The imager",
         body: [
-          "The other system is a line imager for a UAV, in ModLab. A TSL1401 reads 128 pixels at a time on an nRF54L15. I'm integrating that sensor on Zephyr. The ADC and GPIOs bring the samples in. The team has a live view and a timing fix for 120 Hz room light. The lines are not paired with an angle yet, so it is not a 360° image. Notes and the bench photo are on the ",
+          "The other system is a line imager for a UAV, in ModLab. A TSL1401 reads 128 pixels at a time on an nRF54L15. I'm integrating that sensor on Zephyr. The ADC and GPIOs are how a scan becomes numbers. The hardware readout and the Bluetooth stream are in the source and have not been run on this board, so there is no live plot yet and no 360° image. A later try never got a flash through: the wires had come loose, one attachment passed power and not data, and the meter check has no number written down. A spinner is on the bench as a stand-in for the flyer. The line sensor is not on it. Notes and the bench photos are on the ",
           { projectSlug: "3d-imaging-uav" },
           ".",
         ],
@@ -631,7 +631,7 @@ export const EXPERIENCES: Experience[] = [
       {
         title: "Bionic arm electronics",
         body: [
-          "On the arm I'm drawing the PCBs and the mounts. The armband is eight modules, each a differential pair into an ADS1291, tied with a 20-pin flex and meant to drive servos and a linear actuator. The September 2026 main sheet marks a 2-cell pack from 6.0 V to 8.4 V, plus 12 V, 6 V, and 3.3 V. My electrode plan is a 7.2 V pack, a buck down to 4 V, then an LDO. Those two descriptions are not the same battery, and a buck cannot make the labeled 12 V from 8.4 V. The schematics give each ADS1291 its own chip select. A progress slide still says SPI daisy-chain. Bring-up reads one channel, gain 6, 2000 samples per second, with the motors compiled off. Nathan Zhang tested the main board. Rubi Wu started the first fixture. Two longer wires still keep a board out of the CAD mount. There is no measured EMG. The write-up is the ",
+          "I design the sensor PCB, the main PCB, and the mounts. One sensor board is built: a differential pair into one ADS1291. The eight-module armband is the architecture. The team tested the main board and started the first fixture. Firmware reads raw EMG from one channel and can run a fixed motor test. It does not drive the arm from EMG. The write-up is the ",
           { projectSlug: "bionic-arm" },
           ".",
         ],

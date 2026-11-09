@@ -13,7 +13,6 @@ import {
   type TextRun,
 } from "@/data/experiences";
 import {
-  PROJECT_STATUS_LABELS,
   getProjectBySlug,
   pickProjectPrimaryMedia,
   type Project,
@@ -104,7 +103,7 @@ function CompactProjectLink({ project }: { project: Project }) {
       <span className="min-w-0">
         <span className="block truncate text-sm font-medium text-stone-950">{project.title}</span>
         <span className="mt-0.5 block text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-500">
-          {PROJECT_STATUS_LABELS[project.status]}
+          {project.buildStage}
           {project.writeUp === "coming-soon" ? " · Write-up coming soon" : ""}
         </span>
       </span>

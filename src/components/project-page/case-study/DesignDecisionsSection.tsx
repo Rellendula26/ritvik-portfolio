@@ -13,11 +13,10 @@ export default function DesignDecisionsSection({
       <SectionLabel>Key Design Decisions</SectionLabel>
       <div className="mt-3 max-w-2xl">
         <h2 className="text-display text-3xl font-semibold tracking-tight text-zinc-950">
-          Calls I actually made
+          Design decisions
         </h2>
         <p className="mt-2 text-base leading-relaxed text-zinc-600">
-          What else was on the table, what I picked, and why it still made sense once
-          the hardware was real.
+          What was on the table, what got picked, and what that choice costs.
         </p>
       </div>
 

@@ -85,7 +85,7 @@
     ],
     "architectureImages": [],
     "date": "Summer 2026",
-    "buildStage": "Client Deployment",
+    "buildStage": "Client delivered",
     "keyHighlights": [
       "I built that path. Bin 3 over-rotated on one shared motion profile, so that bin got its own PWM duty instead of the same sweep as the others.",
       "Integrated 4 MG996R servos, 8 LEDs, and a fan with shared grounding and separate high-current planning so actuator load did not collapse the control path",

@@ -113,7 +113,7 @@ const COURSES_ALL: Course[] = [
     highlights: [
       "Absorption band gaps from Si at 1.125 eV (0.4% off 1.120) to GaAs at 1.393 eV (2.2% off 1.424).",
       "GaAs photoluminescence peaked at 871 nm, 1.424 eV, 0.03% from the known gap.",
-      "Silicon cell under a phone flashlight: 545 mV open circuit, fill factor 0.79, about 16.7% estimated efficiency against the 1-sun label.",
+      "Silicon cell under a phone flashlight: 545 mV open circuit and fill factor 0.79. The 16.7% figure is an estimate that scales current against a 1-sun label. The flashlight was not a calibrated solar source.",
     ],
     cover: {
       src: "/coursework/ese-2180/cover.jpg",
@@ -140,7 +140,6 @@ const LABS_ALL: Lab[] = [
       "After the bridge was balanced, the voltage on the adjustable side fell as Rx increased, at both a 2 V supply and a 3 V supply.",
     setup:
       "Breadboard bridge, two benchtop multimeters, and the bench supply. Rx values in the report are 2.2 kΩ, 4.7 kΩ, and 10 kΩ.",
-    collaborators: ["Ritvik Ellendula", "Sudhir Yelamarthy"],
     report: { href: "/coursework/ese-2150/lab-02/report.pdf", label: "Lab 2 report" },
   },
   {
@@ -156,7 +155,6 @@ const LABS_ALL: Lab[] = [
       "I measured the node voltages and the marked branch currents and set them next to the calculated values.",
     setup:
       "100 Ω, 470 Ω, and 1 kΩ resistors on a breadboard. Keysight E36441A with a 0.1 A current limit. A digital multimeter for node voltage and series current.",
-    collaborators: ["Gonzalo Cuervo", "Ritvik Ellendula"],
     report: { href: "/coursework/ese-2150/lab-03/report.pdf", label: "Lab 3 report" },
   },
   {
@@ -172,7 +170,6 @@ const LABS_ALL: Lab[] = [
       "The inverting input stayed near 2.5 V. The output sat near -4.997 V, then switched to about 3.758 V. With ±5 V rails the LM324AN reaches the negative rail and stops short of the positive one.",
     setup:
       "LM324AN, 4.7 kΩ resistors checked with an ohmmeter, and a voltmeter referenced to circuit ground.",
-    collaborators: ["Ronak Suchindra", "Ritvik Ellendula"],
     report: { href: "/coursework/ese-2150/lab-04/report.pdf", label: "Lab 4 report" },
   },
   {
@@ -188,7 +185,6 @@ const LABS_ALL: Lab[] = [
       "From 0 V to 3.5 V the follower output stayed with the input. Above that it stopped rising and sat near 3.75 V.",
     setup:
       "One amplifier in an LM324AN. Two supply channels tied into a ±5 V pair, with the shared node as ground. A trimmer sets the follower input.",
-    collaborators: ["Yuki Qian", "Ritvik Ellendula"],
     report: { href: "/coursework/ese-2150/lab-05/report.pdf", label: "Lab 5 report" },
   },
   // No report yet. Drop the PDF at public/coursework/ese-2150/lab-06/report.pdf
@@ -220,7 +216,6 @@ const LABS_ALL: Lab[] = [
       "Cary 5000, 4000 to 20000 cm⁻¹, on GaSb, Ge, Si, GaAs, GaP, and CdS. Photoluminescence on GaAs, InP, CdS, and ZnO with a 405 nm laser (3.06 eV) and a 633 nm laser (1.96 eV), grating 100, acquisition 5 s, four accumulations, laser power at 1% or lower.",
     discussion:
       "A direct edge drops within a few tens of meV because the transition needs no phonon. An indirect edge spreads over about 0.1 to 0.2 eV. Absorption and photoluminescence read the same band edges from opposite directions: a photon promotes an electron, then the carriers fall back and emit near the gap. They are not identical. The absorption fit on a thick sample extrapolates from the tail below the gap, and the linear region I chose moves the intercept. ZnO's gap is 3.20 eV, above both lasers, so there was no band-edge emission.",
-    collaborators: ["Yuchang Liu", "Keyi Ma", "Camille Mou", "Ritvik Ellendula"],
     thumbnail: {
       src: "/coursework/ese-2180/lab-02/plot.jpg",
       alt: "Silicon absorption plot. The fit crosses 1.125 eV and the known gap is 1.120 eV.",
@@ -250,7 +245,6 @@ const LABS_ALL: Lab[] = [
       "Each LED in series with its current-limit resistor, ramped from 1 V to 3.5 V in 0.1 V steps, plus a continuous I-V set for the fit. Emission spectra at 3.5 V with a 220 Ω series resistor. A red laser and a phone flashlight as the comparison sources.",
     discussion:
       "The 0.1 V steps only locate turn-on to about that size, so the continuous set is the one I trust for forward voltage. The green LED's discrete turn-on sat near 2.5 V, above the continuous 2.3 V, and not where the band gap alone would have put it. The red laser peaked at the same wavelength as the red LED and was much narrower. The white LED had three peaks, 450.52 nm, 532.35 nm, and 555.19 nm. The phone flashlight was a broader pile of peaks, not three clean lines. For a red emitter I would pick InGaP over AlGaAs: a red AlGaAs composition sits near the direct-to-indirect crossover, and that cuts radiative efficiency.",
-    collaborators: ["Joshua Mori", "Aadam Mulla", "Ritvik Ellendula", "Abhir Kewalramani"],
     thumbnail: {
       src: "/coursework/ese-2180/lab-03/plot.jpg",
       alt: "Green LED current against voltage, turning on near 2.5 V",

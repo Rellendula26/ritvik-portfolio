@@ -27,10 +27,10 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "EEG-to-Image Generation for Brain Injury Rehabilitation (ArXiv)";
   const subtitle =
-    "Research mentorship with Harvard Medical School on EEG-to-image generation, reproducibility, and model comparison. Preprint on arXiv.";
+    "Mentored student project on adapting DreamDiffusion so EEG can drive image generation. The write-up is an arXiv preprint.";
   const coverSrc = "/research/dreamdiffusion.png"; // must exist in /public
 
-  const badges = ["Affiliated", "Harvard Medical School", "EEG Signal Processing", "Deep Learning"];
+  const badges = ["Mentored project", "arXiv preprint", "EEG", "DreamDiffusion"];
 
   // arXiv
   const arxivAbs = "https://arxiv.org/abs/2407.02673";
@@ -104,13 +104,12 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                I worked on getting the DreamDiffusion pipeline into a state that others could actually run.
-                The original repository had dependency conflicts and environment drift, so I helped migrate
-                the workflow to Google Colab and debug architecture-level failures. We also compared
-                approaches across SVMs, feedforward networks, CNN encoders, GANs, and VAEs for EEG-to-image
-                reconstruction. The central technical issue stayed the same: EEG is noisy, nonlinear, and
-                temporally complex, so naive mappings from signal to image collapse quickly. That is why the
-                CLIP-aligned diffusion approach mattered in this project.
+                DreamDiffusion is an existing model that turns EEG features into images through Stable Diffusion.
+                I did not design that architecture. With two teammates I modified the public codebase so it
+                would run in Google Colab without the original setup, and so it could take other inputs such
+                as sleep EEG. Dr. Carlos Ponce at Harvard Medical School and Dr. Suayb Arslan at MIT mentored
+                the project. Clinical rehabilitation is the motivation in the preprint. We did not test it
+                with patients.
               </p>
             </div>
 
@@ -124,16 +123,11 @@ export default function Page() {
                   pipeline, resolving dependencies, setup errors, and environment incompatibilities.
                 </li>
                 <li>
-                  Implemented EEG preprocessing and representation pipelines, dealing with EEG&apos;s low
-                  signal-to-noise ratio and temporal structure
+                  Adapted the notebook so the same pipeline could generate images from other inputs, including sleep EEG.
                 </li>
                 <li>
-                  Evaluated multiple ML and deep-learning paradigms, and explored CLIP&apos;s multimodal
-                  latent space, enabling Stable Diffusion to generate images via EEG-derived data.
-                </li>
-                <li>
-                  Worked with a team of 3 other peers to write a 13-page research paper, exploring our
-                  findings and documenting the methodologies and insights we made.
+                  Coauthored the 13-page preprint. It describes the Colab port and that input change. It does
+                  not benchmark DreamDiffusion against SVMs, CNNs, GANs, or VAEs.
                 </li>
               </ul>
             </div>
@@ -147,10 +141,8 @@ export default function Page() {
                   Produced a reproducible Colab workflow with setup fixes, cleaner docs, and runnable notebooks.
                 </li>
                 <li>
-                  Demonstrated diffusion-based latent-space generation is more effective for EEG-to-image
-                  generation than CNNs, GANs, VAEs, or SVM models.
+                  Posted the write-up on arXiv (2407.02673, July 2024). arXiv is a preprint server. This version is not peer reviewed.
                 </li>
-                <li>Wrote a paper published to ArXiv as a pre-print.</li>
               </ul>
             </div>
 
@@ -207,7 +199,7 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Machine Learning Research Engineer</dd>
+                <dd className="font-medium">Mentored student researcher</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Timeline</dt>
@@ -217,7 +209,7 @@ export default function Page() {
                 <dt className="text-zinc-500">Tools</dt>
                 <dd className="mt-2 flex flex-wrap gap-2">
                   {[
-                    "Harvard Medical School",
+                    "Mentored by Dr. Carlos Ponce, Harvard Medical School",
                     "EEG Signal Processing",
                     "Deep Learning",
                     "Machine Learning",

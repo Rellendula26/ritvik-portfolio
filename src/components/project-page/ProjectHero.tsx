@@ -3,7 +3,6 @@ import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
 import { ProjectBadge } from "@/components/project-page/shared";
 import {
   CATEGORY_LABELS,
-  PROJECT_STATUS_LABELS,
   pickProjectPrimaryMedia,
   type Project,
   type ProjectMedia,
@@ -74,7 +73,7 @@ export default function ProjectHero({ project }: { project: Project }) {
         <div className="min-w-0">
           <div className="flex flex-wrap gap-2">
             <ProjectBadge>{CATEGORY_LABELS[project.category]}</ProjectBadge>
-            <ProjectBadge tone="dark">{PROJECT_STATUS_LABELS[project.status]}</ProjectBadge>
+            <ProjectBadge tone="dark">{project.buildStage}</ProjectBadge>
             {project.featured && <ProjectBadge tone="yellow">Featured</ProjectBadge>}
           </div>
 
