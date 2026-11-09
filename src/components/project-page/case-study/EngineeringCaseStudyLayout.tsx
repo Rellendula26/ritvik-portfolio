@@ -21,6 +21,7 @@ import {
 } from "@/components/project-page/case-study/RetrospectiveExtrasSection";
 import DesignChallengeExtrasSection from "@/components/project-page/case-study/DesignChallengeExtrasSection";
 import ContributionSection from "@/components/project-page/case-study/ContributionSection";
+import ProjectBrief from "@/components/project-page/ProjectBrief";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
@@ -136,6 +137,7 @@ export default function EngineeringCaseStudyLayout({
           <TransferableSkillsSection skills={caseStudy.transferableSkills} />
         ) : null}
         <ReflectionSection content={caseStudy.reflection} />
+        <ProjectBrief project={project} className="mt-2" />
       </div>
     </ProjectPageShell>
   );

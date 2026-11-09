@@ -27,10 +27,10 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "Redlining & Health Outcomes Research";
   const subtitle =
-    "Literature and evidence review on how historic HOLC redlining patterns relate to present-day chronic health outcomes.";
+    "Systematic review, published in Public Health (2025), on how historic HOLC grades relate to later health outcomes. I am a coauthor. The work was with Wayne State.";
   const coverSrc = "/research/redlining.png";
 
-  const badges = ["Independent", "Public Health", "Data Analysis", "Causal Inference"];
+  const badges = ["Wayne State", "Systematic review", "Public Health", "Epidemiology"];
 
   const paperUrl = "/research/red.pdf";
   const paperEmbedUrl = `${paperUrl}#view=FitH&page=1&toolbar=1`;
@@ -103,12 +103,15 @@ export default function Page() {
                 OVERVIEW
               </h2>
               <p className="mt-3 text-base leading-relaxed text-zinc-700">
-                This project asks a direct question: when neighborhoods were graded
-                as higher-risk under historic redlining maps, did that correlate
-                with worse health outcomes decades later? I focused on tracing
-                evidence quality across studies, separating descriptive correlation
-                from causal claims, and identifying where methods were strong
-                versus where confounders were under-controlled.
+                The review asks whether neighborhoods graded higher-risk on historic
+                HOLC maps show worse health outcomes later. It is a systematic review
+                of observational studies, not a meta-analysis. The published result
+                is a quality-scored summary: 32 of 89 articles met the inclusion
+                rules, and 15 of those scored as high quality. People in less
+                desirable grades tended to have higher rates of injury or violence,
+                asthma, adverse pregnancy outcomes, and some cardiometabolic
+                disorders. I am a coauthor. The paper does not split which analysis
+                was mine.
               </p>
             </div>
 
@@ -131,10 +134,9 @@ export default function Page() {
                 RESULTS / IMPACT
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
-                <li>Most reviewed studies show directionally worse health outcomes in historically redlined areas.</li>
-                <li>The strongest claims came from papers that explicitly modeled socioeconomic confounders.</li>
-                <li>Result quality depends heavily on study design; not every observed disparity supports a causal statement.</li>
-                <li>TODO: add paper-specific effect sizes where available from the final write-up.</li>
+                <li>32 studies met inclusion. 15 were scored high quality.</li>
+                <li>The most common topics were injury or violence, cancer, cardiometabolic disease, perinatal outcomes, and asthma.</li>
+                <li>The review does not pool those papers into one effect size.</li>
               </ul>
             </div>
 
@@ -145,7 +147,7 @@ export default function Page() {
               </h2>
               <ul className="mt-3 list-disc space-y-2 pl-5 text-base text-zinc-700">
                 <li>Inference discipline matters: policy-relevant writing should distinguish correlation from causation line-by-line.</li>
-                <li>Next step is a tighter evidence table with methods, controls, and effect-size comparability across studies.</li>
+                <li>The journal version is Public Health, volume 238 (2025), pages 181 to 187.</li>
               </ul>
             </div>
 
@@ -202,11 +204,11 @@ export default function Page() {
             <dl className="mt-4 space-y-4 text-sm text-zinc-700">
               <div>
                 <dt className="text-zinc-500">Role</dt>
-                <dd className="font-medium">Researcher</dd>
+                <dd className="font-medium">Coauthor</dd>
               </div>
               <div>
-                <dt className="text-zinc-500">Timeline</dt>
-                <dd className="font-medium">4 to 8 Weeks</dd>
+                <dt className="text-zinc-500">Published</dt>
+                <dd className="font-medium">Public Health, 2025</dd>
               </div>
               <div>
                 <dt className="text-zinc-500">Tools</dt>

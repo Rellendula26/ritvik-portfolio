@@ -50,7 +50,11 @@ export default function EvolutionSection({
                 {milestone.media ? (
                   <CaseStudyMediaFrame
                     media={milestone.media}
-                    className="aspect-video w-full"
+                    className={
+                      milestone.media.portrait
+                        ? undefined
+                        : "aspect-video w-full"
+                    }
                   />
                 ) : null}
               </li>

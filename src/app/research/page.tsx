@@ -7,7 +7,7 @@ const RESEARCH: MediaCardItem[] = [
     eyebrow: "Brain-Computer Interfaces",
     title: "EEG-to-Image Generation for Brain Injury Communication (ArXiv)",
     blurb:
-      "Research project with Harvard Medical School mentors on EEG-to-image generation. I focused on making the DreamDiffusion pipeline reproducible, debugging environment issues, and comparing model behavior across classical ML and diffusion-style approaches.",
+      "Mentored student project on EEG-to-image generation. I helped move an existing DreamDiffusion repository into a Colab notebook others could run. The write-up is an arXiv preprint, not a peer-reviewed paper.",
     href: "/research/dreamdiffusion",
     tags: ["EEG Signal Processing", "Diffusion Models", "PyTorch", "Machine Learning", "NumPy","Deep Learning"],
     media: { kind: "image", src: "/research/dreamdiffusion.png", alt: "DreamDiffusion preview" },
@@ -16,11 +16,11 @@ const RESEARCH: MediaCardItem[] = [
     id: "002",
     type: "affiliated",
     eyebrow: "Epidemiology Research",
-    title: "Neighborhood Redlining and Health Outcomes (Journal of Public Health)",
+    title: "Neighborhood Redlining and Health Outcomes (Public Health, 2025)",
     blurb:
-      "Literature review under a Wayne State professor on how historic HOLC grading links to present-day chronic disease patterns. The work centered on study design quality, evidence strength, and what claims the data could actually support.",
+      "I am a coauthor on a Wayne State systematic review of how historic HOLC grades relate to later health outcomes. The review scores study quality. It does not pool the papers into one effect size.",
     href: "/research/redlining",
-    tags: ["Meta Analysis", "Statistical Analysis", "Health Equity", "Epidemiology","Redlining"],
+    tags: ["Systematic Review", "Statistical Analysis", "Health Equity", "Epidemiology","Redlining"],
     media: { kind: "image", src: "/research/redlining.png", alt: "Redlining Image" },
   },
   {

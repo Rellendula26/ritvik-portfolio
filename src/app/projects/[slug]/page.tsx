@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
+import ProjectBrief from "@/components/project-page/ProjectBrief";
 import ProjectHero from "@/components/project-page/ProjectHero";
 import EngineeringCaseStudyLayout from "@/components/project-page/case-study/EngineeringCaseStudyLayout";
 import {
@@ -126,6 +127,7 @@ function ComingSoonProject({ project }: { project: Project }) {
         <ExperienceBacklink slug={project.experienceSlug} />
       ) : null}
       <p className="mt-8 max-w-xl text-sm text-stone-500">Full write-up coming soon.</p>
+      <ProjectBrief project={project} />
     </ProjectPageShell>
   );
 }
@@ -396,6 +398,8 @@ function LegacyProjectPage({
           </div>
         </section>
       )}
+
+      <ProjectBrief project={project} />
     </ProjectPageShell>
   );
 }

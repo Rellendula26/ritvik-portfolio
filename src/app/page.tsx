@@ -27,7 +27,7 @@ export default function Home() {
               Serpent, GRASP, and ADAPT
             </h2>
             <p className="mt-2 max-w-xl text-base text-stone-600">
-              {`Serpent's arm and the logic and power boards have photos and notes. The bionic arm page has the September schematics. The AddLab printer page has the toolhead, the carousel clip, and the encoder drawing. The 360° imager page has the line-sensor bench and the flicker test. None of this work is finished.`}
+              {`At Serpent I modified the power and logic boards and wrote the leader-follower bridge. At GRASP I am integrating a 128-pixel line sensor, and reassembling the AddLab toolhead so the display can show shaft angle. At ADAPT I am designing the EMG boards and the mounts. The pages have the schematics, the bench photos, and what is still open.`}
             </p>
           </Reveal>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

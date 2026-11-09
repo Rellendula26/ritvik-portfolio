@@ -1,4 +1,6 @@
 import GENERATED_INTAKE_PROJECTS from "@/data/projects.generated.json";
+import type { ProjectBrief } from "@/data/project-brief";
+import { PROJECT_BRIEFS } from "@/data/project-briefs";
 import { projectVideo } from "@/data/project-media";
 
 export type ProjectCategory =
@@ -116,6 +118,8 @@ export interface Project {
   experienceSlug?: string;
   /** One specific thing I did, shown on cards. Falls back to the first highlight. */
   contribution?: string;
+  /** Short visual summary at the bottom of the project page. */
+  brief?: ProjectBrief;
   /**
    * Documentation state, separate from `status`.
    * A project can be in progress in the lab while the page write-up is still short.
@@ -198,6 +202,11 @@ function normalizeProject(input: ProjectInput): Project {
     });
   }
 
+  const brief = PROJECT_BRIEFS[input.slug];
+  if (!brief) {
+    throw new Error(`Missing project brief for ${input.slug}`);
+  }
+
   return {
     ...input,
     demoVideoUrl: safeDemoVideoUrl,
@@ -205,6 +214,7 @@ function normalizeProject(input: ProjectInput): Project {
     images: safeImages,
     href: `/projects/${input.slug}`,
     media,
+    brief,
   };
 }
 
@@ -269,7 +279,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/gallery/c-compiler-asm.svg",
     ],
     date: "Spring 2026",
-    buildStage: "Actively Expanding",
+    buildStage: "In development",
     disciplines: ["Frontend", "IR", "Backend", "Testing"],
     keyHighlights: [
       "Recursive-descent parser that handles nested unaries like return ~(-2);",
@@ -350,7 +360,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/gallery/minitorch-gradcheck.svg",
     ],
     date: "Spring 2026",
-    buildStage: "Extending operator coverage",
+    buildStage: "In development",
     disciplines: ["Graph Construction", "Reverse-Mode AD", "Numerical Validation"],
     keyHighlights: [
       "Graph nodes with values, grads, parents, and op metadata for reverse-mode",
@@ -411,7 +421,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/bloombot-poster.jpg",
     images: ["/projects/bloombot-poster.jpg"],
     date: "Spring 2026",
-    buildStage: "Shipped demo; next hardware revision",
+    buildStage: "Working prototype",
     disciplines: [
       "Electromechanical Actuation",
       "Embedded Control",
@@ -487,7 +497,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/lightsaber/perfboardaudiocircuit.png",
     ],
     date: "Spring 2026",
-    buildStage: "Shipped Demo",
+    buildStage: "Working prototype",
     disciplines: [
       "Mechanical Design",
       "Analog Circuit Design",
@@ -542,7 +552,7 @@ const BASE_PROJECTS: Project[] = [
     oneLine:
       "A BrainChild tennis-ball launcher. An ESP32 sequences two RS-775 flywheels and a NEMA 17 feed from a Replit app.",
     overview:
-      "The demo had to run off a battery, not a USB cable. I moved sequencing off an Arduino Mega onto an ESP32. MOSFET modules hard-switch the flywheels, so speed is PWM duty, not a half-on FET dumping heat. A NEMA 17 on an A4988 indexes the balls. A fused 12 V pack feeds the motors, and a buck makes 5 V for the ESP32. Without that buck the ESP32 was dead on battery. A later PWM test oversped a motor. The fuse did not open, buck and battery joints came off, and a wire melted. The first stepper print was too flimsy until a denser reprint. It stayed a prototype: a multi-motor demo, not a finished launcher.",
+      "I moved sequencing off an Arduino Mega onto an ESP32 for a BrainChild demo. MOSFET modules switch the flywheels under PWM. Duty cycle changes the voltage waveform. Speed still depends on the motor and the load. A NEMA 17 on an A4988 indexes the balls. A fused 12 V pack feeds the motors, and a buck makes about 5 V for the ESP32 board's VIN. The chip itself runs at 3.3 V. The bench demo runs from the Replit app. A later PWM test left a flywheel much faster than commanded, the fuse did not open, pack-side joints detached, and a wire's insulation melted. I did not measure the current, and I have not established which of those happened first.",
     techStack: [
       "ESP32",
       "C++",
@@ -577,11 +587,11 @@ const BASE_PROJECTS: Project[] = [
     ],
     demoVideoUrl: "/projects/tennis-ball-shooter/demo-with-app.mp4",
     date: "2025–2026",
-    buildStage: "Client prototype / demo",
+    buildStage: "Working prototype",
     keyHighlights: [
-      "Drove flywheels with MOSFET modules under ESP32 PWM so speed is duty cycle, not a half-on FET dumping heat",
-      "Split a fused 12 V pack: actuators on the high rail, bucked 5 V for ESP32 / driver logic",
-      "Survived an overspeed event where the fuse missed, buck/battery joints failed, and a wire melted, then hardened the bring-up checklist around protection and joints",
+      "PWM into MOSFET modules sets the flywheel voltage waveform. Speed still depends on the motor and the load.",
+      "Fused 12 V for the motors. A buck feeds about 5 V to the ESP32 board. The chip runs at 3.3 V.",
+      "The Replit app sequences the feed and the flywheels on the bench.",
     ],
     architecture: [
       "Replit UI → ESP32 → MOSFET PWM + A4988 → RS-775s / NEMA 17 → feed + launch.",
@@ -589,13 +599,13 @@ const BASE_PROJECTS: Project[] = [
       "PWM hard-switches the pack across the motor; inductance averages the pulses.",
     ],
     challenges: [
-      "12 V pack without a buck converter left the ESP32 unable to run correctly off battery.",
-      "PWM test oversped a motor; fuse did not interrupt; buck/battery solder came off and a wire melted.",
+      "Without the buck, the ESP32 board would not run from the 12 V pack.",
+      "A PWM test left a flywheel much faster than commanded. The fuse did not open, pack-side joints came off, and insulation melted. No current measurement, so the cause is not established.",
       "First 3D-printed stepper interface was too flimsy and poorly fastened under load.",
     ],
     lessonsLearned: [
-      "MOSFET PWM is on/off at high frequency. Duty cycle is average voltage to the motor, not a DC voltage inside the FET.",
-      "A fuse on the diagram is not enough if joints fail first and current has nowhere safe to go.",
+      "PWM changes the voltage waveform applied to the motor. Actual speed also depends on load and the motor.",
+      "An open joint interrupts that path. Melted insulation still needs a measured cause, and I don't have one.",
       "A soft print makes STEP/DIR look guilty. Raise infill before rewriting the ISR.",
     ],
     technicalNotes: [
@@ -636,7 +646,7 @@ const BASE_PROJECTS: Project[] = [
         label: "Overspeed aftermath",
         mediaType: "process",
         caption:
-          "After the flywheel ran away: fuse miss, failed joints, melted conductor.",
+          "After the PWM test: the fuse did not open, pack-side joints came off, and this conductor's insulation melted.",
       },
       {
         kind: "image",
@@ -687,7 +697,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/ultrasonic-pcb/pre-trace-3d.png",
     ],
     date: "Summer 2026",
-    buildStage: "Fabrication-ready Gerbers",
+    buildStage: "Fabrication files ready",
     disciplines: [
       "PCB Design",
       "Electrical Design",
@@ -772,7 +782,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/per-power-electronics/ic-selection-p01.jpg",
     ],
     date: "Fall 2026",
-    buildStage: "Recruitment design challenge",
+    buildStage: "Analysis complete",
     disciplines: [
       "Power Electronics",
       "Circuit Design",
@@ -798,7 +808,7 @@ const BASE_PROJECTS: Project[] = [
     ],
     technicalNotes: [
       "Recruitment challenge · independent analysis.",
-      "Datasheet metric cells intentionally left as TODOs until filled.",
+      "Datasheet cells stay blank where the sheet did not give a number.",
     ],
     tags: [
       "Power Electronics",
@@ -839,7 +849,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/hyperloop-vfd/pages/submission-p09.jpg",
     ],
     date: "Fall 2026",
-    buildStage: "Recruitment design challenge",
+    buildStage: "Analysis complete",
     disciplines: [
       "Power Electronics",
       "Motor Control",
@@ -915,7 +925,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/afterthought/themes.jpg",
     ],
     date: "Summer 2026",
-    buildStage: "Deployed MVP",
+    buildStage: "Working prototype",
     disciplines: [
       "Full-Stack Engineering",
       "Product Design",
@@ -1023,7 +1033,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/gallery/cis5450-pipeline.svg",
     ],
     date: "Spring 2026",
-    buildStage: "Course project complete",
+    buildStage: "Analysis complete",
     disciplines: ["Data Cleaning", "EDA", "Modeling", "Evaluation"],
     keyHighlights: [
       "Dropped post-outcome leakage before any model saw the data",
@@ -1086,7 +1096,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/website-2.png",
     images: ["/projects/website-2.png", "/projects/website-1.png", "/projects/website-cover.png"],
     date: "2026",
-    buildStage: "CLI pipeline working; expanding campaign tooling",
+    buildStage: "In development",
     disciplines: ["Scraping", "LLM Drafting", "Send Control"],
     keyHighlights: [
       "Hybrid scrape path for JS-heavy faculty pages",
@@ -1133,7 +1143,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/count-coach-poster.png",
     images: ["/projects/count-coach-1.png", "/projects/count-coach-2.png", "/projects/count-coach-poster.png"],
     date: "2025-2026",
-    buildStage: "Shipped personal practice tool",
+    buildStage: "Deployed",
     disciplines: ["Signal Processing", "Full-Stack UX"],
     keyHighlights: [
       "Waveform region select tied straight to analysis",
@@ -1174,7 +1184,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/tetrissettup.jpg",
     images: ["/projects/initialmaterials.jpg", "/projects/tetrissettup.jpg", "/projects/gallery/arduino-tetris-gameplay.svg"],
     date: "2026",
-    buildStage: "Playable prototype complete",
+    buildStage: "Working prototype",
     disciplines: ["Embedded Software", "Hardware Bring-up"],
     keyHighlights: [
       "On-device game loop with collision, scoring, and piezo cues",
@@ -1227,7 +1237,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/bc1.png",
     images: ["/projects/bc1.png", "/projects/bcfeedback.png"],
     date: "2026",
-    buildStage: "Iterating on feedback quality",
+    buildStage: "In development",
     disciplines: ["Computer Vision", "Full-Stack Product"],
     keyHighlights: [
       "Pose landmarks on user and reference clips",
@@ -1268,7 +1278,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/website-1.png",
     images: ["/projects/website-1.png"],
     date: "2026",
-    buildStage: "Demo-ready build completed",
+    buildStage: "Working prototype",
     disciplines: ["Product", "Auth & Data"],
     keyHighlights: [
       "Supabase auth and RLS for student profiles",
@@ -1329,7 +1339,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/website-2.png",
     ],
     date: "2025-2026",
-    buildStage: "Continuous iteration",
+    buildStage: "Deployed",
     keyHighlights: [
       "Typed project model powering home, list, and detail routes",
       "Structured case-study shell: motivation through reflection",
@@ -1474,7 +1484,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/gallery/drift-control-loop.svg",
     ],
     date: "Template 2026",
-    buildStage: "Case-study template (placeholder)",
+    buildStage: "Page template",
     keyHighlights: [
       "Placeholder only. Do not read the 200 Hz loop or the hold numbers as a machine I built.",
       "Chassis and star-ground PCB co-designed around battery CG.",
@@ -1651,7 +1661,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     thumbnail: "/projects/leader-follower-robotic-arm/bench.jpg",
     images: [],
     date: "Sep. 2026 – Present",
-    buildStage: "Active",
+    buildStage: "In development",
     keyHighlights: [
       "I wrote the bridge. Pi 1 sends leader joint angles. Pi 2 drives six STS3215 servos. Silence for 300 ms holds, and a step is limited to 15°.",
       "Shop Wi-Fi used a fixed IP. Each hotspot changed it. The sender now looks the follower up by name every 15 seconds.",
@@ -1757,7 +1767,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     thumbnail: "/projects/logic-pcb/logic-board.jpg",
     images: [],
     date: "Sep. 2026 – Present",
-    buildStage: "Active",
+    buildStage: "In development",
     keyHighlights: [
       "5–20 A fused paths, DC-DC regulation, and RS-485 and I2C, kept as one set of board changes.",
       "Bring-up so far: 12 V and 6 V rails and the actuator interfaces, checked with a multimeter, plus board-level fault isolation when a rail or an actuator did not come up.",
@@ -1831,7 +1841,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     thumbnail: "/projects/multimodal-3d-printer/toolhead.jpg",
     images: [],
     date: "August 2026 – Present",
-    buildStage: "Toolhead on the gantry",
+    buildStage: "In development",
     keyHighlights: [
       "The axis is for a military demo of the multimodal printer: set how far the nozzle turns, and show the measured angle.",
       "The motor is a 5:1 geared NEMA 17. STEP is D3 and DIR is D2 on an A4988, with 24 V on the motor supply.",
@@ -1925,47 +1935,48 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     writeUp: "published",
     experienceSlug: "grasp-laboratory",
-    githubUrl: "https://github.com/rkparikh77/360imager",
     oneLine:
-      "A TSL1401 line sensor on an nRF54L15, for a panorama made by rotating. The lines work on the bench. The rotation does not.",
+      "A TSL1401 line sensor on an nRF54L15. One scan is 128 brightness values. The live plot and the panorama are still the plan.",
     overview:
-      "Ongoing work in Penn ModLab. A 128-pixel TSL1401 reads one line of light at a time on an nRF54L15. The plan is to attach each line to a rotational angle and build a 360° view for a UAV. The team has live readout, a finger test with no lens, and a timing fix for 120 Hz room light. A 360° image, a wireless run, and a flight are not done. The repository is github.com/rkparikh77/360imager.",
+      "A GRASP prototype for a panorama built from one line of pixels. The TSL1401 exposes 128 photodiodes together, then the nRF54L15 samples each analog voltage. The hardware readout and the Bluetooth stream are in the source and have not been run on this board. A later flash never took, and the spinner on the bench does not have the sensor on it.",
     contribution:
-      "Integrating the TSL1401 with an nRF54L15 on Zephyr. The ADC and GPIOs bring the samples in.",
-    techStack: ["TSL1401", "nRF54L15", "Zephyr", "J-Link"],
+      "I'm integrating the TSL1401 on the nRF54L15. The ADC and GPIOs are how a scan becomes numbers. I'm not calling the hardware readout or the Bluetooth stream done.",
+    techStack: ["TSL1401", "nRF54L15", "nRF Connect SDK", "J-Link"],
     thumbnail: "/projects/3d-imaging-uav/setup.jpg",
     images: [],
     date: "August 2026 – Present",
-    buildStage: "Acquisition on the bench",
+    buildStage: "In development",
     keyHighlights: [
-      "128 pixels per line. The next step is to pair each line with angle. That pairing is not in the data.",
-      "Room lights at 120 Hz drew stripes. Paired exposures, 12.5 ms apart, are the still-scene fix.",
-      "I am integrating the sensor on the nRF54L15. The flicker timing and the mount are team work.",
+      "128 photodiodes expose together. The ADC sample is where each analog voltage becomes a number.",
+      "The source loops every 25 ms, subtracts a dark frame, and can average a second pair 12.5 ms later.",
+      "That hardware readout and the Bluetooth packet have not been run on this board.",
+      "A later flash never took. The wires had come loose, and the laptop couldn't see a toolchain path.",
     ],
     architecture: [
-      "Light, TSL1401, ADC on the nRF54L15, then a stack of lines in time.",
-      "Nominal line time is 25 ms, about 40 lines a second, with a dark frame subtracted.",
-      "Angle is the missing axis. The sensor is not rotating in the results on this page.",
+      "Light, photocurrent, a held analog voltage on AO, then one ADC sample per pixel.",
+      "A scan is pix[128]. The first laptop demo is pixel index against brightness, not a panorama.",
+      "Angle is the missing axis. The sensor is not rotating.",
     ],
     challenges: [
-      "An earlier readout took about 9 ms. A hardware-timed path near 1 ms is written and not confirmed on the board.",
-      "A faster spin needs a shorter exposure, and a shorter exposure collects less light. ADC gain and a lower reference are proposals.",
-      "Battery, wireless, and rotation are still next. The Bluetooth branch is not tested.",
+      "The J-Link is the 3.3 V supply today. That Vcc clip and a second supply cannot be on together.",
+      "The BLE image still prints every line over RTT. A blocking RTT mode will stall the scan when no debugger is reading.",
+      "The hardware readout and the Bluetooth path are in the source. There is no build output, and neither has been run on this board.",
+      "The lens is on the bench, not on the row. It still has to get smaller and then stay fixed.",
     ],
     lessonsLearned: [
-      "A vertical stripe can be the lamp, not the scene. The line rate decides which one you see.",
+      "A line of analog voltages is not an image until each one is sampled, and a stack of lines is not a panorama until each line has an angle.",
     ],
     technicalNotes: [
-      "Repository pins: analog on P1.11, SI on P1.12, clock on P1.08.",
-      "Still-scene figure: 0.8% line-to-line jitter and 1.2% drift over 60 seconds, sensor not rotating.",
+      "HJ-N54L-SIP_EVB, nRF54L15, nRF Connect SDK v3.4.1. Board target nrf54l15dk/nrf54l15/cpuapp. AO P1.11, SI P1.12, CLK P1.08.",
+      "Full scale is 3.6 V, 12 bits. Pixels 0-3 are copies of pixel 4. The BLE packet is 206 bytes on the Nordic UART Service, and nothing is retransmitted.",
     ],
     nextImprovements: [
-      "Confirm the hardware-timed readout on the board.",
-      "Mount the lens and run one measured rotation.",
-      "Test wireless on the bench before it goes on a vehicle.",
+      "Flash the BLE image once with the J-Link and confirm it advertises as 360imager.",
+      "Move the board to its own 3.3 V supply and unplug the J-Link before plotting a scan.",
+      "Pair each scan with an angle only after a live line plot exists.",
     ],
     finalOutcome:
-      "A working line-sensor prototype. Not a 360° reconstruction, not a wireless demo, and not a flight.",
+      "The signal path is specified, and the readout source is written. Not a live plot, not a 360° reconstruction, and not a flight.",
     media: [
       {
         kind: "image",
@@ -2007,6 +2018,47 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
         fit: "contain",
         mediaType: "image",
       },
+      {
+        kind: "video",
+        src: "/projects/3d-imaging-uav/spin.mp4",
+        poster: "/projects/3d-imaging-uav/spin-poster.jpg",
+        alt: "A small assembly spinning on the bench, with a ribbon cable off the center",
+        label: "Spinner",
+        caption:
+          "The assembly turning. The line sensor is not mounted on it. No speed is written down.",
+        mediaType: "video",
+        portrait: true,
+      },
+      {
+        kind: "image",
+        src: "/projects/3d-imaging-uav/over-spinner.jpg",
+        alt: "A wired perfboard and green board held over a black spinner on the lab bench",
+        label: "Over the spinner",
+        caption:
+          "The wired board held over the spinner. The row is not mounted, and this is not a scan.",
+        fit: "contain",
+        mediaType: "image",
+      },
+      {
+        kind: "image",
+        src: "/projects/3d-imaging-uav/lens.jpg",
+        alt: "A black lens sitting on the bench, not mounted on a sensor",
+        label: "Lens",
+        caption:
+          "The lens on the bench. It still has to get smaller, and it has to stay fixed. It is not on the row.",
+        fit: "contain",
+        mediaType: "image",
+      },
+      {
+        kind: "image",
+        src: "/projects/3d-imaging-uav/meter.jpg",
+        alt: "Handheld multimeter on the bench, probes held on a wired board, display not a recorded reading",
+        label: "Meter check",
+        caption:
+          "Probes on the wired board. The display is not a voltage I wrote down.",
+        fit: "contain",
+        mediaType: "image",
+      },
     ],
     tags: ["ModLab", "GRASP", "TSL1401"],
     signal: "Sensing",
@@ -2020,37 +2072,37 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     experienceSlug: "penn-adapt",
     oneLine:
-      "An EMG armband and a small actuated arm with Penn ADAPT. The boards are drawn. The mount still doesn't fit.",
+      "I design the EMG boards and mounts for a Penn ADAPT arm. One sensor board is built. The eight-channel armband is the architecture.",
     overview:
-      "I design the PCBs and the mounts for an EMG armband and a small actuated arm. This isn't the assistive button. Nathan, Jessica, and Devansh showed an earlier affordable printed arm. The aim I'm working toward is a mid-range EMG device for cleaner signals. I don't have a date for that change.",
+      "I design the sensor PCB, the main PCB, and the mounts. Each sensor board is a two-electrode differential pair into one ADS1291 channel, with protection and filtering ahead of the amplifier. The main board is the STM32 acquisition, processing, and power interface. One sensor board is in hand. The architecture is eight of those modules on a 20-pin flex, plus servos and a linear actuator. The team tested the main board and started the first fixture. Firmware reads raw EMG from one ADS1291 and can run a fixed motor test. It does not map EMG to motion. This is separate from the assistive button.",
     contribution:
-      "I draw the boards and the mounts. The electrode plan is a buck from 7.2 V to 4 V, then an LDO, so the pads are not on the switching rail. Two longer wires still keep a board out of the CAD.",
-    techStack: ["EMG", "ADS1291", "STM32H723", "PCB"],
+      "I design the boards and the mounts. The sensing supply in my note is a 7.2 V pack, a buck to 4 V, then an LDO. That rail powers the sensing circuitry. The electrodes are the signal inputs. Two longer wires still keep a board out of the CAD mount.",
+    techStack: ["EMG", "ADS1291", "STM32", "PCB"],
     thumbnail: "/projects/bionic-arm/main-board.jpg",
     images: [],
     date: "Fall 2026",
-    buildStage: "Boards drawn",
+    buildStage: "In development",
     keyHighlights: [
-      "I've been designing the PCBs and the mounts.",
-      "Two longer wires still keep the board out of the CAD mount.",
-      "Nathan Zhang tested the main board. Rubi Wu started the first fixture. The armband is three boards, two servos, and a linear actuator.",
+      "I design the sensor board: filtering and protection, then an ADS1291 that digitizes one differential EMG channel.",
+      "One sensor board is built. The eight-module armband, two servos, and a linear actuator are the architecture.",
+      "Bring-up reads raw EMG from one ADS1291. A fixed motor test is optional. There is no gesture or closed-loop control.",
     ],
     architecture: [
-      "The armband plan is eight small rigid modules around the forearm. Each one has a differential electrode pair. A 20-pin flat flex ties them together, with a sensor main board between those modules and the main board.",
-      "Architecture V4 puts an ADS1291 on each module. It takes the difference between the two pads, so noise that shows up on both of them drops out, and then it digitizes the result. Eight chips share one SPI bus. Each has its own chip select, and they share a START line so the samples line up.",
-      "A bring-up program on an STM32H723 reads one ADS1291. Gain is 6, the sample rate is 2000 per second, and the motors are compiled off. Samples stay in the debugger.",
+      "Current hardware is one sensor PCB. The architecture document is eight modules around the forearm, tied by a 20-pin flex, with a sensor main board between those modules and the main board.",
+      "Each module takes the difference between two electrodes and digitizes it with an ADS1291. The sheets break out a chip select per device and a shared START.",
+      "The main board is an STM32 for acquisition, processing, and the power and control interfaces. A Nucleo-F446RE in the photos looks like the ST-LINK. That wiring is not confirmed on the schematic.",
     ],
     challenges: [
       "The progress slide says SPI daisy-chain. Architecture V4, and the sensor schematic with CS1 through CS8, use a separate chip select per ADS1291. I don't know which one the team settled on.",
       "My power note steps a 7.2 V LiPo down to 4 V with a buck, then an LDO, so the EMG supply stays quiet. The main-board schematic, dated 9/20/2026, marks a 2-cell pack from 6.0 V to 8.4 V, plus a 12 V actuator rail, a 6 V servo rail, and 3.3 V electronics. Those two descriptions don't match.",
-      "Nathan's letter asks for a skin-flush fixture and a weight fixture, and names Rubi Wu on the first one. I don't know how that work is split.",
+      "A note in the folder asks for a skin-flush fixture and a weight fixture. I don't know how that work is split.",
     ],
     lessonsLearned: [
-      "A buck can drop the pack voltage without burning that drop as heat. An LDO after it is the quieter rail for the electrodes. The schematic voltages still have to be lined up with that note.",
+      "A buck drops the pack voltage efficiently. The LDO after it is a quieter supply for the sensing circuitry. It does not remove every switching artifact, and the electrodes are not loads on that rail.",
     ],
     technicalNotes: [
       "Three schematics, drawn-by left blank. sensor_main2.SchDoc is dated 9/19/2026. Main.SchDoc is 9/20/2026. Sensor_normal.SchDoc is 9/27/2026.",
-      "The progress slide counts one sensor main, seven sensor normal boards, and one main board. Nathan's letter says the sensor main connects onward through another 20-pin flex.",
+      "The progress slide counts one sensor main, seven sensor normal boards, and one main board. The same notes say the sensor main connects onward through another 20-pin flex.",
       "The sensor sheets use an ADS1291. The 3.3 V regulator on them is a TPS7A2033. The main board labels a 12 V actuator rail and a 6 V servo rail.",
     ],
     nextImprovements: [
@@ -2058,7 +2110,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
       "Settle the power story: my 7.2 V to 4 V note, or the schematic's 6.0 V to 8.4 V pack.",
     ],
     finalOutcome:
-      "The schematics are drawn, and a program in the folder reads one ADS1291 with the motors off. I don't have a measured EMG recording, a mount that fits, or a finished arm. Nathan's letter still lists the fixture, a loaded servo test, and building the arm.",
+      "I have schematics for the sensor module, the sensor main, and the main board, and one sensor board in hand. Firmware captures raw EMG from one channel. I don't have a saved EMG recording, a mount that fits, or EMG-driven motion.",
     media: [
       {
         kind: "image",

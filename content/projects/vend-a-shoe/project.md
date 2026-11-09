@@ -4,7 +4,7 @@ slug: "vend-a-shoe"
 category: "embedded"
 status: "shipped"
 date: "Summer 2026"
-buildStage: "Client Deployment"
+buildStage: "Client delivered"
 featured: true
 signal: "Electromechanical Systems"
 disciplines: "Mechanical Design, Electrical Integration, Embedded Systems, Cloud Software"

@@ -41,7 +41,7 @@ const DHAMAKA_PERFORMANCES: Performance[] = [
   },
   {
     title: "Legacy on Broad 2026 · Front Row",
-    event: "Legacy on Broad · Aaron K Wilson Media",
+    event: "Legacy on Broad",
     result: "2nd Place",
     blurb: "Circuit reps mid-season. Placement still counted toward the grind.",
     youtubeId: "gjh7Ebsmmec",

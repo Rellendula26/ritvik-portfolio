@@ -28,7 +28,7 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       },
       {
         name: "MOSFET PWM drive",
-        role: "MCU PWM into MOSFET gates; modules act as fast switches, not linear resistors, so flywheel speed is duty cycle, not a half-on MOSFET burning heat.",
+        role: "MCU PWM into the MOSFET gates. Duty cycle changes the voltage waveform. Flywheel speed also depends on the motor and the load.",
       },
       {
         name: "Ball feed",
@@ -36,7 +36,7 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       },
       {
         name: "Launcher drive",
-        role: "Dual RS-775 DC motors on printed flywheels; PWM duty sets release speed.",
+        role: "Dual RS-775 DC motors on printed flywheels. PWM duty changes the applied waveform. Release speed also depends on the load.",
       },
       {
         name: "Chassis & mounts",
@@ -98,19 +98,19 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       discipline: "Electrical",
       goal: "Run high-current flywheels and a stepper off a 12 V pack without killing a 5 V ESP32, switch motors efficiently with PWM, and keep a fuse in the pack path for overcurrent.",
       design:
-        "Fused 12 V battery rail for MOSFET modules and stepper VMOT. Buck converter steps that rail to 5 V for ESP32 and driver logic. The MOSFETs are not “variable resistors.” The ESP32 drives their gates with PWM so each device hard-switches between nearly full pack voltage and off. Duty cycle sets average motor voltage; motor inductance and inertia smooth the pulses. That is why a half-speed command does not dump tens of watts into a half-on FET.",
+        "Fused 12 V battery rail for MOSFET modules and stepper VMOT. A buck steps that rail to about 5 V for the ESP32 board's VIN and the driver logic. The ESP32 chip runs at 3.3 V from the board regulator. The ESP32 drives the MOSFET gates with PWM, so each device switches between on and off. Duty cycle changes the voltage waveform. Motor inductance and inertia smooth the pulses, and the resulting speed still depends on the motor and the load.",
       challenges: [
-        "Early bring-up had no buck converter. The pack was 12 V; the ESP32 wants ~5 V. Without the step-down, the control side would not run correctly off battery.",
-        "During MOSFET PWM testing the motor oversped hard, as if it were seeing a continuous 12 V rail. The fuse did not open the way we expected.",
-        "Solder joints on the buck converter and battery path came off under that event. With the joint gone, current had nowhere honest to go and a wire melted / charred.",
+        "Early bring-up had no buck. The pack was 12 V. Without the step-down, the ESP32 board would not run from the battery.",
+        "During MOSFET PWM testing a flywheel ran much faster than commanded. The fuse did not open. I did not measure the current, so I am not treating high speed as proof of overcurrent.",
+        "Solder joints on the buck and battery path were detached afterward, and a wire's insulation melted. An open joint interrupts that path. I have not established whether the heating came from a resistive joint, a short, arcing, or something else.",
       ],
       iterations: [
         "Battery toward the logic side without regulation: dead end.",
         "Added a buck module so ESP32 VIN and A4988 VDD sat on a real 5 V rail, with a fuse on the pack feed.",
-        "MOSFET PWM modules for flywheel duty; then a forensic pass after the overspeed / melted-wire failure.",
+        "MOSFET PWM modules for the flywheels. After the fast spin, detached joints, and melted insulation, I still don't have a current measurement or a confirmed sequence.",
       ],
       finalImplementation:
-        "Prototype interface: fused 12 V rail for actuators, bucked 5 V for logic, MOSFET PWM for flywheels, A4988 for the NEMA 17. Fuse and joints became as much of the design as the modules themselves.",
+        "Prototype interface: fused 12 V rail for actuators, about 5 V for the ESP32 board, MOSFET PWM for flywheels, A4988 for the NEMA 17. The damaged harness was not retested against a known fault.",
       media: [
         {
           kind: "image",
@@ -179,9 +179,9 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
         "Hard-switch with PWM duty cycle",
       ],
       tradeoffs:
-        "A half-on FET at several amps burns power as heat. PWM keeps the FET near fully on or fully off so dissipation stays low while average motor voltage tracks duty cycle.",
+        "A MOSFET held between on and off dissipates voltage times current as heat. PWM keeps each switch near fully on or fully off. Duty cycle changes the waveform. Speed still depends on the motor and the load.",
       choice:
-        "ESP32 PWM into MOSFET gates on the 12 V motor path. Duty cycle commands speed; the motor’s inductance and inertia do the averaging.",
+        "ESP32 PWM into MOSFET gates on the 12 V motor path. The motor's inductance and inertia smooth the pulses.",
     },
     {
       id: "fuse",
@@ -189,14 +189,14 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       problem: "A short or runaway motor current needs a hard interrupt, not hope.",
       alternatives: ["No protection", "Software current limit only", "Inline fuse on the battery feed"],
       tradeoffs:
-        "A fuse is slow and blunt, and ours did not save us during the overspeed event. Skipping it is worse. Software limits still need a physical backstop.",
+        "A fuse opens on current and time, not on motor speed. This one did not open during the fast spin. That does not by itself prove the current was under the rating, or that it was over it.",
       choice:
-        "Keep the fuse in the pack path. After the melt, treat fuse rating, joint quality, and PWM fault modes as one failure chain.",
+        "The fuse stays in the pack path. I have not verified a rating or a placement that would have opened before the insulation melted.",
     },
     {
       id: "buck",
       title: "Buck converter between 12 V pack and ESP32",
-      problem: "The battery was a 12 V-class pack; the ESP32 logic rail is 5 V.",
+      problem: "The pack is about 12 V. The ESP32 board expects about 5 V on VIN. The chip runs at 3.3 V.",
       alternatives: ["Feed the MCU somehow off the pack without regulation", "Step down with a buck module"],
       tradeoffs:
         "Skipping the buck looks simpler until nothing boots. A buck adds one more module and wiring, but it is the difference between a demo and a dead board.",
@@ -250,9 +250,9 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
     {
       id: "e3",
       phase: "Failure",
-      title: "Overspeed, fuse miss, melted wire",
+      title: "Fast spin, intact fuse, melted insulation",
       description:
-        "While testing MOSFET PWM, a flywheel motor ran far faster than commanded, like a continuous 12 V connection. The fuse did not interrupt. Solder joints on the buck / battery path came off; with that joint gone the current path collapsed and a wire melted. That failure taught more about protection and joints than another clean PWM scope shot would have.",
+        "While testing MOSFET PWM, a flywheel ran much faster than commanded. The fuse did not open. Afterward, solder joints on the buck and battery path were detached and a wire's insulation had melted. I did not measure current, and I have not established the order. An open joint interrupts current on that path. The melted insulation still needs a measured cause.",
       media: {
         kind: "video",
         src: "/projects/tennis-ball-shooter/post-motor-overspeed.mp4",
@@ -312,8 +312,8 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
         evidence: "MOSFET PWM",
       },
       {
-        title: "Failure that rewrote the checklist",
-        body: "Overspeed + fuse miss + melted wire forced joint quality and protection into the same conversation as firmware duty cycle.",
+        title: "Harness damage, cause not isolated",
+        body: "Observed: a flywheel much faster than commanded, a fuse that did not open, detached pack-side joints, and melted insulation. Not measured: current. Not established: the sequence, or that high speed meant overcurrent.",
         evidence: "Burned wire",
       },
     ],
@@ -324,7 +324,7 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
         alt: "Melted and charred yellow wire after overspeed event",
         label: "Melted wire",
         caption:
-          "Yellow conductor after the overspeed event: insulation charred where the joint failed and current had no honest return path.",
+          "Yellow conductor after the PWM test. The insulation melted. The photo does not show the current or the order of the failures.",
       },
       {
         kind: "image",
@@ -355,7 +355,7 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
     ],
     limitations: [
       "Not production-ready; breadboard interface would need a custom PCB for a durable unit.",
-      "Fuse placement / rating did not interrupt the overspeed event the way we assumed.",
+      "The fuse did not open during the fast spin. No later test shows a rating that would have.",
       "Launcher mechanics and closed-loop current / speed sensing were not finished.",
       "App integration was demo-grade, not a polished consumer UX.",
     ],
@@ -364,8 +364,8 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
     surprises: [
       "The first “ESP32 is dead” bug was a missing buck converter, not firmware.",
       "The first “stepper won’t index” bug was a soft print and weak fastening, not STEP/DIR timing.",
-      "PWM does not mean the MOSFET outputs 6 V. It means 12 V / 0 V pulses whose average the motor smooths. When that chain fails, the motor can look like it is hard-tied to the pack.",
-      "A fuse on the diagram is not the same as a fuse that opens when you need it. Joints failing can leave current with nowhere safe to go.",
+      "PWM is a switched waveform, not a DC voltage inside the MOSFET. Speed still depends on the motor and the load. A motor that runs flat out can look hard-tied to the pack, and that appearance is not a current measurement.",
+      "A fuse opens on current and time, not because the shaft is fast. An open solder joint interrupts current. It does not force current somewhere else.",
     ],
     redesign: [
       "Custom power / motor-interface PCB with deliberate fuse rating, Kelvin sense, and flyback paths.",

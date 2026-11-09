@@ -7,7 +7,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
 import {
   CATEGORY_LABELS,
-  PROJECT_STATUS_LABELS,
   pickProjectPrimaryMedia,
 } from "@/data/projects";
 import { Badge } from "@/components/ui/Badge";
@@ -177,14 +176,6 @@ export default function ProjectCard({
                 </span>
               )}
             </div>
-            <span
-              className={[
-                "absolute right-4 top-4 font-mono text-[10px] tracking-widest",
-                isFeatured ? "text-stone-500" : "text-stone-400",
-              ].join(" ")}
-            >
-              {project.id}
-            </span>
           </div>
         ) : null}
 
@@ -275,7 +266,7 @@ export default function ProjectCard({
                   : "border-stone-200 bg-stone-50 text-stone-600",
               ].join(" ")}
             >
-              {PROJECT_STATUS_LABELS[project.status]}
+              {project.buildStage}
             </span>
             {project.writeUp === "coming-soon" ? (
               <span
