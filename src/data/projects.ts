@@ -111,6 +111,8 @@ export interface Project {
   intakeSourcePath?: string;
   localMediaImported?: boolean;
   media: ProjectMedia[];
+  /** Opening hero shows these photos together, each with its own label. */
+  heroFrames?: Array<{ src: string; alt: string; label: string }>;
   tags: string[];
   href: string;
   signal: string;
@@ -1758,24 +1760,37 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     experienceSlug: "serpent-robotics",
     oneLine:
-      "Power and logic boards for SR-01. I modified the fused paths, the DC-DC, and the buses as one set. A grip test later fried the control board.",
+      "Power and logic boards for SR-01. The logic board's servo path is a Teensy 4.1 into a PCA9685 at 50 Hz. A grip test fried the control board, and that replacement is still open.",
     overview:
-      "I modified the power and logic boards with 5–20 A fused circuits, DC-DC regulation, and RS-485 and I2C, kept as one set. A grip test broke a printed link, the stepper current spiked, and the control board and half the actuators were fried.",
+      "I modified the power and logic boards with 5–20 A fused circuits, DC-DC regulation, and RS-485 and I2C, kept as one set. On the logic board I brought up a Teensy 4.1, a TCA9548A, and a PCA9685 so a servo command is I2C in and 50 Hz PWM out. Output enable is a separate GPIO. A grip test broke a printed link, the stepper current spiked, and the control board and half the actuators were fried.",
     contribution:
-      "Modified the power and logic boards, and checked the 12 V and 6 V rails with a multimeter.",
-    techStack: ["Logic PCB", "Power PCB", "RS-485", "I2C"],
-    thumbnail: "/projects/logic-pcb/logic-board.jpg",
+      "Modified the power and logic boards, checked the 12 V and 6 V rails, and brought up the Teensy servo path, including the output-enable fix.",
+    techStack: ["Teensy 4.1", "PCA9685", "TCA9548A", "I2C", "Logic PCB", "Power PCB"],
+    thumbnail: "/projects/logic-pcb/logic-populated.jpg",
+    heroFrames: [
+      {
+        src: "/projects/logic-pcb/logic-populated.jpg",
+        alt: "V2 logic board on a blue mat, with a Teensy 4.1 installed",
+        label: "V2 logic",
+      },
+      {
+        src: "/projects/logic-pcb/power-modules.jpg",
+        alt: "V2 power board with an XT60, ATAZ converter modules, and terminal blocks",
+        label: "V2 power",
+      },
+    ],
     images: [],
     date: "Sep. 2026 – Present",
     buildStage: "In development",
     keyHighlights: [
-      "5–20 A fused paths, DC-DC regulation, and RS-485 and I2C, kept as one set of board changes.",
-      "Bring-up so far: 12 V and 6 V rails and the actuator interfaces, checked with a multimeter, plus board-level fault isolation when a rail or an actuator did not come up.",
-      "The logic board in the photo is labeled for stepper and encoder connectors, RS-485, and power inputs marked 12 V, 5 V, and ground.",
+      "Teensy 4.1 to a TCA9548A to a PCA9685. 16 channels of 12-bit PWM, set to 50 Hz. A register write reads back.",
+      "The servo stayed still until firmware drove the PCA9685 output-enable pin on GPIO 6. OE is active low.",
+      "5–20 A fused paths, modular DC-DC, and RS-485 and I2C stay one set of board changes. 12 V and 6 V are meter checks, not an endurance test.",
     ],
     architecture: [
-      "Two boards show up in the photos. The logic board has white connectors and silkscreen for stepper, encoder, RS-485, I2C, and proximity sensors. The power board has green terminal blocks, blade fuses, and a yellow XT60.",
-      "Fusing, DC-DC, and the buses are one set of changes. The photos don't separate them onto a single board.",
+      "Servo commands: Teensy 4.1, then the TCA9548A, then the PCA9685, then the servo. Output enable is Teensy GPIO 6 into PCA9685 OE, not another I2C hop.",
+      "V1 is the bare pair on the homework sheet. The boards went through more than one revision. The V2 logic board I tested has the Teensy. The V2 power board has the XT60, blade fuses, and ATAZ UMD40 modules marked for 12 V and 5 V.",
+      "Fusing, DC-DC, and the buses are one set of changes. I have not assigned each fuse or each converter to one load.",
     ],
     challenges: [
       "Shop note from a branch-grip test: the linkage was 3D printed, and it broke while grabbing the branch. The stepper current dropped suddenly and fed back into the electrical system. Signals were delayed by about 5 seconds. Half the actuators and the control board were fried.",
@@ -1783,29 +1798,43 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
       "The note also says the saw was being changed from a brushed DC motor to a BLDC because the brushless saw draws less current. It often got stuck. That change is not described as finished.",
     ],
     lessonsLearned: [
+      "A controller that stores an I2C write can still hold the outputs off. On the PCA9685 that pin is OE, and it is active low.",
       "A printed grip link is part of the electrical story. When it broke, the current spike took out the control board, not just the plastic.",
       "The handwritten numbers under the boards in one photo are ESE 2150 homework. They are not rail measurements.",
     ],
     technicalNotes: [
-      "Visible on the power board: blade fuses are installed, including one marked 15. I am not reading every fuse value off that photo.",
+      "SDA is bidirectional. A one-direction isolator cannot carry it. I looked at bidirectional I2C isolators, including the Si8600, and checked the bus across separate supplies.",
+      "Visible on the power board: blade fuses are installed, including one marked 15. I am not reading every fuse value off that photo. The UMD40 labels say 12 V and 5 V. I have not assigned those modules to loads.",
       "A rotating base and a way to move along the branch were added because the machine was hard to position in the tree. I do not have a separate design note for that mechanism.",
-      "A power cycle was not tested, so turn-on and turn-off behavior is still unknown.",
+      "A power cycle was not tested, so turn-on and turn-off behavior is still unknown. Endurance, current logging, and a long voltage check are also still open.",
     ],
     nextImprovements: [
-      "Mark which fuse, which DC-DC stage, and which bus sit on the power board versus the logic board.",
+      "Log servo current and watch the rail over a long run. Those tests have not started.",
+      "Map the fuse markings to branches. CURRENT_S and VOLTAGE_S are on the power schematic and have not been logged.",
       "Replace the fried control board in the write-up only after there is a photo or a bring-up note for the replacement.",
     ],
     media: [
+      {
+        kind: "image",
+        src: "/projects/logic-pcb/logic-populated.jpg",
+        alt: "Logic board on a blue bench mat, with a Teensy 4.1 installed and a DC-DC module at the top",
+        label: "Logic board in bring-up",
+        caption:
+          "V2 logic board during bring-up. This is the revision I tested. The Teensy 4.1 is installed. This photo is the board, not a meter reading.",
+        fit: "contain",
+        mediaType: "diagram",
+        featured: true,
+        priority: 20,
+      },
       {
         kind: "image",
         src: "/projects/logic-pcb/logic-board.jpg",
         alt: "Green logic PCB with white connectors, labeled for stepper, encoder, and RS-485",
         label: "Logic board",
         caption:
-          "Logic board from the SR-01 set. Silkscreen includes stepper, encoder, RS-485, and power inputs marked 12 V, 5 V, and ground. This photo is the bare board, not a powered measurement.",
+          "An earlier bare logic board. Silkscreen includes stepper, encoder, RS-485, and power inputs marked 12 V, 5 V, and ground. This is not the populated V2 board from the servo bring-up.",
         fit: "contain",
         mediaType: "diagram",
-        featured: true,
         priority: 10,
       },
       {
@@ -1814,7 +1843,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
         alt: "Logic board and power board lying on an ESE 2150 homework page",
         label: "Both boards",
         caption:
-          "Logic board on top, power board below, on an ESE 2150 homework sheet. The handwriting is homework, not a measurement from these boards. Logic labels visible here include RS-485, I2C, Encoder, and Proximity Sensors.",
+          "V1 of both boards, on an ESE 2150 homework sheet. The handwriting is homework, not a measurement. Bring-up was on V2, not on this pair.",
         fit: "contain",
         mediaType: "diagram",
       },

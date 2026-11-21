@@ -27,7 +27,7 @@ export default function Home() {
               Serpent, GRASP, and ADAPT
             </h2>
             <p className="mt-2 max-w-xl text-base text-stone-600">
-              {`At Serpent I modified the power and logic boards and wrote the leader-follower bridge. At GRASP I am integrating a 128-pixel line sensor, and reassembling the AddLab toolhead so the display can show shaft angle. At ADAPT I am designing the EMG boards and the mounts. The pages have the schematics, the bench photos, and what is still open.`}
+              {`At Serpent I modified the power and logic boards, brought up the Teensy servo path, and wrote the leader-follower bridge. At GRASP I am integrating a 128-pixel line sensor, and reassembling the AddLab toolhead so the display can show shaft angle. At ADAPT I am designing the EMG boards and the mounts. The pages have the schematics, the bench photos, and what is still open.`}
             </p>
           </Reveal>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

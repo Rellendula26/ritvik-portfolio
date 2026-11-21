@@ -492,23 +492,24 @@ export const PROJECT_BRIEFS: Record<string, ProjectBrief> = {
   },
   "logic-pcb": {
     context: "Serpent Robotics",
-    what: "Bench validation and debugging of SR-01's power and logic PCBs, for power distribution, regulation, and the actuator interfaces.",
+    what: "Bench bring-up of SR-01's power and logic PCBs, including the Teensy path that turns I2C into 50 Hz servo PWM.",
     contribution: [
-      "I focused on testing the boards already in the system and on how they behaved during bring-up.",
-      "I used a multimeter to check the 12 V and 6 V rails, and whether power reached the points it should.",
-      "When a rail or an actuator did not come up, I followed the supply path and the connections to see whether the problem was power delivery, wiring, or the hardware on the end.",
+      "I tested the boards already in the system: 12 V and 6 V on a meter, then the Teensy, the TCA9548A, and the PCA9685.",
+      "Diagnostic firmware scans the I2C buses and reads a register back after a write.",
+      "The servo sat still until firmware drove the PCA9685 output-enable pin on GPIO 6.",
     ],
     results: [
-      "The 12 V and 6 V rails checked out on the bench.",
-      "A later grip test broke a printed link and damaged the control board and several actuators. The cause of that electrical damage has not been confirmed. Bring-up of a replacement board is still open.",
+      "One servo channel moved at 50 Hz after OE was enabled. That is not an endurance test.",
+      "The 12 V and 6 V rails checked out during bring-up. Current logging and a long voltage check are still open.",
+      "An earlier grip test damaged the control board and several actuators. Bring-up of a replacement board is still open.",
     ],
-    tech: ["Power PCB", "Logic PCB", "12 V", "6 V"],
+    tech: ["Teensy 4.1", "PCA9685", "TCA9548A", "I2C"],
     visuals: [
       {
         kind: "image",
         src: "/projects/logic-pcb/both-boards.jpg",
-        alt: "Logic board and power board side by side on the bench",
-        caption: "The two boards from bring-up. The 12 V and 6 V checks were meter readings, not something this photo shows.",
+        alt: "V1 logic board and V1 power board on an ESE 2150 homework page",
+        caption: "V1 of both boards. The handwriting is homework. The 12 V and 6 V checks, and the servo bring-up, were on V2.",
         fit: "contain",
       },
     ],

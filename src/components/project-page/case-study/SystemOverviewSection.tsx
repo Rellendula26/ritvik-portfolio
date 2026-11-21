@@ -79,6 +79,25 @@ export default function SystemOverviewSection({
             {content.signalPath?.length ? (
               <FlowDiagram title="Signal path" steps={content.signalPath} />
             ) : null}
+            {content.enablePath?.length ? (
+              <FlowDiagram
+                title="Output enable"
+                steps={content.enablePath}
+                caption="Separate from the bus above. This enable line has its own pin."
+              />
+            ) : null}
+            {content.specs?.length ? (
+              <ul className="flex flex-wrap gap-2">
+                {content.specs.map((spec) => (
+                  <li
+                    key={spec}
+                    className="rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-700"
+                  >
+                    {spec}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
             {content.powerPath?.length ? (
               <FlowDiagram title="Power path" steps={content.powerPath} />
             ) : null}
