@@ -4,10 +4,9 @@ import { useMemo, useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
 import { Reveal } from "@/components/motion/Reveal";
 import {
-  FEATURED_PROJECTS,
-  MAJOR_PROJECTS,
-  SUPPORTING_PROJECTS,
-  ARCHIVE_PROJECTS,
+  PROJECTS,
+  PROJECT_DIRECTORY,
+  projectsInDirectory,
   type Project,
   type ProjectCategory,
 } from "@/data/projects";
@@ -61,12 +60,14 @@ function TierBand({
   projects,
   featured,
   shade,
+  directory = false,
 }: {
   title: string;
   subtitle: string;
   projects: Project[];
   featured?: boolean;
   shade: keyof typeof TIER_SHADES;
+  directory?: boolean;
 }) {
   if (projects.length === 0) return null;
 
@@ -93,6 +94,7 @@ function TierBand({
               project={p}
               featured={featured}
               index={i}
+              directory={directory}
             />
           ))}
         </div>
@@ -101,23 +103,29 @@ function TierBand({
   );
 }
 
-function useFiltered(list: Project[], filter: "all" | ProjectCategory) {
-  return useMemo(
-    () => (filter === "all" ? list : list.filter((p) => p.category === filter)),
-    [filter, list]
-  );
+function applyFilter(list: Project[], filter: "all" | ProjectCategory) {
+  return filter === "all" ? list : list.filter((project) => project.category === filter);
 }
 
 export default function ProjectsPage() {
   const [filter, setFilter] = useState<"all" | ProjectCategory>("all");
 
-  const current = useFiltered(
-    MAJOR_PROJECTS.filter((project) => !project.featured),
-    filter
-  );
-  const featured = useFiltered(FEATURED_PROJECTS, filter);
-  const supporting = useFiltered(SUPPORTING_PROJECTS, filter);
-  const archive = useFiltered(ARCHIVE_PROJECTS, filter);
+  const sections = useMemo(() => {
+    const shades = ["featured", "supporting", "header", "archive"] as const;
+    return PROJECT_DIRECTORY.map((section, index) => ({
+      ...section,
+      projects: applyFilter(projectsInDirectory(section.slugs), filter),
+      shade: shades[index] ?? "archive",
+    }));
+  }, [filter]);
+
+  const remainder = useMemo(() => {
+    const listed = new Set(PROJECT_DIRECTORY.flatMap((section) => section.slugs));
+    return applyFilter(
+      PROJECTS.filter((project) => !listed.has(project.slug)),
+      filter
+    );
+  }, [filter]);
 
   return (
     <div className="min-h-screen">
@@ -129,7 +137,7 @@ export default function ProjectsPage() {
                 Projects
               </h1>
               <p className="mt-4 text-lg leading-relaxed text-stone-700">
-                Unfinished work is first: the Serpent arm and boards, the AddLab printer, the 360° imager, and the bionic arm. The finished builds include Vend-A-Shoe, the C compiler, and the lightsaber.
+                The first group is the electrical and robotics work: Serpent boards and teleoperation, the ADAPT arm, Vend-A-Shoe, and the GRASP printer and imager. The other groups are hardware, software, and older coursework.
               </p>
             </header>
           </Reveal>
@@ -148,30 +156,23 @@ export default function ProjectsPage() {
         </div>
       </section>
 
+      {sections.map((section) => (
+        <TierBand
+          key={section.title}
+          title={section.title}
+          subtitle={section.subtitle}
+          projects={section.projects}
+          featured={section.featured}
+          shade={section.shade}
+          directory
+        />
+      ))}
       <TierBand
-        title="Current work"
-        subtitle="Serpent, GRASP, and ADAPT. The Serpent pages, the bionic arm, the AddLab printer, and the 360° imager have notes. The work is ongoing."
-        projects={current}
-        shade="header"
-      />
-      <TierBand
-        title="Featured engineering work"
-        subtitle="The builds I spend the most time on."
-        projects={featured}
-        featured
-        shade="featured"
-      />
-      <TierBand
-        title="Supporting builds"
-        subtitle="Smaller builds, including experiments and class projects."
-        projects={supporting}
-        shade="supporting"
-      />
-      <TierBand
-        title="Earlier work"
-        subtitle="Older course projects and early builds."
-        projects={archive}
+        title="Also on the site"
+        subtitle="Projects that are not in the groups above."
+        projects={remainder}
         shade="archive"
+        directory
       />
     </div>
   );

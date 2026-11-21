@@ -1,0 +1,32 @@
+---
+description: When a photo, video, or diagram belongs on a project page, and how to caption it.
+globs: src/components/project-page/**/*.tsx,src/data/case-studies/**/*.ts,src/data/projects.ts,public/projects/**/*,public/experiences/**/*
+alwaysApply: false
+---
+
+# Engineering media
+
+Use a figure when it answers one of these: what the system does, how it works, what he built, what failed, or what he measured.
+
+The homepage workbench and portrait stay as they are.
+
+## Before adding a file
+
+- Look through `public/projects` and `public/experiences` first.
+- A photo of a board, a scope, or a moving mechanism beats a new illustration.
+- A diagram is a diagram. Do not caption it as a measurement.
+- Do not draw a schematic that was not opened, and do not read a number off a blurry screen.
+
+## On the page
+
+- Caption says what is in the frame and which claim it supports.
+- Alt text names the object. It does not repeat the whole caption.
+- One primary figure per story. The same clip does not appear in two sections unless the second use is the evidence for a result.
+- Scope shots, PCB layouts, and schematics should be openable at a readable size.
+- Videos are muted if they play by themselves, and they can be paused. Do not require audio.
+- Portrait phone clips stay upright.
+
+## What not to publish without asking
+
+- Faces that are not his, client interiors, unreleased company schematics, network addresses, and serial logs that include credentials.
+- The Altium archive stays packed until he asks to unpack it.

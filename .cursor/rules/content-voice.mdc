@@ -25,6 +25,9 @@ Ritvik is an EE student at Penn who likes electronics, embedded systems, robotic
 - A disclaimer about what the page refuses to claim. Say what is done and what is next.
 - A closing paragraph about resilience, curiosity, or cross-disciplinary thinking.
 - Invented numbers, motives, or anecdotes. If the source does not say it, leave it out and flag the gap.
+- Rewriting the homepage. The current hero, workbench, biography, tagline, and home project bands stay unless Ritvik asks for that page.
+
+Information architecture and media placement live in `project-information-architecture.mdc` and `engineering-media.mdc`. This file is only the voice.
 
 ```
 Bad: Forward builds a graph. Backward fills grads. Gradcheck catches errors.

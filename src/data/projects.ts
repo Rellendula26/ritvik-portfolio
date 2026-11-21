@@ -2253,6 +2253,73 @@ export const MAJOR_PROJECTS = PROJECTS.filter((project) =>
   CURRENT_WORK_SLUGS.includes(project.slug)
 );
 
+/**
+ * Projects directory only. Homepage bands keep FEATURED_PROJECTS, MAJOR_PROJECTS,
+ * and SUPPORTING_PROJECTS so the home page does not follow this order.
+ */
+export const PROJECT_DIRECTORY: {
+  title: string;
+  subtitle: string;
+  slugs: string[];
+  featured?: boolean;
+}[] = [
+  {
+    title: "Selected engineering projects",
+    subtitle:
+      "Boards, teleoperation, sensing, and a client machine. These are the systems I would open first.",
+    featured: true,
+    slugs: [
+      "logic-pcb",
+      "leader-follower-robotic-arm",
+      "bionic-arm",
+      "vend-a-shoe",
+      "multimodal-3d-printer",
+      "3d-imaging-uav",
+    ],
+  },
+  {
+    title: "Other hardware and systems builds",
+    subtitle:
+      "A launcher, an analog saber, power-electronics problems, and smaller boards.",
+    slugs: [
+      "tennis-ball-shooter",
+      "saber",
+      "per-power-electronics",
+      "hyperloop-vfd",
+      "ultrasonic-pcb",
+      "bloombot",
+    ],
+  },
+  {
+    title: "Software and personal projects",
+    subtitle:
+      "Compilers, a small autodiff library, course models, and apps.",
+    slugs: [
+      "c-compiler",
+      "minitorch-ocaml",
+      "pennplates",
+      "website",
+      "cis5450-loan-default",
+      "labreach-ai",
+      "count-coach",
+      "bhangra-coach",
+      "afterthought",
+    ],
+  },
+  {
+    title: "Earlier work and coursework",
+    subtitle:
+      "Older class projects. Drift Balancer is still a page template, not a robot I built.",
+    slugs: ["arduino-tetris", "drift-balancer", "brain", "OIDD"],
+  },
+];
+
+export function projectsInDirectory(slugs: string[]) {
+  return slugs
+    .map((slug) => getProjectBySlug(slug))
+    .filter((project): project is Project => Boolean(project));
+}
+
 export function getProjectsForExperience(experienceSlug: string) {
   return PROJECTS.filter((project) => project.experienceSlug === experienceSlug);
 }

@@ -14,7 +14,7 @@ export default function ExperiencesPage() {
               Experiences
             </h1>
             <p className="mt-4 text-base leading-relaxed text-stone-600">
-              Internships and the clubs I build with. Each card opens the role: what the group does, what I worked on, and the projects that came out of it.
+              Serpent builds rope-climbing robots. GRASP is the printer and imaging work. ADAPT is the EMG arm. BrainChild is client hardware. Each page says what I did there, and links the project write-ups.
             </p>
           </div>
         </Reveal>

@@ -9,6 +9,7 @@ import {
   CATEGORY_LABELS,
   pickProjectPrimaryMedia,
 } from "@/data/projects";
+import { getExperience } from "@/data/experiences";
 import { Badge } from "@/components/ui/Badge";
 import LazyVideo from "@/components/LazyVideo";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
@@ -52,14 +53,20 @@ export default function ProjectCard({
   project,
   featured = false,
   index = 0,
+  directory = false,
 }: {
   project: Project;
   featured?: boolean;
   index?: number;
+  /** Projects directory only. Homepage cards leave this off. */
+  directory?: boolean;
 }) {
   const router = useRouter();
   const reduce = useReducedMotion();
-  const isFeatured = featured || project.featured;
+  const isFeatured = featured || (!directory && project.featured);
+  const org = directory && project.experienceSlug
+    ? getExperience(project.experienceSlug)?.org
+    : undefined;
   const primaryMedia = pickProjectPrimaryMedia(project);
   const showMedia = Boolean(
     primaryMedia && (primaryMedia.kind !== "image" || primaryMedia.src)
@@ -187,7 +194,7 @@ export default function ProjectCard({
                 isFeatured ? "text-amber-400/90" : "text-stone-500",
               ].join(" ")}
             >
-              {project.signal}
+              {org ?? project.signal}
             </span>
             {project.date && (
               <>
@@ -231,7 +238,7 @@ export default function ProjectCard({
 
           <p
             className={[
-              "mt-1 line-clamp-3 text-sm font-medium",
+              directory ? "mt-1 text-sm font-medium leading-relaxed" : "mt-1 line-clamp-3 text-sm font-medium",
               isFeatured ? "text-amber-200/80" : "text-amber-800/90",
             ].join(" ")}
           >

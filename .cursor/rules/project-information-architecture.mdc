@@ -1,0 +1,33 @@
+---
+description: How a project or experience page should be organized for a recruiter, a manager, and an interviewer.
+globs: src/app/projects/**/*.tsx,src/app/experiences/**/*.tsx,src/app/research/**/*.tsx,src/components/project-page/**/*.tsx,src/data/projects.ts,src/data/case-studies/**/*.ts,src/data/experiences.ts
+alwaysApply: false
+---
+
+# Project information architecture
+
+A visitor should learn what the system is, what Ritvik did, and what is still open before the part numbers and the journal.
+
+The homepage is out of scope. Do not change `src/app/page.tsx`, `HomeHero`, `HomeHeroIntro`, or the homepage project bands to follow this structure.
+
+## Order on a project page
+
+1. Overview. Title, what the system is for, his role, status, and one strong photo or clip.
+2. How it works. A diagram, an annotated photo, or a short signal or power path.
+3. His work. Only the subsystems he actually touched. Team work stays labeled as team work.
+4. One or two debugging stories. What he saw, what he measured, what he changed, what happened.
+5. What is demonstrated, and what is not finished.
+6. Bench notes. Timelines, revisions, schedule notes, and reflections stay on the page inside a collapsed section. Do not delete them.
+
+Skip a section when the project does not have that kind of work. Do not invent a mechanical section for a compiler.
+
+## Cards and routes
+
+- Keep existing routes and the original project title.
+- A directory card can name the organization and use a longer summary. The homepage card keeps the existing `oneLine`.
+- Group the projects directory by engineering relevance. Do not regroup the homepage arrays.
+
+## Experiences and research
+
+- Say what the organization builds, then what he did, then link the project.
+- A preprint stays a preprint. A review stays a review.
