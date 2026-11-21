@@ -12,6 +12,8 @@ export type ExperienceMedia =
   | { kind: "image"; src: string; alt: string;       caption?: string;
       focal?: FocalPoint;
       fit?: "cover" | "contain";
+      /** Tall phone clips. Wide is the default 16:10 frame. */
+      frame?: "wide" | "tall";
     }
   | {
       kind: "video";
@@ -21,6 +23,8 @@ export type ExperienceMedia =
       caption?: string;
       focal?: FocalPoint;
       fit?: "cover" | "contain";
+      /** Tall phone clips. Wide is the default 16:10 frame. */
+      frame?: "wide" | "tall";
     };
 
 /** A sentence fragment. Project slugs become links to the shared project record. */
@@ -38,6 +42,8 @@ export type ExperienceWork = {
   body: TextRun[];
   projectSlug?: string;
   media?: ExperienceMedia;
+  /** Extra figures under the paragraph. Used for a bench clip set that is not its own project. */
+  clips?: ExperienceMedia[];
 };
 
 export type ExperienceExample = {
@@ -134,15 +140,16 @@ export const EXPERIENCES: Experience[] = [
     dates: "Sep. 2026 – Present",
     location: "Philadelphia, PA",
     oneLiner:
-      "Teleoperated rope-climbing robots for tree work. I work on the logic and power boards, and on the leader-follower bench.",
+      "Teleoperated rope-climbing robots for tree work. I work on the logic and power boards, a BLDC bench bring-up, and the leader-follower bench.",
     overview:
-      "Serpent builds teleoperated rope-climbing robots for tree work. My pieces are the power and logic boards, including the Teensy servo path, and the leader-follower bench. I have not designed the SR-01 chassis.",
+      "Serpent builds teleoperated rope-climbing robots for tree work. My pieces are the power and logic boards, including the Teensy servo path, a BLDC bench bring-up, and the leader-follower bench. I have not designed the SR-01 chassis.",
     highlights: [
       "Power and logic boards: I modified them as one set, 5–20 A fusing, DC-DC, and RS-485 and I2C. On the logic board a Teensy 4.1 drives a PCA9685 at 50 Hz. The servo moved after firmware enabled OE on GPIO 6. A grip test fried the control board. That replacement is not in a bring-up note.",
       "V1 is the pair on the homework sheet. The boards I tested were V2. I still have not mapped the fuse markings to a branch.",
       "I wrote the leader-follower bridge. The bench pair is a blue leader and a white follower, not mounted on SR-01. A fixed follower IP worked on shop Wi-Fi and broke on the next hotspot.",
+      "BLDC bring-up on the bench: a RobStride, a Pi printing position and velocity, a supply at 24.00 V, a scope, and a motor in an aluminum frame. The saw change on the robot is still unfinished.",
     ],
-    focus: ["SR-01", "SR-02", "Power and logic PCBs", "PCA9685", "Leader-follower"],
+    focus: ["SR-01", "SR-02", "Power and logic PCBs", "PCA9685", "BLDC bring-up", "Leader-follower"],
     externalHref: "https://serpentrobotics.com/",
     websiteKind: "company",
     cover: {
@@ -188,6 +195,46 @@ export const EXPERIENCES: Experience[] = [
           alt: "Blue leader arm and white follower arm on a shop bench",
           caption: "Blue leader, white follower. Not the SR-01 chassis.",
         },
+      },
+      {
+        title: "BLDC bring-up",
+        body: [
+          "These clips are the BLDC bring-up on the bench, and they stay on this page. The supply in the first clip reads 24.00 V. A RobStride is on the desk next to a Pi. The monitor is printing position and velocity beside a Python file, and a hand is on the rotor. Another clip is a Rigol scope on the blue bench, with probes landed. I'm not reading a voltage or a time off that screen. The last clip is a motor in an aluminum frame, with the phase wires landed. The brushed-to-BLDC saw change is still the unfinished item in the boards note above. These clips stay on the bench.",
+        ],
+        clips: [
+          {
+            kind: "video",
+            src: "/experiences/serpent/bldc-supply.mp4",
+            poster: "/experiences/serpent/bldc-supply-poster.jpg",
+            alt: "Bench power supply reading 24.00 volts, with a RobStride box on the table",
+            caption: "Bench supply reading 24.00 V. The RobStride box is on the table.",
+            frame: "tall",
+          },
+          {
+            kind: "video",
+            src: "/experiences/serpent/bldc-bench.mp4",
+            poster: "/experiences/serpent/bldc-bench-poster.jpg",
+            alt: "RobStride motor on a desk, a hand on the rotor, and a Pi with a terminal open",
+            caption: "RobStride on the desk. The Pi is printing position and velocity, and a hand is on the rotor.",
+            frame: "tall",
+          },
+          {
+            kind: "video",
+            src: "/experiences/serpent/bldc-scope.mp4",
+            poster: "/experiences/serpent/bldc-scope-poster.jpg",
+            alt: "Rigol oscilloscope on a blue bench with probes connected",
+            caption: "Rigol scope on the blue bench. Probes are landed. I'm not reading a number off the screen.",
+            frame: "tall",
+          },
+          {
+            kind: "video",
+            src: "/experiences/serpent/bldc-frame.mp4",
+            poster: "/experiences/serpent/bldc-frame-poster.jpg",
+            alt: "Motor mounted in an aluminum frame with phase wires landed",
+            caption: "Motor in the aluminum frame, with the phase wires landed. This clip stays on the bench.",
+            frame: "tall",
+          },
+        ],
       },
     ],
     deepDive: {

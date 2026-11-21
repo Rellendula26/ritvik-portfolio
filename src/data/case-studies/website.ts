@@ -7,7 +7,7 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 export const WEBSITE_CASE_STUDY: EngineeringCaseStudy = {
   slug: "website",
   motivation: {
-    why: "My earlier portfolio showed what I built without consistently showing why it mattered, how the system worked, what failed, or which tradeoffs shaped the final version.",
+    why: "The old site listed projects and left out what failed and what I decided. I wanted those notes on the page.",
     interest:
       "I wanted something closer to an engineering notebook than a polished résumé gallery. Substance first, then depth for anyone who wants to inspect the reasoning.",
     learning:
@@ -99,7 +99,7 @@ export const WEBSITE_CASE_STUDY: EngineeringCaseStudy = {
       discipline: "Product / Visual Design",
       goal: "Feel engineered and personal, not like a generic dark neon developer template.",
       design:
-        "Warm stone and amber tones, large editorial type, rounded cards, generous spacing, restrained motion. Hero stages text, photo, then workbench instead of animating everything at once.",
+        "Warm stone and amber tones, large editorial type, rounded cards, generous spacing, restrained motion. The hero powers the bench on once, with the name and the project links already in place.",
       challenges: [
         "Corporate startup landing energy vs personality.",
         "Long-form technical writing needs calm surfaces, not glow effects.",

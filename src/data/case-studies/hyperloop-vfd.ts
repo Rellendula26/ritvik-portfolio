@@ -337,7 +337,7 @@ export const HYPERLOOP_VFD_CASE_STUDY: EngineeringCaseStudy = {
         id: "switches",
         title: "MOSFETs / IGBTs",
         what: "Act as fast controlled switches in the bridge.",
-        why: "Without devices that can chop the bus cleanly, PWM control is fiction.",
+        why: "PWM only exists if the switches can connect each motor phase to the bus and disconnect it.",
       },
       {
         id: "pwm",

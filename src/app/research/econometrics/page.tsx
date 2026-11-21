@@ -27,7 +27,7 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "Econometrics Labor Market Research";
   const subtitle =
-    "An empirical econometrics project analyzing how remote work and company size interact to shape salary outcomes in the global tech workforce. Pre-print publication.";
+    "I looked at how remote work and company size show up in tech salaries. The write-up is a preprint.";
 
   const coverSrc = "/research/econometrics.png";
 

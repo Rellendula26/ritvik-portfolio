@@ -8,8 +8,7 @@ export default function Footer() {
           <div>
             <p className="text-display text-2xl text-zinc-950">Ritvik Ellendula</p>
             <p className="mt-2 max-w-sm text-sm text-zinc-500">
-              Thanks for stopping by, always happy to talk about a project,
-              idea, or something half-built on my desk.
+              If you want to talk about a project, or something still on the bench, email me.
             </p>
           </div>
 

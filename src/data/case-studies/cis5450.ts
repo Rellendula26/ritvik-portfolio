@@ -8,7 +8,7 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 export const CIS5450_CASE_STUDY: EngineeringCaseStudy = {
   slug: "cis5450-loan-default",
   motivation: {
-    why: "I wanted a tabular ML project where the scary part was not the model library. Leakage and bad metrics can make you look smart while being wrong.",
+    why: "I wanted a tabular ML project where the work was the split and the metric. A leaked column makes the score meaningless.",
     interest:
       "XGBoost is not the story. Keeping recoveries and total_pymnt out of the feature set is. Same for fitting transforms only after the split.",
     learning:

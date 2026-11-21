@@ -323,8 +323,8 @@ export default function VideoEditingPage() {
 
       <Section
         eyebrow="Where I'm at"
-        title="Editing is only half of it. The camera work matters too."
-        subtitle="Because of my YouTube channel, I started learning videography and filmmaking gear for real, not just timeline tricks."
+        title="The camera work matters too."
+        subtitle="The YouTube channel got me learning the camera and the gear, along with the edit."
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div className="rounded-3xl border border-black/10 bg-white p-6 shadow-sm">
@@ -386,7 +386,7 @@ export default function VideoEditingPage() {
         id="watch"
         eyebrow="Now playing"
         title={active.title}
-        subtitle="Pick any edit below. This player is the full watch, not just a hover preview."
+        subtitle="Pick an edit below to play the full video."
       >
         <FeaturedPlayer project={active} />
       </Section>

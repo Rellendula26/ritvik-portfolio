@@ -6,7 +6,7 @@ const LIFE: MediaCardItem[] = [
     eyebrow: "Gift-Giving",
     title: "CADded/Personalized Gifts",
     blurb:
-      "I'm someone who loves making personalized gifts, and once I found out Penn had free 3D printing, I started learning everything about it in order to make my friends stellar presents.",
+      "I like making gifts for friends. Penn has free 3D printing, so I learned enough CAD to make something for a specific person.",
     href: "/life/gift-giving",
     tags: ["CAD", "Friends", "Design"],
     media: { kind: "image", src: "/life/gift-giving.jpg", alt: "Gift-Giving" },
@@ -51,7 +51,7 @@ export default function LifePage() {
       <main className="mx-auto w-full max-w-6xl px-8 py-14">
         <MediaCardGrid
           title="Life"
-          subtitle="Some hobbies that add some spice to life."
+          subtitle="Dance, running, video, and gifts."
           items={LIFE}
           columns={2}
         />

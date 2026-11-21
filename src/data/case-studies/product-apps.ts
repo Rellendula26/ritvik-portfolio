@@ -348,7 +348,7 @@ export const BHANGRA_COACH_CASE_STUDY: EngineeringCaseStudy = {
 export const PENNPLATES_CASE_STUDY: EngineeringCaseStudy = {
   slug: "pennplates",
   motivation: {
-    why: "SPARK project with a clock. Dining coordination for students, not a feature museum.",
+    why: "A SPARK project with a deadline. Students coordinating dinner, with a small set of screens.",
     interest:
       "Auth and RLS had to work. Everything else had to survive cuts.",
     learning:

@@ -17,6 +17,12 @@ import {
 export default function Home() {
   return (
     <div className="min-h-screen">
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            '(function(){try{var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;var seen=sessionStorage.getItem("bench-powered")==="1";if(!reduce&&!seen)document.documentElement.setAttribute("data-boot","start");}catch(e){}})();',
+        }}
+      />
       <HomeHero />
 
       <section className="border-t border-stone-200/50 bg-[#faf6f0]">
@@ -200,7 +206,7 @@ export default function Home() {
                 What I&apos;m usually thinking about
               </p>
               <p className="text-display mt-4 max-w-3xl text-2xl leading-snug text-white md:text-3xl">
-                I keep coming back to a command, a sensor, and a motor or a rail that has to do what the code asked.
+                A lot of what I work on is the same shape. A command or a sensor has to move something, and the supply has to stay up while it does.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {[

@@ -18,7 +18,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
       "KiCad distribution board with keyed connectors and branch protection, closed-loop dispense sensing, and a Version 2 sequence that freezes power and harness before packaging.",
   },
   motivation: {
-    why: "I built this at BrainChild Engineering for a client who needed a unit that could leave the lab. A breadboard demo was never the finish line.",
+    why: "I built this at BrainChild Engineering for a client who needed a unit that could run outside the lab. The breadboard was only the start.",
     interest:
       "BloomBot got me comfortable with servos on Arduino. This one stacked packaging, a dense harness, power distribution for motors plus eight LEDs and a fan, and a Pi that had to stay alive on a wall adapter; that mix is what pulled me in.",
     learning:

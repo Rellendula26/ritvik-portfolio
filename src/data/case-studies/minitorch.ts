@@ -8,7 +8,7 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 export const MINITORCH_CASE_STUDY: EngineeringCaseStudy = {
   slug: "minitorch-ocaml",
   motivation: {
-    why: "I was tired of treating PyTorch as a calculator I did not understand. If backprop is the whole game, I wanted to implement it.",
+    why: "I was tired of treating PyTorch as a calculator I did not understand. I wanted to write backpropagation myself.",
     interest:
       "Calling backward() is easy. Keeping parent links and local derivatives correct when a node is reused is not. Wrong grads still train for a bit, which is worse.",
     learning:
@@ -16,7 +16,7 @@ export const MINITORCH_CASE_STUDY: EngineeringCaseStudy = {
   },
   systemOverview: {
     summary:
-      "MiniTorch is reverse-mode autodiff in OCaml. Forward ops grow a graph. Backward walks parents and fills grads. A tiny MLP with SGD/Adam is the smoke test. Gradcheck is the real test.",
+      "MiniTorch is reverse-mode autodiff in OCaml. Forward ops grow a graph, and the backward pass walks the parents and fills in gradients. A tiny MLP with SGD and Adam is there to see whether the pieces still connect. I trust the finite-difference check when the loss moves.",
     subsystems: [
       {
         name: "Tensor / graph nodes",
