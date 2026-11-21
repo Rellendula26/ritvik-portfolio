@@ -10,7 +10,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
     learning:
       "I wanted the rails and the connectors to be something I could check with a meter before I blamed the firmware.",
     narrative:
-      "The bring-up above is the servo path. This note is the other fault, and it is still open. A grip test broke a printed link while it was grabbing a branch. Stepper current fed back, and the control board and half the actuators were fried. I don't have a photo of a replacement board.\n\nI modified the power and logic boards as one set: fused paths in the 5–20 A range, DC-DC regulation, and RS-485 and I2C. The power sheets are the pack, the fuses, and the regulators. The logic sheets are the Teensy, the buses, and the actuator interfaces. Rail checks so far are 12 V and 6 V on a meter.",
+      "The boards and the servo path are above. This note is only the open fault: a grip test broke a printed link, and that story is written once under When it broke. Meter checks on the boards in hand are 12 V and 6 V. The fuse markings are still not a map.",
     requirements: [
       "Switch actuator current in the 5–20 A range without taking the control board with it.",
       "Keep a fused path on the power board and a regulated rail. The fuse markings are still not mapped to a branch.",
@@ -90,8 +90,8 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       design:
         "Fused circuits in that current range, and DC-DC regulation, on the power and logic boards I modified. The power board in hand has the yellow XT60, green terminal blocks, and blade fuses marked 15 and 5. A closer photo shows ATAZ UMD40 modules marked for 12 V and 5 V outputs. I looked at those modules for distribution and for adding a rail later, and at keeping the power routing off the signal routing, plus reverse-current protection. I check 12 V and 6 V with a multimeter before I trust an actuator channel. Those meter checks are not a fuse map, and they are not an EMI or protection test.",
       challenges: [
-        "A grip test broke a printed link while it was grabbing a branch. The stepper current dropped suddenly and fed back into the electrical system. Signals were delayed by about 5 seconds. Half the actuators and the control board were fried.",
-        "In that same cascade one signal kept getting sent, the saw traveled past a full turn, and a Hall-sensor wire came out. The saw was being changed from a brushed DC motor to a BLDC because the brushless saw draws less current and the old one often got stuck. That change is not finished.",
+        "The grip-test cascade, including the fried control board, is written under When it broke.",
+        "The brushed-to-BLDC saw change is unfinished. The reason for trying it, and what is still missing, is in that same fault note.",
       ],
       iterations: [
         "Rail and connector checks with a multimeter when a channel doesn't come up.",

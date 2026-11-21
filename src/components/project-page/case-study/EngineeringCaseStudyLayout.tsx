@@ -31,39 +31,28 @@ import { getExperience } from "@/data/experiences";
 import Link from "next/link";
 
 function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
-  const items = [
-    caseStudy.servoBringUp
-      ? { id: "board-architecture", label: "Boards" }
-      : { id: "motivation", label: "Motivation" },
-    caseStudy.servoBringUp
-      ? { id: "actuation-challenge", label: "The fault" }
-      : { id: "system-overview", label: "System" },
-    caseStudy.servoBringUp
-      ? { id: "debug-path", label: "Debug" }
-      : null,
-    caseStudy.servoBringUp ? { id: "motivation", label: "Context" } : null,
-    caseStudy.contribution ? { id: "contribution", label: "My part" } : null,
-    caseStudy.designChallenge
-      ? { id: "design-challenge", label: "Deep dive" }
-      : null,
-    { id: "engineering-breakdown", label: "Breakdown" },
-    { id: "design-decisions", label: "Decisions" },
-    caseStudy.rootCauseAnalyses?.length
-      ? { id: "root-cause", label: "When it broke" }
-      : null,
-    { id: "results", label: "Results" },
-    caseStudy.executiveAssessment ||
-    caseStudy.timeline?.length ||
-    caseStudy.evolution?.length ||
-    caseStudy.scheduleAnalysis ||
-    caseStudy.version2Plan ||
-    caseStudy.transferableSkills?.length ||
-    caseStudy.reflection
-      ? { id: "record", label: "Notes" }
-      : null,
-  ];
+  if (caseStudy.servoBringUp) {
+    return [
+      { id: "board-architecture", label: "Boards" },
+      { id: "system-overview", label: "Bring-up" },
+      { id: "root-cause", label: "The fault" },
+      { id: "results", label: "Status" },
+      { id: "record", label: "Notes" },
+    ];
+  }
 
-  return items.filter((item): item is { id: string; label: string } => item !== null);
+  return [
+    { id: "motivation", label: "Overview" },
+    { id: "system-overview", label: "Architecture" },
+    caseStudy.contribution
+      ? { id: "contribution", label: "My work" }
+      : { id: "engineering-breakdown", label: "My work" },
+    caseStudy.rootCauseAnalyses?.length
+      ? { id: "root-cause", label: "Challenges" }
+      : { id: "design-decisions", label: "Decisions" },
+    { id: "results", label: "Results" },
+    { id: "record", label: "Notes" },
+  ];
 }
 
 function ExperienceLink({ slug }: { slug?: string }) {
@@ -110,23 +99,42 @@ export default function EngineeringCaseStudyLayout({
       <div className="mt-10 space-y-12 md:space-y-14">
         {caseStudy.servoBringUp ? <BoardArchitecture /> : null}
         {caseStudy.servoBringUp ? <ServoBringUpStory /> : null}
-        <MotivationSection content={caseStudy.motivation} />
+        {caseStudy.servoBringUp ? null : (
+          <MotivationSection content={caseStudy.motivation} />
+        )}
         {caseStudy.servoBringUp ? null : (
           <SystemOverviewSection content={caseStudy.systemOverview} />
         )}
-        {caseStudy.contribution ? (
+        {caseStudy.servoBringUp || !caseStudy.contribution ? null : (
           <ContributionSection content={caseStudy.contribution} />
-        ) : null}
-        {caseStudy.designChallenge ? (
+        )}
+        {caseStudy.servoBringUp || !caseStudy.designChallenge ? null : (
           <DesignChallengeExtrasSection content={caseStudy.designChallenge} />
-        ) : null}
-        <EngineeringBreakdownSection disciplines={caseStudy.disciplines} />
-        <DesignDecisionsSection decisions={caseStudy.designDecisions} />
+        )}
+        {caseStudy.servoBringUp ? null : (
+          <EngineeringBreakdownSection disciplines={caseStudy.disciplines} />
+        )}
+        {caseStudy.servoBringUp ? null : (
+          <DesignDecisionsSection decisions={caseStudy.designDecisions} />
+        )}
         {caseStudy.rootCauseAnalyses?.length ? (
           <RootCauseAnalysesSection items={caseStudy.rootCauseAnalyses} />
         ) : null}
         <ResultsValidationSection content={caseStudy.results} />
         <BenchNotes>
+          {caseStudy.servoBringUp ? (
+            <>
+              <MotivationSection content={caseStudy.motivation} />
+              {caseStudy.contribution ? (
+                <ContributionSection content={caseStudy.contribution} />
+              ) : null}
+              {caseStudy.designChallenge ? (
+                <DesignChallengeExtrasSection content={caseStudy.designChallenge} />
+              ) : null}
+              <EngineeringBreakdownSection disciplines={caseStudy.disciplines} />
+              <DesignDecisionsSection decisions={caseStudy.designDecisions} />
+            </>
+          ) : null}
           {caseStudy.executiveAssessment ? (
             <ExecutiveAssessmentSection content={caseStudy.executiveAssessment} />
           ) : null}

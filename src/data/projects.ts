@@ -82,6 +82,8 @@ export interface Project {
   category: ProjectCategory;
   status: ProjectStatus;
   oneLine: string;
+  /** Project-page lead. Homepage cards keep using oneLine. */
+  pageLead?: string;
   overview: string;
   techStack: string[];
   /** When set, hero meta shows these under "Disciplines" instead of Stack. */
@@ -554,7 +556,7 @@ const BASE_PROJECTS: Project[] = [
     oneLine:
       "A BrainChild tennis-ball launcher. An ESP32 sequences two RS-775 flywheels and a NEMA 17 feed from a Replit app.",
     overview:
-      "I moved sequencing off an Arduino Mega onto an ESP32 for a BrainChild demo. MOSFET modules switch the flywheels under PWM. Duty cycle changes the voltage waveform. Speed still depends on the motor and the load. A NEMA 17 on an A4988 indexes the balls. A fused 12 V pack feeds the motors, and a buck makes about 5 V for the ESP32 board's VIN. The chip itself runs at 3.3 V. The bench demo runs from the Replit app. A later PWM test left a flywheel much faster than commanded, the fuse did not open, pack-side joints detached, and a wire's insulation melted. I did not measure the current, and I have not established which of those happened first.",
+      "I moved sequencing off an Arduino Mega onto an ESP32 for a BrainChild demo. MOSFET modules switch the flywheels. A NEMA 17 on an A4988 indexes the balls. A fused 12 V pack feeds the motors, and a buck makes about 5 V for the ESP32 board's VIN. The chip itself runs at 3.3 V. The bench demo runs from the Replit app. A later PWM test left a flywheel much faster than commanded, the fuse did not open, pack-side joints detached, and a wire's insulation melted. I did not measure the current.",
     techStack: [
       "ESP32",
       "C++",
@@ -1761,8 +1763,10 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     experienceSlug: "serpent-robotics",
     oneLine:
       "Power and logic boards for SR-01. The logic board's servo path is a Teensy 4.1 into a PCA9685 at 50 Hz. A grip test fried the control board, and that replacement is still open.",
+    pageLead:
+      "SR-01 climbs a rope and cuts a branch from the ground. The power board feeds the actuators. The logic board is the controller. I modified both, and I brought up the servo path on the V2 logic board.",
     overview:
-      "I modified the power and logic boards with 5–20 A fused circuits, DC-DC regulation, and RS-485 and I2C, kept as one set. On the logic board I brought up a Teensy 4.1, a TCA9548A, and a PCA9685 so a servo command is I2C in and 50 Hz PWM out. Output enable is a separate GPIO. A grip test broke a printed link, the stepper current spiked, and the control board and half the actuators were fried.",
+      "Rails I have metered are 12 V and 6 V. The fuse markings are not a map yet. A grip test broke a printed link and fried the control board. That fault has its own section, and the replacement is still open.",
     contribution:
       "Modified the power and logic boards, checked the 12 V and 6 V rails, and brought up the Teensy servo path, including the output-enable fix.",
     techStack: ["Teensy 4.1", "PCA9685", "TCA9548A", "I2C", "Logic PCB", "Power PCB"],
@@ -2103,7 +2107,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     oneLine:
       "I design the EMG boards and mounts for a Penn ADAPT arm. One sensor board is built. The eight-channel armband is the architecture.",
     overview:
-      "I design the sensor PCB, the main PCB, and the mounts. Each sensor board is a two-electrode differential pair into one ADS1291 channel, with protection and filtering ahead of the amplifier. The main board is the STM32 acquisition, processing, and power interface. One sensor board is in hand. The architecture is eight of those modules on a 20-pin flex, plus servos and a linear actuator. The team tested the main board and started the first fixture. Firmware reads raw EMG from one ADS1291 and can run a fixed motor test. It does not map EMG to motion. This is separate from the assistive button.",
+      "Each sensor board is a two-electrode differential pair into one ADS1291 channel, with protection and filtering ahead of the amplifier. The main board is the STM32 acquisition, processing, and power interface. One sensor board is in hand. The architecture is eight of those modules on a 20-pin flex, plus servos and a linear actuator. The team tested the main board and started the first fixture. Firmware reads raw EMG from one ADS1291 and can run a fixed motor test. It does not map EMG to motion.",
     contribution:
       "I design the boards and the mounts. The sensing supply in my note is a 7.2 V pack, a buck to 4 V, then an LDO. That rail powers the sensing circuitry. The electrodes are the signal inputs. Two longer wires still keep a board out of the CAD mount.",
     techStack: ["EMG", "ADS1291", "STM32", "PCB"],
@@ -2112,7 +2116,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     date: "Fall 2026",
     buildStage: "In development",
     keyHighlights: [
-      "I design the sensor board: filtering and protection, then an ADS1291 that digitizes one differential EMG channel.",
+      "Filtering and protection, then an ADS1291 that digitizes one differential EMG channel.",
       "One sensor board is built. The eight-module armband, two servos, and a linear actuator are the architecture.",
       "Bring-up reads raw EMG from one ADS1291. A fixed motor test is optional. There is no gesture or closed-loop control.",
     ],

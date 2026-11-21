@@ -149,6 +149,13 @@ body {
   opacity: 1;
 }
 
+/* Project pages only. The homepage does not use .project-page. */
+.project-page h2,
+.project-page .text-base.leading-relaxed,
+.project-page .text-lg.leading-relaxed {
+  max-width: 46rem;
+}
+
 /* Homepage bench. --boot is 1 unless the first-visit script sets data-boot="start". */
 .workbench-hero {
   --boot: 1;

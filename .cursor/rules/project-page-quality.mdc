@@ -1,0 +1,37 @@
+---
+description: Density, media rhythm, and repetition rules for individual project pages. Homepage stays frozen.
+globs: src/app/projects/**/*.tsx,src/components/project-page/**/*.tsx,src/data/case-studies/**/*.ts,src/data/engineering-case-study.ts
+alwaysApply: false
+---
+
+# Project page quality
+
+Voice is `content-voice.mdc`. Section order is `project-information-architecture.mdc`. Photos, diagrams, and what may not be invented are `engineering-media.mdc`. This rule is the reading rhythm on top of those.
+
+The homepage is frozen. Do not change `src/app/page.tsx`, `HomeHero`, `HomeHeroIntro`, `EngineeringWorkbench`, homepage bands, or homepage project arrays. Shared CSS has to stay under `.project-page` or another selector the homepage does not use.
+
+## Density
+
+Match the length to the work. A small project can be a few hundred words. A major board or robot can be longer. Do not pad a small project, and do not cut a real measurement, rail, or failure to hit a number.
+
+The open page is the engineering story. Pin maps, chronology, alternate designs, and repeated calculations go in Bench notes or another collapsed section. They stay on the page.
+
+## Rhythm
+
+Most paragraphs are two to five sentences. A relevant photo, diagram, or clip belongs next to the claim it supports, about every few paragraphs when that asset exists. Do not save every image for a gallery at the bottom, and do not stack several large figures with no sentence between them.
+
+The strongest photo or demonstration goes near the overview. Prose on a project page stays near a 60–80 character line. Diagrams and schematics can be wider. Use `object-contain` for schematics, layouts, and scope shots. Do not crop them to a decorative frame.
+
+## One home per fact
+
+Say the role once. Say a bus path once. Say a failure once. A later section can point at that place. It should not explain the same thing again in new wording.
+
+If two sections do the same job, merge them. If a paragraph adds no new part, measurement, or outcome, delete it. Do not add a skills list that restates the page. Do not add a reflection that restates the result.
+
+## Navigation
+
+A major project page should have about four to six primary nav items: overview, architecture, the work, the hard part, the result, and notes. Skip a section the project does not have. Do not add motivation, skills, or future-work blocks to fill the template.
+
+## Media you do not have
+
+Do not add stock photos, fake scope traces, or a PCB render that was not exported from the design. A diagram is allowed when it is drawn from the documented path, and it has to say when a connection was not traced. If the photo is missing, name the shot to take. Do not invent it.

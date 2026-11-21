@@ -9,7 +9,7 @@ export const BIONIC_ARM_CASE_STUDY: EngineeringCaseStudy = {
     learning:
       "A schematic date and a power note can describe two different batteries. I want those to be the same pack before I call the power path done.",
     narrative:
-      "I design the PCBs and the mounts for a Penn ADAPT arm. One sensor board is built. It is a two-electrode differential pair into one ADS1291 channel. The architecture is eight of those modules, a main STM32 board, two servos, and a linear actuator. The team tested the main board and started the first fixture. This is not the assistive button.\n\nThe buck and LDO feed the sensing circuitry. The electrodes are the signal inputs, not a load on that rail. The September main sheet marks a 2-cell pack from 6.0 V to 8.4 V and also labels 12 V. My note is a 7.2 V pack, a buck to 4 V, then an LDO. Those are not the same description. Firmware reads raw EMG from one ADS1291, gain 6, 2000 samples per second, and can run a fixed motor test. It does not turn that signal into a gesture or a grip force. Two longer wires still keep a board out of the CAD mount.",
+      "One sensor board is built. It is a two-electrode differential pair into one ADS1291 channel. The architecture is eight of those modules, a main STM32 board, two servos, and a linear actuator. The team tested the main board and started the first fixture.\n\nThe buck and LDO feed the sensing circuitry. The electrodes are the signal inputs, not a load on that rail. The September main sheet marks a 2-cell pack from 6.0 V to 8.4 V and also labels 12 V. My note is a 7.2 V pack, a buck to 4 V, then an LDO. Those are not the same description. Firmware reads raw EMG from one ADS1291, gain 6, 2000 samples per second, and can run a fixed motor test. It does not turn that signal into a gesture or a grip force. Two longer wires still keep a board out of the CAD mount.",
     requirements: [
       "Digitize eight EMG channels from differential pairs.",
       "Leave a quiet supply for the sensing circuitry.",
@@ -19,7 +19,7 @@ export const BIONIC_ARM_CASE_STUDY: EngineeringCaseStudy = {
   },
   systemOverview: {
     summary:
-      "I have one sensor PCB. The plan is eight small rigid modules around the forearm, each a differential electrode pair, tied with 20-pin flex. A sensor main board sits between those modules and the main board. The main board is an STM32 with a labeled 12 V actuator rail, a 6 V servo rail, and 3.3 V electronics. The team tested that board and started the first fixture. I design the boards and the mounts.",
+      "I have one sensor PCB. The plan is eight small rigid modules around the forearm, each a differential electrode pair, tied with 20-pin flex. A sensor main board sits between those modules and the main board. The main board is an STM32 with a labeled 12 V actuator rail, a 6 V servo rail, and 3.3 V electronics. The team tested that board and started the first fixture.",
     subsystems: [
       { name: "Sensor module", role: "ADS1291 on the differential pair. Eight chips, one SPI bus, a chip select each, shared START." },
       { name: "Sensor main", role: "One ADS1291, bias network, two 20-pin flex connectors." },
@@ -93,7 +93,7 @@ export const BIONIC_ARM_CASE_STUDY: EngineeringCaseStudy = {
   ],
   contribution: {
     summary:
-      "I design the boards and the mounts. One sensor board is built. The team tested the main board and started the first fixture. Drawn-by is blank on the sheets.",
+      "One sensor board is built. The team tested the main board and started the first fixture. Drawn-by is blank on the sheets.",
     mine: [
       "PCB drawings for the sensor modules, the sensor main, and the main board.",
       "The 7.2 V to 4 V buck-then-LDO plan for the sensing supply.",

@@ -84,7 +84,7 @@ export default function ProjectHero({ project }: { project: Project }) {
           </h1>
 
           <p className="mt-4 max-w-2xl font-medium leading-snug tracking-tight text-zinc-800 md:text-xl">
-            {project.oneLine}
+            {project.pageLead ?? project.oneLine}
           </p>
           <p className="mt-3 max-w-2xl text-base leading-relaxed text-zinc-700 md:text-[17px] md:leading-7">
             {project.overview}
