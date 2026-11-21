@@ -24,6 +24,7 @@ import ContributionSection from "@/components/project-page/case-study/Contributi
 import BoardArchitecture from "@/components/project-page/case-study/BoardArchitecture";
 import ServoBringUpStory from "@/components/project-page/case-study/ServoBringUpStory";
 import ProjectBrief from "@/components/project-page/ProjectBrief";
+import BenchNotes from "@/components/project-page/case-study/BenchNotes";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
@@ -45,27 +46,21 @@ function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
     caseStudy.designChallenge
       ? { id: "design-challenge", label: "Deep dive" }
       : null,
-    caseStudy.executiveAssessment
-      ? { id: "executive-assessment", label: "At a glance" }
-      : null,
-    caseStudy.timeline?.length
-      ? { id: "engineering-timeline", label: "Timeline" }
-      : null,
     { id: "engineering-breakdown", label: "Breakdown" },
     { id: "design-decisions", label: "Decisions" },
     caseStudy.rootCauseAnalyses?.length
       ? { id: "root-cause", label: "When it broke" }
       : null,
-    { id: "evolution", label: "Evolution" },
-    caseStudy.scheduleAnalysis
-      ? { id: "schedule-analysis", label: "Schedule" }
-      : null,
-    caseStudy.version2Plan ? { id: "version-2", label: "Version 2" } : null,
     { id: "results", label: "Results" },
-    caseStudy.transferableSkills?.length
-      ? { id: "transferable-skills", label: "What this built" }
+    caseStudy.executiveAssessment ||
+    caseStudy.timeline?.length ||
+    caseStudy.evolution?.length ||
+    caseStudy.scheduleAnalysis ||
+    caseStudy.version2Plan ||
+    caseStudy.transferableSkills?.length ||
+    caseStudy.reflection
+      ? { id: "record", label: "Notes" }
       : null,
-    { id: "reflection", label: "Reflection" },
   ];
 
   return items.filter((item): item is { id: string; label: string } => item !== null);
@@ -125,32 +120,34 @@ export default function EngineeringCaseStudyLayout({
         {caseStudy.designChallenge ? (
           <DesignChallengeExtrasSection content={caseStudy.designChallenge} />
         ) : null}
-        {caseStudy.executiveAssessment ? (
-          <ExecutiveAssessmentSection content={caseStudy.executiveAssessment} />
-        ) : null}
-        {caseStudy.timeline?.length ? (
-          <EngineeringTimelineSection
-            entries={caseStudy.timeline}
-            copy={caseStudy.timelineCopy}
-          />
-        ) : null}
         <EngineeringBreakdownSection disciplines={caseStudy.disciplines} />
         <DesignDecisionsSection decisions={caseStudy.designDecisions} />
         {caseStudy.rootCauseAnalyses?.length ? (
           <RootCauseAnalysesSection items={caseStudy.rootCauseAnalyses} />
         ) : null}
-        <EvolutionSection milestones={caseStudy.evolution} />
-        {caseStudy.scheduleAnalysis ? (
-          <ScheduleAnalysisSection content={caseStudy.scheduleAnalysis} />
-        ) : null}
-        {caseStudy.version2Plan ? (
-          <Version2PlanSection content={caseStudy.version2Plan} />
-        ) : null}
         <ResultsValidationSection content={caseStudy.results} />
-        {caseStudy.transferableSkills?.length ? (
-          <TransferableSkillsSection skills={caseStudy.transferableSkills} />
-        ) : null}
-        <ReflectionSection content={caseStudy.reflection} />
+        <BenchNotes>
+          {caseStudy.executiveAssessment ? (
+            <ExecutiveAssessmentSection content={caseStudy.executiveAssessment} />
+          ) : null}
+          {caseStudy.timeline?.length ? (
+            <EngineeringTimelineSection
+              entries={caseStudy.timeline}
+              copy={caseStudy.timelineCopy}
+            />
+          ) : null}
+          <EvolutionSection milestones={caseStudy.evolution} />
+          {caseStudy.scheduleAnalysis ? (
+            <ScheduleAnalysisSection content={caseStudy.scheduleAnalysis} />
+          ) : null}
+          {caseStudy.version2Plan ? (
+            <Version2PlanSection content={caseStudy.version2Plan} />
+          ) : null}
+          {caseStudy.transferableSkills?.length ? (
+            <TransferableSkillsSection skills={caseStudy.transferableSkills} />
+          ) : null}
+          <ReflectionSection content={caseStudy.reflection} />
+        </BenchNotes>
         <ProjectBrief project={project} className="mt-2" />
       </div>
     </ProjectPageShell>

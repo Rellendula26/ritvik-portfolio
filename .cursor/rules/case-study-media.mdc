@@ -6,6 +6,8 @@ alwaysApply: false
 
 # Case-study media hygiene
 
+Broader rules live in `engineering-media.mdc`. This file is the per-section cap.
+
 Engineering case-study pages must read like a design review, not a media dump.
 
 ## Hard limits per discipline block
