@@ -147,6 +147,7 @@ function LegacyProjectPage({
       alt: `${project.title} architecture ${index + 1}`,
       label: `Architecture ${index + 1}`,
       caption: `Architecture ${index + 1}`,
+      fit: "contain" as const,
     })) ?? [];
   const imageGalleryMedia =
     project.imageGallery?.map((src, index) => ({
@@ -155,6 +156,7 @@ function LegacyProjectPage({
       alt: `${project.title} gallery image ${index + 1}`,
       label: `Image ${index + 1}`,
       caption: `Image ${index + 1}`,
+      fit: "contain" as const,
     })) ?? [];
   const videoGalleryMedia =
     project.videoGallery?.map((src, index) => ({
@@ -173,6 +175,63 @@ function LegacyProjectPage({
       {project.experienceSlug ? (
         <ExperienceBacklink slug={project.experienceSlug} />
       ) : null}
+
+      {architectureMedia.length > 0 && (
+        <section className="mt-10">
+          <SectionLabel>Architecture</SectionLabel>
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {architectureMedia.map((item, index) => (
+              <div
+                key={`${project.slug}-arch-${index}`}
+                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+              >
+                <div className="relative aspect-[4/3] w-full bg-white">
+                  {renderMedia(item)}
+                </div>
+                <MediaNotes media={item} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {imageGalleryMedia.length > 0 && (
+        <section className="mt-10">
+          <SectionLabel>Build photos</SectionLabel>
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {imageGalleryMedia.map((item, index) => (
+              <div
+                key={`${project.slug}-image-${index}`}
+                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+              >
+                <div className="relative aspect-[4/3] w-full bg-[#f7f1e8]">
+                  {renderMedia(item)}
+                </div>
+                <MediaNotes media={item} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {videoGalleryMedia.length > 0 && (
+        <section className="mt-10">
+          <SectionLabel>Demonstrations</SectionLabel>
+          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {videoGalleryMedia.map((item, index) => (
+              <div
+                key={`${project.slug}-video-${index}`}
+                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
+              >
+                <div className="relative aspect-video w-full bg-[#070707]">
+                  {renderMedia(item)}
+                </div>
+                <MediaNotes media={item} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {process.env.NODE_ENV === "development" &&
         project.driveFolderUrl &&
@@ -304,72 +363,6 @@ function LegacyProjectPage({
           >
             Open Google Drive intake folder
           </a>
-        </section>
-      )}
-
-      {architectureMedia.length > 0 && (
-        <section className="mt-14">
-          <SectionLabel>Architecture media</SectionLabel>
-          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {architectureMedia.map((item, index) => (
-              <div
-                key={`${project.slug}-arch-${index}`}
-                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
-              >
-                <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
-                  {item.label}
-                </div>
-                <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
-                  {renderMedia(item)}
-                </div>
-                <MediaNotes media={item} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {imageGalleryMedia.length > 0 && (
-        <section className="mt-14">
-          <SectionLabel>Image gallery</SectionLabel>
-          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {imageGalleryMedia.map((item, index) => (
-              <div
-                key={`${project.slug}-image-${index}`}
-                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
-              >
-                <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
-                  {item.label}
-                </div>
-                <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
-                  {renderMedia(item)}
-                </div>
-                <MediaNotes media={item} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {videoGalleryMedia.length > 0 && (
-        <section className="mt-14">
-          <SectionLabel>Video gallery</SectionLabel>
-          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {videoGalleryMedia.map((item, index) => (
-              <div
-                key={`${project.slug}-video-${index}`}
-                className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.06)]"
-              >
-                <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
-                  {item.label}
-                </div>
-                <div className="relative h-[280px] w-full bg-[#070707] md:h-[340px]">
-                  {renderMedia(item)}
-                </div>
-                <MediaNotes media={item} />
-              </div>
-            ))}
-          </div>
         </section>
       )}
 

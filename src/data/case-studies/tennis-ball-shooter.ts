@@ -36,7 +36,7 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       },
       {
         name: "Launcher drive",
-        role: "Dual RS-775 DC motors on printed flywheels. PWM duty changes the applied waveform. Release speed also depends on the load.",
+        role: "Dual RS-775 DC motors on printed flywheels. Release speed still depends on the load, not only on the duty cycle.",
       },
       {
         name: "Chassis & mounts",
@@ -98,7 +98,7 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       discipline: "Electrical",
       goal: "Run high-current flywheels and a stepper off a 12 V pack without killing a 5 V ESP32, switch motors efficiently with PWM, and keep a fuse in the pack path for overcurrent.",
       design:
-        "Fused 12 V battery rail for MOSFET modules and stepper VMOT. A buck steps that rail to about 5 V for the ESP32 board's VIN and the driver logic. The ESP32 chip runs at 3.3 V from the board regulator. The ESP32 drives the MOSFET gates with PWM, so each device switches between on and off. Duty cycle changes the voltage waveform. Motor inductance and inertia smooth the pulses, and the resulting speed still depends on the motor and the load.",
+        "Fused 12 V battery rail for MOSFET modules and stepper VMOT. A buck steps that rail to about 5 V for the ESP32 board's VIN and the driver logic. The ESP32 chip runs at 3.3 V from the board regulator. The gates are PWM. The decision below is why the FET is hard-switched.",
       challenges: [
         "Early bring-up had no buck. The pack was 12 V. Without the step-down, the ESP32 board would not run from the battery.",
         "During MOSFET PWM testing a flywheel ran much faster than commanded. The fuse did not open. I did not measure the current, so I am not treating high speed as proof of overcurrent.",

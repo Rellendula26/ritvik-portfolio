@@ -10,7 +10,7 @@ export type ProjectMedia =
 
 export function ProjectPageShell({ children }: { children: React.ReactNode }) {
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(to_bottom,#fff7ed_0%,#fffaf5_18%,#ffffff_42%,#fffaf5_100%)]">
+    <main className="project-page relative min-h-screen overflow-hidden bg-[linear-gradient(to_bottom,#fff7ed_0%,#fffaf5_18%,#ffffff_42%,#fffaf5_100%)]">
       <div className="absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:24px_24px]" />
       {/* Faint schematic texture — decorative only */}
       <svg
