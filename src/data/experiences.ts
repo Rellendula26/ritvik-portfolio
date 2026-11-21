@@ -136,13 +136,13 @@ export const EXPERIENCES: Experience[] = [
     oneLiner:
       "Teleoperated rope-climbing robots for tree work. I work on the logic and power boards, and on the leader-follower bench.",
     overview:
-      "Serpent builds teleoperated rope-climbing robots for tree work. My pieces are the power and logic boards, and the leader-follower bench. I have not designed the SR-01 chassis.",
+      "Serpent builds teleoperated rope-climbing robots for tree work. My pieces are the power and logic boards, including the Teensy servo path, and the leader-follower bench. I have not designed the SR-01 chassis.",
     highlights: [
-      "Power and logic boards: I modified them as one set, 5–20 A fusing, DC-DC, and RS-485 and I2C. Bring-up so far is the 12 V and 6 V rails on a multimeter. A grip test later fried the control board. That replacement is not in a bring-up note.",
-      "I have not split the fuses, the DC-DC stage, or the buses onto one board. The photos show both boards. They don't assign each part.",
+      "Power and logic boards: I modified them as one set, 5–20 A fusing, DC-DC, and RS-485 and I2C. On the logic board a Teensy 4.1 drives a PCA9685 at 50 Hz. The servo moved after firmware enabled OE on GPIO 6. A grip test fried the control board. That replacement is not in a bring-up note.",
+      "V1 is the pair on the homework sheet. The boards I tested were V2. I still have not mapped the fuse markings to a branch.",
       "I wrote the leader-follower bridge. The bench pair is a blue leader and a white follower, not mounted on SR-01. A fixed follower IP worked on shop Wi-Fi and broke on the next hotspot.",
     ],
-    focus: ["SR-01", "SR-02", "Power and logic PCBs", "Leader-follower"],
+    focus: ["SR-01", "SR-02", "Power and logic PCBs", "PCA9685", "Leader-follower"],
     externalHref: "https://serpentrobotics.com/",
     websiteKind: "company",
     cover: {
@@ -161,7 +161,7 @@ export const EXPERIENCES: Experience[] = [
       {
         title: "Logic and power boards",
         body: [
-          "SR-01 has to switch actuator current without taking the control board with it. I modified the two boards as one set: 5–20 A fused paths, DC-DC regulation, and RS-485 and I2C. The logic board is the connector side, marked for stepper, encoder, RS-485, 12 V, 5 V, and ground. The power board is the XT60, the terminal blocks, and the blade fuses. In that photo the readable fuse markings are 15 and 5. I haven't assigned either fuse, the DC-DC stage, or either bus to only one board. Bring-up so far is the 12 V and 6 V rails, checked with a multimeter. A grip test later broke a printed link while it was grabbing a branch. Stepper current fed back, signals lagged by about 5 seconds, the saw went past a full turn, a Hall-sensor wire came out, and the control board and half the actuators were fried. The brushed-to-BLDC saw change that was supposed to draw less current is not finished, and I don't have a photo of a replacement board. The write-up is ",
+          "SR-01 has to switch actuator current without taking the control board with it. I modified the two boards as one set: 5–20 A fused paths, DC-DC regulation, and RS-485 and I2C. The logic board is the connector side, marked for stepper, encoder, RS-485, 12 V, 5 V, and ground. Servo commands on that board go from a Teensy 4.1 through a TCA9548A to a PCA9685, set to 50 Hz. OE is active low on GPIO 6, and the servo did not move until firmware drove that pin. The power board is the XT60, the terminal blocks, and the blade fuses. In that photo the readable fuse markings are 15 and 5. The fuse and regulator sheets are the power PCB. RS-485 and I2C are logic-board sheets. I still haven't mapped the 15 and 5 markings to a branch. Rail checks so far are 12 V and 6 V on a multimeter. A grip test broke a printed link while it was grabbing a branch. Stepper current fed back, signals lagged by about 5 seconds, the saw went past a full turn, a Hall-sensor wire came out, and the control board and half the actuators were fried. The brushed-to-BLDC saw change that was supposed to draw less current is not finished, and I don't have a photo of a replacement board. The write-up is ",
           { projectSlug: "logic-pcb" },
           ".",
         ],

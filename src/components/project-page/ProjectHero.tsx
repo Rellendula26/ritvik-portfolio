@@ -54,7 +54,9 @@ function isPlaceholder(src: string | undefined) {
 export default function ProjectHero({ project }: { project: Project }) {
   const hero = pickProjectPrimaryMedia(project);
   const heroSrc = hero && "src" in hero ? hero.src : undefined;
+  const frames = project.heroFrames;
   const showMedia =
+    Boolean(frames && frames.length > 0) ||
     hero?.kind === "visual" ||
     (hero && !isPlaceholder(heroSrc)) ||
     (!hero && !isPlaceholder(project.thumbnail));
@@ -195,29 +197,54 @@ export default function ProjectHero({ project }: { project: Project }) {
         <div className="min-w-0 lg:sticky lg:top-28 lg:self-start">
           <div className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-[#070707] shadow-[0_18px_45px_rgba(0,0,0,0.08)]">
             <div className="border-b border-zinc-200 bg-gradient-to-r from-orange-50 via-white to-amber-50 px-4 py-3 text-xs font-medium text-zinc-500">
-              {hero?.label ?? "Project preview"}
+              {frames && frames.length > 1 ? "V2" : (hero?.label ?? "Project preview")}
             </div>
-            <div
-              className={
-                hero?.kind === "video" && hero.portrait
-                  ? "relative mx-auto aspect-[9/16] max-h-[560px] w-full max-w-[320px] bg-[#1c1917]"
-                  : "relative aspect-video w-full bg-[#070707]"
-              }
-            >
-              {hero ? (
-                renderMedia(hero, true)
-              ) : (
-                <ProjectMediaImage
-                  src={project.thumbnail}
-                  alt={`${project.title} thumbnail`}
-                  priority
-                  sizes="(max-width: 768px) 100vw, 800px"
-                />
-              )}
-            </div>
-            {hero &&
+            {frames && frames.length > 1 ? (
+              <div className="grid grid-cols-2 gap-2 bg-[#faf8f5] p-2">
+                {frames.map((frame) => (
+                  <figure key={frame.src} className="relative aspect-[3/4] min-w-0 overflow-hidden rounded-xl bg-[#f3efe8]">
+                    <ProjectMediaImage
+                      src={frame.src}
+                      alt={frame.alt}
+                      priority
+                      className="object-contain object-center"
+                      sizes="(max-width: 1024px) 50vw, 360px"
+                    />
+                    <figcaption className="absolute left-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-950 shadow-sm">
+                      {frame.label}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            ) : (
+              <div
+                className={
+                  hero?.kind === "video" && hero.portrait
+                    ? "relative mx-auto aspect-[9/16] max-h-[560px] w-full max-w-[320px] bg-[#1c1917]"
+                    : "relative aspect-video w-full bg-[#070707]"
+                }
+              >
+                {hero ? (
+                  renderMedia(hero, true)
+                ) : (
+                  <ProjectMediaImage
+                    src={project.thumbnail}
+                    alt={`${project.title} thumbnail`}
+                    priority
+                    sizes="(max-width: 768px) 100vw, 800px"
+                  />
+                )}
+              </div>
+            )}
+            {frames && frames.length > 1 ? (
+              <div className="border-t border-zinc-200 bg-white px-4 py-3">
+                <p className="text-sm leading-relaxed text-zinc-700">
+                  V2 logic and V2 power, the boards I tested. V1 is the bare pair on the homework sheet, further down.
+                </p>
+              </div>
+            ) : hero &&
               (("caption" in hero && hero.caption) ||
-                ("description" in hero && hero.description)) && (
+                ("description" in hero && hero.description)) ? (
                 <div className="border-t border-zinc-200 bg-white px-4 py-3">
                   {"caption" in hero && hero.caption && (
                     <p className="text-sm leading-relaxed text-zinc-700">{hero.caption}</p>
@@ -228,7 +255,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                     </p>
                   )}
                 </div>
-              )}
+              ) : null}
           </div>
         </div>
         ) : null}

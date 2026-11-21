@@ -21,6 +21,8 @@ import {
 } from "@/components/project-page/case-study/RetrospectiveExtrasSection";
 import DesignChallengeExtrasSection from "@/components/project-page/case-study/DesignChallengeExtrasSection";
 import ContributionSection from "@/components/project-page/case-study/ContributionSection";
+import BoardArchitecture from "@/components/project-page/case-study/BoardArchitecture";
+import ServoBringUpStory from "@/components/project-page/case-study/ServoBringUpStory";
 import ProjectBrief from "@/components/project-page/ProjectBrief";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
@@ -29,8 +31,16 @@ import Link from "next/link";
 
 function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
   const items = [
-    { id: "motivation", label: "Motivation" },
-    { id: "system-overview", label: "System" },
+    caseStudy.servoBringUp
+      ? { id: "board-architecture", label: "Boards" }
+      : { id: "motivation", label: "Motivation" },
+    caseStudy.servoBringUp
+      ? { id: "actuation-challenge", label: "The fault" }
+      : { id: "system-overview", label: "System" },
+    caseStudy.servoBringUp
+      ? { id: "debug-path", label: "Debug" }
+      : null,
+    caseStudy.servoBringUp ? { id: "motivation", label: "Context" } : null,
     caseStudy.contribution ? { id: "contribution", label: "My part" } : null,
     caseStudy.designChallenge
       ? { id: "design-challenge", label: "Deep dive" }
@@ -103,8 +113,12 @@ export default function EngineeringCaseStudyLayout({
       <AnchorNav items={nav} />
 
       <div className="mt-10 space-y-12 md:space-y-14">
+        {caseStudy.servoBringUp ? <BoardArchitecture /> : null}
+        {caseStudy.servoBringUp ? <ServoBringUpStory /> : null}
         <MotivationSection content={caseStudy.motivation} />
-        <SystemOverviewSection content={caseStudy.systemOverview} />
+        {caseStudy.servoBringUp ? null : (
+          <SystemOverviewSection content={caseStudy.systemOverview} />
+        )}
         {caseStudy.contribution ? (
           <ContributionSection content={caseStudy.contribution} />
         ) : null}

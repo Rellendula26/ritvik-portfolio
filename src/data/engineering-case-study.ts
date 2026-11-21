@@ -86,6 +86,13 @@ export interface SystemOverviewContent {
   diagram?: CaseStudyMedia;
   /** Ordered signal path. Rendered as a diagram, separate from power. */
   signalPath?: FlowNode[];
+  /**
+   * Control line that is not on the signal bus.
+   * Drawn under the signal path so a GPIO enable is not mistaken for another I2C hop.
+   */
+  enablePath?: FlowNode[];
+  /** Short spec chips under the signal diagram. Facts only, not measured results. */
+  specs?: string[];
   /** Ordered power path. Only include rails the source actually names. */
   powerPath?: FlowNode[];
 }
@@ -320,6 +327,11 @@ export interface EngineeringCaseStudy {
   transferableSkills?: TransferableSkill[];
   /** Optional recruitment-challenge visuals / tables (PER, Hyperloop, …). */
   designChallenge?: DesignChallengeExtras;
+  /**
+   * Logic-board servo bring-up. When set, that story replaces the generic
+   * system-overview block and leads the page.
+   */
+  servoBringUp?: boolean;
 }
 
 export const ENGINEERING_NOTE_LABELS: Record<EngineeringNoteKind, string> = {

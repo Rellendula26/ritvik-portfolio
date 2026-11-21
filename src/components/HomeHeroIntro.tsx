@@ -26,7 +26,7 @@ const PARAGRAPHS: Segment[][] = [
   ],
   [
     {
-      text: "I like working through something difficult and gradually figuring it out. That's part of why I do endurance sports: stay patient when progress is slow. Engineering gives me that same feeling, and a chance to build something someone else can use.",
+      text: "Persistence is one of my strongest skills. I like walking into a field I don't know and figuring it out as I go. If the path is easy, there isn't much behind it. That's why I love endurance sports, and why engineering feels the same.",
     },
   ],
   [

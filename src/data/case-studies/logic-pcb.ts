@@ -2,6 +2,7 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 
 export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
   slug: "logic-pcb",
+  servoBringUp: true,
   motivation: {
     why: "SR-01 climbs and cuts on a rope. The actuators pull real current, and the control board has to survive that. I modified the power and logic boards so the robot can switch that current and still talk to the actuators.",
     interest:
@@ -9,54 +10,76 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
     learning:
       "I wanted the rails and the connectors to be something I could check with a meter before I blamed the firmware.",
     narrative:
-      "SR-01 climbs a rope and cuts a branch while the arborist stays on the ground. The actuators pull real current, and the control board has to survive a fault in that current. I modified the power and logic boards for that job: fused paths in the 5–20 A range, DC-DC regulation, and RS-485 and I2C, kept as one set of changes. I don't have a sheet that puts each of those on only one board.\n\nBring-up so far is the 12 V and 6 V rails and the actuator connectors, checked with a multimeter. A later grip test is the failure this page has to account for. A printed link broke, stepper current fed back, and the control board and half the actuators were fried. That board has not been replaced in a bring-up note.",
+      "The bring-up above is the servo path. This note is the other fault, and it is still open. A grip test broke a printed link while it was grabbing a branch. Stepper current fed back, and the control board and half the actuators were fried. I don't have a photo of a replacement board.\n\nI modified the power and logic boards as one set: fused paths in the 5–20 A range, DC-DC regulation, and RS-485 and I2C. The power sheets are the pack, the fuses, and the regulators. The logic sheets are the Teensy, the buses, and the actuator interfaces. Rail checks so far are 12 V and 6 V on a meter.",
     requirements: [
       "Switch actuator current in the 5–20 A range without taking the control board with it.",
-      "Keep a fused path and a regulated rail, even though the photos don't assign each part to one board.",
+      "Keep a fused path on the power board and a regulated rail. The fuse markings are still not mapped to a branch.",
       "Talk to the actuators over RS-485 and I2C.",
       "Be able to check 12 V and 6 V with a meter before blaming firmware.",
     ],
   },
   systemOverview: {
     summary:
-      "Two boards from the SR-01 set. The logic board carries connectors for the stepper, encoder, RS-485, I2C, and proximity sensors, with power inputs marked 12 V, 5 V, and ground. The power board has terminal blocks, blade fuses, and a yellow XT60. I changed them together: 5–20 A fused paths, DC-DC regulation, and RS-485 and I2C. I don't have a schematic that puts each of those on only one board.",
+      "Two boards from the SR-01 set. Servo commands on the logic board go from a Teensy 4.1, through a TCA9548A, to a PCA9685, and out as 50 Hz PWM. Output enable is not another I2C hop. It is Teensy GPIO 6 into the PCA9685 OE pin, and OE is active low. RS-485 is still on the same board. The power board is the fused distribution: terminal blocks, blade fuses, a yellow XT60, and modular DC-DC converters. The fuse and regulator sheets are that board. I still have not mapped the fuse markings to branches.",
     subsystems: [
       {
         name: "Power board",
-        role: "Fused distribution into the actuators. Blade fuses are installed, including one marked 15.",
+        role: "Fused distribution into the actuators. Blade fuses are installed, including one marked 15. A later photo shows modular DC-DC converters on this board.",
       },
       {
         name: "Logic board",
-        role: "Stepper, encoder, RS-485, I2C, and proximity connectors, plus the marked 12 V, 5 V, and ground inputs.",
+        role: "Teensy 4.1, plus stepper, encoder, RS-485, I2C, and proximity connectors. Power inputs are marked 12 V, 5 V, and ground.",
       },
       {
-        name: "Bring-up",
-        role: "12 V and 6 V rails and the actuator interfaces, checked with a multimeter.",
+        name: "Servo path",
+        role: "TCA9548A multiplexer into a PCA9685. Sixteen channels of 12-bit PWM, set to 50 Hz. Firmware scans the buses and reads a register back after a write.",
       },
     ],
-    dataFlow: "Commands over RS-485 and I2C, actuator power through the fused path.",
+    dataFlow:
+      "I2C from the Teensy through the TCA9548A to the PCA9685. The scan names what answers, and a register write has to read back.",
     controlFlow:
-      "The logic board is the control side. Actuator current stays on the power path, not on the signal pins.",
+      "PWM leaves the PCA9685 only if OE is enabled. GPIO 6 has to drive that pin. Actuator current stays on the power path, not on SDA and SCL.",
     signalPath: [
-      { title: "Command", detail: "The controller talks to the actuators." },
-      { title: "RS-485 and I2C", detail: "Both buses are in the same set of board changes." },
-      { title: "Logic connectors", detail: "Stepper, encoder, proximity, and the bus labels are on the silkscreen." },
-      { title: "Actuator", detail: "The command side. Current for the motor is the other path." },
+      { title: "Teensy 4.1", detail: "I2C host on the logic board." },
+      { title: "TCA9548A", detail: "I2C multiplexer to the downstream devices." },
+      {
+        title: "PCA9685",
+        detail: "16-channel, 12-bit PWM. I set the servo rate to 50 Hz.",
+      },
+      { title: "Servos", detail: "Actuator outputs. One channel moved on the bench." },
+    ],
+    enablePath: [
+      { title: "Teensy GPIO 6", detail: "Not an I2C pin. Firmware has to drive it." },
+      {
+        title: "PCA9685 OE",
+        detail: "Active low. Until this pin is enabled, the outputs stay off.",
+      },
+    ],
+    specs: [
+      "I2C",
+      "16-channel, 12-bit PWM",
+      "50 Hz servo control",
+      "Register read and write",
+      "Output enable on GPIO 6",
     ],
     powerPath: [
       { title: "Input", detail: "A yellow XT60 is on the power board. I am not reading a pack voltage off that connector." },
       { title: "Fuses", detail: "The power board photo shows blade fuses marked 15 and 5. I haven't assigned either one to a rail." },
-      { title: "DC-DC", detail: "Regulation is part of the same change set. The photos don't show which board it sits on." },
+      {
+        title: "DC-DC",
+        detail:
+          "The power board carries ATAZ UMD40 modules marked for 12 V and 5 V outputs. The logic board has its own module. I have not assigned each converter to a load.",
+      },
       { title: "Rails", detail: "12 V and 6 V, checked with a multimeter. Logic inputs are marked 12 V, 5 V, and ground." },
     ],
     diagram: {
       kind: "image",
-      src: "/projects/logic-pcb/both-boards.jpg",
-      alt: "Logic board and power board lying on a homework page",
+      src: "/projects/logic-pcb/teensy-i2c.jpg",
+      alt: "Teensy 4.1 on the logic board, with SDA and SCL marked beside the green connectors",
       fit: "contain",
-      label: "Both boards",
+      label: "Teensy I2C",
       caption:
-        "Logic board on top, power board below. The handwriting under them is ESE 2150 homework, not a measurement from these boards.",
+        "Teensy 4.1 on the logic board. The silkscreen by the green connectors is marked SDA and SCL. This is the connector, not a bus capture.",
     },
   },
   disciplines: [
@@ -65,7 +88,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       discipline: "Power",
       goal: "Feed actuators that can draw 5–20 A without letting a fault take the control board.",
       design:
-        "Fused circuits in that current range, and DC-DC regulation, on the power and logic boards I modified. The power board in hand has the yellow XT60, green terminal blocks, and blade fuses marked 15 and 5. I check 12 V and 6 V with a multimeter before I trust an actuator channel. Those meter checks are not the same thing as knowing which fuse feeds which motor.",
+        "Fused circuits in that current range, and DC-DC regulation, on the power and logic boards I modified. The power board in hand has the yellow XT60, green terminal blocks, and blade fuses marked 15 and 5. A closer photo shows ATAZ UMD40 modules marked for 12 V and 5 V outputs. I looked at those modules for distribution and for adding a rail later, and at keeping the power routing off the signal routing, plus reverse-current protection. I check 12 V and 6 V with a multimeter before I trust an actuator channel. Those meter checks are not a fuse map, and they are not an EMI or protection test.",
       challenges: [
         "A grip test broke a printed link while it was grabbing a branch. The stepper current dropped suddenly and fed back into the electrical system. Signals were delayed by about 5 seconds. Half the actuators and the control board were fried.",
         "In that same cascade one signal kept getting sent, the saw traveled past a full turn, and a Hall-sensor wire came out. The saw was being changed from a brushed DC motor to a BLDC because the brushless saw draws less current and the old one often got stuck. That change is not finished.",
@@ -78,43 +101,35 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       media: [
         {
           kind: "image",
-          src: "/projects/logic-pcb/logic-board.jpg",
-          alt: "Green logic PCB with connectors for stepper, encoder, and RS-485",
-          label: "Logic board",
-          fit: "contain",
-          caption:
-            "Bare logic board. Silkscreen includes stepper, encoder, RS-485, and power inputs marked 12 V, 5 V, and ground. This is not a powered measurement.",
-        },
-        {
-          kind: "image",
           src: "/experiences/serpent/power-board.jpg",
           alt: "Power board held on a clear plate, with a yellow XT60 and blade fuses",
           label: "Power board",
           fit: "contain",
           caption:
-            "Power board. Yellow XT60, green terminal blocks, and blade fuses marked 15 and 5. I haven't mapped those fuses to rails.",
+            "An earlier power board: yellow XT60, green terminal blocks, and blade fuses marked 15 and 5. This is not the V2 board I tested, and I haven't mapped those fuses to rails.",
         },
         {
           kind: "image",
-          src: "/projects/logic-pcb/driver-bench.jpg",
-          alt: "Logic board, power hardware, a brushless driver, and a motor on a blue bench mat",
-          label: "On the bench",
-          fit: "cover",
+          src: "/projects/logic-pcb/power-modules.jpg",
+          alt: "Power board with two black ATAZ DC-DC modules and green terminal blocks",
+          label: "DC-DC modules",
+          fit: "contain",
           caption:
-            "Logic board, power hardware, a brushless driver marked BLD-30, and a motor, with a soldering iron in the frame. This is not a finished channel, and it is not a meter reading.",
+            "V2 power board. ATAZ UMD40 modules marked for 12 V and 5 V outputs. The labels are what the parts say. This photo is not a load test.",
         },
       ],
     },
   ],
   contribution: {
     summary:
-      "I modified the power and logic boards and checked the rails with a meter. The grip-test cascade is the failure on record. I don't have a photo of a replacement control board.",
+      "I modified the power and logic boards, checked the rails with a meter, and brought up the Teensy servo path on the logic board. The grip-test cascade is still the earlier failure on record. I don't have a photo of a replacement control board.",
     mine: [
       "Fused paths, DC-DC regulation, and RS-485 and I2C, as one set of changes on the two boards.",
       "Meter checks of the 12 V and 6 V rails and the actuator interfaces.",
+      "Diagnostic firmware on the Teensy: bus scan, register readback, 50 Hz PWM, and the GPIO 6 enable that let the servo move.",
     ],
     alreadyThere: [
-      "The SR-01 logic board and power board in the photos, including the connectors, blade fuses, and XT60.",
+      "The SR-01 logic and power boards, including V1 on the homework sheet and the later V2 pair I tested. The Altium project is in a .rar. I did not draw a schematic for this page, and I did not design the chassis.",
       "The climbing robot the boards belong to. I modified these two boards. I did not design the chassis.",
     ],
   },
@@ -131,9 +146,9 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       rootCause:
         "The printed link was in the electrical path. When it broke, the current spike killed the control board and half the actuators, not just the plastic.",
       improvement:
-        "There is no replacement-board photo and no bring-up note for a new control board. Fusing was the change meant to give that fault current a place to stop. I still can't point to which fuse sits on which board.",
+        "There is no replacement-board photo and no bring-up note for a new control board. Fusing was the change meant to give that fault current a place to stop. The fuse sheet is on the power board. I still have not mapped the marked ratings to a branch.",
       notYet:
-        "Bring the rails back up on a replacement control board. Mark which 5–20 A fuse, which DC-DC stage, and which bus live on the power board versus the logic board. Finish the saw motor change only with a current measurement.",
+        "Bring the rails back up on a replacement control board. Map the fuse markings to the branches on the power sheet. Finish the saw motor change only with a current measurement.",
     },
   ],
   designDecisions: [
@@ -147,7 +162,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
         "Fuse the 5–20 A paths and regulate the logic rails separately.",
       ],
       tradeoffs:
-        "Fuses and a DC-DC stage add parts and a voltage drop. They also give a place for the fault current to stop. I still don't have the sheet that says which fuse sits on which board.",
+        "Fuses and a DC-DC stage add parts and a voltage drop. They also give a place for the fault current to stop. The fuse sheet is on the power board. I still have not mapped the 15, the 5, or the later 30 A markings to a branch.",
       choice:
         "I put 5–20 A fused circuits, DC-DC regulation, and RS-485 and I2C onto the power and logic boards as one set of changes.",
     },
@@ -158,7 +173,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       phase: "Boards",
       title: "Power and logic in the SR-01 set",
       description:
-        "The photos show both boards. Bring-up so far is the 12 V and 6 V rails and the actuator interfaces.",
+        "V1 is the pair on the homework sheet. The boards went through more than one revision after that. Rail bring-up, 12 V and 6 V, was on V2.",
     },
     {
       id: "grip",
@@ -167,22 +182,34 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       description:
         "The printed link broke while grabbing a branch. Stepper current fed back, signals were delayed by about 5 seconds, and the control board and half the actuators were fried. A rotating base was added because the machine was hard to place in the tree. I don't have a separate design note for that mechanism.",
     },
+    {
+      id: "servo-path",
+      phase: "Bring-up",
+      title: "I2C to a servo",
+      description:
+        "On V2: Teensy 4.1, TCA9548A, PCA9685 at 50 Hz. The servo moved once GPIO 6 enabled the PCA9685 outputs. Endurance, current logging, and a long voltage check are still open.",
+    },
   ],
   results: {
     items: [
       {
-        title: "Rails I have checked",
-        body: "12 V and 6 V, and the actuator interfaces, with a multimeter.",
+        title: "Servo path",
+        body: "One channel moved after output enable was driven. The checks, and what is still open, are in the bring-up above.",
       },
       {
-        title: "What failed",
-        body: "The grip test took out the control board and half the actuators. That is the current state, not a finished redesign.",
+        title: "Rails I have checked",
+        body: "12 V and 6 V, and the actuator interfaces, with a multimeter during bring-up. That is not a stability run.",
+      },
+      {
+        title: "What failed earlier",
+        body: "The grip test took out the control board and half the actuators. That replacement is still open. It is a different fault from the servo that sat still.",
       },
     ],
     limitations: [
-      "Fusing, DC-DC, and the buses are not yet assigned to a single board.",
+      "Fuse markings are not mapped to a branch. CURRENT_S and VOLTAGE_S are on the power schematic and have not been logged.",
       "No photo of a replacement control board after the grip test.",
       "A power cycle was not tested, so turn-on and turn-off behavior is unknown.",
+      "Extended actuator endurance, current-consumption logging, and voltage stability over a long run have not been done.",
     ],
   },
   reflection: {
@@ -194,13 +221,18 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
     ],
     future: [
       "Replace the fried control board and bring the rails back up on the new board.",
-      "Mark which fused path and which bus live on the power board versus the logic board.",
+      "Map the fuse markings to the branches on the power sheet.",
+      "Run the servo long enough to log current and watch the rail. That test has not started.",
     ],
     questions: [
       "Which of the 5–20 A fuses is the one marked 15 on the power board, and what are the others?",
     ],
   },
   engineeringNotes: [
+    {
+      kind: "engineering-note",
+      text: "OE is active low. A controller that accepts a register write can still hold every output off.",
+    },
     {
       kind: "engineering-note",
       text: "Check 12 V and 6 V before rewriting a driver that might just be unpowered.",
