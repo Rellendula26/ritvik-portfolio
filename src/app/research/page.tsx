@@ -29,7 +29,7 @@ const RESEARCH: MediaCardItem[] = [
     eyebrow: "Muscular Dystrophy & Machine Learning",
     title: "Machine Learning for Muscular Dystrophy Diagnosis (SSRN)",
     blurb:
-      "Independent project on GEO gene-expression data to test which supervised models best separate dystrophy from control samples. I built a clean preprocessing and evaluation pipeline and reported model limits directly.",
+      "I used GEO gene-expression data to see which supervised models could separate dystrophy samples from controls. I wrote the preprocessing and the evaluation. The write-up includes where those models stop working.",
     href: "/research/muscular-dystrophy",
     tags: ["Bioinformatics", "Machine Learning", "Data Pre-Processing & Normalization", "NumPy", "Scikit-learn"],
     media: { kind: "image", src: "/research/muscular-dystrophy.png", alt: "Muscular Dystrophy Image" },
@@ -40,7 +40,7 @@ const RESEARCH: MediaCardItem[] = [
     eyebrow: "Econometrics Research",
     title: "How does the relationship between remote work and salary vary by company size in the global tech workforce? (SSRN)",
     blurb:
-      "Econometrics project on 130,000+ tech salary records to test how remote-work status and company size relate to wages. Focus was model specification, ANOVA assumptions, and interpretation discipline.",
+      "I looked at 130,000+ tech salary records to see how remote work and company size show up in wages. Most of the work was specifying the model and checking whether ANOVA's assumptions held.",
     href: "/research/econometrics",
     tags: ["R", "ANOVA Test", "Data Visualization", "Economics"],
     media: { kind: "image", src: "/research/econometrics.png", alt: "Econometrics" },
@@ -53,7 +53,7 @@ export default function ResearchPage() {
       <main className="mx-auto w-full max-w-6xl px-8 py-14">
         <MediaCardGrid
           title="Research"
-          subtitle="Research work across EEG modeling, public-health evidence review, genomics ML, and labor-market econometrics."
+          subtitle="An EEG image project, a redlining review, a muscular dystrophy gene-expression project, and a paper on remote-work wages."
           items={RESEARCH}
           columns={2}
           filters={[

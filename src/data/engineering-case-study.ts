@@ -1095,13 +1095,13 @@ export const LIGHTSABER_CASE_STUDY: EngineeringCaseStudy = {
         alt: "Lightsaber blade carried through an airport",
         label: "Airport bit",
         caption:
-          "Not evidence. Just me taking the blade through the airport; funny travel still, zero engineering substance.",
+          "Carrying the blade through the airport. This is a travel clip, not a test.",
         portrait: true,
       },
     ],
     limitations: [
       "Analog character is fixed in hardware; no runtime tone profiles.",
-      "Pad-soldered LED joint is robust enough for use; it is still a scar from a packaging miss.",
+      "The pad-soldered LED joint has held. It is still the repair from a lead that was too short.",
       "9V alkaline path is simple and heavy; battery optimization is a next revision, not this one.",
     ],
   },

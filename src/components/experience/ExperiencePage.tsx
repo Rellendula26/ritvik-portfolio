@@ -113,13 +113,17 @@ function CompactProjectLink({ project }: { project: Project }) {
 
 function WorkSplit({
   aside,
+  align = "center",
   children,
 }: {
   aside?: ReactNode;
+  align?: "center" | "start";
   children: ReactNode;
 }) {
   if (!aside) {
-    return <div className="mx-auto max-w-2xl">{children}</div>;
+    return (
+      <div className={align === "start" ? "max-w-2xl" : "mx-auto max-w-2xl"}>{children}</div>
+    );
   }
 
   return (
@@ -134,7 +138,7 @@ function MediaFigure({ item }: { item: ExperienceMedia }) {
   return (
     <figure className="overflow-hidden rounded-2xl border border-stone-200/80 bg-white">
       <div
-        className={`relative aspect-[16/10] ${
+        className={`relative ${item.frame === "tall" ? "aspect-[9/16]" : "aspect-[16/10]"} ${
           item.kind === "image" && item.fit === "contain" ? "bg-[#f7f1e8]" : "bg-stone-900"
         }`}
       >
@@ -179,7 +183,10 @@ export default function ExperiencePage({
   const inlineMedia = new Set(
     [
       ...(experience.examples ?? []).map((example) => example.media?.src),
-      ...(experience.work ?? []).map((section) => section.media?.src),
+      ...(experience.work ?? []).flatMap((section) => [
+        section.media?.src,
+        ...(section.clips ?? []).map((clip) => clip.src),
+      ]),
     ].filter((src): src is string => Boolean(src))
   );
   const banner = experience.hero ?? experience.cover;
@@ -275,15 +282,24 @@ export default function ExperiencePage({
             {work.length ? (
               <div className="mt-4 space-y-6 md:mt-5 md:space-y-8">
                 {work.map((section) => (
-                  <WorkSplit
-                    key={section.title}
-                    aside={section.media ? <MediaFigure item={section.media} /> : null}
-                  >
-                    <h3 className="text-display text-xl text-stone-950">{section.title}</h3>
-                    <p className="mt-2 text-base leading-relaxed text-stone-700 md:text-base">
-                      <RichText runs={section.body} />
-                    </p>
-                  </WorkSplit>
+                  <div key={section.title} className="space-y-4">
+                    <WorkSplit
+                      aside={section.media ? <MediaFigure item={section.media} /> : null}
+                      align={section.clips?.length ? "start" : "center"}
+                    >
+                      <h3 className="text-display text-xl text-stone-950">{section.title}</h3>
+                      <p className="mt-2 text-base leading-relaxed text-stone-700 md:text-base">
+                        <RichText runs={section.body} />
+                      </p>
+                    </WorkSplit>
+                    {section.clips?.length ? (
+                      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+                        {section.clips.map((clip) => (
+                          <MediaFigure key={`${clip.kind}-${clip.src}`} item={clip} />
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
                 ))}
               </div>
             ) : (

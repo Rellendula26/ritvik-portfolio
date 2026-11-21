@@ -300,9 +300,9 @@ const BASE_PROJECTS: Project[] = [
       "Apple Silicon hosts need explicit x86-64 target handling for generated binaries.",
     ],
     lessonsLearned: [
-      "Compiler complexity is preserving meaning across representations, not recognizing syntax.",
-      "Stage-local tests beat end-to-end-only debugging.",
-      "Reading generated assembly is still the fastest debug loop.",
+      "The hard part is keeping the program's meaning while it moves from C to assembly.",
+      "A test on one pass finds the bug faster than only running the finished compiler.",
+      "When the output is wrong, I read the assembly.",
     ],
     technicalNotes: [
       "Honest scope today: return constants and nested unaries in official tests; broader C is incremental.",
@@ -349,7 +349,7 @@ const BASE_PROJECTS: Project[] = [
     category: "ml",
     status: "iterating",
     oneLine:
-      "Reverse-mode autodiff in OCaml. Forward builds a graph. Backward fills grads. Finite-difference gradcheck is how I catch a wrong gradient.",
+      "Reverse-mode autodiff in OCaml. The forward pass builds a graph, backpropagation fills the gradients, and I check them with finite differences.",
     overview:
       "Framework backprop always felt like a black box, so I wrote my own. Nodes store values, grads, parents, and ops. Forward grows the graph; backward walks it. Most bugs do not show up in the forward pass; they show up when a shared node silently gets the wrong accumulated gradient. Finite-difference gradcheck is what I trust. The tiny MLP with SGD/Adam is just a smoke test that the pieces still talk to each other.",
     techStack: ["OCaml", "Autodiff", "Computation Graphs", "Gradient Checking", "SGD/Adam"],
@@ -380,9 +380,9 @@ const BASE_PROJECTS: Project[] = [
       "API had to stay small while remaining extensible.",
     ],
     lessonsLearned: [
-      "Math correctness needs numerical checks, not confidence.",
-      "Strong types catch structure issues, not calculus mistakes.",
-      "Loss curves confirm integration; they do not replace gradcheck.",
+      "A gradient can be wrong even when the forward numbers look fine, so I check it against finite differences.",
+      "The types catch a broken graph. They do not catch a wrong derivative.",
+      "A falling loss tells me the pieces are connected. The finite-difference check is what tells me the math is right.",
     ],
     technicalNotes: [
       "New operators should ship with forward, backward, and gradcheck.",
@@ -446,9 +446,9 @@ const BASE_PROJECTS: Project[] = [
       "Timing collisions appear when actuators and sensing share one loop carelessly.",
     ],
     lessonsLearned: [
-      "Hardware reliability is mostly integration discipline.",
-      "Live demo confidence comes from failure-mode rehearsal.",
-      "A local feedback channel beats laptop-only debug on the floor.",
+      "The servos pulled the rail down when they moved together, so I had to sequence them and leave some current margin.",
+      "I rehearsed the WiFi failures before the demo. A retry in the code is not the same as a dead network in the room.",
+      "The LCD let me see what the flower was doing without a laptop on the floor.",
     ],
     technicalNotes: [
       "Next: cleaner enclosure/harness and smoother interpolation.",
@@ -523,9 +523,9 @@ const BASE_PROJECTS: Project[] = [
       "Measured NE555 sweep disagreed with the textbook RC prediction.",
     ],
     lessonsLearned: [
-      "The schematic is rarely the schedule risk; packaging and structural reliability are.",
-      "Failure analysis beats stronger glue when the load path is wrong.",
-      "Salvaging a component under constraint is as much engineering as picking a better part.",
+      "The circuit was the easy part. The blade bent the printed hilt until I changed the geometry.",
+      "Glue would not have fixed a load that was already in the wrong place.",
+      "The LED lead was too short after assembly, so I had to salvage the pad.",
     ],
     technicalNotes: [
       "Detkin Lab build; whiteboard circuit plan through lab checkout.",
@@ -721,9 +721,9 @@ const BASE_PROJECTS: Project[] = [
       "Missing a Gerber layer would fail silently at the board house.",
     ],
     lessonsLearned: [
-      "A simple circuit is fine if the manufacturing workflow is complete.",
-      "Custom footprints are how parts actually mount.",
-      "3D view catches mechanical issues DRC ignores.",
+      "The circuit was simple. Getting a footprint, a board outline, and Gerbers out was the actual work.",
+      "A custom footprint is what lets the part sit on the pads I drew.",
+      "The 3D view is where a part can pass the electrical checks and still not fit.",
     ],
     technicalNotes: [
       "Electrically intentional simple; process was the goal.",
@@ -805,8 +805,8 @@ const BASE_PROJECTS: Project[] = [
       "A 5 V label does not guarantee a quiet or stiff rail.",
     ],
     lessonsLearned: [
-      "Power stages are system decisions.",
-      "Verification against the written requirement is part of design.",
+      "Picking a 5 V buck meant comparing current, ripple, and EMI, not just reading the voltage on the label.",
+      "I first read 0.5 s as a minimum delay. The requirement is a maximum response time.",
     ],
     technicalNotes: [
       "Recruitment challenge · independent analysis.",
@@ -872,8 +872,8 @@ const BASE_PROJECTS: Project[] = [
       "A correct topology still fails without thermal and EMI thinking.",
     ],
     lessonsLearned: [
-      "Every conversion stage needs a why.",
-      "Control knobs only matter if they map to real switch states.",
+      "Each stage is there because the previous one cannot do the next job. The rectifier does not make a variable frequency.",
+      "A control description only helps if it maps to which switches are on.",
     ],
     technicalNotes: [
       "Recruitment challenge · independent analysis.",
@@ -951,9 +951,9 @@ const BASE_PROJECTS: Project[] = [
       "Requiring TMDB + Supabase + OpenAI keys made the portfolio demo fragile.",
     ],
     lessonsLearned: [
-      "Capture and organization are different jobs; mixing them kills completion.",
-      "One score collapses two different questions: quality vs personal impact.",
-      "External catalog IDs and private journal state need different ownership and lifecycles.",
+      "Writing down a movie and organizing the log are different jobs. If I combine them, I stop halfway.",
+      "One score mixes whether the movie was good with whether it mattered to me.",
+      "The catalog id for a film and my private note about it should not be the same record.",
     ],
     technicalNotes: [
       "MVP validates interaction flow and architecture seams, not long-term retention.",
@@ -1053,9 +1053,9 @@ const BASE_PROJECTS: Project[] = [
       "Hyperparameter search did almost nothing once leakage was gone.",
     ],
     lessonsLearned: [
-      "In tabular risk work, column discipline beats model flexing.",
-      "Fit nothing before the split if you want a number you can defend.",
-      "0.5 is a default, not a policy.",
+      "A messy column will mislead the model before the choice of algorithm does.",
+      "I fit the model only after the split. Otherwise the score is partly memorizing the test rows.",
+      "A threshold of 0.5 is the library default. It is not a decision about who gets flagged.",
     ],
     technicalNotes: [
       "Notebook analysis, not a deployed underwriting system.",
@@ -1116,8 +1116,8 @@ const BASE_PROJECTS: Project[] = [
       "Automation without brakes is a reputation risk.",
     ],
     lessonsLearned: [
-      "The review layer is both ethics and product quality.",
-      "Extraction failures should be data, not silent guesses.",
+      "Someone has to review what the tool drafts before it goes out. That is what keeps a bad extraction from becoming an email.",
+      "When extraction fails, I keep the failure instead of filling the field with a guess.",
     ],
     technicalNotes: [
       "Discovery + review tooling now matters more than single-email generation.",
@@ -1162,8 +1162,8 @@ const BASE_PROJECTS: Project[] = [
       "Analysis latency cannot break rehearsal flow.",
     ],
     lessonsLearned: [
-      "Niche tools win when they delete repeated friction.",
-      "UX clarity matters as much as analysis quality.",
+      "The useful part is not having to stop rehearsal to ask what the count is.",
+      "If the screen is confusing while I am dancing, the BPM math does not matter.",
     ],
     technicalNotes: ["Next: richer loop controls and movement-aware cues."],
     tags: ["signal-processing", "audio", "fullstack", "dance"],
@@ -1204,8 +1204,8 @@ const BASE_PROJECTS: Project[] = [
       "Overdraw kills responsiveness.",
     ],
     lessonsLearned: [
-      "Hardware faults and software bugs are tightly coupled in embedded work.",
-      "Prototype staging reduces risk before packaging controls.",
+      "A bad joint and a logic bug look the same when a piece does not move.",
+      "I got the game running on the bench before I worried about a case.",
     ],
     technicalNotes: ["Upgrades: rotation polish, difficulty ramps, enclosure."],
     media: [
@@ -1257,10 +1257,10 @@ const BASE_PROJECTS: Project[] = [
       "Camera angle and lighting shift landmark quality.",
     ],
     lessonsLearned: [
-      "Feedback UX is as important as pipeline quality.",
-      "Domain technique knowledge shapes useful features.",
+      "A joint angle on screen is useless if I would not know what to fix in the mirror.",
+      "I already know the technique, so the cue has to match how I think about the move.",
     ],
-    technicalNotes: ["Focus: robustness across angles and lighting."],
+    technicalNotes: ["Still open: how well a cue holds up from another camera angle or in different light."],
     tags: ["computer-vision", "ml", "fullstack", "product-iteration"],
     signal: "CV + ML",
   }),
@@ -1296,10 +1296,10 @@ const BASE_PROJECTS: Project[] = [
       "Keeping UX simple while supporting social coordination.",
     ],
     lessonsLearned: [
-      "Shipping on time is an engineering constraint.",
-      "Product clarity beats feature density.",
+      "The deadline was part of the design, so I cut features to ship.",
+      "A clear way to coordinate dinner mattered more than another screen.",
     ],
-    technicalNotes: ["Systems thinking applies to product scope too."],
+    technicalNotes: ["I have not gone back to measure whether people kept using it."],
     tags: ["fullstack", "product", "student-build"],
     signal: "Product",
   }),
@@ -1361,9 +1361,9 @@ const BASE_PROJECTS: Project[] = [
       "Keeping the interface personal while making documentation scalable.",
     ],
     lessonsLearned: [
-      "Technical work does not automatically communicate itself.",
-      "A smaller project becomes meaningful when learning and failure modes are clear.",
-      "The hard problem was information architecture, not more animation.",
+      "A list of projects does not explain the work.",
+      "The pages got better when I wrote down what failed, not when I added more motion.",
+      "Deciding what a visitor sees first took longer than the animation.",
     ],
     technicalNotes: [
       "Warm stone/amber editorial system on purpose; avoiding generic neon portfolio aesthetics.",
@@ -1428,7 +1428,7 @@ const BASE_PROJECTS: Project[] = [
     ],
     architecture: ["Digital sculpting → print preparation → physical labeling."],
     challenges: ["Detail versus FDM reliability.", "Labels without obscuring form."],
-    lessonsLearned: ["Physical artifacts force precision software can paper over."],
+    lessonsLearned: ["A model that looks right on screen can still be impossible to print. Overhangs and wall thickness showed up only when I tried."],
     technicalNotes: ["Early build evidence; not a research-grade atlas."],
     tags: ["cad", "3d-print", "neuroscience"],
     signal: "CAD",
@@ -1459,7 +1459,7 @@ const BASE_PROJECTS: Project[] = [
       "Rigor versus deadline.",
       "Avoiding causal language the data cannot support.",
     ],
-    lessonsLearned: ["Communicating assumptions is as important as model scores."],
+    lessonsLearned: ["The score did not explain the result until I wrote down what the model was assuming."],
     technicalNotes: ["Context project; not a flagship systems build."],
     tags: ["data", "analysis", "coursework"],
     signal: "Data",
@@ -1503,9 +1503,9 @@ const BASE_PROJECTS: Project[] = [
       "Gains that looked perfect on a full pack and oscillated when voltage sagged.",
     ],
     lessonsLearned: [
-      "Debuggability beats cleverness once the plant is real.",
-      "Battery placement is a system constraint, not a packaging detail.",
-      "Fixed-rate sampling turns tuning back into an experiment.",
+      "Once the robot exists, I care more about seeing the control loop than about making the controller clever.",
+      "Where the battery sits changes the balance. It is not only a question of where the wires fit.",
+      "Sampling at a fixed rate made tuning something I could repeat.",
     ],
     technicalNotes: [
       "Placeholder diagrams; replace with real CAD, PCB, and scope captures when migrating a live project.",
@@ -1800,7 +1800,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     lessonsLearned: [
       "A controller that stores an I2C write can still hold the outputs off. On the PCA9685 that pin is OE, and it is active low.",
       "A printed grip link is part of the electrical story. When it broke, the current spike took out the control board, not just the plastic.",
-      "The handwritten numbers under the boards in one photo are ESE 2150 homework. They are not rail measurements.",
+      "The numbers written on the homework sheet under the boards are from ESE 2150. I measured 12 V and 6 V later, on V2.",
     ],
     technicalNotes: [
       "SDA is bidirectional. A one-direction isolator cannot carry it. I looked at bidirectional I2C isolators, including the Si8600, and checked the bus across separate supplies.",

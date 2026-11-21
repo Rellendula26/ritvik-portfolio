@@ -9,7 +9,7 @@ import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 export const C_COMPILER_CASE_STUDY: EngineeringCaseStudy = {
   slug: "c-compiler",
   motivation: {
-    why: "I was calling clang for years without knowing what it actually did. Building a compiler seemed like the cleanest way to stop pretending.",
+    why: "I had been calling clang without knowing what the passes actually did. Writing a small compiler was how I learned them.",
     interest:
       "Parsing is not the hard part. Keeping the same program meaning while the representation gets less human and more machine-shaped is.",
     learning:
@@ -17,7 +17,7 @@ export const C_COMPILER_CASE_STUDY: EngineeringCaseStudy = {
   },
   systemOverview: {
     summary:
-      "mycc is my OCaml compiler for a small C subset. Source to tokens to AST to TACKY to x86 with fixups, then the host assembler and linker. Each stage should make the next one simpler. If it does not, the architecture is lying.",
+      "mycc is my OCaml compiler for a small C subset. Source goes to tokens, then an AST, then TACKY, then x86 with fixups, and the host assembler and linker finish it. Each stage should make the next one easier to write.",
     subsystems: [
       {
         name: "Lexer",

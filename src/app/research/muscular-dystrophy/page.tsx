@@ -27,7 +27,7 @@ function ActionLink({ label, href }: LinkItem) {
 export default function Page() {
   const title = "Machine Learning for Muscular Dystrophy Diagnosis";
   const subtitle =
-    "This project uses NCBI Gene Expression Omnibus (GEO) data to evaluate classical ML methods for muscular dystrophy classification.";
+    "I used GEO gene-expression data to compare classical models on muscular dystrophy samples versus controls.";
   const coverSrc = "/research/muscular-dystrophy.png"; // must exist in /public
 
   // PDF (local)
@@ -168,17 +168,17 @@ export default function Page() {
                   precision, recall, and F1 score.
                 </li>
                 <li>
-                  Identified a subset of genes with statistically significant
-                  associations to muscular dystrophy status, reinforcing known
-                  pathways and surfacing candidates for follow-up study.
+                  A subset of genes had a statistically significant association
+                  with muscular dystrophy status. Some line up with known
+                  pathways, and some are candidates for a follow-up study.
                 </li>
                 <li>
-                  Produced a reproducible ML pipeline adaptable to other
-                  genetically driven neuromuscular disorders using GEO.
+                  I wrote a preprocessing and model-comparison pipeline on GEO
+                  data. The same steps can be pointed at other neuromuscular
+                  expression sets.
                 </li>
                 <li>
-                  Published the work as a public preprint, contributing an
-                  accessible end-to-end example of applied ML in genomic diagnostics.
+                  I posted the pipeline and the results as a public preprint.
                 </li>
               </ul>
             </div>

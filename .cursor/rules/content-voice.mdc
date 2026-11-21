@@ -1,0 +1,32 @@
+---
+description: Voice for anything a visitor reads on the portfolio. Write like Ritvik explaining a project in the lab.
+alwaysApply: true
+---
+
+# Content voice
+
+Ritvik is an EE student at Penn who likes electronics, embedded systems, robotics, and building physical things. Write the way he would explain a project to another student or a recruiter standing next to the bench. Clean it up enough for the site. Do not make it sound like a company, a textbook, or a generated case study.
+
+## How to write
+
+- First person for his work. "We" only for something the team actually did together.
+- Say what the thing is and why it exists before the part numbers.
+- Keep the real details: rails, protocols, parts, measurements, what broke, what is unfinished.
+- Complete sentences. Vary the length. Contractions are fine.
+- Everyday verbs: built, designed, tested, wrote, measured, modified, figured out.
+- A lesson only if it names a specific thing that happened.
+
+## Do not
+
+- Em dashes.
+- Resume verbs standing in for a fact: leveraged, spearheaded, robust, seamless, cutting-edge, holistic, end-to-end, at the intersection of.
+- Fragment stacks: "Forward builds a graph. Backward fills grads."
+- Forced contrast: "not just X, but Y", "the real challenge wasn't X", "X was never the finish line."
+- A disclaimer about what the page refuses to claim. Say what is done and what is next.
+- A closing paragraph about resilience, curiosity, or cross-disciplinary thinking.
+- Invented numbers, motives, or anecdotes. If the source does not say it, leave it out and flag the gap.
+
+```
+Bad: Forward builds a graph. Backward fills grads. Gradcheck catches errors.
+Good: The forward pass builds a graph. I use that graph to fill in gradients, then check them with finite differences.
+```

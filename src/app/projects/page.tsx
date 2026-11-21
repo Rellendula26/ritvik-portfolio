@@ -156,20 +156,20 @@ export default function ProjectsPage() {
       />
       <TierBand
         title="Featured engineering work"
-        subtitle="Physical systems first: robotics, embedded control, electronics, and low-level systems."
+        subtitle="The builds I spend the most time on."
         projects={featured}
         featured
         shade="featured"
       />
       <TierBand
         title="Supporting builds"
-        subtitle="Smaller projects that still taught me something specific about architecture, debugging, or system behavior."
+        subtitle="Smaller builds, including experiments and class projects."
         projects={supporting}
         shade="supporting"
       />
       <TierBand
         title="Earlier work"
-        subtitle="Course and earlier builds. I keep them here for context because they show how my approach changed over time."
+        subtitle="Older course projects and early builds."
         projects={archive}
         shade="archive"
       />
