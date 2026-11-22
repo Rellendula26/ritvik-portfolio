@@ -90,10 +90,25 @@ Do not invent these. They are the shots and exports that would help.
 - Count Coach, Bhangra Coach, Tetris: one still each. A second screenshot of the state that matters (a count, a rep, a placed piece) would carry the page.
 - Drift Balancer: the page says it is a template. It should not gain fake robot photos.
 
+## Video pass, 21 Nov 2026
+
+The logic and power page had no clips of the boards. The servo clip leads that page. The Rigol from that session and the header soldering stay in the logic section. The captions do not read a pulse width or a scope grid, and they do not say the horn moved. A still of both boards is under the two-board intro. The meter in that frame reads 0.000, which is not a rail check. The power section opens on a different board from the V2 ATAZ photo: yellow XT60, a grey part marked 220 and 2603, and fuses marked 7.5, 5, and 40, plus one marking I cannot read. The four BLDC bench clips are only on the Serpent experience page.
+
+Clips that were already in `public/` and not on a page:
+
+- Tennis: the Elegoo Mega breadboard, the ESP32 harness, the blurry yellow motor, and the setup screen. The MOSFET module clip was already next to the electrical section, so the bagged module clip was left out.
+- Leader-follower: the bench teleop clip, next to the actuation section.
+- Count Coach: the two Colab notebooks, ahead of the deployed demo.
+- Bhangra Coach: the Railway service page and the Supabase dashboard, next to the feedback clip.
+
+Pages that still have no video file in the repo: C compiler, MiniTorch, ultrasonic PCB, PER, Hyperloop VFD, Afterthought, LabReach, Brain, OIDD, Drift Balancer, and the bionic arm. Those need a recording. I did not add a stand-in.
+
+Homepage card sentences were left as they are, including "kill leakage", "actually shipped", and "cues that actually mean something". The project pages use a separate lead for those four.
+
 ## Claims I did not upgrade
 
 - The grip-test cascade is the shop note. I do not have a photo of the fried board.
-- 12 V and 6 V are meter checks. Nominal 24 V is the sheet. Fuse markings are not a branch map.
+- 12 V and 6 V are meter checks. Nominal 24 V is the sheet. The fuse photos are three different markings, 15 and 5, holders marked 30, and 7.5, 5, and 40. None of them is a branch map.
 - The brushed-to-BLDC saw change is not finished.
 - Tennis: a fast flywheel, a detached joint, and melted insulation are observations. I did not measure the current.
 - The imager has not run a hardware readout or BLE. A panorama still needs an angle tag.

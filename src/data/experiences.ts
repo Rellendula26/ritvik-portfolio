@@ -199,7 +199,7 @@ export const EXPERIENCES: Experience[] = [
       {
         title: "BLDC bring-up",
         body: [
-          "These clips are the BLDC bring-up on the bench, and they stay on this page. The supply in the first clip reads 24.00 V. A RobStride is on the desk next to a Pi. The monitor is printing position and velocity beside a Python file, and a hand is on the rotor. Another clip is a Rigol scope on the blue bench, with probes landed. I'm not reading a voltage or a time off that screen. The last clip is a motor in an aluminum frame, with the phase wires landed. The brushed-to-BLDC saw change is still the unfinished item in the boards note above. These clips stay on the bench.",
+          "These clips are the BLDC bring-up on the bench. They stay on this page. They are not a video of the two PCBs. The supply in the first clip reads 24.00 V. A RobStride is on the desk next to a Pi. The monitor is printing position and velocity beside a Python file, and a hand is on the rotor. Another clip is a Rigol scope on the blue bench, with probes landed. I'm not reading a voltage or a time off that screen. The last clip is a motor in an aluminum frame, with the phase wires landed. The brushed-to-BLDC saw change is still unfinished.",
         ],
         clips: [
           {

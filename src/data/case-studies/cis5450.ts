@@ -48,7 +48,7 @@ export const CIS5450_CASE_STUDY: EngineeringCaseStudy = {
       src: "/projects/gallery/cis5450-cover.svg",
       alt: "CIS 5450 loan default risk cover",
       label: "Project cover",
-      caption: "Cover card for the pipeline: kill leakage, split first, then model.",
+      caption: "Cover card for the pipeline: drop the leaking columns, split first, then fit the model.",
     },
   },
   disciplines: [

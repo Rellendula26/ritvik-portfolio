@@ -1018,6 +1018,8 @@ const BASE_PROJECTS: Project[] = [
     status: "shipped",
     oneLine:
       "Lending Club default model for CIS 5450: clean the data, kill leakage, then rank risk under a messy class balance.",
+    pageLead:
+      "Lending Club default model for CIS 5450. I dropped the columns that leak the outcome, split the data before fitting anything, and ranked risk when most loans are paid.",
     overview:
       "Course project on ~1M Lending Club loans. I filtered to paid vs charged-off, threw out post-outcome cheat columns like recoveries and total_pymnt, and only fitted transforms after the train/test split. Models went from logistic regression up to tuned XGBoost around 0.7175 AUC. Tuning barely moved the needle once the columns were honest. Accuracy was a trap with an 80/20 split, so I cared about AUC, PR, and the fact that a 0.5 threshold is not a business decision.",
     techStack: [
@@ -1232,6 +1234,8 @@ const BASE_PROJECTS: Project[] = [
     status: "in-progress",
     oneLine:
       "CV dance coach: compare your form to a reference clip and get cues that actually mean something.",
+    pageLead:
+      "A dance coach that compares a clip to a reference and names a cue I would fix on the next run.",
     overview:
       "I dance, so I care when feedback is useless. Bhangra Coach uploads a clip, runs MediaPipe landmarks, aligns against a reference when tempos differ, then surfaces deltas in a Next.js UI with FastAPI and Supabase behind it. Raw joint error is not coaching. Alignment and wording are the product right now, and both still need work.",
     techStack: ["Next.js", "FastAPI", "MediaPipe", "Supabase", "Computer Vision"],
@@ -1275,6 +1279,8 @@ const BASE_PROJECTS: Project[] = [
     status: "shipped",
     oneLine:
       "Campus dining social app from Penn SPARK: auth, profiles, and a small student loop that actually shipped.",
+    pageLead:
+      "Campus dining app from Penn SPARK. We finished auth, profiles, and a small loop in time to demo it.",
     overview:
       "SPARK project with a real deadline. We built Penn Plates on Next.js and Supabase so students could coordinate around dining without a bloated feature list. Auth and RLS had to be right. Scope cuts hurt, but they are why we had a demo instead of half-finished screens.",
     techStack: ["Next.js", "Supabase", "React"],
@@ -2106,6 +2112,8 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     experienceSlug: "penn-adapt",
     oneLine:
       "I design the EMG boards and mounts for a Penn ADAPT arm. One sensor board is built. The eight-channel armband is the architecture.",
+    pageLead:
+      "I design the EMG boards and the mounts for a Penn ADAPT arm. One sensor board is built. Eight channels is the plan on paper, not the hardware in hand.",
     overview:
       "Each sensor board is a two-electrode differential pair into one ADS1291 channel, with protection and filtering ahead of the amplifier. The main board is the STM32 acquisition, processing, and power interface. One sensor board is in hand. The architecture is eight of those modules on a 20-pin flex, plus servos and a linear actuator. The team tested the main board and started the first fixture. Firmware reads raw EMG from one ADS1291 and can run a fixed motor test. It does not map EMG to motion.",
     contribution:

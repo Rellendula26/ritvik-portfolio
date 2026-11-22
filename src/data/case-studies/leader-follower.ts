@@ -115,6 +115,14 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
       media: [
         {
           kind: "video",
+          src: "/projects/leader-follower-robotic-arm/frame-teleop.mp4",
+          alt: "Ritvik holding the leader controller at a bench, with the follower arm on the table",
+          label: "At the bench",
+          caption:
+            "Leader in hand, follower on the table, and a terminal open on the monitor. This clip is the bench session, not the arm on SR-01.",
+        },
+        {
+          kind: "video",
           src: "/projects/leader-follower-robotic-arm/printed-arm.mp4",
           poster: "/projects/leader-follower-robotic-arm/printed-arm-poster.jpg",
           alt: "Printed arm held up so the joint housings are visible",
