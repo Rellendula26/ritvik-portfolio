@@ -77,6 +77,15 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       media: [
         {
           kind: "video",
+          src: "/projects/tennis-ball-shooter/stepper-motor.mp4",
+          alt: "Yellow motor housing on the blue bench mat",
+          label: "Stepper on the mat",
+          caption:
+            "A yellow motor housing on the blue mat, with a white cable. The frame is blurry, so I am not reading a part number off it.",
+          portrait: true,
+        },
+        {
+          kind: "video",
           src: "/projects/tennis-ball-shooter/flimsy-stepper-part.mp4",
           alt: "Flimsy 3D-printed stepper interface under load",
           label: "Print failure",
@@ -122,6 +131,15 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
         },
         {
           kind: "video",
+          src: "/projects/tennis-ball-shooter/battery-esp32-power.mp4",
+          alt: "ESP32 on a breadboard with lever connectors on a blue mat",
+          label: "ESP32 and the connectors",
+          caption:
+            "ESP32 on the breadboard, with lever-nut connectors in the harness. This is the wired controller, not a meter reading of the pack.",
+          portrait: true,
+        },
+        {
+          kind: "video",
           src: "/projects/tennis-ball-shooter/mosfet-switch-module.mp4",
           alt: "MOSFET switch module with PWM gate wiring",
           label: "MOSFET PWM switch",
@@ -148,14 +166,33 @@ export const TENNIS_BALL_SHOOTER_CASE_STUDY: EngineeringCaseStudy = {
       ],
       finalImplementation:
         "ESP32 as the control brain: web commands in, sequenced STEP/DIR + PWM out through the interface circuitry.",
-      media: {
-        kind: "video",
-        src: "/projects/tennis-ball-shooter/app-interface.mp4",
-        alt: "Replit TENNIS control UI on a laptop",
-        label: "Replit control UI",
-        caption:
-          "Web app on Replit: LIVE rail readout, REST BETWEEN, FAST/MED/SLOW pace, START FEED, and emergency stop. This is the client-facing command surface into the ESP32.",
-      },
+      media: [
+        {
+          kind: "video",
+          src: "/projects/tennis-ball-shooter/v1-circuit.mp4",
+          alt: "Elegoo Mega beside a breadboard with a red module",
+          label: "First controller",
+          caption:
+            "Elegoo Mega next to a breadboard. A red module sits in the middle, and the harness leaves through lever connectors. This is the board I started on.",
+          portrait: true,
+        },
+        {
+          kind: "video",
+          src: "/projects/tennis-ball-shooter/app-interface.mp4",
+          alt: "Replit TENNIS control UI on a laptop",
+          label: "Replit control UI",
+          caption:
+            "Web app on Replit: LIVE rail readout, REST BETWEEN, FAST/MED/SLOW pace, START FEED, and emergency stop.",
+        },
+        {
+          kind: "video",
+          src: "/projects/tennis-ball-shooter/connected-app-pipeline.mp4",
+          alt: "Tennis launcher setup screen with a disconnect button and a live status",
+          label: "Setup screen",
+          caption:
+            "Setup screen for the link to the ESP32, with a disconnect button and a live status. Emergency stop is on the same page.",
+        },
+      ],
     },
   ],
   designDecisions: [

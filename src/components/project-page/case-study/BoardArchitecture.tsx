@@ -64,7 +64,7 @@ const POWER: Block[] = [
     does: "Puts the pack onto dedicated fused branches. One is fused 24 V distribution. Another is the protected feed into the regulators.",
     why: "A short or a stalled actuator should open its own branch. The rest of the robot should still have a supply to come back on.",
     principle:
-      "A fuse opens when its branch carries too much current for too long. It does not isolate the robot. A shared ground, a fault that stays under the fuse rating, or a fast spike can still reach another branch. One photo shows blade fuses marked 15 and 5. A later photo shows holders marked 30. I have not mapped either set of markings onto these branches.",
+      "A fuse opens when its branch carries too much current for too long. It does not isolate the robot. A shared ground, a fault that stays under the fuse rating, or a fast spike can still reach another branch. One photo shows blade fuses marked 15 and 5. The V2 photo shows holders marked 30. The board at the top of this section shows fuses marked 7.5, 5, and 40, and one I cannot read. I have not mapped any of those markings onto these branches.",
     system:
       "The fused 24 V branch is distribution. The other fused branch is what the regulators are allowed to draw from. The grip test is why this split exists, and it is still an open fault. I do not have a measurement from the moment the link broke.",
   },
@@ -269,6 +269,68 @@ const TRADEOFFS: Array<{ title: string; body: string }> = [
     body: "Connectors go to the edge so a harness can leave the board. Test points go on nets I have to probe during bring-up. On the V2 photos, the modules sit off the Teensy. I am not pinning the current sensor or the isolators, because I cannot pick those chips out of the pictures.",
   },
 ];
+
+function Still({
+  src,
+  alt,
+  label,
+  caption,
+}: {
+  src: string;
+  alt: string;
+  label: string;
+  caption: string;
+}) {
+  return (
+    <figure className="mt-6 overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white">
+      <figcaption className="border-b border-zinc-200 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">
+        {label}
+      </figcaption>
+      <img src={src} alt={alt} className="w-full bg-[#f7f1e8] object-contain" />
+      <p className="px-4 py-3 text-sm leading-relaxed text-zinc-700">{caption}</p>
+    </figure>
+  );
+}
+
+function BoardVideo({
+  src,
+  poster,
+  alt,
+  label,
+  caption,
+  tall,
+}: {
+  src: string;
+  poster: string;
+  alt: string;
+  label: string;
+  caption: string;
+  tall?: boolean;
+}) {
+  return (
+    <figure className="overflow-hidden rounded-[1.5rem] border border-zinc-200 bg-white">
+      <figcaption className="border-b border-zinc-200 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">
+        {label}
+      </figcaption>
+      <div className={tall ? "flex justify-center bg-[#1c1917]" : "bg-[#1c1917]"}>
+        <video
+          src={src}
+          poster={poster}
+          aria-label={alt}
+          className={
+            tall
+              ? "h-[480px] w-auto max-w-full object-contain"
+              : "aspect-video w-full object-contain"
+          }
+          controls
+          playsInline
+          preload="metadata"
+        />
+      </div>
+      <p className="px-4 py-3 text-sm leading-relaxed text-zinc-700">{caption}</p>
+    </figure>
+  );
+}
 
 const VIEWS: BoardView[] = [
   {
@@ -703,6 +765,17 @@ export default function BoardArchitecture() {
   return (
     <div className="space-y-12 md:space-y-14">
       <section id="board-architecture" className="scroll-mt-36">
+        <div className="max-w-sm">
+          <BoardVideo
+            src="/projects/logic-pcb/logic-servo.mp4"
+            poster="/projects/logic-pcb/logic-servo-poster.jpg"
+            alt="Hand holding a blue servo wired to the Teensy logic board"
+            label="Servo on the logic board"
+            caption="A blue servo in hand, wired back to the Teensy board. The connector board is on the mat behind it. I am not reading a pulse width off this clip."
+            tall
+          />
+        </div>
+        <div className="mt-10">
         <SectionLabel>The two boards</SectionLabel>
         <h2 className="text-display mt-3 text-3xl font-semibold tracking-tight text-zinc-950">
           One board feeds the robot. The other tells it what to do.
@@ -713,6 +786,12 @@ export default function BoardArchitecture() {
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
           The pair on the homework sheet is V1. The boards went through more than one revision after that. The meter checks and the servo bring-up were on V2. The Altium project is in a .rar, and I am not redrawing that schematic here.
         </p>
+        <Still
+          src="/projects/logic-pcb/bench-both-boards.jpg"
+          alt="Two green boards on a blue mat, with a meter reading 0.000 and probes on the bench"
+          label="Both boards on the mat"
+          caption="The connector board and the Teensy board on the blue mat, with a meter and probes. The meter in this frame reads 0.000. That is not a rail check."
+        />
         <div className="mt-6 grid gap-3 lg:grid-cols-2">
           <article className="rounded-[1.75rem] border border-amber-300 bg-amber-50/70 p-5 shadow-[0_14px_40px_rgba(0,0,0,0.04)]">
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">Power PCB</p>
@@ -757,6 +836,7 @@ export default function BoardArchitecture() {
             The top row is energy. The bottom row is information. They meet at an actuator, and they are not the same wire. A valid command with a dead rail sits still. A healthy rail with output enable held off sits still too.
           </p>
         </div>
+        </div>
       </section>
 
       <section id="power-board" className="scroll-mt-36">
@@ -767,6 +847,12 @@ export default function BoardArchitecture() {
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
           The sensing block is the one to open if you only open one. Those parts are in the design. I have not validated the readings on V2, and I have not unpacked the Altium .rar.
         </p>
+        <Still
+          src="/projects/logic-pcb/power-fuses.jpg"
+          alt="Power board with a yellow XT60 and blade fuses marked 7.5, 5, and 40"
+          label="Power board"
+          caption="This is not the V2 board with the ATAZ modules. Yellow XT60 on the left, a grey part marked 220 and 2603, and four blade fuses: 7.5, one I cannot read, 5, and 40. I have not mapped those fuses to branches, and I am not reading a pack voltage off the connector."
+        />
         <BlockPicker blocks={POWER} active={powerId} onSelect={setPowerId} label="Power board blocks" />
       </section>
 
@@ -778,6 +864,31 @@ export default function BoardArchitecture() {
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
           The servo block is the path I ran on V2. The sensor blocks are interfaces in the design, not measurements I have taken.
         </p>
+        <Still
+          src="/projects/logic-pcb/logic-pair.jpg"
+          alt="Connector board marked Encoder next to the Teensy logic board"
+          label="The two logic boards"
+          caption="The connector board is on the left. It is marked Encoder, and the long black header is open. The Teensy board is on the right, with a black module at the top."
+        />
+        <div className="mt-6 max-w-sm">
+          <BoardVideo
+            src="/projects/logic-pcb/logic-scope.mp4"
+            poster="/projects/logic-pcb/logic-scope-poster.jpg"
+            alt="Rigol oscilloscope with a repeating trace and a blue servo in front"
+            label="Scope during that session"
+            caption="Rigol scope from the same session. A repeating trace is on the screen. I am not reading the volts or the time off it."
+            tall
+          />
+        </div>
+        <div className="mt-6 max-w-3xl">
+          <BoardVideo
+            src="/projects/logic-pcb/logic-solder.mp4"
+            poster="/projects/logic-pcb/logic-solder-poster.jpg"
+            alt="Soldering a black header onto the connector board"
+            label="Header on the connector board"
+            caption="Soldering the header on the connector board. The white connectors are already on it."
+          />
+        </div>
         <BlockPicker blocks={LOGIC} active={logicId} onSelect={setLogicId} label="Logic board blocks" />
       </section>
 
