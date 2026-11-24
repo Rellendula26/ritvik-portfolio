@@ -183,9 +183,6 @@ export default function Home() {
               <p className="text-display mt-4 max-w-3xl text-2xl leading-snug text-white md:text-3xl">
                 A lot of what I work on is the same shape. A command or a sensor has to move something, and the supply has to stay up while it does.
               </p>
-              <p className="mt-4 max-w-3xl text-base leading-relaxed text-stone-300">
-                Persistence is the skill I lean on most; I like walking into a field I don&apos;t know yet and figuring it out as I go. It&apos;s the same reason I love endurance sports.
-              </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {[
                   "Electrical Engineering @ Penn",

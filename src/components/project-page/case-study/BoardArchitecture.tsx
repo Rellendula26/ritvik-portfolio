@@ -650,8 +650,8 @@ function BlockPicker({
 }) {
   const selected = blocks.find((block) => block.id === active);
   return (
-    <div className="mt-6 grid gap-4 lg:grid-cols-[18rem_1fr] lg:items-start">
-      <div role="group" aria-label={label} className="grid gap-2">
+    <div className="mt-6">
+      <div role="group" aria-label={label} className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {blocks.map((block) => (
           <BlockButton
             key={block.id}
@@ -662,9 +662,11 @@ function BlockPicker({
         ))}
       </div>
       {selected ? (
-        <BlockDetail block={selected} />
+        <div className="mt-4">
+          <BlockDetail block={selected} />
+        </div>
       ) : (
-        <p className="rounded-[1.25rem] border border-dashed border-zinc-300 bg-white px-4 py-6 text-sm leading-relaxed text-zinc-600">
+        <p className="mt-4 rounded-[1.25rem] border border-dashed border-zinc-300 bg-white px-4 py-4 text-sm leading-relaxed text-zinc-600">
           Pick a block. The short list is the whole board. The four notes are that one circuit.
         </p>
       )}
@@ -769,12 +771,12 @@ function BoardMap() {
 
 export default function BoardArchitecture() {
   const [powerId, setPowerId] = useState<string | null>("monitor");
-  const [logicId, setLogicId] = useState<string | null>(null);
+  const [logicId, setLogicId] = useState<string | null>("servo");
 
   return (
     <div className="space-y-12 md:space-y-14">
       <section id="board-architecture" className="scroll-mt-36">
-        <div className="max-w-sm">
+        <div className="mx-auto max-w-sm">
           <BoardVideo
             src="/projects/logic-pcb/logic-servo.mp4"
             poster="/projects/logic-pcb/logic-servo-poster.jpg"
@@ -879,7 +881,7 @@ export default function BoardArchitecture() {
           label="The two logic boards"
           caption="The connector board is on the left. It is marked Encoder, and the long black header is open. The Teensy board is on the right, with a black module at the top."
         />
-        <div className="mt-6 max-w-sm">
+        <div className="mt-6 grid items-start gap-4 lg:grid-cols-2">
           <BoardVideo
             src="/projects/logic-pcb/logic-scope.mp4"
             poster="/projects/logic-pcb/logic-scope-poster.jpg"
@@ -888,8 +890,6 @@ export default function BoardArchitecture() {
             caption="Rigol scope from the same session. A repeating trace is on the screen. I am not reading the volts or the time off it."
             tall
           />
-        </div>
-        <div className="mt-6 max-w-3xl">
           <BoardVideo
             src="/projects/logic-pcb/logic-solder.mp4"
             poster="/projects/logic-pcb/logic-solder-poster.jpg"

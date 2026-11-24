@@ -2359,13 +2359,14 @@ export const PROJECTS: Project[] = [
 
 /** Homepage featured order: lead with strongest robotics/systems work. */
 const FEATURED_SLUG_ORDER = [
-  "vend-a-shoe",
+  "leader-follower-robotic-arm",
   "c-compiler",
   "per-power-electronics",
   "tennis-ball-shooter",
   "saber",
   "bloombot",
   "minitorch-ocaml",
+  "vend-a-shoe",
 ] as const;
 
 function featuredRank(slug: string) {
@@ -2379,12 +2380,12 @@ export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured).
 
 /** Homepage band. Real bench and board work, not the software featured list. */
 const HOMEPAGE_SELECTED_SLUGS = [
-  "vend-a-shoe",
-  "logic-pcb",
   "leader-follower-robotic-arm",
+  "logic-pcb",
   "bionic-arm",
   "multimodal-3d-printer",
   "ecg-signal-conditioning",
+  "vend-a-shoe",
 ];
 
 export const HOMEPAGE_SELECTED_PROJECTS = HOMEPAGE_SELECTED_SLUGS.flatMap((slug) => {
@@ -2432,13 +2433,13 @@ export const PROJECT_DIRECTORY: {
       "Boards, teleoperation, sensing, and a client machine. These are the systems I would open first.",
     featured: true,
     slugs: [
-      "vend-a-shoe",
-      "logic-pcb",
       "leader-follower-robotic-arm",
+      "logic-pcb",
       "bionic-arm",
       "multimodal-3d-printer",
       "3d-imaging-uav",
       "ecg-signal-conditioning",
+      "vend-a-shoe",
     ],
   },
   {
