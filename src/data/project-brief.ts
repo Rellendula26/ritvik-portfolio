@@ -7,6 +7,9 @@ export type ProjectBriefVisual =
       caption: string;
       /** contain keeps schematics and plots whole. cover is for photos. */
       fit?: "contain" | "cover";
+      /** Reserves the image box so the glance does not jump after load. */
+      width?: number;
+      height?: number;
     }
   | {
       kind: "diagram";

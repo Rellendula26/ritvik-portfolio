@@ -127,7 +127,14 @@ export default function ProjectCard({
         )}
 
         {showMedia && primaryMedia ? (
-          <div className="group/media relative aspect-[16/9] overflow-hidden">
+          <div
+            className={[
+              "group/media relative overflow-hidden",
+              primaryMedia.kind === "image" && primaryMedia.portrait
+                ? "aspect-[7/8]"
+                : "aspect-[16/9]",
+            ].join(" ")}
+          >
             {primaryMedia.kind === "visual" ? (
               <ProjectCardVisual
                 visualId={primaryMedia.visualId}
@@ -257,7 +264,7 @@ export default function ProjectCard({
           )}
 
           <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, 5).map((tag) => (
+            {project.techStack.slice(0, project.cardTechLimit ?? 5).map((tag) => (
               <TechChip key={tag} variant={isFeatured ? "dark" : "light"}>
                 {tag}
               </TechChip>
@@ -289,7 +296,10 @@ export default function ProjectCard({
             ) : null}
           </div>
 
-          {(project.githubUrl || project.liveUrl || project.youtubeUrl) && (
+          {(project.githubUrl ||
+            project.liveUrl ||
+            project.youtubeUrl ||
+            project.documentLink) && (
             <div className="mt-4 flex flex-wrap gap-2" onClick={stopNav}>
               {project.githubUrl && (
                 <ExternalLink
@@ -333,6 +343,14 @@ export default function ProjectCard({
               >
                 Engineering breakdown
               </Link>
+              {project.documentLink && (
+                <ExternalLink
+                  href={project.documentLink.href}
+                  label={project.documentLink.cardLabel}
+                  featured={isFeatured}
+                  onNavigate={stopNav}
+                />
+              )}
             </div>
           )}
         </div>

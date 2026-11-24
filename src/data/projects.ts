@@ -43,6 +43,8 @@ export type ProjectMedia =
       fit?: "cover" | "contain";
       featured?: boolean;
       priority?: number;
+      /** Tall subject. The hero uses a portrait frame instead of 16:9. */
+      portrait?: boolean;
     }
   | {
       kind: "video";
@@ -129,6 +131,19 @@ export interface Project {
    * A project can be in progress in the lab while the page write-up is still short.
    */
   writeUp?: "published" | "coming-soon";
+  /**
+   * Featured badge on the detail hero.
+   * Does not add the project to the homepage featured band. That band uses `featured`.
+   */
+  pageFeatured?: boolean;
+  /** Hero meta row. The directory card still prints `signal` as the org line. */
+  course?: string;
+  /** Directory-card tech chips. Defaults to 5 so other cards stay as they are. */
+  cardTechLimit?: number;
+  /** PDF or note linked from the card, the hero, and the glance. */
+  documentLink?: { href: string; cardLabel: string; heroLabel: string };
+  /** Page metadata when it should not follow `pageLead`. */
+  seo?: { title: string; description: string; image: string; imageAlt: string };
 }
 
 type ProjectInput = Omit<Project, "href" | "media"> & { media?: ProjectMedia[] };
@@ -2210,6 +2225,95 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     signal: "Electronics",
     writeUp: "published",
   },
+  {
+    id: "P25",
+    title: "ECG Signal-Conditioning PCB",
+    slug: "ecg-signal-conditioning",
+    // Directory section marks the card featured. pageFeatured is the hero badge.
+    // `featured` stays false so this does not join the homepage band.
+    featured: false,
+    pageFeatured: true,
+    category: "hardware",
+    status: "in-progress",
+    oneLine:
+      "A three-stage analog front end that turns a ~1 mV heart signal into a ~1 V signal for a microcontroller ADC, on a custom through-hole PCB.",
+    pageLead:
+      "An AD623 instrumentation amplifier and two op-amp filter stages, taken from a lab reference schematic to my own fabrication-ready board. It runs from a single 3.3 V rail and feeds a Feather's ADC.",
+    overview:
+      "An AD623 instrumentation amplifier and two op-amp filter stages, taken from a lab reference schematic to my own fabrication-ready board. It runs from a single 3.3 V rail and feeds a Feather's ADC.",
+    contribution:
+      "Schematic validates clean; board 100% routed with 0 electrical DRC violations; Gerbers ready.",
+    course: "ESE 2150 Lab 9",
+    cardTechLimit: 6,
+    documentLink: {
+      href: "/projects/ecg-signal-conditioning/ecg-project-diary.pdf",
+      cardLabel: "Project diary",
+      heroLabel: "Project diary (PDF)",
+    },
+    seo: {
+      title: "ECG Signal-Conditioning PCB · Ritvik Ellendula",
+      description:
+        "A three-stage analog front end that turns a ~1 mV heart signal into a ~1 V signal for a microcontroller ADC, on a custom through-hole PCB.",
+      image: "/projects/ecg-signal-conditioning/pcb-routed.png",
+      imageAlt:
+        "Two-layer ECG front-end PCB, 54/54 nets routed. Red = top copper, blue = bottom.",
+    },
+    techStack: [
+      "AD623",
+      "TLV2462",
+      "Altium Designer",
+      "PCB",
+      "Analog filters",
+      "Feather nRF52840",
+    ],
+    disciplines: ["Analog design", "PCB layout"],
+    thumbnail: "/projects/ecg-signal-conditioning/pcb-routed.png",
+    images: [],
+    date: "Nov. 2026",
+    buildStage: "Ready for fabrication",
+    keyHighlights: [],
+    architecture: [
+      "AD623 difference stage, a 160 Hz low-pass with gain, then a high-pass that corrects the integrator.",
+      "A buffered 1.65 V reference is the signal zero on the Feather's 3.3 V rail.",
+    ],
+    challenges: [
+      "One wire had merged +IN, −IN, both gain pins, and ground into a single net.",
+      "The vault AD623 and TLV2462 were SOIC. The board is through-hole, so the AD623 needed a DIP-8 footprint.",
+    ],
+    lessonsLearned: [
+      "A net label is not a source. The 1.65 V port needed the divider and follower that actually drive it.",
+    ],
+    technicalNotes: [
+      "The Bode numbers are calculated from the component values with ideal op-amps. The board is not built yet.",
+    ],
+    media: [
+      {
+        kind: "image",
+        src: "/projects/ecg-signal-conditioning/pcb-routed.png",
+        alt: "Two-layer ECG front-end PCB, 54/54 nets routed. Red = top copper, blue = bottom.",
+        label: "Routed board",
+        caption:
+          "Two-layer ECG front-end PCB, 54/54 nets routed. Red = top copper, blue = bottom.",
+        fit: "contain",
+        mediaType: "diagram",
+        featured: true,
+        priority: 10,
+        portrait: true,
+      },
+    ],
+    tags: [
+      "AD623",
+      "TLV2462",
+      "Altium Designer",
+      "Footprint Wizard",
+      "Situs autorouter",
+      "Gerber RS-274X",
+      "single-supply design",
+      "active filters",
+    ],
+    signal: "ESE 2150",
+    writeUp: "published",
+  },
 ];
 
 export const PROJECTS: Project[] = [
@@ -2252,12 +2356,16 @@ const CURRENT_WORK_SLUGS = [
   "bionic-arm",
 ];
 
+/** Directory pages only. Kept out of the homepage "More builds" slice. */
+const HOMEPAGE_EXCLUDED_SLUGS = ["ecg-signal-conditioning"];
+
 export const SUPPORTING_PROJECTS = PROJECTS.filter(
   (project) =>
     !project.featured &&
     project.status !== "archived" &&
     project.writeUp !== "coming-soon" &&
-    !CURRENT_WORK_SLUGS.includes(project.slug)
+    !CURRENT_WORK_SLUGS.includes(project.slug) &&
+    !HOMEPAGE_EXCLUDED_SLUGS.includes(project.slug)
 );
 export const ARCHIVE_PROJECTS = PROJECTS.filter((project) => project.status === "archived");
 
@@ -2285,6 +2393,7 @@ export const PROJECT_DIRECTORY: {
       "leader-follower-robotic-arm",
       "bionic-arm",
       "vend-a-shoe",
+      "ecg-signal-conditioning",
       "multimodal-3d-printer",
       "3d-imaging-uav",
     ],

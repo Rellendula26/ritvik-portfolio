@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 330" font-family="Inter, system-ui, sans-serif">
+  <title>ECG signal-conditioning signal chain</title>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5L1 9" fill="none" stroke="#1d6b5a" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+  <g font-size="15" font-weight="600" fill="#1f2b2b">
+    <rect x="10" y="40" width="150" height="86" rx="10" fill="#eef1ef" stroke="#c4ccc7"/>
+    <text x="85" y="72" text-anchor="middle">J1 · Input</text>
+    <rect x="200" y="40" width="160" height="86" rx="10" fill="#dcebe4" stroke="#8fbfad"/>
+    <text x="280" y="72" text-anchor="middle">Stage 1 · AD623</text>
+    <rect x="400" y="40" width="160" height="86" rx="10" fill="#dcebe4" stroke="#8fbfad"/>
+    <text x="480" y="72" text-anchor="middle">Stage 2 · U1B</text>
+    <rect x="600" y="40" width="160" height="86" rx="10" fill="#dcebe4" stroke="#8fbfad"/>
+    <text x="680" y="72" text-anchor="middle">Stage 3 · U2A</text>
+    <rect x="800" y="40" width="150" height="86" rx="10" fill="#eef1ef" stroke="#c4ccc7"/>
+    <text x="875" y="72" text-anchor="middle">J3 · Output</text>
+  </g>
+  <g font-size="12.5" fill="#55615f" text-anchor="middle">
+    <text x="85" y="96">VIN, −IN, GND</text><text x="85" y="113">electrodes / fn gen</text>
+    <text x="280" y="96">in-amp, gain ≈ 46</text><text x="280" y="113">rejects common mode</text>
+    <text x="480" y="96">160 Hz low-pass</text><text x="480" y="113">gain ≈ 23.5</text>
+    <text x="680" y="96">0.5 Hz high-pass</text><text x="680" y="113">+ low-freq correction</text>
+    <text x="875" y="96">VOUT → Feather A0</text><text x="875" y="113">~1 V signal</text>
+  </g>
+  <g stroke="#1d6b5a" stroke-width="2" fill="none" marker-end="url(#a)">
+    <line x1="162" y1="83" x2="196" y2="83"/><line x1="362" y1="83" x2="396" y2="83"/>
+    <line x1="562" y1="83" x2="596" y2="83"/><line x1="762" y1="83" x2="796" y2="83"/>
+  </g>
+  <g font-size="14" font-weight="600" fill="#1f2b2b">
+    <rect x="200" y="200" width="260" height="70" rx="10" fill="#f3ece1" stroke="#d6c6ad"/>
+    <text x="330" y="228" text-anchor="middle">U1A · DC-restoring integrator</text>
+    <rect x="500" y="200" width="260" height="70" rx="10" fill="#f3ece1" stroke="#d6c6ad"/>
+    <text x="630" y="228" text-anchor="middle">U2B · 1.65 V virtual ground</text>
+  </g>
+  <g font-size="12.5" fill="#55615f" text-anchor="middle">
+    <text x="330" y="250">drives AD623 REF to cancel drift</text>
+    <text x="630" y="250">buffered half-supply for all stages</text>
+  </g>
+  <g stroke="#a3461f" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#a)">
+    <path d="M300 128 L300 196"/>
+    <path d="M260 198 L260 132"/>
+    <path d="M630 198 L630 166 L480 166 L480 132"/>
+    <path d="M630 166 L680 166 L680 132"/>
+  </g>
+  <g font-size="11.5" fill="#a3461f">
+    <text x="306" y="170">out</text><text x="216" y="170">REF</text><text x="538" y="160">1.65V</text>
+  </g>
+  <text x="480" y="312" text-anchor="middle" font-size="12.5" fill="#55615f">Single 3.3 V supply from the Feather (J2) · all signals centred on 1.65 V</text>
+</svg>

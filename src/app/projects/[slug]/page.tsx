@@ -5,6 +5,7 @@ import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
 import ProjectBrief from "@/components/project-page/ProjectBrief";
 import ProjectHero from "@/components/project-page/ProjectHero";
 import EngineeringCaseStudyLayout from "@/components/project-page/case-study/EngineeringCaseStudyLayout";
+import EcgSignalConditioningPage from "@/components/project-page/EcgSignalConditioningPage";
 import {
   BackToProjects,
   ProjectPageShell,
@@ -406,9 +407,18 @@ export async function generateMetadata({
   const project = getProjectBySlug(slug);
   if (!project) return {};
 
+  const description = project.seo?.description ?? project.pageLead ?? project.oneLine;
   return {
-    title: `${project.title} | Ritvik Ellendula`,
-    description: project.oneLine,
+    title: project.seo?.title ?? `${project.title} | Ritvik Ellendula`,
+    description,
+    openGraph: {
+      title: project.title,
+      description,
+      url: project.href,
+      ...(project.seo?.image
+        ? { images: [{ url: project.seo.image, alt: project.seo.imageAlt }] }
+        : {}),
+    },
   };
 }
 
@@ -427,6 +437,12 @@ export default async function ProjectDetailPage({
 
   if (project.writeUp === "coming-soon") {
     return <ComingSoonProject project={project} />;
+  }
+
+  // Stage cards, schematic failures, a calculated Bode, and the diary
+  // don't fit the generic case-study blocks. Same hero, nav, frames, and glance.
+  if (slug === "ecg-signal-conditioning") {
+    return <EcgSignalConditioningPage project={project} />;
   }
 
   const caseStudy = getCaseStudyBySlug(slug);

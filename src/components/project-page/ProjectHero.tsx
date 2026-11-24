@@ -53,6 +53,7 @@ function isPlaceholder(src: string | undefined) {
 
 export default function ProjectHero({ project }: { project: Project }) {
   const hero = pickProjectPrimaryMedia(project);
+  const lead = project.pageLead ?? project.oneLine;
   const heroSrc = hero && "src" in hero ? hero.src : undefined;
   const frames = project.heroFrames;
   const showMedia =
@@ -76,7 +77,9 @@ export default function ProjectHero({ project }: { project: Project }) {
           <div className="flex flex-wrap gap-2">
             <ProjectBadge>{CATEGORY_LABELS[project.category]}</ProjectBadge>
             <ProjectBadge tone="dark">{project.buildStage}</ProjectBadge>
-            {project.featured && <ProjectBadge tone="yellow">Featured</ProjectBadge>}
+            {(project.featured || project.pageFeatured) && (
+              <ProjectBadge tone="yellow">Featured</ProjectBadge>
+            )}
           </div>
 
           <h1 className="text-display mt-5 text-4xl font-semibold tracking-tight text-zinc-950 md:text-5xl">
@@ -84,11 +87,13 @@ export default function ProjectHero({ project }: { project: Project }) {
           </h1>
 
           <p className="mt-4 max-w-2xl font-medium leading-snug tracking-tight text-zinc-800 md:text-xl">
-            {project.pageLead ?? project.oneLine}
+            {lead}
           </p>
-          <p className="mt-3 max-w-2xl text-base leading-relaxed text-zinc-700 md:text-[17px] md:leading-7">
-            {project.overview}
-          </p>
+          {project.overview && project.overview !== lead ? (
+            <p className="mt-3 max-w-2xl text-base leading-relaxed text-zinc-700 md:text-[17px] md:leading-7">
+              {project.overview}
+            </p>
+          ) : null}
 
           {project.keyHighlights.length > 0 && (
             <div className="mt-5 max-w-2xl">
@@ -116,7 +121,9 @@ export default function ProjectHero({ project }: { project: Project }) {
             {(
               [
                 { label: "Date", value: project.date },
-                { label: "Focus", value: project.signal },
+                project.course
+                  ? { label: "Course", value: project.course }
+                  : { label: "Focus", value: project.signal },
                 { label: "Build stage", value: project.buildStage },
                 project.disciplines && project.disciplines.length > 0
                   ? {
@@ -184,6 +191,16 @@ export default function ProjectHero({ project }: { project: Project }) {
                 Watch skit
               </a>
             )}
+            {project.documentLink && (
+              <a
+                href={project.documentLink.href}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-lift inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm hover:bg-orange-50"
+              >
+                {project.documentLink.heroLabel}
+              </a>
+            )}
           </div>
 
           <div className="mt-7 flex flex-wrap gap-2">
@@ -221,7 +238,9 @@ export default function ProjectHero({ project }: { project: Project }) {
                 className={
                   hero?.kind === "video" && hero.portrait
                     ? "relative mx-auto aspect-[9/16] max-h-[560px] w-full max-w-[320px] bg-[#1c1917]"
-                    : "relative aspect-video w-full bg-[#070707]"
+                    : hero?.kind === "image" && hero.portrait
+                      ? "relative mx-auto aspect-[7/8] max-h-[640px] w-full max-w-[480px] bg-[#2a2a2a]"
+                      : "relative aspect-video w-full bg-[#070707]"
                 }
               >
                 {hero ? (
