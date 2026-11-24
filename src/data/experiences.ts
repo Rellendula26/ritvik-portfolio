@@ -144,9 +144,9 @@ export const EXPERIENCES: Experience[] = [
     overview:
       "Serpent builds teleoperated rope-climbing robots for tree work. My pieces are the power and logic boards, including the Teensy servo path, a BLDC bench bring-up, and the leader-follower bench. I have not designed the SR-01 chassis.",
     highlights: [
-      "Power and logic boards: I modified them as one set, 5–20 A fusing, DC-DC, and RS-485 and I2C. On the logic board a Teensy 4.1 drives a PCA9685 at 50 Hz. The servo moved after firmware enabled OE on GPIO 6. A grip test fried the control board. That replacement is not in a bring-up note.",
+      "Power and logic boards: I modified them as one set, 5–20 A fusing, DC-DC, and RS-485 and I2C. On the V2 logic board a Teensy 4.1 drives a PCA9685 at 50 Hz, and the servo moved after firmware enabled the active-low output on GPIO 6. A later grip test took out the control board. That replacement is still open.",
       "V1 is the pair on the homework sheet. The boards I tested were V2. I still have not mapped the fuse markings to a branch.",
-      "I wrote the leader-follower bridge. The bench pair is a blue leader and a white follower, not mounted on SR-01. A fixed follower IP worked on shop Wi-Fi and broke on the next hotspot.",
+      "Leader-follower: I moved the existing sender off a fixed IP onto a name lookup, and I traced a still follower to a dead motor pack. The bench pair is a blue leader and a white follower, not mounted on SR-01.",
       "BLDC bring-up on the bench: a RobStride, a Pi printing position and velocity, a supply at 24.00 V, a scope, and a motor in an aluminum frame. The saw change on the robot is still unfinished.",
     ],
     focus: ["SR-01", "SR-02", "Power and logic PCBs", "PCA9685", "BLDC bring-up", "Leader-follower"],
@@ -168,7 +168,7 @@ export const EXPERIENCES: Experience[] = [
       {
         title: "Logic and power boards",
         body: [
-          "SR-01 has to switch actuator current without taking the control board with it. I modified the two boards as one set: 5–20 A fused paths, DC-DC regulation, and RS-485 and I2C. The logic board is the connector side, marked for stepper, encoder, RS-485, 12 V, 5 V, and ground. Servo commands on that board go from a Teensy 4.1 through a TCA9548A to a PCA9685, set to 50 Hz. OE is active low on GPIO 6, and the servo did not move until firmware drove that pin. The power board is the XT60, the terminal blocks, and the blade fuses. In that photo the readable fuse markings are 15 and 5. The fuse and regulator sheets are the power PCB. RS-485 and I2C are logic-board sheets. I still haven't mapped the 15 and 5 markings to a branch. Rail checks so far are 12 V and 6 V on a multimeter. A grip test broke a printed link while it was grabbing a branch. Stepper current fed back, signals lagged by about 5 seconds, the saw went past a full turn, a Hall-sensor wire came out, and the control board and half the actuators were fried. The brushed-to-BLDC saw change that was supposed to draw less current is not finished, and I don't have a photo of a replacement board. The write-up is ",
+          "SR-01 has to switch actuator current without taking the control board with it. I modified the two boards as one set: 5–20 A fused paths, DC-DC regulation, and RS-485 and I2C. On the V2 logic board, servo commands go from a Teensy 4.1 through a TCA9548A to a PCA9685 at 50 Hz. The servo moved after firmware drove the active-low output enable on GPIO 6. Meter checks on those boards are 12 V and 6 V. The power board is the XT60, the terminal blocks, and the blade fuses. A grip test broke a printed link, stepper current fed back, and the control board failed. The brushed-to-BLDC saw change is not finished. The write-up is ",
           { projectSlug: "logic-pcb" },
           ".",
         ],
@@ -184,7 +184,7 @@ export const EXPERIENCES: Experience[] = [
       {
         title: "Leader-follower arms",
         body: [
-          "The reason for the pair is a cut with the operator still on the ground. A small leader stays down here. The follower is meant to sit up on the climbing robot. I wrote the bridge that sends the leader's joint angles to six STS3215 servos on the follower. LeRobot is what that bridge runs on. On the bench the leader is blue and the follower is white, and they are not on SR-01 yet. Shop Wi-Fi used a fixed follower address. An iPhone hotspot and then a Razr hotspot each gave Pi 2 a new one, so the sender looks serpentpi-follower.local up every 15 seconds. A 300 ms silence holds, and a step is limited to 15°. When the follower sat still, a multimeter showed the motor pack was dead. After it was replaced, the board read 12 V, and I checked each motor connection for a voltage drop. The motion that runs still jitters, and the servos' reported 4.8 to 5.0 V is not a meter reading at the plug. The write-up is ",
+          "The operator stays on the ground with a small leader. The follower is meant to sit on the climbing robot. Leader joint angles cross two Raspberry Pis and drive six STS3215 servos. The sender and receiver were already the LeRobot path. I changed the sender so it looks serpentpi-follower.local up every 15 seconds, after a fixed address broke on the next hotspot. When the follower sat still, a multimeter showed the motor pack was dead. After it was replaced, the board read 12 V. The bench pair is not on SR-01, and motion quality is still open. The write-up is ",
           { projectSlug: "leader-follower-robotic-arm" },
           ".",
         ],
@@ -256,7 +256,7 @@ export const EXPERIENCES: Experience[] = [
     role: "Robotics, Sensing, & Controls Research Intern",
     kind: "internship",
     track: "industry",
-    dates: "August 2026 – Present",
+    dates: "Aug. 2026 – Present",
     location: "Philadelphia, PA · ModLab & AddLab",
     oneLiner:
       "AddLab printer toolhead: a rotating nozzle, an encoder on the shaft, and the sketch split out of one file.",
@@ -584,9 +584,9 @@ export const EXPERIENCES: Experience[] = [
     overview:
       "AI engineering intern at a stealth startup. The product was a live conversational avatar. I profiled startup across Next.js, Pipecat Cloud, Daily WebRTC, Tavus, and the LLM and TTS services, then changed session init so the avatar and first speech came up faster.",
     highlights: [
-      "Instrumented and profiled a latency-sensitive conversational AI pipeline spanning Next.js, Pipecat Cloud, Daily WebRTC, Tavus, and LLM/TTS services to isolate critical-path startup bottlenecks.",
-      "Redesigned session initialization through asynchronous preconnection, connection-state synchronization, and WebRTC sequencing.",
-      "Debugged WebRTC race conditions across avatar, LLM, and TTS services, reducing startup latency 77% (30 s to 7 s).",
+      "Startup was about 30 seconds. I traced it through Next.js, Pipecat, Daily WebRTC, Tavus, and the language and speech services.",
+      "The avatar, the model, and speech were coming up in the wrong order. I brought the connections up first and waited on connection state before the session continued.",
+      "After that change, startup was about 7 seconds.",
     ],
     focus: [
       "Next.js",
@@ -791,9 +791,17 @@ export const EXPERIENCES: Experience[] = [
   },
 ];
 
-export const FEATURED_EXPERIENCES = EXPERIENCES.filter(
-  (experience) => experience.track === "industry"
-).slice(0, 3);
+const FEATURED_EXPERIENCE_SLUGS = [
+  "serpent-robotics",
+  "grasp-laboratory",
+  "penn-adapt",
+  "brainchild-engineering",
+];
+
+export const FEATURED_EXPERIENCES = FEATURED_EXPERIENCE_SLUGS.flatMap((slug) => {
+  const experience = EXPERIENCES.find((item) => item.slug === slug);
+  return experience ? [experience] : [];
+});
 
 export function getExperience(slug: string): Experience | undefined {
   return EXPERIENCES.find((experience) => experience.slug === slug);

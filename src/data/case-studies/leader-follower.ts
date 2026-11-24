@@ -7,7 +7,7 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
     interest: "A still follower can be power, a held serial port, or a packet that never arrived.",
     learning: "I wanted a check that separates a missing packet from a motor with no voltage.",
     narrative:
-      "The point is a cut with the operator still on the ground. A small leader arm stays down here. The follower arm is meant to sit up on the climbing robot and do the cutting. I wrote the bridge that turns the leader's joint angles into follower motion, so nobody has to type a command for every move.\n\nGetting that off the shop network took a fixed address out of the path. On Wi-Fi the sender aimed at 10.177.7.163. On an iPhone hotspot the follower was 172.20.10.8, and on a Razr hotspot it was 192.168.118.37. The sender now looks up serpentpi-follower.local and checks again every 15 seconds. The blue and white bench pair is not mounted on SR-01. In the shop the white follower sits on an extrusion frame.\n\nA still follower was not one fault. The first motor pack was dead on a multimeter. After it was replaced, the board read 12 V, and I checked each motor connection for a voltage drop. The servos still report about 4.8 to 5.0 V. The motion that runs still jitters.",
+      "The operator stays on the ground with a small leader. The follower is meant to sit on the climbing robot and make the cut. Leader servo feedback becomes joint angles. Pi 1 sends those angles. Pi 2 turns them into commands for six STS3215 servos. The sender and receiver were already the LeRobot path. I took the sender off a fixed address and traced why a still follower could be any of four different faults.\n\nShop Wi-Fi used 10.177.7.163. An iPhone hotspot moved Pi 2 to 172.20.10.8, and a Razr hotspot moved it to 192.168.118.37. The sender now looks up serpentpi-follower.local and checks again every 15 seconds. The blue and white bench pair is not mounted on SR-01.\n\nA still follower was not one fault. A stale address, a process that already holds the serial port, a USB-C address that was not set again after an unplug, and a dead motor pack all look the same from across the bench. The first pack was dead on a multimeter. After it was replaced, the board read 12 V, and I checked each motor connection for a voltage drop. Motion on the known networks still jitters. That work is in the results.",
     requirements: [
       "Keep a small leader with the operator on the ground.",
       "Drive a follower up on the robot so the robot can cut.",
@@ -31,7 +31,7 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
       { title: "Leader sensing", detail: "Servo feedback on the blue arm is the pose." },
       { title: "Pi 1", detail: "Reads the joints and sends the angles." },
       { title: "Network", detail: "UDP angles. A fixed IP broke on each hotspot. Lookup by name, every 15 s." },
-      { title: "Pi 2", detail: "The bridge I wrote turns those angles into follower commands." },
+      { title: "Pi 2", detail: "The existing receiver turns those angles into follower commands. I changed how the sender finds this Pi." },
       { title: "STS3215", detail: "Six servos on the white arm." },
     ],
     powerPath: [
@@ -53,10 +53,10 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
   },
   contribution: {
     summary:
-      "I wrote the bridge. The Oct 29 session took it off a fixed IP: the sender looks Pi 2 up by name every 15 seconds. When the follower sat still, I metered a dead motor pack, then checked each motor connection for a drop.",
+      "The sender and receiver were already there. I took the sender off a fixed IP, so it looks Pi 2 up by name every 15 seconds, and I metered a dead motor pack before treating the silence as a software fault.",
     mine: [
-      "The bridge between the two Pis: leader joint angles in, follower servo commands out.",
-      "The network path: Wi-Fi, then one hotspot, then a hotspot that can change if both Pis join it.",
+      "The name lookup that follows Pi 2 when the hotspot changes.",
+      "The checks that separate a stale address, a held serial port, and a dead motor pack.",
       "A multimeter on the dead motor pack, then each motor connection, looking for a voltage drop.",
     ],
     alreadyThere: [
@@ -84,17 +84,17 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
       discipline: "Communication",
       goal: "Get angles from Pi 1 to Pi 2 without a typed command on every move.",
       design:
-        "I wrote the bridge. Joint angles go from Pi 1 to Pi 2 over UDP, because teleop wants the newest command, not a backlog of old ones. Silence for 300 ms holds the last position, and a commanded step is limited to 15°. On shop Wi-Fi that sender used a fixed follower address, 10.177.7.163. The iPhone hotspot moved Pi 2 to 172.20.10.8, and the Razr hotspot moved it to 192.168.118.37. The sender now looks up serpentpi-follower.local and checks again every 15 seconds, so a new hotspot does not need an edit. Pi 1 as its own access point was written down and not used.",
+        "Joint angles go from Pi 1 to Pi 2 over UDP, because teleop wants the newest command, not a backlog of old ones. The existing bridge holds the last position after 300 ms of silence and limits a step to 15°. On shop Wi-Fi the sender used 10.177.7.163. The iPhone hotspot moved Pi 2 to 172.20.10.8, and the Razr hotspot moved it to 192.168.118.37. I changed the sender so it looks up serpentpi-follower.local and checks again every 15 seconds. Pi 1 as its own access point was written down and not used.",
       challenges: [
         "A sender that logs on time can still be talking to nobody. UDP does not complain when the receiver is gone.",
-        "On the iPhone hotspot, pings ran about 26 to 72 ms with a 449 ms spike. The 300 ms hold then froze the arm. The Razr hotspot measured about 3 to 27 ms. Wi-Fi power saving made the slow link worse, so it is off.",
+        "On the iPhone hotspot, ping round trips ran about 26 to 72 ms with a 449 ms spike. Those are ping times, not the delay from a leader move to a follower joint. The 300 ms hold then froze the arm. The Razr hotspot measured about 3 to 27 ms, again as ping round trips. Wi-Fi power saving made the slow link worse, so it is off.",
       ],
       iterations: [
         "Single-Pi teleop came before the second Pi. That tracking was within about 2°.",
         "Wi-Fi with a fixed IP, then one hotspot with the address edited by hand, then a name lookup that follows the hotspot.",
       ],
       finalImplementation:
-        "Teleoperation runs without a typed command on those three networks. The clip at the top is that session: I move the blue leader, and the white follower is on the shop frame. It is not the follower up on SR-01. The motion still jitters.",
+        "Teleoperation runs without a typed command on those three networks. I move the blue leader, and the white follower is on the shop frame. It is not the follower up on SR-01. Motion quality is the open item.",
     },
     {
       id: "actuation",
@@ -193,7 +193,7 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
       tradeoffs:
         "A bridge has to stay up on both Pis. A typed command is slower, and it makes a dropped packet obvious because nothing else is moving.",
       choice:
-        "I wrote the bridge. Pi 1 sends leader angles. Pi 2 drives the six STS3215 servos. A 300 ms silence holds, and a step stops at 15°.",
+        "I kept the existing sender and receiver, and I changed how the sender finds Pi 2. Pi 1 sends leader angles. Pi 2 drives the six STS3215 servos. A 300 ms silence holds, and a step stops at 15°. Those limits were already in the bridge.",
     },
     {
       id: "hotspots",
@@ -242,7 +242,7 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
       phase: "Wi-Fi",
       title: "Teleoperation on the shop network",
       description:
-        "I wrote the bridge. Leader angles went to the follower over Wi-Fi, without a typed command on each move.",
+        "Leader angles went to the follower over Wi-Fi, without a typed command on each move. I adapted the sender. I did not write the original bridge.",
     },
     {
       id: "one-hotspot",
@@ -281,7 +281,7 @@ export const LEADER_FOLLOWER_CASE_STUDY: EngineeringCaseStudy = {
       },
       {
         title: "Motion",
-        body: "Single-Pi teleop tracked within about 2°. Over the network it works on shop Wi-Fi, on one hotspot, and on a hotspot the sender finds by name. The clip here is that session: I move the blue leader, and the white follower is on the shop frame. It is not the arm on SR-01. The motion jitters.",
+        body: "Demonstrated remote joint tracking across two Raspberry Pis on shop Wi-Fi and on two hotspots. On one Pi, the six motors tracked the leader within about 2°. The bench pair is not on SR-01. Motion-quality work is still open.",
       },
     ],
     media: [

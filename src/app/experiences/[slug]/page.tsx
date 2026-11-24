@@ -17,7 +17,7 @@ export async function generateMetadata({
   const experience = getExperience(slug);
   if (!experience) return {};
   return {
-    title: `${experience.org} | Ritvik Ellendula`,
+    title: `${experience.org} · Ritvik Ellendula`,
     description: experience.oneLiner,
   };
 }

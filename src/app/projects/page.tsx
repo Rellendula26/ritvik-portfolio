@@ -137,7 +137,7 @@ export default function ProjectsPage() {
                 Projects
               </h1>
               <p className="mt-4 text-lg leading-relaxed text-stone-700">
-                The first group is the electrical and robotics work: Serpent boards and teleoperation, the ADAPT arm, Vend-A-Shoe, and the GRASP printer and imager. The other groups are hardware, software, and older coursework.
+                The first group is the electrical and robotics work: Serpent boards and teleoperation, the ADAPT arm, Vend-A-Shoe, and the GRASP printer and imager.
               </p>
             </header>
           </Reveal>

@@ -67,7 +67,13 @@ export default function ProjectCard({
   const org = directory && project.experienceSlug
     ? getExperience(project.experienceSlug)?.org
     : undefined;
-  const primaryMedia = pickProjectPrimaryMedia(project);
+  const pickedMedia = pickProjectPrimaryMedia(project);
+  // The detail hero and the directory card share one media item. A portrait
+  // board stays on the hero; the card uses the landscape thumbnail instead.
+  const primaryMedia =
+    pickedMedia?.kind === "image" && pickedMedia.portrait
+      ? { ...pickedMedia, src: project.thumbnail, portrait: false, fit: undefined }
+      : pickedMedia;
   const showMedia = Boolean(
     primaryMedia && (primaryMedia.kind !== "image" || primaryMedia.src)
   );
@@ -181,9 +187,13 @@ export default function ProjectCard({
               ].join(" ")}
             />
             <div className="absolute left-4 top-4 flex flex-wrap gap-2">
-              <Badge variant={isFeatured ? "featured" : "default"}>
-                {CATEGORY_LABELS[project.category]}
-              </Badge>
+              {isFeatured ? (
+                <span className="inline-flex items-center rounded-full border border-white/45 bg-stone-950/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+                  {CATEGORY_LABELS[project.category]}
+                </span>
+              ) : (
+                <Badge>{CATEGORY_LABELS[project.category]}</Badge>
+              )}
               {isFeatured && (
                 <span className="rounded-full bg-amber-400 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-stone-950">
                   Featured

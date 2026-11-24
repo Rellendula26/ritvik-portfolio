@@ -148,6 +148,32 @@ export interface Project {
 
 type ProjectInput = Omit<Project, "href" | "media"> & { media?: ProjectMedia[] };
 
+const BUILD_STAGE_LABELS: Record<string, string> = {
+  "In development": "In development",
+  "In Development": "In development",
+  "Working prototype": "Working prototype",
+  "Working Prototype": "Working prototype",
+  "Bench Validated": "Working prototype",
+  "Ready for fabrication": "Ready for fabrication",
+  "Design Complete": "Ready for fabrication",
+  "Fabrication files ready": "Ready for fabrication",
+  Delivered: "Delivered",
+  "Client delivered": "Delivered",
+  Deployed: "Delivered",
+  Archived: "Archived",
+};
+
+function displayBuildStage(stage: string) {
+  return BUILD_STAGE_LABELS[stage] ?? stage;
+}
+
+function displayDate(date: string) {
+  if (date === "High School" || date === "Course project" || date === "Template 2026") {
+    return "";
+  }
+  return date.replaceAll("August ", "Aug. ").replace(/(\d{4})-(\d{4})/g, "$1–$2");
+}
+
 /**
  * Add a new project by dropping one object in PROJECTS below.
  * normalizeProject() auto-generates:
@@ -202,7 +228,7 @@ function normalizeProject(input: ProjectInput): Project {
       media.push({
         kind: "image",
         src,
-        alt: `${input.title} media ${index + 1}`,
+        alt: `${input.title}, photo ${index + 1}`,
         label: inferImageLabel(index),
         mediaType: "image",
       });
@@ -228,6 +254,8 @@ function normalizeProject(input: ProjectInput): Project {
 
   return {
     ...input,
+    date: displayDate(input.date),
+    buildStage: displayBuildStage(input.buildStage),
     demoVideoUrl: safeDemoVideoUrl,
     thumbnail: safeThumbnail,
     images: safeImages,
@@ -298,7 +326,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/gallery/c-compiler-asm.svg",
     ],
     date: "Spring 2026",
-    buildStage: "In development",
+    buildStage: "In Development",
     disciplines: ["Frontend", "IR", "Backend", "Testing"],
     keyHighlights: [
       "Recursive-descent parser that handles nested unaries like return ~(-2);",
@@ -379,7 +407,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/gallery/minitorch-gradcheck.svg",
     ],
     date: "Spring 2026",
-    buildStage: "In development",
+    buildStage: "In Development",
     disciplines: ["Graph Construction", "Reverse-Mode AD", "Numerical Validation"],
     keyHighlights: [
       "Graph nodes with values, grads, parents, and op metadata for reverse-mode",
@@ -440,7 +468,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/bloombot-poster.jpg",
     images: ["/projects/bloombot-poster.jpg"],
     date: "Spring 2026",
-    buildStage: "Working prototype",
+    buildStage: "Working Prototype",
     disciplines: [
       "Electromechanical Actuation",
       "Embedded Control",
@@ -493,7 +521,7 @@ const BASE_PROJECTS: Project[] = [
     category: "hardware",
     status: "shipped",
     oneLine:
-      "A handheld saber from Detkin Lab. An NE555 and a PN2222A make the sound, and the blade is an LED strip on a switched 9 V pack.",
+      "A handheld saber from Detkin Lab: an oscillator makes the sound, and the blade is an LED strip.",
     overview:
       "I built this so it could leave the breadboard: a printed hilt, emitter, and battery carrier, plus a discrete audio circuit and an LED blade, soldered with 40+ through-hole joints. The circuit was the easy part. The polycarbonate blade acts like a lever, and that bending load broke the printed hilt twice. I changed the hilt geometry. A short LED lead after final assembly meant I had to salvage a pad, because there was no spare strip.",
     techStack: [
@@ -516,7 +544,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/lightsaber/perfboardaudiocircuit.png",
     ],
     date: "Spring 2026",
-    buildStage: "Working prototype",
+    buildStage: "Working Prototype",
     disciplines: [
       "Mechanical Design",
       "Analog Circuit Design",
@@ -569,7 +597,7 @@ const BASE_PROJECTS: Project[] = [
     category: "embedded",
     status: "shipped",
     oneLine:
-      "A BrainChild tennis-ball launcher. An ESP32 sequences two RS-775 flywheels and a NEMA 17 feed from a Replit app.",
+      "A tennis-ball launcher: two flywheels throw the ball, and a stepper feeds the next one.",
     overview:
       "I moved sequencing off an Arduino Mega onto an ESP32 for a BrainChild demo. MOSFET modules switch the flywheels. A NEMA 17 on an A4988 indexes the balls. A fused 12 V pack feeds the motors, and a buck makes about 5 V for the ESP32 board's VIN. The chip itself runs at 3.3 V. The bench demo runs from the Replit app. A later PWM test left a flywheel much faster than commanded, the fuse did not open, pack-side joints detached, and a wire's insulation melted. I did not measure the current.",
     techStack: [
@@ -606,7 +634,7 @@ const BASE_PROJECTS: Project[] = [
     ],
     demoVideoUrl: "/projects/tennis-ball-shooter/demo-with-app.mp4",
     date: "2025–2026",
-    buildStage: "Working prototype",
+    buildStage: "Working Prototype",
     keyHighlights: [
       "PWM into MOSFET modules sets the flywheel voltage waveform. Speed still depends on the motor and the load.",
       "Fused 12 V for the motors. A buck feeds about 5 V to the ESP32 board. The chip runs at 3.3 V.",
@@ -696,7 +724,7 @@ const BASE_PROJECTS: Project[] = [
     category: "hardware",
     status: "shipped",
     oneLine:
-      "First complete PCB: KiCad schematic through two-layer layout and Gerbers for an Arduino Nano, HC-SR04, and status LED.",
+      "My first complete board: a schematic and a two-layer layout for an ultrasonic sensor and a status LED.",
     overview:
       "I built this to learn the real board house pipeline, not to invent a fancy circuit. Custom HC-SR04 footprint from measured dimensions, two-layer routing with a ground plane, DRC, then Gerber and Excellon export for PCBWay. Breadboards were familiar. Owning symbols, copper, mask, and fab files was the point.",
     techStack: [
@@ -716,7 +744,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/ultrasonic-pcb/pre-trace-3d.png",
     ],
     date: "Summer 2026",
-    buildStage: "Fabrication files ready",
+    buildStage: "Design Complete",
     disciplines: [
       "PCB Design",
       "Electrical Design",
@@ -849,7 +877,7 @@ const BASE_PROJECTS: Project[] = [
     category: "hardware",
     status: "shipped",
     oneLine:
-      "Analyzed a three-phase variable-frequency drive from AC rectification through DC-link energy storage and PWM inverter control.",
+      "A study of a three-phase drive: rectify the AC, store it on a DC link, then invert it into the motor.",
     overview:
       "Independent engineering analysis for Penn Hyperloop's recruitment process; this is not Hyperloop vehicle hardware. Maps 480 V three-phase AC through a diode rectifier, DC link, and PWM inverter so motor frequency/voltage control is understandable as a chain of energy conversions, with PWM carrier kept distinct from fundamental output frequency.",
     techStack: [
@@ -875,7 +903,7 @@ const BASE_PROJECTS: Project[] = [
       "Engineering Design Challenge",
     ],
     keyHighlights: [
-      "End-to-end VFD energy path: rectify → store → invert → motor",
+      "The path is rectify, store on the DC link, invert, then the motor.",
       "PWM switching frequency separated from fundamental motor frequency",
       "Losses, EMI, ratings, and protection treated as first-class concerns",
     ],
@@ -944,7 +972,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/afterthought/themes.jpg",
     ],
     date: "Summer 2026",
-    buildStage: "Working prototype",
+    buildStage: "Working Prototype",
     disciplines: [
       "Full-Stack Engineering",
       "Product Design",
@@ -1117,7 +1145,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/website-2.png",
     images: ["/projects/website-2.png", "/projects/website-1.png", "/projects/website-cover.png"],
     date: "2026",
-    buildStage: "In development",
+    buildStage: "In Development",
     disciplines: ["Scraping", "LLM Drafting", "Send Control"],
     keyHighlights: [
       "Hybrid scrape path for JS-heavy faculty pages",
@@ -1164,7 +1192,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/count-coach-poster.png",
     images: ["/projects/count-coach-1.png", "/projects/count-coach-2.png", "/projects/count-coach-poster.png"],
     date: "2025-2026",
-    buildStage: "Deployed",
+    buildStage: "Delivered",
     disciplines: ["Signal Processing", "Full-Stack UX"],
     keyHighlights: [
       "Waveform region select tied straight to analysis",
@@ -1205,7 +1233,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/tetrissettup.jpg",
     images: ["/projects/initialmaterials.jpg", "/projects/tetrissettup.jpg", "/projects/gallery/arduino-tetris-gameplay.svg"],
     date: "2026",
-    buildStage: "Working prototype",
+    buildStage: "Working Prototype",
     disciplines: ["Embedded Software", "Hardware Bring-up"],
     keyHighlights: [
       "On-device game loop with collision, scoring, and piezo cues",
@@ -1260,7 +1288,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/bc1.png",
     images: ["/projects/bc1.png", "/projects/bcfeedback.png"],
     date: "2026",
-    buildStage: "In development",
+    buildStage: "In Development",
     disciplines: ["Computer Vision", "Full-Stack Product"],
     keyHighlights: [
       "Pose landmarks on user and reference clips",
@@ -1303,7 +1331,7 @@ const BASE_PROJECTS: Project[] = [
     thumbnail: "/projects/website-1.png",
     images: ["/projects/website-1.png"],
     date: "2026",
-    buildStage: "Working prototype",
+    buildStage: "Working Prototype",
     disciplines: ["Product", "Auth & Data"],
     keyHighlights: [
       "Supabase auth and RLS for student profiles",
@@ -1364,7 +1392,7 @@ const BASE_PROJECTS: Project[] = [
       "/projects/website-2.png",
     ],
     date: "2025-2026",
-    buildStage: "Deployed",
+    buildStage: "Delivered",
     keyHighlights: [
       "Typed project model powering home, list, and detail routes",
       "Structured case-study shell: motivation through reflection",
@@ -1436,7 +1464,7 @@ const BASE_PROJECTS: Project[] = [
     category: "cad",
     status: "archived",
     oneLine:
-      "Maya brain model that I cleaned up and 3D printed as a labeled study piece.",
+      "A high-school study piece: I modeled a brain in Maya, then printed and labeled it.",
     overview:
       "Early project. I modeled cortical detail in Maya, fought overhangs and wall thickness for FDM, then printed and labeled it. Pretty geometry that will not print is useless. Kept here because it is one of the first times I cared about a physical artifact, not just a screenshot.",
     techStack: ["Maya", "CAD", "3D Printing"],
@@ -1474,7 +1502,7 @@ const BASE_PROJECTS: Project[] = [
     buildStage: "Archived",
     disciplines: ["Data Analysis", "Statistical Communication"],
     keyHighlights: [
-      "End-to-end cleaning, viz, and interpretable model exploration",
+      "Cleaning, charts, and models I could explain.",
       "Assumptions written up with the results, not buried",
     ],
     architecture: ["Dataset prep → feature analysis → model fitting → interpretation."],
@@ -1491,7 +1519,7 @@ const BASE_PROJECTS: Project[] = [
     id: "P14",
     title: "Drift",
     slug: "drift-balancer",
-    featured: true,
+    featured: false,
     devOnly: true,
     category: "hardware",
     status: "iterating",
@@ -1599,6 +1627,7 @@ function normalizeIntakeProject(
     status: input.status,
     oneLine: input.oneLine,
     overview: input.overview,
+    contribution: input.contribution,
     techStack: input.techStack,
     disciplines: input.disciplines,
     githubUrl: input.githubUrl,
@@ -1677,25 +1706,25 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     experienceSlug: "serpent-robotics",
     oneLine:
-      "A small leader on the ground, and a follower up on the robot, so the cut can happen with the operator still down here.",
+      "A small leader stays with the operator; the follower is meant to make the cut from the robot.",
     overview:
-      "Serpent wants the operator to stay on the ground with a small leader arm, and a follower arm up on the climbing robot, so the robot can actually cut. I built the bridge that makes that teleoperation work. On two Raspberry Pis it reads the leader's joint angles and drives six Feetech STS3215 servos on the follower. LeRobot is the stack those scripts sit on. Shop Wi-Fi used a fixed follower address, 10.177.7.163. An iPhone hotspot moved that address to 172.20.10.8, and a Razr hotspot moved it to 192.168.118.37. The sender now looks up serpentpi-follower.local every 15 seconds. The bench pair is not on SR-01. When the follower sat still, a multimeter showed the motor pack was dead. After it was replaced, the board read 12 V, and I checked each motor connection for a voltage drop. The motion that runs still jitters.",
+      "A small leader stays with the operator. The follower is meant to sit on the climbing robot and make the cut. Two Raspberry Pis carry joint angles from the leader's servo feedback to six STS3215 servos. The sender and receiver were already the LeRobot path. I took that sender off a fixed IP, so it looks up serpentpi-follower.local every 15 seconds, and I separated a dead motor pack from a network fault when the follower sat still. Shop Wi-Fi used 10.177.7.163. An iPhone hotspot moved Pi 2 to 172.20.10.8, and a Razr hotspot moved it to 192.168.118.37. The bench pair is not on SR-01. After the pack was replaced, the board read 12 V. Further motion-quality work is still open.",
     contribution:
-      "Wrote the angle bridge, moved teleoperation off a fixed IP onto a name lookup, and metered a dead motor pack before checking each motor connection for a drop.",
+      "Moved the existing sender off a fixed IP onto a name lookup, and traced a still follower through network addressing, a held serial port, and a dead motor pack.",
     techStack: ["SO-101", "STS3215", "Raspberry Pi", "LeRobot"],
     thumbnail: "/projects/leader-follower-robotic-arm/bench.jpg",
     images: [],
     date: "Sep. 2026 – Present",
-    buildStage: "In development",
+    buildStage: "Working Prototype",
     keyHighlights: [
-      "I wrote the bridge. Pi 1 sends leader joint angles. Pi 2 drives six STS3215 servos. Silence for 300 ms holds, and a step is limited to 15°.",
+      "Demonstrated remote joint tracking across two Raspberry Pis. Pi 1 sends leader angles. Pi 2 drives six STS3215 servos. A 300 ms silence holds, and a step is limited to 15°.",
       "Shop Wi-Fi used a fixed IP. Each hotspot changed it. The sender now looks the follower up by name every 15 seconds.",
-      "The motor pack was dead on the meter. With the board at 12 V, I checked each motor connection for a voltage drop. The motion that runs still jitters.",
+      "A still follower was not one fault. I metered a dead motor pack, then checked each motor connection with the board at 12 V. Motion quality is still open.",
     ],
     architecture: [
       "On one Pi, all six follower motors tracked the leader within about 2°. The next step was a second Pi over the network.",
       "Pi 1 sends leader joint angles. Pi 2 drives six STS3215 servos on a 12 V battery. A 300 ms silence holds position, and a step is limited to 15°.",
-      "I wrote the bridge. Teleoperation worked on Wi-Fi, then one hotspot, then hotspots both Pis connect to.",
+      "Teleoperation runs on shop Wi-Fi, on one hotspot, and on a hotspot the sender finds by name. I did not write the original LeRobot bridge.",
     ],
     challenges: [
       "The motion is still jittery. The servos report 4.8 to 5.0 V while the board measured 12 V. That servo figure still needs a meter at the plug.",
@@ -1783,13 +1812,13 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     experienceSlug: "serpent-robotics",
     oneLine:
-      "Power and logic boards for SR-01. The logic board's servo path is a Teensy 4.1 into a PCA9685 at 50 Hz. A grip test fried the control board, and that replacement is still open.",
+      "Power and logic boards for a climbing robot, so actuator current stays off the controller.",
     pageLead:
-      "SR-01 climbs a rope and cuts a branch from the ground. The power board feeds the actuators. The logic board is the controller. I modified both, and I brought up the servo path on the V2 logic board.",
+      "I modified the SR-01 power and logic boards and brought the servo path up on the V2 logic board. A Teensy 4.1 reaches a PCA9685 through a TCA9548A, and the servo moved after firmware drove the active-low output enable on GPIO 6.",
     overview:
-      "Rails I have metered are 12 V and 6 V. The fuse markings are not a map yet. A grip test broke a printed link and fried the control board. That fault has its own section, and the replacement is still open.",
+      "The power board distributes the pack through fused branches and modular DC-DC converters. The logic board is the Teensy, the buses, and the actuator interfaces. Meter checks on V2 are 12 V and 6 V. The grip-test failure is in its own section.",
     contribution:
-      "Modified the power and logic boards, checked the 12 V and 6 V rails, and brought up the Teensy servo path, including the output-enable fix.",
+      "I modified both boards, metered 12 V and 6 V on V2, and got one servo moving after the output-enable pin.",
     techStack: ["Teensy 4.1", "PCA9685", "TCA9548A", "I2C", "Logic PCB", "Power PCB"],
     thumbnail: "/projects/logic-pcb/logic-populated.jpg",
     heroFrames: [
@@ -1806,11 +1835,11 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     ],
     images: [],
     date: "Sep. 2026 – Present",
-    buildStage: "In development",
+    buildStage: "Bench Validated",
     keyHighlights: [
-      "Teensy 4.1 to a TCA9548A to a PCA9685. 16 channels of 12-bit PWM, set to 50 Hz. A register write reads back.",
-      "The servo stayed still until firmware drove the PCA9685 output-enable pin on GPIO 6. OE is active low.",
-      "5–20 A fused paths, modular DC-DC, and RS-485 and I2C stay one set of board changes. 12 V and 6 V are meter checks, not an endurance test.",
+      "Diagnosed an active-low output-enable fault on the PCA9685. Driving GPIO 6 low let the servo move.",
+      "Teensy 4.1, TCA9548A at 0x70, PCA9685 at 0x40. Register writes read back, and the servo frame is set to 50 Hz.",
+      "Modified the boards as one set: 5–20 A fused paths, modular DC-DC, and RS-485 and I2C. Meter checks on V2 are 12 V and 6 V.",
     ],
     architecture: [
       "Servo commands: Teensy 4.1, then the TCA9548A, then the PCA9685, then the servo. Output enable is Teensy GPIO 6 into PCA9685 OE, not another I2C hop.",
@@ -1818,13 +1847,13 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
       "Fusing, DC-DC, and the buses are one set of changes. I have not assigned each fuse or each converter to one load.",
     ],
     challenges: [
-      "Shop note from a branch-grip test: the linkage was 3D printed, and it broke while grabbing the branch. The stepper current dropped suddenly and fed back into the electrical system. Signals were delayed by about 5 seconds. Half the actuators and the control board were fried.",
+      "Shop note from a branch-grip test: the printed linkage broke while grabbing the branch. Stepper current dropped suddenly and fed back. Signals were delayed by about 5 seconds. Half the actuators and the control board failed.",
       "In that same cascade the note says one signal kept getting sent, the saw actuated past a full turn, and a Hall-sensor wire came out.",
       "The note also says the saw was being changed from a brushed DC motor to a BLDC because the brushless saw draws less current. It often got stuck. That change is not described as finished.",
     ],
     lessonsLearned: [
       "A controller that stores an I2C write can still hold the outputs off. On the PCA9685 that pin is OE, and it is active low.",
-      "A printed grip link is part of the electrical story. When it broke, the current spike took out the control board, not just the plastic.",
+      "A printed grip link is part of the electrical story. When it broke, the current spike took the control board with it.",
       "The numbers written on the homework sheet under the boards are from ESE 2150. I measured 12 V and 6 V later, on V2.",
     ],
     technicalNotes: [
@@ -1836,7 +1865,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     nextImprovements: [
       "Log servo current and watch the rail over a long run. Those tests have not started.",
       "Map the fuse markings to branches. CURRENT_S and VOLTAGE_S are on the power schematic and have not been logged.",
-      "Replace the fried control board in the write-up only after there is a photo or a bring-up note for the replacement.",
+      "Replace the failed control board once there is a photo or a bring-up note for the replacement.",
     ],
     media: [
       {
@@ -1886,18 +1915,18 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     experienceSlug: "grasp-laboratory",
     oneLine:
-      "A multimodal printer, headed for a military demo. The rotating nozzle has to show a measured angle, not a step count.",
+      "A rotating nozzle for GRASP's multimodal printer: the screen has to show the angle the shaft reached.",
     overview:
-      "AddLab's Aerotech is a multimodal printer: one rotating toolhead places more than one material. The reason for this axis right now is a demo to the military. Someone at the machine has to set how far the nozzle turns, and the screen has to show where the shaft actually went. A potentiometer on A0 is that command, from the wiper voltage. An AS5600 reads the shaft, and that reading is what the LCD is supposed to show. The screen still doesn't. The motor is a 5:1 geared NEMA 17 on an A4988, with 24 V on VMOT.",
+      "AddLab's Aerotech is a multimodal printer: one rotating toolhead places more than one material. Someone at the machine has to set how far the nozzle turns, and the screen has to show where the shaft actually went. A potentiometer on A0 is that command, from the wiper voltage. An AS5600 reads the shaft, and that reading is what the LCD is supposed to show. The screen still doesn't. The motor is a 5:1 geared NEMA 17 on an A4988, with 24 V on VMOT.",
     contribution:
-      "The newer drawing: pot voltage as the move command, encoder angle for the LCD, and the sketch split into stepper, encoder, and PID files.",
+      "I drew the command path: potentiometer voltage sets the move, an encoder reading is meant for the LCD, and the sketch is split into stepper, encoder, and PID files.",
     techStack: ["Arduino Uno", "A4988", "AS5600", "NEMA 17"],
     thumbnail: "/projects/multimodal-3d-printer/toolhead.jpg",
     images: [],
     date: "August 2026 – Present",
-    buildStage: "In development",
+    buildStage: "In Development",
     keyHighlights: [
-      "The axis is for a military demo of the multimodal printer: set how far the nozzle turns, and show the measured angle.",
+      "The axis needs a measured angle on the display, not a step count.",
       "The motor is a 5:1 geared NEMA 17. STEP is D3 and DIR is D2 on an A4988, with 24 V on the motor supply.",
       "The breadboard LCD lights up and still isn't showing degrees. The carousel clip moves, and it doesn't record an angle.",
     ],
@@ -1990,16 +2019,16 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     writeUp: "published",
     experienceSlug: "grasp-laboratory",
     oneLine:
-      "A TSL1401 line sensor on an nRF54L15. One scan is 128 brightness values. The live plot and the panorama are still the plan.",
+      "A line sensor for a panorama: one scan is 128 brightness values, and the live plot is still the plan.",
     overview:
       "A GRASP prototype for a panorama built from one line of pixels. The TSL1401 exposes 128 photodiodes together, then the nRF54L15 samples each analog voltage. The hardware readout and the Bluetooth stream are in the source and have not been run on this board. A later flash never took, and the spinner on the bench does not have the sensor on it.",
     contribution:
-      "I'm integrating the TSL1401 on the nRF54L15. The ADC and GPIOs are how a scan becomes numbers. I'm not calling the hardware readout or the Bluetooth stream done.",
+      "I'm integrating the line sensor on the nRF54L15. The readout and the Bluetooth stream have not been run on this board.",
     techStack: ["TSL1401", "nRF54L15", "nRF Connect SDK", "J-Link"],
     thumbnail: "/projects/3d-imaging-uav/setup.jpg",
     images: [],
     date: "August 2026 – Present",
-    buildStage: "In development",
+    buildStage: "In Development",
     keyHighlights: [
       "128 photodiodes expose together. The ADC sample is where each analog voltage becomes a number.",
       "The source loops every 25 ms, subtracts a dark frame, and can average a second pair 12.5 ms later.",
@@ -2126,22 +2155,22 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     status: "in-progress",
     experienceSlug: "penn-adapt",
     oneLine:
-      "I design the EMG boards and mounts for a Penn ADAPT arm. One sensor board is built. The eight-channel armband is the architecture.",
+      "EMG boards for a Penn ADAPT arm. One sensor board is built; eight channels are the plan.",
     pageLead:
-      "I design the EMG boards and the mounts for a Penn ADAPT arm. One sensor board is built. Eight channels is the plan on paper, not the hardware in hand.",
+      "I designed a differential EMG front end for a Penn ADAPT arm. One sensor board is built: two electrodes into an ADS1291. Eight channels and closed-loop control are the plan, not the hardware in hand.",
     overview:
-      "Each sensor board is a two-electrode differential pair into one ADS1291 channel, with protection and filtering ahead of the amplifier. The main board is the STM32 acquisition, processing, and power interface. One sensor board is in hand. The architecture is eight of those modules on a 20-pin flex, plus servos and a linear actuator. The team tested the main board and started the first fixture. Firmware reads raw EMG from one ADS1291 and can run a fixed motor test. It does not map EMG to motion.",
+      "Surface EMG is a small difference between two electrodes. Noise that lands on both pads would hide that difference if the amplifier measured either pad alone, so each module takes the difference first and an ADS1291 digitizes it. That rejection does not remove noise that differs between the pads. One sensor board is built. The architecture is eight modules on a 20-pin flex, an STM32 main board, two servos, and a linear actuator. Firmware reads raw EMG from one channel and can run a fixed motor test. It does not classify a gesture.",
     contribution:
-      "I design the boards and the mounts. The sensing supply in my note is a 7.2 V pack, a buck to 4 V, then an LDO. That rail powers the sensing circuitry. The electrodes are the signal inputs. Two longer wires still keep a board out of the CAD mount.",
+      "I design the boards and the mounts. One board still will not sit in the CAD mount, because two of its wires are too long.",
     techStack: ["EMG", "ADS1291", "STM32", "PCB"],
     thumbnail: "/projects/bionic-arm/main-board.jpg",
     images: [],
     date: "Fall 2026",
-    buildStage: "In development",
+    buildStage: "In Development",
     keyHighlights: [
       "Filtering and protection, then an ADS1291 that digitizes one differential EMG channel.",
       "One sensor board is built. The eight-module armband, two servos, and a linear actuator are the architecture.",
-      "Bring-up reads raw EMG from one ADS1291. A fixed motor test is optional. There is no gesture or closed-loop control.",
+      "Firmware reads one ADS1291 at gain 6 and 2000 samples per second. A fixed motor test is separate. Gesture classification is not in this bring-up.",
     ],
     architecture: [
       "Current hardware is one sensor PCB. The architecture document is eight modules around the forearm, tied by a 20-pin flex, with a sensor main board between those modules and the main board.",
@@ -2236,13 +2265,13 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     category: "hardware",
     status: "in-progress",
     oneLine:
-      "A three-stage analog front end that turns a ~1 mV heart signal into a ~1 V signal for a microcontroller ADC, on a custom through-hole PCB.",
+      "A three-stage front end that turns a millivolt heart signal into about a volt for an ADC.",
     pageLead:
       "An AD623 instrumentation amplifier and two op-amp filter stages, taken from a lab reference schematic to my own fabrication-ready board. It runs from a single 3.3 V rail and feeds a Feather's ADC.",
     overview:
       "An AD623 instrumentation amplifier and two op-amp filter stages, taken from a lab reference schematic to my own fabrication-ready board. It runs from a single 3.3 V rail and feeds a Feather's ADC.",
     contribution:
-      "Schematic validates clean; board 100% routed with 0 electrical DRC violations; Gerbers ready.",
+      "I designed the schematic and laid out the board. It validates clean, and the Gerbers are ready.",
     course: "ESE 2150 Lab 9",
     cardTechLimit: 6,
     documentLink: {
@@ -2253,7 +2282,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     seo: {
       title: "ECG Signal-Conditioning PCB · Ritvik Ellendula",
       description:
-        "A three-stage analog front end that turns a ~1 mV heart signal into a ~1 V signal for a microcontroller ADC, on a custom through-hole PCB.",
+        "A three-stage front end that turns a millivolt heart signal into about a volt for an ADC.",
       image: "/projects/ecg-signal-conditioning/pcb-routed.png",
       imageAlt:
         "Two-layer ECG front-end PCB, 54/54 nets routed. Red = top copper, blue = bottom.",
@@ -2267,7 +2296,7 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
       "Feather nRF52840",
     ],
     disciplines: ["Analog design", "PCB layout"],
-    thumbnail: "/projects/ecg-signal-conditioning/pcb-routed.png",
+    thumbnail: "/projects/ecg-signal-conditioning/pcb-routed-card.png",
     images: [],
     date: "Nov. 2026",
     buildStage: "Ready for fabrication",
@@ -2330,14 +2359,14 @@ export const PROJECTS: Project[] = [
 
 /** Homepage featured order: lead with strongest robotics/systems work. */
 const FEATURED_SLUG_ORDER = [
-  "vend-a-shoe",
+  "leader-follower-robotic-arm",
   "c-compiler",
   "per-power-electronics",
   "tennis-ball-shooter",
   "saber",
   "bloombot",
   "minitorch-ocaml",
-  "drift-balancer",
+  "vend-a-shoe",
 ] as const;
 
 function featuredRank(slug: string) {
@@ -2348,6 +2377,21 @@ function featuredRank(slug: string) {
 export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured).sort(
   (a, b) => featuredRank(a.slug) - featuredRank(b.slug)
 );
+
+/** Homepage band. Real bench and board work, not the software featured list. */
+const HOMEPAGE_SELECTED_SLUGS = [
+  "leader-follower-robotic-arm",
+  "logic-pcb",
+  "bionic-arm",
+  "multimodal-3d-printer",
+  "ecg-signal-conditioning",
+  "vend-a-shoe",
+];
+
+export const HOMEPAGE_SELECTED_PROJECTS = HOMEPAGE_SELECTED_SLUGS.flatMap((slug) => {
+  const project = PROJECTS.find((item) => item.slug === slug);
+  return project ? [project] : [];
+});
 const CURRENT_WORK_SLUGS = [
   "leader-follower-robotic-arm",
   "logic-pcb",
@@ -2389,13 +2433,13 @@ export const PROJECT_DIRECTORY: {
       "Boards, teleoperation, sensing, and a client machine. These are the systems I would open first.",
     featured: true,
     slugs: [
-      "logic-pcb",
       "leader-follower-robotic-arm",
+      "logic-pcb",
       "bionic-arm",
-      "vend-a-shoe",
-      "ecg-signal-conditioning",
       "multimodal-3d-printer",
       "3d-imaging-uav",
+      "ecg-signal-conditioning",
+      "vend-a-shoe",
     ],
   },
   {
@@ -2429,8 +2473,7 @@ export const PROJECT_DIRECTORY: {
   },
   {
     title: "Earlier work and coursework",
-    subtitle:
-      "Older class projects. Drift Balancer is still a page template, not a robot I built.",
+    subtitle: "Older class projects.",
     slugs: ["arduino-tetris", "drift-balancer", "brain", "OIDD"],
   },
 ];

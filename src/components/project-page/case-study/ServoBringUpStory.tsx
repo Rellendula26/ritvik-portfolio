@@ -28,7 +28,7 @@ const CHAIN: Array<{ id: ChainId; title: string; plain: string; tech: string }> 
   {
     id: "pwm",
     title: "PCA9685",
-    plain: "A chip whose only job is pulses. The Teensy sends a number. This chip turns that number into a timed electrical pulse, on up to 16 outputs, so the controller is not building each pulse itself.",
+    plain: "The PWM controller. The Teensy writes a width. This chip turns that width into a timed pulse on up to 16 outputs, so the controller is not timing each edge itself.",
     tech: "It sits at address 0x40, behind multiplexer channel 7. Each output is a 12-bit pulse width. I set the frame to about 50 Hz. The chip can store those widths and still keep the pins quiet until output enable is on.",
   },
   {

@@ -35,10 +35,7 @@ export default function CaseStudyMediaFrame({
           {media.kind === "video" ? (
             videoFailed ? (
               <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
-                <p className="text-xs text-stone-400">
-                  Missing media:{" "}
-                  <span className="font-mono text-stone-300">{media.src}</span>
-                </p>
+                <p className="text-xs text-stone-400">This clip did not load.</p>
               </div>
             ) : (
               <video

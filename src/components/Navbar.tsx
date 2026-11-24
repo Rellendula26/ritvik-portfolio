@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { RESUME_URL } from "@/data/site";
 
 const nav = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
-  { label: "Experiences", href: "/experiences" },
+  { label: "Experience", href: "/experiences" },
   { label: "Coursework", href: "/coursework" },
   { label: "Research", href: "/research" },
   { label: "Life", href: "/life" },
+  { label: "Résumé", href: RESUME_URL, external: true },
 ];
 
 function cx(...classes: Array<string | false | undefined>) {
@@ -50,16 +52,20 @@ export default function Navbar() {
             <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 sm:flex-nowrap sm:gap-7">
               {nav.map((item) => {
                 const active =
-                  item.href === "/"
+                  !("external" in item) &&
+                  (item.href === "/"
                     ? pathname === "/"
                     : pathname === item.href ||
-                      pathname.startsWith(`${item.href}/`);
+                      pathname.startsWith(`${item.href}/`));
 
                 return (
                   <Link
                     key={item.href}
                     href={item.href}
                     data-active={active ? "true" : "false"}
+                    {...("external" in item
+                      ? { target: "_blank", rel: "noreferrer" }
+                      : {})}
                     className={cx(
                       "nav-underline whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-solid focus-visible:outline-amber-700 sm:shrink-0 sm:text-xs sm:tracking-[0.18em]",
                       active

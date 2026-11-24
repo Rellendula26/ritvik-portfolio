@@ -472,7 +472,7 @@ export const PROJECT_BRIEFS: Record<string, ProjectBrief> = {
     context: "Serpent Robotics",
     what: "A small leader arm on the ground and a follower arm for the cut, so the operator does not have to climb with the robot.",
     contribution: [
-      "I wrote the bridge. Pi 1 sends leader joint angles. Pi 2 drives six Feetech STS3215 servos. Silence for 300 ms holds, and a step is limited to 15°. I did not write LeRobot.",
+      "I adapted the existing sender so Pi 1 finds Pi 2 by name. Pi 2 drives six Feetech STS3215 servos. Silence for 300 ms holds, and a step is limited to 15°. I did not write LeRobot.",
       "Shop Wi-Fi used a fixed follower address. The sender now looks up serpentpi-follower.local every 15 seconds.",
     ],
     results: [
@@ -496,7 +496,7 @@ export const PROJECT_BRIEFS: Record<string, ProjectBrief> = {
     contribution: [
       "I tested the boards already in the system: 12 V and 6 V on a meter, then the Teensy, the TCA9548A, and the PCA9685.",
       "Diagnostic firmware scans the I2C buses and reads a register back after a write.",
-      "The servo sat still until firmware drove the PCA9685 output-enable pin on GPIO 6.",
+      "Diagnosed the PCA9685 output-enable fault. Driving GPIO 6 low moved one servo.",
     ],
     results: [
       "One servo channel moved at 50 Hz after OE was enabled. That is not an endurance test.",
@@ -640,7 +640,7 @@ export const PROJECT_BRIEFS: Record<string, ProjectBrief> = {
   },
   "ecg-signal-conditioning": {
     context: "ESE 2150",
-    what: "A three-stage analog front end that turns a ~1 mV heart signal into a ~1 V signal for a microcontroller ADC, on a custom through-hole PCB.",
+    what: "A three-stage front end that turns a millivolt heart signal into about a volt for an ADC.",
     contribution: [
       "I designed and validated a three-stage single-supply ECG front end.",
       "I laid out and autorouted a hand-solderable through-hole PCB with custom footprints.",

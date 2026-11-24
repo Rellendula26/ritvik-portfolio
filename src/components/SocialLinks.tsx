@@ -1,4 +1,5 @@
 import { Github, Linkedin } from "lucide-react";
+import { RESUME_URL } from "@/data/site";
 
 const iconButton =
   "inline-flex h-11 w-11 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-700 transition hover:border-amber-400 hover:text-amber-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700";
@@ -24,6 +25,12 @@ export const SOCIAL_LINKS = [
     id: "github",
     href: "https://github.com/Rellendula26",
     label: "GitHub",
+    external: true,
+  },
+  {
+    id: "resume",
+    href: RESUME_URL,
+    label: "Résumé",
     external: true,
   },
 ] as const;
@@ -58,7 +65,8 @@ function GmailIcon() {
 function SocialIcon({ id }: { id: (typeof SOCIAL_LINKS)[number]["id"] }) {
   if (id === "email") return <GmailIcon />;
   if (id === "linkedin") return <Linkedin className="h-4 w-4" aria-hidden />;
-  return <Github className="h-4 w-4" aria-hidden />;
+  if (id === "github") return <Github className="h-4 w-4" aria-hidden />;
+  return null;
 }
 
 export default function SocialLinks({
@@ -69,6 +77,10 @@ export default function SocialLinks({
   const button = tone === "onDark" ? iconButtonOnDark : iconButton;
   const labelClass =
     tone === "onDark" ? "text-sm font-medium text-zinc-200" : "text-sm font-medium text-stone-700";
+  const resumeButton =
+    tone === "onDark"
+      ? "inline-flex h-11 items-center rounded-full border border-white/25 bg-white/10 px-4 text-xs font-medium uppercase tracking-[0.14em] text-white transition hover:border-amber-300 hover:text-amber-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+      : "inline-flex h-11 items-center rounded-full border border-stone-200 bg-white px-4 text-xs font-medium uppercase tracking-[0.14em] text-stone-700 transition hover:border-amber-400 hover:text-amber-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700";
 
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -82,9 +94,9 @@ export default function SocialLinks({
               {...(item.external
                 ? { target: "_blank", rel: "noreferrer" }
                 : {})}
-              className={button}
+              className={item.id === "resume" ? resumeButton : button}
             >
-              <SocialIcon id={item.id} />
+              {item.id === "resume" ? item.label : <SocialIcon id={item.id} />}
             </a>
           </li>
         ))}

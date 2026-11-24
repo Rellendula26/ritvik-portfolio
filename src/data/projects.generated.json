@@ -6,7 +6,8 @@
     "featured": true,
     "category": "embedded",
     "status": "shipped",
-    "oneLine": "A client shoe dispenser. A Next.js command lands in Supabase, a Pi polls about once a second, and four MG996R servos move the shoe.",
+    "oneLine": "A client shoe dispenser: a web command reaches a Pi, and four servos move the shoe.",
+    "contribution": "I built that path. Bin 3 over-rotated on one shared motion profile, so that bin got its own PWM duty instead of the same sweep as the others.",
     "overview": "Vend-A-Shoe exists because the client needed a real unit, not a bench demo. The architecture is browser command -> Supabase queue -> Pi worker -> GPIO/PWM -> physical dispense. I integrated the enclosure, harness, power distribution, and control software so that path stayed reliable with 4 servos, 8 LEDs, and a fan in the same box. Early failures looked like software bugs; many were actually electrical and mechanical issues, including faulty servos and power mistakes. The useful debugging loop was isolating one layer at a time with a known-good actuator, a bench supply, and a meter before touching code.",
     "techStack": [
       "Raspberry Pi 4",
@@ -85,7 +86,7 @@
     ],
     "architectureImages": [],
     "date": "Summer 2026",
-    "buildStage": "Client delivered",
+    "buildStage": "Delivered",
     "keyHighlights": [
       "I built that path. Bin 3 over-rotated on one shared motion profile, so that bin got its own PWM duty instead of the same sweep as the others.",
       "Integrated 4 MG996R servos, 8 LEDs, and a fan with shared grounding and separate high-current planning so actuator load did not collapse the control path",

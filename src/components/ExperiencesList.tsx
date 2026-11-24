@@ -78,14 +78,13 @@ export default function ExperiencesList() {
               key={experience.slug}
               experience={experience}
               index={i}
+              showResult
             />
           ))
         ) : (
           <p className="rounded-2xl border border-dashed border-stone-300 bg-white/50 px-6 py-10 text-sm text-stone-600">
             No {EXPERIENCE_TRACK_LABELS[filter as ExperienceTrack].toLowerCase()}{" "}
-            listed yet. Add them in{" "}
-            <code className="text-stone-800">src/data/experiences.ts</code> with{" "}
-            <code className="text-stone-800">track: &quot;club&quot;</code>.
+            listed yet.
           </p>
         )}
       </div>

@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ExperiencesList from "@/components/ExperiencesList";
 import { Reveal } from "@/components/motion/Reveal";
+
+export const metadata: Metadata = {
+  title: "Experience · Ritvik Ellendula",
+  description:
+    "Serpent builds rope-climbing robots. GRASP is the printer and imaging work. ADAPT is the EMG arm. BrainChild is client hardware.",
+};
 
 export default function ExperiencesPage() {
   return (
@@ -9,9 +16,8 @@ export default function ExperiencesPage() {
       <main className="mx-auto w-full max-w-6xl px-6 py-14 md:px-8">
         <Reveal>
           <div className="max-w-2xl">
-            <p className="text-sm font-medium text-amber-800">Roles & clubs</p>
-            <h1 className="text-display mt-2 text-4xl text-stone-950 md:text-5xl">
-              Experiences
+            <h1 className="text-display text-4xl text-stone-950 md:text-5xl">
+              Experience
             </h1>
             <p className="mt-4 text-base leading-relaxed text-stone-600">
               Serpent builds rope-climbing robots. GRASP is the printer and imaging work. ADAPT is the EMG arm. BrainChild is client hardware. Each page says what I did there, and links the project write-ups.

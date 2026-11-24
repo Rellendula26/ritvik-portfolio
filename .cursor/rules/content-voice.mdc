@@ -16,6 +16,21 @@ Ritvik is an EE student at Penn who likes electronics, embedded systems, robotic
 - Everyday verbs: built, designed, tested, wrote, measured, modified, figured out.
 - A lesson only if it names a specific thing that happened.
 
+## Punctuation and rhythm
+
+- Semicolons join two closely related complete thoughts: "The controller accepted every register write; the servo still didn't move."
+- Colons introduce the specifics: "The fix was one pin: GPIO 6 drives the PCA9685's active-low Output Enable."
+- Vary the sentence structure. Mix a short sentence with a longer one that carries the detail. Don't stack fragments, and don't write three sentences of the same length in a row.
+- Use semicolons and colons where they make a sentence clearer; don't force one into every paragraph. Roughly one per short paragraph is the natural rate.
+
+## Provisional examples (pending Ritvik's approval)
+
+| Current | Target style |
+|---|---|
+| "This drawing stays inside a short reach. The real motion still jitters." | "This drawing only covers a short reach; on the bench, the real motion still jitters, and that's the open problem." |
+| "A multimodal printer, headed for a military demo. The rotating nozzle has to show a measured angle, not a step count." | "A rotating nozzle for GRASP's multimodal printer: an AS5600 encoder reports the angle the nozzle actually reached, and a PID loop drives it to the target." |
+| "Persistence is one of my strongest skills. I like walking into a field I don't know and figuring it out as I go. If the path is super easy, there isn't much substance behind the success." | "Persistence is the skill I lean on most; I like walking into a field I don't know yet and figuring it out as I go. It's the same reason I love endurance sports." |
+
 ## Do not
 
 - Em dashes.

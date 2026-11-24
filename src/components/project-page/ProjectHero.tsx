@@ -224,6 +224,7 @@ export default function ProjectHero({ project }: { project: Project }) {
                       src={frame.src}
                       alt={frame.alt}
                       priority
+                      expandable
                       className="object-contain object-center"
                       sizes="(max-width: 1024px) 50vw, 360px"
                     />

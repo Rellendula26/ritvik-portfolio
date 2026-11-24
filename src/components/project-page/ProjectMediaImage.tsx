@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 
@@ -39,6 +39,15 @@ export default function ProjectMediaImage({
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const failed = failedSrc === src;
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   if (failed || !src) {
     return null;

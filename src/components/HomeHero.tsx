@@ -1,7 +1,7 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import HomeHeroIntro from "@/components/HomeHeroIntro";
 import EngineeringWorkbench from "@/components/lab/EngineeringWorkbench";
@@ -26,8 +26,8 @@ export default function HomeHero() {
       return;
     }
 
-    setBooting(true);
     const started = performance.now();
+    setBooting(true);
     const tick = (now: number) => {
       const t = Math.min(1, (now - started) / BOOT_MS);
       root.style.setProperty("--boot", t.toFixed(4));

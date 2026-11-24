@@ -4,6 +4,8 @@ import {
   ProjectPageShell,
 } from "@/components/project-page/shared";
 import ProjectHero from "@/components/project-page/ProjectHero";
+import PageSummary from "@/components/project-page/PageSummary";
+import { projectSummary } from "@/data/page-summaries";
 import MotivationSection from "@/components/project-page/case-study/MotivationSection";
 import SystemOverviewSection from "@/components/project-page/case-study/SystemOverviewSection";
 import EngineeringBreakdownSection from "@/components/project-page/case-study/EngineeringBreakdownSection";
@@ -28,6 +30,7 @@ import BenchNotes from "@/components/project-page/case-study/BenchNotes";
 import type { EngineeringCaseStudy } from "@/data/engineering-case-study";
 import type { Project } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
+import { getProjectsForExperience } from "@/data/projects";
 import Link from "next/link";
 
 function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
@@ -53,6 +56,41 @@ function buildCaseStudyNav(caseStudy: EngineeringCaseStudy) {
     { id: "results", label: "Results" },
     { id: "record", label: "Notes" },
   ];
+}
+
+function RelatedProjects({ project }: { project: Project }) {
+  if (!project.experienceSlug) return null;
+  const related = getProjectsForExperience(project.experienceSlug).filter(
+    (item) => item.slug !== project.slug && item.writeUp !== "coming-soon"
+  );
+  if (related.length === 0) return null;
+
+  return (
+    <section className="scroll-mt-36" aria-labelledby="related-work">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">
+        Same work
+      </p>
+      <h2 id="related-work" className="text-display mt-3 text-2xl font-semibold tracking-tight text-zinc-950">
+        Other projects from this role
+      </h2>
+      <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+        {related.map((item) => (
+          <li key={item.slug}>
+            <Link
+              href={item.href}
+              className="block h-full rounded-[1.25rem] border border-zinc-200 bg-white px-4 py-4 transition-colors hover:border-amber-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+            >
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-amber-900">
+                {item.buildStage}
+              </p>
+              <p className="mt-1 text-base font-semibold text-zinc-950">{item.title}</p>
+              <p className="mt-2 text-sm leading-relaxed text-zinc-700">{item.oneLine}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 function ExperienceLink({ slug }: { slug?: string }) {
@@ -93,6 +131,9 @@ export default function EngineeringCaseStudyLayout({
       <BackToProjects />
       <ProjectHero project={project} />
       <ExperienceLink slug={project.experienceSlug} />
+      <div className="mx-auto mt-8 max-w-3xl px-6">
+        <PageSummary {...projectSummary(project)} />
+      </div>
 
       <AnchorNav items={nav} />
 
@@ -157,6 +198,7 @@ export default function EngineeringCaseStudyLayout({
           <ReflectionSection content={caseStudy.reflection} />
         </BenchNotes>
         <ProjectBrief project={project} className="mt-2" />
+        <RelatedProjects project={project} />
       </div>
     </ProjectPageShell>
   );

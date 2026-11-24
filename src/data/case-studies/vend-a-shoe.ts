@@ -13,7 +13,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
     shipped:
       "Assembled, wall-powered unit with enclosure, dense harness, Pi worker, and cloud-queued multi-bin dispense delivered to the client.",
     difficulty:
-      "Cross-layer failures (fried motors, DHCP/SSH loss, bad joints, overvoltage) shared the same “it doesn’t work” symptom until meters and substitution isolated the layer.",
+      "Cross-layer failures (dead motors, DHCP/SSH loss, bad joints, overvoltage) shared the same “it doesn’t work” symptom until meters and substitution isolated the layer.",
     next:
       "KiCad distribution board with keyed connectors and branch protection, closed-loop dispense sensing, and a Version 2 sequence that freezes power and harness before packaging.",
   },
@@ -157,7 +157,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
       design:
         "Bench supply for bring-up; multimeter checks on rails and grounds before trusting a channel. Then a wall AC to DC / USB-C PD path into a soldered protoboard with common ground so the whole unit can leave the bench. This was one of the clearest electrical lessons from the internship: wall power is not just plugging something in; it is conversion, distribution, and load budgeting. Actuator and accessory current stay off the Pi GPIO path; GPIO only signals.",
       challenges: [
-        "We planned for four motors; a few were already fried and just sat dead. Later I connected the system to 24 V during a power mix-up and likely damaged more. Sorting wiring versus software versus dead hardware became its own debug loop.",
+        "We planned for four motors; a few were already dead and just sat there. Later I connected the system to 24 V during a power mix-up and likely damaged more. Sorting wiring versus software versus dead hardware became its own debug loop.",
         "Eight LEDs and a fan added continuous load on top of the servo harness; the wall converter and protoboard had to feed all of that plus the Pi.",
         "Shared Pi power sagged under multi-servo moves; breadboard contacts lied; forty-plus wires made routing a design problem, not a cleanup task.",
         "No experienced EE mentor, dull soldering iron, solder paste instead of proper wire, and no fume extraction. I was also teaching a teammate basic circuits while trying to bring the board up.",
@@ -666,7 +666,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
   reflection: {
     surprises: [
       "The biggest lesson was how to debug across numerous systems at once. Mechanical, electrical, embedded, and cloud failures share symptoms; the work is picking a layer, measuring it, and only then moving.",
-      "Some of the four motors were already fried; the quiet failure looked like bad wiring or bad code until a swap test and a meter reading forced the assumption to break.",
+      "Some of the four motors were already dead. The quiet failure looked like bad wiring or bad code until a swap test and a meter reading forced the assumption to break.",
       "I also made a real power mistake: connecting the system to 24 V. I own that. The slow recovery around it also showed how little protection, review, and spare qualification existed in the environment.",
       "Eight LEDs, a fan, and forty-plus wires ate more calendar than the PWM math; harness planning was the real schedule risk.",
       "Bench power supply and multimeter work caught sag and ground issues that software logs never would have named correctly.",
@@ -699,7 +699,7 @@ export const VEND_A_SHOE_CASE_STUDY: EngineeringCaseStudy = {
     },
     {
       kind: "engineering-note",
-      text: "A quiet servo is not a diagnosis. Wiring, software, and fried hardware all look the same until you challenge the assumption.",
+      text: "A quiet servo is not a diagnosis. Wiring, software, and a dead motor all look the same until you challenge the assumption.",
     },
     {
       kind: "engineering-note",
