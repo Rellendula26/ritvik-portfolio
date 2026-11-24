@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Muscular Dystrophy Diagnosis · Ritvik Ellendula",
+  description:
+    "GEO gene-expression data, and which supervised models could separate dystrophy samples from controls. The write-up is on SSRN.",
+};
 
 type LinkItem = { label: string; href: string };
 
@@ -317,7 +324,7 @@ export default function Page() {
               <div className="relative h-64 w-full">
                 <Image
                   src={src}
-                  alt="Project image"
+                  alt={`Muscular dystrophy figure, ${src.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "image"}`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"

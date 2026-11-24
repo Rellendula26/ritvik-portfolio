@@ -12,6 +12,8 @@ import {
   type ExperienceMedia,
   type TextRun,
 } from "@/data/experiences";
+import { EXPERIENCE_SUMMARIES } from "@/data/page-summaries";
+import PageSummary from "@/components/project-page/PageSummary";
 import {
   getProjectBySlug,
   pickProjectPrimaryMedia,
@@ -272,6 +274,12 @@ export default function ExperiencePage({
             </figure>
           ) : null}
         </header>
+
+        {EXPERIENCE_SUMMARIES[experience.slug] ? (
+          <div className="mx-auto mt-8 max-w-2xl">
+            <PageSummary {...EXPERIENCE_SUMMARIES[experience.slug]} />
+          </div>
+        ) : null}
 
         {hasWorkCopy ? (
           <section id="role" className={sectionClass}>

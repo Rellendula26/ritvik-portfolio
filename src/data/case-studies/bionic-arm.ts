@@ -9,7 +9,7 @@ export const BIONIC_ARM_CASE_STUDY: EngineeringCaseStudy = {
     learning:
       "A schematic date and a power note can describe two different batteries. I want those to be the same pack before I call the power path done.",
     narrative:
-      "One sensor board is built. It is a two-electrode differential pair into one ADS1291 channel. The architecture is eight of those modules, a main STM32 board, two servos, and a linear actuator. The team tested the main board and started the first fixture.\n\nThe buck and LDO feed the sensing circuitry. The electrodes are the signal inputs, not a load on that rail. The September main sheet marks a 2-cell pack from 6.0 V to 8.4 V and also labels 12 V. My note is a 7.2 V pack, a buck to 4 V, then an LDO. Those are not the same description. Firmware reads raw EMG from one ADS1291, gain 6, 2000 samples per second, and can run a fixed motor test. It does not turn that signal into a gesture or a grip force. Two longer wires still keep a board out of the CAD mount.",
+      "One sensor board is built. Two electrodes feed one ADS1291. Surface EMG is a small difference, and any noise that shows up on both pads rides on top of it. The differential pair is there to reject that common part before the converter. It does not reject noise that differs between the pads. The architecture around that board is eight modules, an STM32 main board, two servos, and a linear actuator. The team tested the main board and started the first fixture.\n\nThe sensing supply in my note is a 7.2 V pack, a buck down to 4 V, then an LDO. The electrodes are inputs, not a load on that rail. The September main sheet marks a 2-cell pack from 6.0 V to 8.4 V and also labels 12 V, so those two descriptions still have to be reconciled. Firmware reads raw EMG from one ADS1291, gain 6, 2000 samples per second, and can run a fixed motor test. Gesture classification is the next step. Two longer wires still keep a board out of the CAD mount.",
     requirements: [
       "Digitize eight EMG channels from differential pairs.",
       "Leave a quiet supply for the sensing circuitry.",
@@ -30,7 +30,7 @@ export const BIONIC_ARM_CASE_STUDY: EngineeringCaseStudy = {
     controlFlow:
       "Architecture V4 gives each ADS1291 its own chip select, CS1 through CS8, and a shared START so the samples line up. A progress slide still says SPI daisy-chain. I am not treating either description as the one the team finished.",
     signalPath: [
-      { title: "Electrodes", detail: "A differential pair on each module. Noise common to both pads drops out." },
+      { title: "Electrodes", detail: "A differential pair on each module. Noise common to both pads is what this stage is there to reject." },
       { title: "ADS1291", detail: "Digitizes that difference. The sheets show one chip per module." },
       { title: "SPI", detail: "Schematics use CS1 through CS8 and a shared START. The progress slide says daisy-chain." },
       { title: "STM32", detail: "Main board. Firmware reads one ADS1291 and can run a fixed motor test. It does not close a loop on EMG." },
@@ -57,7 +57,7 @@ export const BIONIC_ARM_CASE_STUDY: EngineeringCaseStudy = {
       discipline: "Electrical",
       goal: "Digitize EMG channels and feed the sensing circuitry from a quieter supply than the buck alone.",
       design:
-        "Each module takes the difference between two electrodes, so noise common to both drops out, then an ADS1291 digitizes it. The sensor sheets use a TPS7A2033 on 3.3 V. My power plan steps a 7.2 V LiPo to 4 V with a buck, then an LDO, for that sensing supply. The LDO reduces ripple. It does not remove every switching artifact. The electrodes stay signal inputs.",
+        "Each module takes the difference between two electrodes, then an ADS1291 digitizes it over SPI. Common-mode noise is the part that lands on both pads. The differential pair rejects that part. It does not remove noise that differs between the pads, and it does not replace layout or supply work. The sensor sheets use a TPS7A2033 on 3.3 V. My power plan steps a 7.2 V LiPo to 4 V with a buck, then an LDO, so the sensing circuitry is not sitting on the buck's ripple. The LDO does not remove every switching artifact. The electrodes stay signal inputs.",
       challenges: [
         "The main-board sheet, 9/20/2026, marks a 2-cell pack from 6.0 V to 8.4 V, plus 12 V, 6 V, and 3.3 V. That is not the 7.2 V to 4 V plan.",
         "A buck cannot make the 12 V actuator rail from an 8.4 V pack. The sheet labels 12 V. It does not say how that rail is made.",

@@ -9,9 +9,7 @@ import TechChip from "@/components/motion/TechChip";
 import { COURSES, courseHref } from "@/data/coursework";
 import { FEATURED_EXPERIENCES } from "@/data/experiences";
 import {
-  FEATURED_PROJECTS,
-  MAJOR_PROJECTS,
-  SUPPORTING_PROJECTS,
+  HOMEPAGE_SELECTED_PROJECTS,
 } from "@/data/projects";
 
 export default function Home() {
@@ -28,32 +26,44 @@ export default function Home() {
       <section className="border-t border-stone-200/50 bg-[#faf6f0]">
         <div className="mx-auto max-w-6xl px-6 py-16 md:px-8">
           <Reveal>
-            <p className="text-sm font-medium text-amber-800">Current work</p>
-            <h2 className="text-display mt-2 text-3xl text-stone-950 md:text-4xl">
-              Serpent, GRASP, and ADAPT
+            <h2 className="text-display text-3xl text-stone-950 md:text-4xl">
+              Current work
             </h2>
-            <p className="mt-2 max-w-xl text-base text-stone-600">
-              {`At Serpent I modified the power and logic boards, brought up the Teensy servo path, and wrote the leader-follower bridge. At GRASP I am integrating a 128-pixel line sensor, and reassembling the AddLab toolhead so the display can show shaft angle. At ADAPT I am designing the EMG boards and the mounts. The pages have the schematics, the bench photos, and what is still open.`}
-            </p>
+            <ul className="mt-6 max-w-2xl space-y-3 text-base leading-relaxed text-stone-700">
+              <li>
+                <Link href="/experiences/serpent-robotics" className="font-medium text-amber-800">
+                  Serpent Robotics.
+                </Link>{" "}
+                I modified the power and logic boards, brought the Teensy servo path up, and moved the leader-follower sender off a fixed address.
+              </li>
+              <li>
+                <Link href="/experiences/grasp-laboratory" className="font-medium text-amber-800">
+                  GRASP Lab.
+                </Link>{" "}
+                I am integrating a 128-pixel line sensor, and working on the printer toolhead so the display can show shaft angle.
+              </li>
+              <li>
+                <Link href="/experiences/penn-adapt" className="font-medium text-amber-800">
+                  Penn ADAPT.
+                </Link>{" "}
+                I design the EMG boards and the mounts. One sensor board is built.
+              </li>
+            </ul>
           </Reveal>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {MAJOR_PROJECTS.filter((project) => !project.featured).map((project, i) => (
-              <ProjectCard key={project.slug} project={project} index={i} />
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Featured projects: darkest band */}
       <section className="border-t border-stone-200/50 bg-[#f0e8dc]">
         <div className="mx-auto max-w-6xl px-6 py-20 md:px-8">
           <Reveal>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-medium text-amber-800">Core engineering work</p>
-                <h2 className="text-display mt-2 text-3xl text-stone-950 md:text-4xl">
-                  Embedded, robotics, and systems builds
+                <h2 className="text-display text-3xl text-stone-950 md:text-4xl">
+                  Selected projects
                 </h2>
+                <p className="mt-2 max-w-xl text-base text-stone-600">
+                  The hardware and robotics builds I would open first.
+                </p>
               </div>
               <Link
                 href="/projects"
@@ -66,43 +76,10 @@ export default function Home() {
           </Reveal>
 
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {FEATURED_PROJECTS.map((project, i) => (
+            {HOMEPAGE_SELECTED_PROJECTS.map((project, i) => (
               <ProjectCard key={project.slug} project={project} featured index={i} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* More builds: mid band */}
-      <section className="border-t border-stone-200/40 bg-[#f7f2ea]">
-        <div className="mx-auto max-w-6xl px-6 py-20 md:px-8">
-          <Reveal>
-            <div>
-              <p className="text-sm font-medium text-amber-800/90">More project work</p>
-              <h2 className="text-display mt-2 text-2xl text-stone-950 md:text-3xl">
-                More builds
-              </h2>
-              <p className="mt-2 max-w-xl text-base text-stone-600">
-                Supporting projects, research tools, and experiments that shaped how I build.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {SUPPORTING_PROJECTS.slice(0, 6).map((project, i) => (
-              <ProjectCard key={project.slug} project={project} index={i} />
-            ))}
-          </div>
-
-          <Reveal delay={0.08} className="mt-10 text-center">
-            <Link
-              href="/projects"
-              className="btn-lift inline-flex items-center gap-2 text-sm font-medium text-amber-800 hover:text-amber-900"
-            >
-              View full project archive
-              <ArrowRight className="btn-arrow h-4 w-4" />
-            </Link>
-          </Reveal>
         </div>
       </section>
 
@@ -112,20 +89,18 @@ export default function Home() {
           <Reveal>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="text-sm font-medium text-amber-800">Official roles</p>
-                <h2 className="text-display mt-2 text-3xl text-stone-950 md:text-4xl">
-                  Experiences
+                <h2 className="text-display text-3xl text-stone-950 md:text-4xl">
+                  Experience
                 </h2>
                 <p className="mt-2 max-w-xl text-base text-stone-600">
-                  Internships and appointments; fewer entries, more ownership
-                  under a real org.
+                  The labs and the internship, with the projects that came out of each one.
                 </p>
               </div>
               <Link
                 href="/experiences"
                 className="btn-lift inline-flex items-center gap-1 text-sm font-medium text-amber-800 hover:text-amber-900"
               >
-                All experiences
+                All experience
                 <ArrowRight className="btn-arrow h-4 w-4" />
               </Link>
             </div>
@@ -202,11 +177,14 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-20 pb-24 md:px-8">
           <Reveal>
             <div className="rounded-3xl border border-stone-200/80 bg-stone-900 px-8 py-12 text-stone-300 md:px-12">
-              <p className="text-sm font-medium text-amber-400/90">
+              <h2 className="text-sm font-medium text-amber-400/90">
                 What I&apos;m usually thinking about
-              </p>
+              </h2>
               <p className="text-display mt-4 max-w-3xl text-2xl leading-snug text-white md:text-3xl">
                 A lot of what I work on is the same shape. A command or a sensor has to move something, and the supply has to stay up while it does.
+              </p>
+              <p className="mt-4 max-w-3xl text-base leading-relaxed text-stone-300">
+                Persistence is the skill I lean on most; I like walking into a field I don&apos;t know yet and figuring it out as I go. It&apos;s the same reason I love endurance sports.
               </p>
               <div className="mt-8 flex flex-wrap gap-2">
                 {[

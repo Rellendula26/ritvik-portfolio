@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import { SectionLabel } from "@/components/project-page/shared";
 
 type Standing = "sheet" | "checked" | "mixed" | "open";
@@ -286,7 +287,15 @@ function Still({
       <figcaption className="border-b border-zinc-200 px-4 py-3 text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">
         {label}
       </figcaption>
-      <img src={src} alt={alt} className="w-full bg-[#f7f1e8] object-contain" />
+      <div className="relative">
+        <ProjectMediaImage
+          src={src}
+          alt={alt}
+          fill={false}
+          expandable
+          className="w-full bg-[#f7f1e8] object-contain"
+        />
+      </div>
       <p className="px-4 py-3 text-sm leading-relaxed text-zinc-700">{caption}</p>
     </figure>
   );
@@ -781,10 +790,10 @@ export default function BoardArchitecture() {
           One board feeds the robot. The other tells it what to do.
         </h2>
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
-          SR-01 climbs a rope and cuts a branch. The actuators need current at more than one voltage. The controller needs a clean conversation with sensors and with the chips that make pulses. Those are different electrical jobs, so they are different boards.
+          SR-01 climbs a rope and cuts a branch. The actuators need current at more than one voltage. The controller needs a clean conversation with the sensors and with the PWM controller. Those are different electrical jobs, so they are different boards.
         </p>
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
-          The pair on the homework sheet is V1. The boards went through more than one revision after that. The meter checks and the servo bring-up were on V2. The Altium project is in a .rar, and I am not redrawing that schematic here.
+          The pair on the homework sheet is V1. The boards went through more than one revision after that. The meter checks and the servo bring-up were on V2.
         </p>
         <Still
           src="/projects/logic-pcb/bench-both-boards.jpg"
@@ -808,14 +817,14 @@ export default function BoardArchitecture() {
               Embedded control, sensor integration, and actuator interfaces
             </h3>
             <p className="mt-3 text-base leading-relaxed text-zinc-800">
-              The Teensy coordinates the peripherals. Sensors come in. Commands go out as pulses, bus messages, and enable pins. Those commands are not motor current. The current still comes from the power board.
+              The Teensy coordinates the peripherals. Sensors come in. Commands go out as PWM pulses, bus messages, and enable pins. Motor current still comes from the power board.
             </p>
           </article>
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            ["In the design", "The blocks below are how the two boards are divided. They are not a schematic export from the .rar."],
+            ["In the design", "The blocks below are how the two boards are divided. They are the sheets I worked from, not a new schematic."],
             ["What I changed", "Fused paths in the 5–20 A range, DC-DC, and RS-485 and I2C, as one set of modifications on the boards I had. I did not design the chassis."],
             ["What I have shown", "On V2: Teensy to the mux at 0x70, channel 7, PCA9685 at 0x40. Register readback, 50 Hz widths stored, GPIO 6 driven low, one servo moved. 12 V and 6 V on a meter."],
             ["Still open", "CURRENT_S and VOLTAGE_S are not logged. The sensors are not brought up. Fuse markings are not mapped to branches. No emissions number. The grip-test board is not replaced."],
@@ -845,7 +854,7 @@ export default function BoardArchitecture() {
           From a 24 V pack to rails the robot can use
         </h2>
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
-          The sensing block is the one to open if you only open one. Those parts are in the design. I have not validated the readings on V2, and I have not unpacked the Altium .rar.
+          The sensing block is the one to open if you only open one. CURRENT_S and VOLTAGE_S are in the design. I have not logged those readings on V2.
         </p>
         <Still
           src="/projects/logic-pcb/power-fuses.jpg"
@@ -913,7 +922,7 @@ export default function BoardArchitecture() {
           Only the regions I can see
         </h2>
         <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
-          The first two photos are V2, which is what I tested. The third is V1. Hover or select a box. I am not drawing a part onto a photo where I cannot see it, and I am not drawing a schematic from the .rar.
+          The first two photos are V2, which is what I tested. The third is V1. Hover or select a box. A box only marks a part I can see.
         </p>
         <BoardMap />
       </section>

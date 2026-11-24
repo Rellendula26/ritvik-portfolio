@@ -197,14 +197,22 @@ export default function ProjectBrief({
             <p className="mt-4 text-[15px] leading-relaxed text-zinc-800 sm:text-base">
               {brief.what}
             </p>
-            <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
-              What I did
-            </h3>
-            <BulletList items={brief.contribution} />
-            <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
-              Where it stands
-            </h3>
-            <BulletList items={brief.results} />
+            {brief.contribution.length > 0 ? (
+              <>
+                <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
+                  What I did
+                </h3>
+                <BulletList items={brief.contribution} />
+              </>
+            ) : null}
+            {brief.results.length > 0 ? (
+              <>
+                <h3 className="mt-6 text-xs font-semibold uppercase tracking-[0.16em] text-stone-500">
+                  Where it stands
+                </h3>
+                <BulletList items={brief.results} />
+              </>
+            ) : null}
 
             <ul className="mt-6 flex flex-wrap gap-x-2 gap-y-1 text-sm text-stone-600">
               {brief.tech.map((item, itemIndex) => (

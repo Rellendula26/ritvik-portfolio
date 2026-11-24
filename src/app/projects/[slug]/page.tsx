@@ -53,6 +53,12 @@ function renderMedia(media: ProjectMedia, priority = false) {
   );
 }
 
+function fileLabel(src: string) {
+  const name = decodeURIComponent(src.split("/").pop() ?? "media");
+  const stem = name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ").trim();
+  return stem || "Project media";
+}
+
 function InsightList({
   title,
   eyebrow,
@@ -145,27 +151,27 @@ function LegacyProjectPage({
     project.architectureImages?.map((src, index) => ({
       kind: "image" as const,
       src,
-      alt: `${project.title} architecture ${index + 1}`,
-      label: `Architecture ${index + 1}`,
-      caption: `Architecture ${index + 1}`,
+      alt: `${project.title} architecture drawing ${index + 1}`,
+      label: fileLabel(src),
+      caption: fileLabel(src),
       fit: "contain" as const,
     })) ?? [];
   const imageGalleryMedia =
-    project.imageGallery?.map((src, index) => ({
+    project.imageGallery?.map((src) => ({
       kind: "image" as const,
       src,
-      alt: `${project.title} gallery image ${index + 1}`,
-      label: `Image ${index + 1}`,
-      caption: `Image ${index + 1}`,
+      alt: `${project.title}, ${fileLabel(src)}`,
+      label: fileLabel(src),
+      caption: fileLabel(src),
       fit: "contain" as const,
     })) ?? [];
   const videoGalleryMedia =
-    project.videoGallery?.map((src, index) => ({
+    project.videoGallery?.map((src) => ({
       kind: "video" as const,
       src,
-      alt: `${project.title} gallery video ${index + 1}`,
-      label: `Video ${index + 1}`,
-      caption: `Video ${index + 1}`,
+      alt: `${project.title}, ${fileLabel(src)}`,
+      label: fileLabel(src),
+      caption: fileLabel(src),
       poster: project.thumbnail,
     })) ?? [];
 
@@ -408,15 +414,16 @@ export async function generateMetadata({
   if (!project) return {};
 
   const description = project.seo?.description ?? project.pageLead ?? project.oneLine;
+  const image = project.seo?.image || project.thumbnail;
   return {
-    title: project.seo?.title ?? `${project.title} | Ritvik Ellendula`,
+    title: project.seo?.title ?? `${project.title} · Ritvik Ellendula`,
     description,
     openGraph: {
       title: project.title,
       description,
       url: project.href,
-      ...(project.seo?.image
-        ? { images: [{ url: project.seo.image, alt: project.seo.imageAlt }] }
+      ...(image
+        ? { images: [{ url: image, alt: project.seo?.imageAlt ?? project.title }] }
         : {}),
     },
   };

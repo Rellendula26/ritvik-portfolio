@@ -27,7 +27,7 @@ export async function generateMetadata({
   const parent = getCourse(course);
   if (!record || !parent) return {};
   return {
-    title: `${parent.code} Lab ${record.number}: ${record.title} | Ritvik Ellendula`,
+    title: `${parent.code} Lab ${record.number}: ${record.title} · Ritvik Ellendula`,
     description: record.description,
   };
 }

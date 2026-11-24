@@ -21,13 +21,13 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "Ritvik Ellendula | Electrical Engineering @ Penn",
   description:
-    "Electrical Engineering student at Penn focused on robotics, embedded systems, electronics, and software that controls physical hardware.",
-  metadataBase: new URL("https://ritvik-portfolio-eta.vercel.app"),
+    "Electrical engineering student at Penn. I build embedded systems, PCBs, and robots, especially for medical and surgical work.",
+  metadataBase: new URL("https://ritvikellendula.dev"),
   openGraph: {
     title: "Ritvik Ellendula",
     description:
-      "Robotics-focused electrical engineering portfolio: embedded systems, electronics, and hardware that has to move.",
-    url: "https://ritvik-portfolio-eta.vercel.app",
+      "Electrical engineering student at Penn. I build embedded systems, PCBs, and robots, especially for medical and surgical work.",
+    url: "https://ritvikellendula.dev",
     siteName: "Ritvik Ellendula",
     images: [
       {

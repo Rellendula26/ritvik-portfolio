@@ -4,7 +4,7 @@ import CoverFrame from "@/components/media/CoverFrame";
 import { COURSES, courseHref } from "@/data/coursework";
 
 export const metadata: Metadata = {
-  title: "Coursework | Ritvik Ellendula",
+  title: "Coursework · Ritvik Ellendula",
   description:
     "Penn labs with the measurements attached: band gaps, LEDs, a silicon cell, and the circuits around them.",
 };

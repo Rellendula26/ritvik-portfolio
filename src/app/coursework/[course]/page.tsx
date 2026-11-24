@@ -25,7 +25,7 @@ export async function generateMetadata({
   const course = getCourse(slug);
   if (!course) return {};
   return {
-    title: `${course.code}: ${course.title} | Ritvik Ellendula`,
+    title: `${course.code}: ${course.title} · Ritvik Ellendula`,
     description: course.description,
   };
 }

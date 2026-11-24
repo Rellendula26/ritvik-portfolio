@@ -90,7 +90,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       design:
         "Fused circuits in that current range, and DC-DC regulation, on the power and logic boards I modified. The power board in hand has the yellow XT60, green terminal blocks, and blade fuses marked 15 and 5. A closer photo shows ATAZ UMD40 modules marked for 12 V and 5 V outputs. I looked at those modules for distribution and for adding a rail later, and at keeping the power routing off the signal routing, plus reverse-current protection. I check 12 V and 6 V with a multimeter before I trust an actuator channel. Those meter checks are not a fuse map, and they are not an EMI or protection test.",
       challenges: [
-        "The grip-test cascade, including the fried control board, is written under When it broke.",
+        "The grip-test cascade, including the failed control board, is written under When it broke.",
         "The brushed-to-BLDC saw change is unfinished. The reason for trying it, and what is still missing, is in that same fault note.",
       ],
       iterations: [
@@ -129,7 +129,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       "Diagnostic firmware on the Teensy: bus scan, register readback, 50 Hz PWM, and the GPIO 6 enable that let the servo move.",
     ],
     alreadyThere: [
-      "The SR-01 logic and power boards, including V1 on the homework sheet and the later V2 pair I tested. The Altium project is in a .rar. I did not draw a schematic for this page, and I did not design the chassis.",
+      "The SR-01 logic and power boards, including V1 on the homework sheet and the later V2 pair I tested. I did not draw a new schematic for this page, and I did not design the chassis.",
       "The climbing robot the boards belong to. I modified these two boards. I did not design the chassis.",
     ],
   },
@@ -138,7 +138,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       id: "grip-test",
       title: "The grip test took the control board",
       symptoms:
-        "During a branch-grip test the printed link broke while grabbing the branch. Stepper current dropped suddenly and fed back. Signals were delayed by about 5 seconds. Half the actuators and the control board were fried. One signal kept getting sent, the saw went past a full turn, and a Hall-sensor wire came out.",
+        "During a branch-grip test the printed link broke while grabbing the branch. Stepper current dropped suddenly and fed back. Signals were delayed by about 5 seconds. Half the actuators and the control board failed. One signal kept getting sent, the saw went past a full turn, and a Hall-sensor wire came out.",
       alsoConsidered:
         "A stalled motor, a broken mechanical stop, and a driver that never limits current can all end at a dead control board. The link breaking is what this test recorded. I am not treating the brushed-to-BLDC saw change as finished. That change was started because the brushless saw draws less current and the old one often got stuck.",
       method:
@@ -180,14 +180,14 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       phase: "Failure",
       title: "The grip test",
       description:
-        "The printed link broke while grabbing a branch. Stepper current fed back, signals were delayed by about 5 seconds, and the control board and half the actuators were fried. A rotating base was added because the machine was hard to place in the tree. I don't have a separate design note for that mechanism.",
+        "The printed link broke while grabbing a branch. Stepper current fed back, signals were delayed by about 5 seconds, and the control board and half the actuators failed. A rotating base was added because the machine was hard to place in the tree. I don't have a separate design note for that mechanism.",
     },
     {
       id: "servo-path",
       phase: "Bring-up",
       title: "I2C to a servo",
       description:
-        "On V2: Teensy 4.1, TCA9548A, PCA9685 at 50 Hz. The servo moved once GPIO 6 enabled the PCA9685 outputs. Endurance, current logging, and a long voltage check are still open.",
+        "Diagnosed and cleared an active-low output-enable fault on the PCA9685. Driving GPIO 6 low moved a servo through the V2 logic board at 50 Hz. Endurance, current logging, and a long voltage check are still open.",
     },
   ],
   results: {
@@ -220,7 +220,7 @@ export const LOGIC_PCB_CASE_STUDY: EngineeringCaseStudy = {
       "Finish the brushed-to-BLDC saw change only after there is a current measurement, not just the reason for trying it.",
     ],
     future: [
-      "Replace the fried control board and bring the rails back up on the new board.",
+      "Replace the failed control board and bring the rails back up on the new board.",
       "Map the fuse markings to the branches on the power sheet.",
       "Run the servo long enough to log current and watch the rail. That test has not started.",
     ],

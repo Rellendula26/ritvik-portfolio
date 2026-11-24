@@ -23,9 +23,12 @@ function cx(...classes: Array<string | false | undefined>) {
 export default function ExperienceCard({
   experience,
   index = 0,
+  showResult = false,
 }: {
   experience: Experience;
   index?: number;
+  /** Experience directory only. Homepage cards keep the one-line summary. */
+  showResult?: boolean;
 }) {
   const router = useRouter();
   const reduce = useReducedMotion();
@@ -95,6 +98,11 @@ export default function ExperienceCard({
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-stone-600 line-clamp-3">
             {experience.oneLiner}
           </p>
+          {showResult && experience.highlights[0] ? (
+            <p className="mt-3 max-w-xl text-sm leading-relaxed text-stone-800 line-clamp-3">
+              {experience.highlights[0]}
+            </p>
+          ) : null}
 
           <div className="mt-6 flex items-center gap-2 text-sm font-medium text-amber-800 transition-colors group-hover:text-amber-950">
             Open this role

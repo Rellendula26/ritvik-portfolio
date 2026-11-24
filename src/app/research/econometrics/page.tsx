@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Remote Work and Salary · Ritvik Ellendula",
+  description:
+    "130,000+ tech salary records, and how remote work and company size show up in wages. The write-up is on SSRN.",
+};
 
 type LinkItem = { label: string; href: string };
 
@@ -272,7 +279,7 @@ export default function Page() {
               <div className="relative h-64 w-full">
                 <Image
                   src={src}
-                  alt="Project image"
+                  alt={`Wage paper figure, ${src.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "image"}`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"

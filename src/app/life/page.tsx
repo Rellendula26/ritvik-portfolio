@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import MediaCardGrid, { type MediaCardItem } from "@/components/MediaCardGrid";
+
+export const metadata: Metadata = {
+  title: "Life · Ritvik Ellendula",
+  description: "Gifts, dance, edits, and endurance sports.",
+};
 
 const LIFE: MediaCardItem[] = [
   {

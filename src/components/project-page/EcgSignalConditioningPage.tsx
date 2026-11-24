@@ -2,6 +2,8 @@ import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import CaseStudyMediaFrame from "@/components/project-page/case-study/CaseStudyMediaFrame";
 import ProjectBrief from "@/components/project-page/ProjectBrief";
 import ProjectHero from "@/components/project-page/ProjectHero";
+import PageSummary from "@/components/project-page/PageSummary";
+import { projectSummary } from "@/data/page-summaries";
 import {
   AnchorNav,
   BackToProjects,
@@ -305,6 +307,9 @@ export default function EcgSignalConditioningPage({ project }: { project: Projec
     <ProjectPageShell>
       <BackToProjects />
       <ProjectHero project={project} />
+      <div className="mt-8">
+        <PageSummary {...projectSummary(project)} />
+      </div>
       <AnchorNav items={NAV} />
 
       <div className="mt-10 space-y-12 md:space-y-14">

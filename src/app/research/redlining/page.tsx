@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import Image from "next/image";
+
+export const metadata: Metadata = {
+  title: "Neighborhood Redlining and Health Outcomes · Ritvik Ellendula",
+  description:
+    "A coauthored review of how historic HOLC grades relate to later health outcomes. It scores study quality. It does not pool the papers into one effect size.",
+};
 
 type LinkItem = { label: string; href: string };
 
@@ -246,7 +253,7 @@ export default function Page() {
               <div className="relative h-64 w-full">
                 <Image
                   src={src}
-                  alt="Project image"
+                  alt={`Redlining review figure, ${src.split("/").pop()?.replace(/\.[^.]+$/, "") ?? "image"}`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"

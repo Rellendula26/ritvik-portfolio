@@ -14,7 +14,7 @@ const PIECES = [
   {
     id: "scope",
     title: "Oscilloscope",
-    body: "At Quantum Opus I set the attenuation and captured the detector pulse on a scope. The shapes here are ones you can switch.",
+    body: "At Quantum Opus I set the attenuation and captured the detector pulse on a scope. Switch the shape here to see the kinds of signals I work with.",
     href: "/experiences/quantum-opus",
     box: { left: "4%", top: "8%", width: "27%", height: "38%" },
     tip: "group/scope absolute rounded-xl bg-amber-400/0 transition-colors hover:bg-amber-400/10",
@@ -34,7 +34,7 @@ const PIECES = [
   {
     id: "logic",
     title: "Logic board",
-    body: "V2 logic board. Teensy 4.1, through a mux, to a PCA9685 at 50 Hz. The servo moved once GPIO 6 enabled the outputs.",
+    body: "V2 logic board. I traced a still servo to the PCA9685 output enable, then drove GPIO 6 low and the servo moved.",
     href: "/projects/logic-pcb",
     box: { left: "36%", top: "40%", width: "34%", height: "42%" },
     tip: "group/logic absolute rounded-xl bg-amber-400/0 transition-colors hover:bg-amber-400/10",
@@ -44,7 +44,7 @@ const PIECES = [
   {
     id: "arm",
     title: "Leader arm",
-    body: "I wrote the bridge from the leader arm to six servos on a second Pi. This drawing stays inside a short reach. The real motion still jitters.",
+    body: "Leader joint angles cross two Raspberry Pis and drive six servos. This drawing only covers a short reach; on the bench, the real motion still jitters.",
     href: "/projects/leader-follower-robotic-arm",
     box: { left: "72%", top: "14%", width: "24%", height: "48%" },
     tip: "group/arm absolute rounded-xl bg-amber-400/0 transition-colors hover:bg-amber-400/10",
@@ -236,7 +236,7 @@ export default function EngineeringWorkbench() {
         viewBox="0 0 720 460"
         className="w-full"
         role="img"
-        aria-label="Workbench drawing: scope, power board, logic board, leader arm, and an EMG sensor."
+        aria-label="Drawing of the SR-01 bench: a scope, a power board metered at 12 V and 6 V, a Teensy logic board at 50 Hz, a leader arm, and an EMG sensor."
       >
         <defs>
           <linearGradient id="wb-wood" x1="0" y1="0" x2="0" y2="1">
@@ -317,10 +317,10 @@ export default function EngineeringWorkbench() {
               pathLength="100"
             />
             <text x="108" y="276" fill="#fde68a" fontSize="8" fontFamily="ui-monospace, monospace">
-              12 V
+              12 V,
             </text>
             <text x="162" y="276" fill="#fde68a" fontSize="8" fontFamily="ui-monospace, monospace">
-              6 V
+              6 V.
             </text>
           </g>
 
@@ -360,7 +360,7 @@ export default function EngineeringWorkbench() {
             ))}
             <rect x="292" y="246" width="78" height="40" rx="3" fill="#1c1917" />
             <text x="304" y="270" fill="#e7e5e4" fontSize="9" fontFamily="ui-sans-serif, system-ui">
-              Teensy
+              Teensy,
             </text>
             <rect x="392" y="276" width="48" height="28" rx="2" fill="#111827" />
             <text x="400" y="294" fill="#fde68a" fontSize="8" fontFamily="ui-monospace, monospace">
