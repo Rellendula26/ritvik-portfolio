@@ -2225,8 +2225,6 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     signal: "Electronics",
     writeUp: "published",
   },
-];
-
   {
     id: "P25",
     title: "ECG Signal-Conditioning PCB",
@@ -2316,6 +2314,8 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     signal: "ESE 2150",
     writeUp: "published",
   },
+];
+
 export const PROJECTS: Project[] = [
   ...MAJOR_PROJECT_INPUTS.map(normalizeProject),
   ...BASE_PROJECTS,
