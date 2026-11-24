@@ -75,6 +75,13 @@ function BriefVisual({ visual }: { visual: ProjectBriefVisual }) {
         <img
           src={visual.src}
           alt={visual.alt}
+          width={visual.width}
+          height={visual.height}
+          style={
+            visual.width && visual.height
+              ? { aspectRatio: `${visual.width} / ${visual.height}` }
+              : undefined
+          }
           className="max-h-[32rem] w-full object-contain"
           decoding="async"
         />
@@ -219,6 +226,16 @@ export default function ProjectBrief({
                   </a>
                 ))}
               </p>
+            ) : null}
+            {project.documentLink ? (
+              <a
+                href={project.documentLink.href}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-lift mt-4 inline-flex items-center rounded-full border border-orange-300 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-zinc-900 shadow-sm hover:bg-orange-50"
+              >
+                {project.documentLink.heroLabel}
+              </a>
             ) : null}
           </div>
 

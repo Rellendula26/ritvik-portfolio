@@ -638,4 +638,28 @@ export const PROJECT_BRIEFS: Record<string, ProjectBrief> = {
       },
     ],
   },
+  "ecg-signal-conditioning": {
+    context: "ESE 2150",
+    what: "A three-stage analog front end that turns a ~1 mV heart signal into a ~1 V signal for a microcontroller ADC, on a custom through-hole PCB.",
+    contribution: [
+      "I designed and validated a three-stage single-supply ECG front end.",
+      "I laid out and autorouted a hand-solderable through-hole PCB with custom footprints.",
+    ],
+    results: [
+      "Schematic validates clean. The board is 100% routed with 0 electrical DRC violations, and the Gerbers are ready.",
+    ],
+    tech: ["AD623", "TLV2462", "Altium Designer", "PCB", "Analog filters", "Feather nRF52840"],
+    visuals: [
+      {
+        kind: "image",
+        src: "/projects/ecg-signal-conditioning/pcb-routed.png",
+        alt: "Two-layer ECG front-end PCB, 54/54 nets routed. Red = top copper, blue = bottom.",
+        caption:
+          "Two-layer ECG front-end PCB, 54/54 nets routed. Red = top copper, blue = bottom.",
+        fit: "contain",
+        width: 566,
+        height: 638,
+      },
+    ],
+  },
 };

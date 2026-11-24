@@ -58,6 +58,7 @@ export default function CaseStudyMediaFrame({
               src={media.src}
               alt={media.alt}
               sizes="(max-width: 768px) 100vw, 720px"
+              expandable={media.fit !== "cover"}
               className={`img-zoom object-center ${
                 media.fit === "cover" ? "object-cover" : "object-contain p-2"
               }`}
