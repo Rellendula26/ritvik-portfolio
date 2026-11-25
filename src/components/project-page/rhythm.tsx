@@ -104,9 +104,13 @@ export function SplitRow({
   if (!media) return <div className="max-w-3xl">{children}</div>;
 
   return (
-    <div className={`grid items-center gap-5 lg:grid-cols-2 ${flip ? "lg:[&>*:first-child]:order-2" : ""}`}>
+    <div
+      className={`grid items-start gap-6 md:grid-cols-2 md:gap-8 ${
+        flip ? "md:[&>*:first-child]:order-2" : ""
+      }`}
+    >
       <MediaFigure media={media} />
-      <div className="max-w-xl">{children}</div>
+      <div className="min-w-0">{children}</div>
     </div>
   );
 }
