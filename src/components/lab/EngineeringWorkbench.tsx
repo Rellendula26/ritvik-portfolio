@@ -512,14 +512,6 @@ export default function EngineeringWorkbench() {
           </li>
         ))}
       </ul>
-      <ul className="mt-3 grid gap-2 md:hidden">
-        {PIECES.map((piece) => (
-          <li key={`${piece.id}-note`} className="rounded-2xl border border-stone-200/80 bg-white/70 px-3 py-2">
-            <p className="text-sm font-medium text-stone-950">{piece.title}</p>
-            <p className="mt-0.5 text-xs leading-relaxed text-stone-600">{piece.body}</p>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

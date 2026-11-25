@@ -573,6 +573,7 @@ export const EXPERIENCES: Experience[] = [
   },
   {
     slug: "stealth-startup",
+    // TODO(ritvik): need a photo of the stealth internship work. No board, bench, or logo is in /public.
     org: "Stealth Startup",
     shortName: "Stealth Startup",
     role: "AI Engineering Intern",
@@ -654,8 +655,8 @@ export const EXPERIENCES: Experience[] = [
     ],
     cover: {
       kind: "image",
-      src: "/experiences/penn-adapt/cover.jpg",
-      alt: "Penn ADAPT website homepage",
+      src: "/projects/bionic-arm/main-board.jpg",
+      alt: "Main board schematic with a 2-cell LiPo note, actuator, servo, and 3.3 V rails, and an STM32",
     },
     gallery: [
       {
@@ -728,8 +729,8 @@ export const EXPERIENCES: Experience[] = [
     focus: ["Next.js", "Supabase", "Product", "Auth", "Student apps"],
     cover: {
       kind: "image",
-      src: "/experiences/penn-spark/cover.jpg",
-      alt: "Penn SPARK website homepage",
+      src: "/projects/pennplates-poster.jpg",
+      alt: "Penn Plates demo",
     },
     gallery: [
       {

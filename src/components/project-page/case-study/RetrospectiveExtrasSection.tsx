@@ -1,5 +1,6 @@
-import CaseStudyMediaFrame from "@/components/project-page/case-study/CaseStudyMediaFrame";
 import { SectionLabel } from "@/components/project-page/shared";
+import { FailureCard } from "@/components/project-page/rhythm";
+import { capWords } from "@/data/experience-summary";
 import type {
   ExecutiveAssessment,
   RootCauseAnalysis,
@@ -105,63 +106,27 @@ export function RootCauseAnalysesSection({
         </h2>
       </div>
 
-      <div className="mt-8 space-y-10">
+      <div className="mt-8 space-y-6">
         {items.map((item) => (
-          <article
-            key={item.id}
-            className="border-t border-zinc-200 pt-6"
-          >
-            <h3 className="text-2xl font-semibold tracking-tight text-zinc-950">
-              {item.title}
-            </h3>
-            <dl className="mt-5 max-w-3xl space-y-5 text-base leading-relaxed">
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
-                  What I saw
-                </dt>
-                <dd className="mt-1.5 text-zinc-800">{item.symptoms}</dd>
+          <div key={item.id}>
+            <FailureCard
+              title={item.title}
+              problem={capWords(item.symptoms, 30)}
+              diagnosis={capWords(item.rootCause, 30)}
+              fix={capWords(item.improvement, 30)}
+              media={item.media}
+            />
+            <details className="mt-3 rounded-2xl border border-stone-200 bg-white">
+              <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-stone-950 [&::-webkit-details-marker]:hidden">
+                How I checked this
+              </summary>
+              <div className="space-y-3 border-t border-stone-200 px-4 py-4 text-sm leading-relaxed text-stone-700">
+                <p>{item.method}</p>
+                {item.alsoConsidered ? <p>{item.alsoConsidered}</p> : null}
+                {item.notYet ? <p>{item.notYet}</p> : null}
               </div>
-              {item.alsoConsidered ? (
-                <div>
-                  <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
-                    What else could look like that
-                  </dt>
-                  <dd className="mt-1.5 text-zinc-800">{item.alsoConsidered}</dd>
-                </div>
-              ) : null}
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
-                  What I checked
-                </dt>
-                <dd className="mt-1.5 text-zinc-800">{item.method}</dd>
-              </div>
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
-                  What that narrowed it to
-                </dt>
-                <dd className="mt-1.5 text-zinc-800">{item.rootCause}</dd>
-              </div>
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500">
-                  What I took from it
-                </dt>
-                <dd className="mt-1.5 text-zinc-800">{item.improvement}</dd>
-              </div>
-              {item.notYet ? (
-                <div className="rounded-xl border border-amber-200 bg-amber-50/70 px-4 py-3">
-                  <dt className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">
-                    Checks I have not run
-                  </dt>
-                  <dd className="mt-1.5 text-zinc-800">{item.notYet}</dd>
-                </div>
-              ) : null}
-            </dl>
-            {item.media ? (
-              <div className="mt-5">
-                <CaseStudyMediaFrame media={item.media} />
-              </div>
-            ) : null}
-          </article>
+            </details>
+          </div>
         ))}
       </div>
     </section>

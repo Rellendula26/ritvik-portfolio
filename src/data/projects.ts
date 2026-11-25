@@ -1328,7 +1328,7 @@ const BASE_PROJECTS: Project[] = [
       "SPARK project with a real deadline. We built Penn Plates on Next.js and Supabase so students could coordinate around dining without a bloated feature list. Auth and RLS had to be right. Scope cuts hurt, but they are why we had a demo instead of half-finished screens.",
     techStack: ["Next.js", "Supabase", "React"],
     demoVideoUrl: "/projects/pennplates.mp4",
-    thumbnail: "/projects/website-1.png",
+    thumbnail: "/projects/pennplates-poster.jpg",
     images: ["/projects/website-1.png"],
     date: "2026",
     buildStage: "Working Prototype",

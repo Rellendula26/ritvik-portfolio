@@ -64,34 +64,27 @@ export default function ResultsValidationSection({
                 ))}
             </div>
             <p className="mt-3 text-base leading-relaxed text-zinc-700">{item.body}</p>
+            {media[content.items.indexOf(item)] ? (
+              <div className="mt-4">
+                <CaseStudyMediaFrame media={media[content.items.indexOf(item)]} />
+              </div>
+            ) : null}
           </motion.article>
         ))}
       </motion.div>
 
-      {media.length > 0 && (
-        <div className="mt-8">
-          <Reveal>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-900">
-              Photos and clips
-            </p>
-            <p className="mt-2 max-w-2xl text-sm text-zinc-600">
-              The runs and stills that match the results above.
-            </p>
-          </Reveal>
-          <div className="mt-5 grid gap-5 md:grid-cols-2">
-            {media.map((item, i) => (
-              <Reveal key={`${item.kind}-${item.src}-${item.label ?? item.alt}`} delay={i * 0.05}>
-                <CaseStudyMediaFrame
-                  media={item}
-                  className={
-                    item.portrait ? undefined : "aspect-video w-full"
-                  }
-                />
-              </Reveal>
+      {media.length > content.items.length ? (
+        <details className="mt-6 rounded-2xl border border-zinc-200 bg-white">
+          <summary className="cursor-pointer list-none px-4 py-3 text-sm font-semibold text-zinc-950 [&::-webkit-details-marker]:hidden">
+            More stills from this build
+          </summary>
+          <div className="grid gap-5 border-t border-zinc-200 p-4 md:grid-cols-2">
+            {media.slice(content.items.length).map((item) => (
+              <CaseStudyMediaFrame key={`${item.kind}-${item.src}-${item.label ?? item.alt}`} media={item} />
             ))}
           </div>
-        </div>
-      )}
+        </details>
+      ) : null}
 
       {content.limitations.length > 0 && (
         <Reveal className="mt-6">
