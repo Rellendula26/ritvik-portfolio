@@ -217,5 +217,17 @@ export const MULTIMODAL_PRINTER_CASE_STUDY: EngineeringCaseStudy = {
       kind: "engineering-note",
       text: "24 V is the motor supply. 5 V is the Uno, the driver logic, the encoder, the potentiometer, and the LCD. They are not the same rail.",
     },
+    {
+      kind: "engineering-note",
+      text: "From the lab setup writeup: eight connections join the board, the motor, and the magnetic encoder. 24 V goes on the hanging white and yellow cables, then the Arduino is powered.",
+    },
+    {
+      kind: "engineering-note",
+      text: "From the lab setup writeup: the left button switches the adjustment between speed and RPM. The right button sends that command. A long press on the right button opens speed control. Clockwise on the dial raises positive rpm. Counterclockwise raises negative speed.",
+    },
+    {
+      kind: "engineering-note",
+      text: "From the lab setup writeup: if the motor buzzes, swap the green and blue wires.",
+    },
   ],
 };

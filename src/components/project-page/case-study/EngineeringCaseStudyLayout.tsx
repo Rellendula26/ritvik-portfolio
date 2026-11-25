@@ -120,20 +120,25 @@ function ExperienceLink({ slug }: { slug?: string }) {
 export default function EngineeringCaseStudyLayout({
   project,
   caseStudy,
+  embedded = false,
 }: {
   project: Project;
   caseStudy: EngineeringCaseStudy;
+  /** Inside the collapsed engineering log. Skips the recruiter card and the glance. */
+  embedded?: boolean;
 }) {
   const nav = buildCaseStudyNav(caseStudy);
 
-  return (
-    <ProjectPageShell>
-      <BackToProjects />
-      <ProjectHero project={project} />
-      <ExperienceLink slug={project.experienceSlug} />
-      <div className="mx-auto mt-8 max-w-3xl px-6">
-        <PageSummary {...projectSummary(project)} />
-      </div>
+  const body = (
+    <>
+      {embedded ? null : <BackToProjects />}
+      {embedded ? null : <ProjectHero project={project} />}
+      {embedded ? null : <ExperienceLink slug={project.experienceSlug} />}
+      {embedded ? null : (
+        <div className="mx-auto mt-8 max-w-3xl px-6">
+          <PageSummary {...projectSummary(project)} />
+        </div>
+      )}
 
       <AnchorNav items={nav} />
 
@@ -197,9 +202,24 @@ export default function EngineeringCaseStudyLayout({
           ) : null}
           <ReflectionSection content={caseStudy.reflection} />
         </BenchNotes>
-        <ProjectBrief project={project} className="mt-2" />
+        {embedded ? null : <ProjectBrief project={project} className="mt-2" />}
+        {caseStudy.engineeringNotes.length ? (
+          <section aria-labelledby="engineering-notes">
+            <h2 id="engineering-notes" className="text-display text-2xl font-semibold tracking-tight text-zinc-950">
+              Notes
+            </h2>
+            <ul className="mt-4 space-y-2 text-sm leading-relaxed text-zinc-700">
+              {caseStudy.engineeringNotes.map((note) => (
+                <li key={note.text}>{note.text}</li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
         <RelatedProjects project={project} />
       </div>
-    </ProjectPageShell>
+    </>
   );
+
+  if (embedded) return body;
+  return <ProjectPageShell>{body}</ProjectPageShell>;
 }

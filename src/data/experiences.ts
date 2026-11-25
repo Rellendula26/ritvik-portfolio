@@ -73,6 +73,7 @@ export type Experience = {
   track: ExperienceTrack;
   /** Display range, e.g. "Summer 2026" */
   dates: string;
+  // TODO(ritvik): employment type (Part-time / Full-time) is not in the source for any role. Do not render it until it is.
   location?: string;
   /** ~2 second skim under the role title */
   oneLiner: string;
@@ -634,6 +635,7 @@ export const EXPERIENCES: Experience[] = [
     kind: "role",
     track: "club",
     dates: "Current",
+    // TODO(ritvik): Penn ADAPT start and end months. The source only says Current.
     location: "Assistive tech · HMS collaboration",
     oneLiner:
       "An assistive button that turns one press into space or tab, and the bionic arm's boards and mounts.",
@@ -712,6 +714,7 @@ export const EXPERIENCES: Experience[] = [
     kind: "role",
     track: "club",
     dates: "Current",
+    // TODO(ritvik): Penn SPARK start and end months. The source only says Current.
     location: "Student engineering · product builds",
     oneLiner:
       "I write software with Penn SPARK. The piece I can point to is Penn Plates, a campus dining app with student accounts and a loop people can use.",

@@ -1,7 +1,6 @@
 "use client";
 
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/data/projects";
@@ -10,6 +9,8 @@ import {
   pickProjectPrimaryMedia,
 } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
+import { sentences, wordCount } from "@/data/experience-summary";
+import { recruiterStatus } from "@/data/recruiter-status";
 import { Badge } from "@/components/ui/Badge";
 import LazyVideo from "@/components/LazyVideo";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
@@ -67,6 +68,11 @@ export default function ProjectCard({
   const org = directory && project.experienceSlug
     ? getExperience(project.experienceSlug)?.org
     : undefined;
+  const status = recruiterStatus(project.buildStage) ?? project.buildStage;
+  const description = (() => {
+    const first = sentences(project.oneLine)[0] ?? project.oneLine;
+    return wordCount(first) <= 20 ? first : project.oneLine;
+  })();
   const pickedMedia = pickProjectPrimaryMedia(project);
   // The detail hero and the directory card share one media item. A portrait
   // board stays on the hero; the card uses the landscape thumbnail instead.
@@ -255,26 +261,15 @@ export default function ProjectCard({
 
           <p
             className={[
-              directory ? "mt-1 text-sm font-medium leading-relaxed" : "mt-1 line-clamp-3 text-sm font-medium",
+              "mt-1 line-clamp-2 text-sm font-medium leading-relaxed",
               isFeatured ? "text-amber-200/80" : "text-amber-800/90",
             ].join(" ")}
           >
-            {project.oneLine}
+            {description}
           </p>
 
-          {(project.contribution || project.keyHighlights[0]) && (
-            <p
-              className={[
-                "mt-3 line-clamp-2 text-sm leading-relaxed",
-                isFeatured ? "text-stone-300" : "text-stone-700",
-              ].join(" ")}
-            >
-              {project.contribution ?? project.keyHighlights[0]}
-            </p>
-          )}
-
           <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, project.cardTechLimit ?? 5).map((tag) => (
+            {project.techStack.slice(0, 4).map((tag) => (
               <TechChip key={tag} variant={isFeatured ? "dark" : "light"}>
                 {tag}
               </TechChip>
@@ -290,7 +285,7 @@ export default function ProjectCard({
                   : "border-stone-200 bg-stone-50 text-stone-600",
               ].join(" ")}
             >
-              {project.buildStage}
+              {status}
             </span>
             {project.writeUp === "coming-soon" ? (
               <span
@@ -327,7 +322,7 @@ export default function ProjectCard({
                       ? "Devpost"
                       : /youtu\.?be/i.test(project.liveUrl)
                         ? "YouTube"
-                        : "Live"
+                        : "Demo"
                   }
                   featured={isFeatured}
                   onNavigate={stopNav}
@@ -336,23 +331,11 @@ export default function ProjectCard({
               {project.youtubeUrl && (
                 <ExternalLink
                   href={project.youtubeUrl}
-                  label="Skit"
+                  label="Video"
                   featured={isFeatured}
                   onNavigate={stopNav}
                 />
               )}
-              <Link
-                href={project.href}
-                onClick={stopNav}
-                className={[
-                  "btn-lift inline-flex items-center rounded-full border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide",
-                  isFeatured
-                    ? "border-amber-500/30 text-amber-300/90 hover:bg-amber-500/10"
-                    : "border-stone-200 text-stone-600 hover:border-amber-200",
-                ].join(" ")}
-              >
-                Engineering breakdown
-              </Link>
               {project.documentLink && (
                 <ExternalLink
                   href={project.documentLink.href}

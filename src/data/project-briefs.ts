@@ -662,4 +662,45 @@ export const PROJECT_BRIEFS: Record<string, ProjectBrief> = {
       },
     ],
   },
+  latticelab: {
+    context: "ESE 2180",
+    what: "A simulation portal for ESE 2180: move a lattice or a bandgap, and the carriers and the diode move with it.",
+    contribution: [
+      "I built the live labs for crystals, Fermi-Dirac occupancy, LED color, and a PN junction on one set of controls.",
+    ],
+    results: [
+      "The portal is live. The curves are conceptual models, not measured silicon bands.",
+    ],
+    tech: ["ESE 2180", "Interactive simulation"],
+    visuals: [
+      {
+        kind: "image",
+        src: "/projects/latticelab/hero.png",
+        alt: "LatticeLab homepage for the ESE 2180 semiconductor physics portal",
+        caption: "LatticeLab. The exam studio and the core lab open from this page.",
+        fit: "contain",
+      },
+    ],
+  },
+  nodelab: {
+    context: "ESE 2150",
+    what: "A circuit lab for ESE 2150: change a resistor, and the currents, node voltages, and KCL equation move with it.",
+    contribution: [
+      "I built the core lab and the simulations that are live.",
+      "The balance finder, the supernode, and several other sections are still marked for a later phase.",
+    ],
+    results: [
+      "The core lab is open. The unfinished sections are labeled on the site.",
+    ],
+    tech: ["ESE 2150", "Interactive simulation"],
+    visuals: [
+      {
+        kind: "image",
+        src: "/projects/nodelab/hero.png",
+        alt: "NodeLab homepage for the ESE 2150 circuit analysis lab",
+        caption: "NodeLab. The core lab opens from this page.",
+        fit: "contain",
+      },
+    ],
+  },
 };

@@ -1921,6 +1921,11 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     contribution:
       "I drew the command path: potentiometer voltage sets the move, an encoder reading is meant for the LCD, and the sketch is split into stepper, encoder, and PID files.",
     techStack: ["Arduino Uno", "A4988", "AS5600", "NEMA 17"],
+    documentLink: {
+      href: "/projects/multimodal-3d-printer/setup-writeup.pdf",
+      cardLabel: "Setup writeup",
+      heroLabel: "Setup writeup",
+    },
     thumbnail: "/projects/multimodal-3d-printer/toolhead.jpg",
     images: [],
     date: "August 2026 – Present",
@@ -2343,6 +2348,135 @@ const MAJOR_PROJECT_INPUTS: ProjectInput[] = [
     signal: "ESE 2150",
     writeUp: "published",
   },
+  {
+    id: "P26",
+    title: "LatticeLab",
+    slug: "latticelab",
+    featured: false,
+    category: "fullstack",
+    status: "iterating",
+    oneLine:
+      "A simulation portal for ESE 2180: move a lattice or a bandgap, and the carriers and the diode move with it.",
+    pageLead:
+      "Interactive simulations for ESE 2180. A lattice constant, a temperature, or a bandgap is one control, and the Fermi occupation, the carriers, and the diode Q-point follow it.",
+    overview:
+      "LatticeLab is a portal for Penn's electronic and photonic devices course. I built the live labs: a rotatable crystal cell, Fermi-Dirac occupancy, LED color from the bandgap, and a PN junction whose bias, bands, and load line stay on one voltage. The curves are conceptual models, not measured silicon bands.",
+    contribution:
+      "I built the live labs for crystals, Fermi-Dirac occupancy, LED color, and a PN junction on one set of controls.",
+    course: "ESE 2180",
+    techStack: ["Interactive simulation", "ESE 2180"],
+    liveUrl: "https://lattice-lab-beige.vercel.app/",
+    thumbnail: "/projects/latticelab/hero.png",
+    images: ["/projects/latticelab/hero.png"],
+    date: "Fall 2026",
+    buildStage: "Working Prototype",
+    keyHighlights: [
+      "Five linked tabs share temperature and bandgap, from the crystal through the diode Q-point.",
+      "Diamond-cubic silicon, direct and indirect gaps, and a Shockley curve against a load line are live.",
+    ],
+    architecture: [
+      "One portal links the exam studio, the homework visualizer, the equation map, and the junction lab.",
+      "A shared control moves Fermi occupation, carrier type, and the diode operating point together.",
+    ],
+    challenges: [
+      "A band diagram is an energy map, not a picture of an electron falling through the chip.",
+      "The curves are conceptual models, not textbook-accurate silicon bands.",
+    ],
+    lessonsLearned: [
+      "The useful control is the one that moves the next plot, not a second calculator.",
+    ],
+    technicalNotes: [
+      "The lattice slider uses silicon's conventional cell, 5.43 Å.",
+    ],
+    media: [
+      {
+        kind: "image",
+        src: "/projects/latticelab/hero.png",
+        alt: "LatticeLab homepage: ESE 2180 semiconductor physics portal, with a band-edge sketch and links to the exam studio and core lab",
+        label: "LatticeLab",
+        caption:
+          "LatticeLab, the ESE 2180 portal. The band sketch is conduction and valence edges. The exam studio and the core lab open from here.",
+        fit: "contain",
+        mediaType: "image",
+        featured: true,
+        priority: 10,
+      },
+    ],
+    tags: ["ESE 2180", "semiconductors", "simulation"],
+    signal: "ESE 2180",
+    seo: {
+      title: "LatticeLab · Ritvik Ellendula",
+      description:
+        "A simulation portal for ESE 2180: move a lattice or a bandgap, and the carriers and the diode move with it.",
+      image: "/projects/latticelab/hero.png",
+      imageAlt: "LatticeLab homepage for the ESE 2180 semiconductor physics portal",
+    },
+    writeUp: "published",
+  },
+  {
+    id: "P27",
+    title: "NodeLab",
+    slug: "nodelab",
+    featured: false,
+    category: "fullstack",
+    status: "iterating",
+    oneLine:
+      "A circuit lab for ESE 2150: change a resistor, and the currents, node voltages, and KCL equation move with it.",
+    pageLead:
+      "Interactive simulations for ESE 2150. One resistor or source change moves the currents, the node voltages, and the KCL equation together.",
+    overview:
+      "NodeLab is a circuit lab for nodal analysis. I built the core lab and the simulations that are already open: a Wheatstone arm turning resistance into voltage, current splitting at one node, the voltage across an element, and a nodal equation built term by term. The balance finder, the supernode, and several other sections are still marked for a later phase.",
+    contribution:
+      "I built the core lab and the simulations that are live. The balance finder, the supernode, and several other sections are still marked for a later phase.",
+    course: "ESE 2150",
+    techStack: ["Interactive simulation", "ESE 2150"],
+    liveUrl: "https://nodelab-mu.vercel.app/",
+    thumbnail: "/projects/nodelab/hero.png",
+    images: ["/projects/nodelab/hero.png"],
+    date: "Fall 2026",
+    buildStage: "In Development",
+    keyHighlights: [
+      "The core lab shares one circuit across currents, node voltages, and the KCL equation.",
+      "A Wheatstone sensor, a current split, element voltage, and a nodal equation are live. Other sections are marked for a later phase.",
+    ],
+    architecture: [
+      "One shared circuit. A resistor or source change is the input. Currents, node voltages, and the KCL equation are the output.",
+    ],
+    challenges: [
+      "Same potential is not the same current. On the live split, the node stays one voltage while the branches take different currents.",
+      "A Wheatstone arm turns a resistance change into a voltage. The linear sensor reading stops matching once the bridge is far from balance.",
+    ],
+    lessonsLearned: [
+      "The lab is for moving one part and watching the equation, not for handing back an answer.",
+    ],
+    technicalNotes: [
+      "Sections still marked for a later phase include the balance finder, nodal inspection, dependent sources, and the supernode.",
+    ],
+    media: [
+      {
+        kind: "image",
+        src: "/projects/nodelab/hero.png",
+        alt: "NodeLab homepage: ESE 2150 circuit lab, with a two-resistor circuit and a link to the core concepts lab",
+        label: "NodeLab",
+        caption:
+          "NodeLab, the ESE 2150 circuit lab. The sketch is a two-resistor loop with conventional current. The core lab opens from this page.",
+        fit: "contain",
+        mediaType: "image",
+        featured: true,
+        priority: 10,
+      },
+    ],
+    tags: ["ESE 2150", "circuits", "nodal analysis"],
+    signal: "ESE 2150",
+    seo: {
+      title: "NodeLab · Ritvik Ellendula",
+      description:
+        "A circuit lab for ESE 2150: change a resistor, and the currents, node voltages, and KCL equation move with it.",
+      image: "/projects/nodelab/hero.png",
+      imageAlt: "NodeLab homepage for the ESE 2150 circuit analysis lab",
+    },
+    writeUp: "published",
+  },
 ];
 
 export const PROJECTS: Project[] = [
@@ -2430,7 +2564,7 @@ export const PROJECT_DIRECTORY: {
   {
     title: "Selected engineering projects",
     subtitle:
-      "Boards, teleoperation, sensing, and a client machine. These are the systems I would open first.",
+      "The projects I'd point you to first: power and logic boards for a climbing robot, a teleoperated arm, EMG sensing for a bionic arm, and a shoe dispenser I delivered to a client.",
     featured: true,
     slugs: [
       "leader-follower-robotic-arm",
@@ -2460,6 +2594,8 @@ export const PROJECT_DIRECTORY: {
     subtitle:
       "Compilers, a small autodiff library, course models, and apps.",
     slugs: [
+      "latticelab",
+      "nodelab",
       "c-compiler",
       "minitorch-ocaml",
       "pennplates",
