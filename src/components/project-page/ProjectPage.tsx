@@ -51,14 +51,14 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mt-10 border-t border-stone-200/80 pt-8">
       <h2 className="text-display text-2xl text-stone-950">{title}</h2>
-      <div className="mt-4 text-base leading-relaxed text-stone-700">{children}</div>
+      <div className="mt-4">{children}</div>
     </section>
   );
 }
 
 function BulletList({ items }: { items: string[] }) {
   return (
-    <ul className="mt-3 space-y-2">
+    <ul className="mt-3 space-y-2 text-base leading-relaxed text-stone-800">
       {items.map((item) => (
         <li key={item} className="flex gap-3">
           <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-700" />
@@ -226,7 +226,7 @@ export default function ProjectPage({
           <SplitRow media={content.resultsMedia} flip>
             <Prose text={content.results} />
             {content.limitations ? (
-              <p className="mt-3">
+              <p className="mt-3 text-base leading-relaxed text-stone-800">
                 <span className="font-medium text-stone-950">Limitations. </span>
                 {content.limitations}
               </p>
