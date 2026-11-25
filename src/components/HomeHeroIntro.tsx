@@ -9,13 +9,15 @@ type Segment = {
 
 const PARAGRAPHS: Segment[][] = [
   [
-    { text: "I'm an electrical engineering student at Penn. I bring up boards and the firmware on them: " },
-    { text: "PCB design", accent: true },
-    { text: ", " },
+    { text: "I'm an electrical engineering student at Penn. I'm interested in " },
     { text: "embedded systems", accent: true },
     { text: ", " },
+    { text: "electronics", accent: true },
+    { text: ", and " },
     { text: "robotics", accent: true },
-    { text: ", and the measurement that shows the hardware moved." },
+    { text: ", especially " },
+    { text: "medical and surgical robotics", accent: true },
+    { text: ". I bring up boards and the firmware on them: PCB design, and the measurement that shows the hardware moved." },
   ],
   [
     { text: "At " },
@@ -31,7 +33,7 @@ const PARAGRAPHS: Segment[][] = [
     { text: " I set up SNSPD benches and read the detector pulse on a scope." },
   ],
   [
-    { text: "I like walking into a field I don't know yet and figuring it out on the bench. The " },
+    { text: "Persistence is one of my strongest skills. I like walking into a field I don't know and figuring it out as I go. If the path is super easy, there isn't much substance behind the success. That's why I love endurance sports, and why engineering feels the same. The " },
     { text: "projects", href: "/projects" },
     { text: " keep the decisions and the setbacks with the result." },
   ],
