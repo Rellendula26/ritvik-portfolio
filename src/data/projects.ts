@@ -2514,12 +2514,12 @@ export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured).
 
 /** Homepage band. Real bench and board work, not the software featured list. */
 const HOMEPAGE_SELECTED_SLUGS = [
-  "leader-follower-robotic-arm",
   "logic-pcb",
-  "bionic-arm",
-  "multimodal-3d-printer",
-  "ecg-signal-conditioning",
+  "leader-follower-robotic-arm",
   "vend-a-shoe",
+  "bionic-arm",
+  "ecg-signal-conditioning",
+  "multimodal-3d-printer",
 ];
 
 export const HOMEPAGE_SELECTED_PROJECTS = HOMEPAGE_SELECTED_SLUGS.flatMap((slug) => {

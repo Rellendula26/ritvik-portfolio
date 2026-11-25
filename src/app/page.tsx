@@ -48,6 +48,18 @@ export default function Home() {
                 </Link>{" "}
                 I design the EMG boards and the mounts. One sensor board is built.
               </li>
+              <li>
+                <Link href="/experiences/brainchild-engineering" className="font-medium text-amber-800">
+                  BrainChild.
+                </Link>{" "}
+                I delivered Vend-A-Shoe, a wall-powered dispenser with a Pi, servos, and a harness.
+              </li>
+              <li>
+                <Link href="/experiences/quantum-opus" className="font-medium text-amber-800">
+                  Quantum Opus.
+                </Link>{" "}
+                I set up SNSPD benches and separated a saturating detector from a bad one by attenuating the fiber path.
+              </li>
             </ul>
           </Reveal>
         </div>

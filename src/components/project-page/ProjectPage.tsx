@@ -5,7 +5,7 @@ import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
 import { BackToProjects, ProjectPageShell } from "@/components/project-page/shared";
 import type { CaseStudyMedia } from "@/data/engineering-case-study";
 import type { ProjectPageContent } from "@/data/project-page-content";
-import type { ProjectMedia } from "@/data/projects";
+import { getProjectsForExperience, type ProjectMedia } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
 import {
   Collapsible,
@@ -83,6 +83,9 @@ export default function ProjectPage({
   log?: ReactNode;
 }) {
   const experience = experienceSlug ? getExperience(experienceSlug) : undefined;
+  const related = experienceSlug
+    ? getProjectsForExperience(experienceSlug).filter((item) => item.slug !== content.slug)
+    : [];
   const meta = [content.role, content.dates, content.status, content.org].filter(Boolean);
   const showHero = Boolean(content.hero && (content.hero.kind === "visual" || ("src" in content.hero && content.hero.src)));
 
@@ -135,7 +138,7 @@ export default function ProjectPage({
             ) : null}
             {content.bullets.length ? (
               <div className="mt-5">
-                <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">What I did</h2>
+                <h2 className="text-xs font-semibold uppercase tracking-[0.16em] text-amber-900">Key outcomes</h2>
                 <BulletList items={content.bullets} />
               </div>
             ) : null}
@@ -184,31 +187,50 @@ export default function ProjectPage({
       ) : null}
 
       {content.overview ? (
-        <Section title="Overview">
-          <SplitRow media={content.diagram ?? content.figures[0]}>
+        <Section title="Project overview">
+          <SplitRow media={content.figures[0]}>
             <Prose text={content.overview} />
           </SplitRow>
         </Section>
       ) : null}
 
-      {content.contribution ? (
-        <Section title="My contribution">
-          <SplitRow media={content.diagram ? content.figures[0] : content.figures[1]} flip>
-            <Prose text={content.contribution} />
+      {content.subsystems.length || content.diagram || content.dataFlow ? (
+        <Section title="System architecture">
+          <SplitRow media={content.diagram ?? content.figures[1]}>
+            {content.dataFlow ? <p className="text-base leading-relaxed text-stone-800">{content.dataFlow}</p> : null}
+            {content.subsystems.length ? (
+              <dl className="mt-3 space-y-3">
+                {content.subsystems.map((item) => (
+                  <div key={item.name}>
+                    <dt className="text-sm font-semibold text-stone-950">{item.name}</dt>
+                    <dd className="text-sm leading-relaxed text-stone-700">{item.role}</dd>
+                  </div>
+                ))}
+              </dl>
+            ) : null}
           </SplitRow>
         </Section>
       ) : null}
 
       {content.decisionRows.length ? (
-        <Section title="Key design decisions">
-          <SplitRow media={content.diagram ? content.figures[1] : content.figures[2]}>
-            <DecisionTable rows={content.decisionRows} />
+        <Section title="Engineering decisions">
+          <DecisionTable rows={content.decisionRows} />
+        </Section>
+      ) : null}
+
+      {content.contribution || content.depthNote ? (
+        <Section title="Implementation">
+          <SplitRow media={content.figures[content.diagram ? 1 : 2]} flip>
+            {content.contribution ? <Prose text={content.contribution} /> : null}
+            {content.depthNote ? (
+              <p className="mt-3 text-base leading-relaxed text-stone-800">{content.depthNote}</p>
+            ) : null}
           </SplitRow>
         </Section>
       ) : null}
 
       {content.failures.length ? (
-        <Section title="What broke and how I fixed it">
+        <Section title="Debugging and validation">
           <div className="space-y-5">
             {content.failures.map((item) => (
               <FailureCard key={item.title} {...item} />
@@ -216,28 +238,40 @@ export default function ProjectPage({
           </div>
         </Section>
       ) : content.broke.length ? (
-        <Section title="What broke and how I fixed it">
+        <Section title="Debugging and validation">
           <BulletList items={content.broke} />
         </Section>
       ) : null}
 
-      {content.results ? (
-        <Section title="Results">
+      {content.results || content.nextSteps.length ? (
+        <Section title="Results and future work">
           <SplitRow media={content.resultsMedia} flip>
-            <Prose text={content.results} />
+            {content.results ? <Prose text={content.results} /> : null}
             {content.limitations ? (
               <p className="mt-3 text-base leading-relaxed text-stone-800">
-                <span className="font-medium text-stone-950">Limitations. </span>
+                <span className="font-medium text-stone-950">Still open. </span>
                 {content.limitations}
               </p>
             ) : null}
+            {content.nextSteps.length ? <BulletList items={content.nextSteps} /> : null}
           </SplitRow>
         </Section>
       ) : null}
 
-      {content.nextSteps.length ? (
-        <Section title="Next steps">
-          <BulletList items={content.nextSteps} />
+      {related.length ? (
+        <Section title="Related work">
+          <ul className="flex flex-wrap gap-2">
+            {related.map((item) => (
+              <li key={item.slug}>
+                <Link
+                  href={item.href}
+                  className="inline-flex rounded-full border border-stone-200 bg-white px-3 py-1.5 text-sm font-medium text-stone-800 hover:border-amber-300 hover:bg-amber-50"
+                >
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </Section>
       ) : null}
 
