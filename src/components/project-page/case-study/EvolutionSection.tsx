@@ -1,5 +1,6 @@
 import { SectionLabel } from "@/components/project-page/shared";
-import CaseStudyMediaFrame from "@/components/project-page/case-study/CaseStudyMediaFrame";
+import { Timeline } from "@/components/project-page/rhythm";
+import { capWords } from "@/data/experience-summary";
 import type { EvolutionMilestone } from "@/data/engineering-case-study";
 
 export default function EvolutionSection({
@@ -17,50 +18,20 @@ export default function EvolutionSection({
           How it got here
         </h2>
         <p className="mt-2 text-base leading-relaxed text-zinc-600">
-          The steps I can put in order from the notes.
+          The steps I can put in order from the notes. A clip opens from its still.
         </p>
       </div>
 
-      <div className="relative mt-8">
-        <div className="absolute bottom-0 left-4 top-0 w-px bg-gradient-to-b from-orange-300 via-zinc-200 to-transparent" />
-
-        <ol className="space-y-8">
-          {milestones.map((milestone) => {
-            return (
-              <li
-                key={milestone.id}
-                className={`relative pl-10 ${
-                  milestone.media ? "grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start" : ""
-                }`}
-              >
-                <div className="absolute left-4 top-2 z-10 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-orange-400 bg-white shadow-sm" />
-
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-orange-800">
-                    {milestone.phase}
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-zinc-900">
-                    {milestone.title}
-                  </h3>
-                  <p className="mt-3 max-w-3xl text-base leading-relaxed text-zinc-700">
-                    {milestone.description}
-                  </p>
-                </div>
-
-                {milestone.media ? (
-                  <CaseStudyMediaFrame
-                    media={milestone.media}
-                    className={
-                      milestone.media.portrait
-                        ? undefined
-                        : "aspect-video w-full"
-                    }
-                  />
-                ) : null}
-              </li>
-            );
-          })}
-        </ol>
+      <div className="mt-8">
+        <Timeline
+          steps={milestones.map((milestone) => ({
+            id: milestone.id,
+            date: milestone.phase,
+            title: milestone.title,
+            text: capWords(milestone.description, 40),
+            media: milestone.media,
+          }))}
+        />
       </div>
     </section>
   );

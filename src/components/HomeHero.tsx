@@ -61,7 +61,7 @@ export default function HomeHero() {
     >
       <HeroAtmosphere />
 
-      <div className="grid items-stretch gap-10 md:gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="grid items-start gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
         <HomeHeroIntro />
 
         <div className="group relative flex min-h-[380px] md:min-h-[420px]">

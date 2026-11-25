@@ -265,15 +265,28 @@ export default function ExperiencePage({
         <section className="mx-auto mt-10 max-w-3xl border-t border-stone-200/70 pt-8">
           <h2 className="text-display text-2xl text-stone-950">Overview</h2>
           <p className="mt-3 text-base leading-relaxed text-stone-700">
-            {capWords(experience.overview, 120)}
+            {capWords(experience.overview, 60)}
           </p>
         </section>
 
+        {projects.length ? (
+          <section id="projects" className={sectionClass}>
+            <h2 className="text-display text-2xl text-stone-950 md:text-3xl">Related projects</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {projects.map((project) => (
+                <CompactProjectLink key={project.slug} project={project} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
         <section className="mx-auto mt-10 max-w-3xl border-t border-stone-200/70 pt-8">
           <h2 className="text-display text-2xl text-stone-950">My contribution</h2>
-          <p className="mt-3 text-base leading-relaxed text-stone-700">
-            {capWords(experience.highlights.join(" "), 100)}
-          </p>
+          <WorkSplit aside={gallery[0] ? <MediaFigure item={gallery[0]} /> : undefined}>
+            <p className="text-base leading-relaxed text-stone-700">
+              {capWords(experience.highlights.join(" "), 60)}
+            </p>
+          </WorkSplit>
         </section>
 
         {examples.length || experience.highlights.length > 3 ? (
@@ -292,17 +305,6 @@ export default function ExperiencePage({
                       {capWords(highlight, 40)}
                     </p>
                   ))}
-            </div>
-          </section>
-        ) : null}
-
-        {projects.length ? (
-          <section id="projects" className={sectionClass}>
-            <h2 className="text-display text-2xl text-stone-950 md:text-3xl">Related projects</h2>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {projects.map((project) => (
-                <CompactProjectLink key={project.slug} project={project} />
-              ))}
             </div>
           </section>
         ) : null}
@@ -444,11 +446,11 @@ export default function ExperiencePage({
           </section>
         ) : null}
 
-        {gallery.length ? (
+        {gallery.length > 1 ? (
           <section id="gallery" className={sectionClass}>
             <h2 className="text-display text-2xl text-stone-950 md:text-3xl">Photos</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              {gallery.map((item) => (
+              {gallery.slice(1).map((item) => (
                 <MediaFigure key={`${item.kind}-${item.src}`} item={item} />
               ))}
             </div>

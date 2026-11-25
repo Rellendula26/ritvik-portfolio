@@ -9,10 +9,9 @@ import {
   pickProjectPrimaryMedia,
 } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
-import { sentences, wordCount } from "@/data/experience-summary";
+import { sentences } from "@/data/experience-summary";
 import { recruiterStatus } from "@/data/recruiter-status";
 import { Badge } from "@/components/ui/Badge";
-import LazyVideo from "@/components/LazyVideo";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
 import TechChip from "@/components/motion/TechChip";
 import {
@@ -71,18 +70,21 @@ export default function ProjectCard({
   const status = recruiterStatus(project.buildStage) ?? project.buildStage;
   const description = (() => {
     const first = sentences(project.oneLine)[0] ?? project.oneLine;
-    return wordCount(first) <= 20 ? first : project.oneLine;
+    const words = first.split(/\s+/).filter(Boolean);
+    return words.slice(0, 20).join(" ");
   })();
   const pickedMedia = pickProjectPrimaryMedia(project);
-  // The detail hero and the directory card share one media item. A portrait
-  // board stays on the hero; the card uses the landscape thumbnail instead.
-  const primaryMedia =
-    pickedMedia?.kind === "image" && pickedMedia.portrait
-      ? { ...pickedMedia, src: project.thumbnail, portrait: false, fit: undefined }
-      : pickedMedia;
-  const showMedia = Boolean(
-    primaryMedia && (primaryMedia.kind !== "image" || primaryMedia.src)
-  );
+  const stillSrc =
+    pickedMedia?.kind === "video"
+      ? pickedMedia.poster || project.thumbnail
+      : pickedMedia?.kind === "image"
+        ? pickedMedia.portrait
+          ? project.thumbnail
+          : pickedMedia.src
+        : project.thumbnail;
+  const stillAlt =
+    pickedMedia && pickedMedia.kind !== "visual" ? pickedMedia.alt : project.title;
+  const showMedia = Boolean(pickedMedia?.kind === "visual" || stillSrc);
 
   function goToProject() {
     router.push(project.href);
@@ -138,52 +140,25 @@ export default function ProjectCard({
           />
         )}
 
-        {showMedia && primaryMedia ? (
-          <div
-            className={[
-              "group/media relative overflow-hidden",
-              primaryMedia.kind === "image" && primaryMedia.portrait
-                ? "aspect-[7/8]"
-                : "aspect-[16/9]",
-            ].join(" ")}
-          >
-            {primaryMedia.kind === "visual" ? (
+        {showMedia ? (
+          <div className="group/media relative aspect-video overflow-hidden">
+            {pickedMedia?.kind === "visual" ? (
               <ProjectCardVisual
-                visualId={primaryMedia.visualId}
+                visualId={pickedMedia.visualId}
                 className="img-zoom"
               />
-            ) : primaryMedia.kind === "image" ? (
+            ) : stillSrc ? (
               <ProjectMediaImage
-                src={primaryMedia.src}
-                alt={primaryMedia.alt}
-                className={
-                  primaryMedia.fit === "contain"
-                    ? "img-zoom object-contain object-center bg-[#f7f1e8] p-2"
-                    : "img-zoom object-cover object-center"
-                }
+                src={stillSrc}
+                alt={stillAlt}
+                className="img-zoom object-cover object-center"
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
-            ) : (
-              <>
-                <LazyVideo
-                  src={primaryMedia.src}
-                  poster={primaryMedia.poster}
-                  className="img-zoom absolute inset-0 h-full w-full object-contain object-center bg-black"
-                  playOnHover={!isFeatured}
-                  playWhenVisible={isFeatured}
-                />
-                {!isFeatured && (
-                  <span className="pointer-events-none absolute bottom-3 right-3 z-10 flex items-center gap-1.5 rounded-full bg-black/55 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-sm">
-                    <span className="inline-block h-0 w-0 border-y-[4px] border-l-[7px] border-y-transparent border-l-white" />
-                    Video
-                  </span>
-                )}
-              </>
-            )}
+            ) : null}
             <div
               className={[
                 "pointer-events-none absolute inset-0 bg-gradient-to-t to-transparent transition-opacity duration-500",
-                primaryMedia.kind === "visual"
+                pickedMedia?.kind === "visual"
                   ? isFeatured
                     ? "from-stone-950/50 via-transparent"
                     : "from-stone-950/40 via-transparent"
@@ -269,7 +244,7 @@ export default function ProjectCard({
           </p>
 
           <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, 4).map((tag) => (
+            {project.techStack.slice(0, 3).map((tag) => (
               <TechChip key={tag} variant={isFeatured ? "dark" : "light"}>
                 {tag}
               </TechChip>

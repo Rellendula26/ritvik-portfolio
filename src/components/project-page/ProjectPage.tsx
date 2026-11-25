@@ -7,6 +7,14 @@ import type { CaseStudyMedia } from "@/data/engineering-case-study";
 import type { ProjectPageContent } from "@/data/project-page-content";
 import type { ProjectMedia } from "@/data/projects";
 import { getExperience } from "@/data/experiences";
+import {
+  Collapsible,
+  DecisionTable,
+  FailureCard,
+  Prose,
+  SplitRow,
+  StatCallout,
+} from "@/components/project-page/rhythm";
 
 function MediaFrame({ media, priority = false }: { media: ProjectMedia | CaseStudyMedia; priority?: boolean }) {
   if (media.kind === "visual" && "visualId" in media) {
@@ -43,7 +51,7 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="mt-10 border-t border-stone-200/80 pt-8">
       <h2 className="text-display text-2xl text-stone-950">{title}</h2>
-      <div className="mt-3 max-w-3xl text-base leading-relaxed text-stone-700">{children}</div>
+      <div className="mt-4 text-base leading-relaxed text-stone-700">{children}</div>
     </section>
   );
 }
@@ -169,37 +177,45 @@ export default function ProjectPage({
         </div>
       </header>
 
+      {content.stats.length ? (
+        <div className="mt-8">
+          <StatCallout items={content.stats} />
+        </div>
+      ) : null}
+
       {content.overview ? (
         <Section title="Overview">
-          <p>{content.overview}</p>
-          {content.diagram ? (
-            <figure className="mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-white">
-              <div className="relative aspect-[4/3] bg-[#f7f1e8]">
-                <MediaFrame media={content.diagram} />
-              </div>
-              {content.diagram.caption ? (
-                <figcaption className="border-t border-stone-200 px-4 py-3 text-xs leading-relaxed text-stone-600">
-                  {content.diagram.caption}
-                </figcaption>
-              ) : null}
-            </figure>
-          ) : null}
+          <SplitRow media={content.diagram ?? content.figures[0]}>
+            <Prose text={content.overview} />
+          </SplitRow>
         </Section>
       ) : null}
 
       {content.contribution ? (
         <Section title="My contribution">
-          <p>{content.contribution}</p>
+          <SplitRow media={content.diagram ? content.figures[0] : content.figures[1]} flip>
+            <Prose text={content.contribution} />
+          </SplitRow>
         </Section>
       ) : null}
 
-      {content.decisions.length ? (
+      {content.decisionRows.length ? (
         <Section title="Key design decisions">
-          <BulletList items={content.decisions} />
+          <SplitRow media={content.diagram ? content.figures[1] : content.figures[2]}>
+            <DecisionTable rows={content.decisionRows} />
+          </SplitRow>
         </Section>
       ) : null}
 
-      {content.broke.length ? (
+      {content.failures.length ? (
+        <Section title="What broke and how I fixed it">
+          <div className="space-y-5">
+            {content.failures.map((item) => (
+              <FailureCard key={item.title} {...item} />
+            ))}
+          </div>
+        </Section>
+      ) : content.broke.length ? (
         <Section title="What broke and how I fixed it">
           <BulletList items={content.broke} />
         </Section>
@@ -207,13 +223,15 @@ export default function ProjectPage({
 
       {content.results ? (
         <Section title="Results">
-          <p>{content.results}</p>
-          {content.limitations ? (
-            <p className="mt-3">
-              <span className="font-medium text-stone-950">Limitations. </span>
-              {content.limitations}
-            </p>
-          ) : null}
+          <SplitRow media={content.resultsMedia} flip>
+            <Prose text={content.results} />
+            {content.limitations ? (
+              <p className="mt-3">
+                <span className="font-medium text-stone-950">Limitations. </span>
+                {content.limitations}
+              </p>
+            ) : null}
+          </SplitRow>
         </Section>
       ) : null}
 
@@ -223,17 +241,7 @@ export default function ProjectPage({
         </Section>
       ) : null}
 
-      {log ? (
-        <details className="mt-12 rounded-[1.5rem] border border-stone-200 bg-white shadow-[0_14px_40px_rgba(0,0,0,0.04)]">
-          <summary className="cursor-pointer list-none px-5 py-4 text-lg font-semibold text-stone-950 [&::-webkit-details-marker]:hidden">
-            <span className="mr-2 text-amber-800" aria-hidden>
-              +
-            </span>
-            Full engineering log
-          </summary>
-          <div className="border-t border-stone-200 px-3 py-6 md:px-5">{log}</div>
-        </details>
-      ) : null}
+      {log ? <Collapsible title="Full engineering log">{log}</Collapsible> : null}
     </ProjectPageShell>
   );
 }
