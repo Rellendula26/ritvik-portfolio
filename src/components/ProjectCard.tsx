@@ -69,7 +69,8 @@ export default function ProjectCard({
     : undefined;
   const status = recruiterStatus(project.buildStage) ?? project.buildStage;
   const description = (() => {
-    const first = sentences(project.oneLine)[0] ?? project.oneLine;
+    const source = project.pageLead || project.oneLine;
+    const first = sentences(source)[0] ?? source;
     const words = first.split(/\s+/).filter(Boolean);
     return words.slice(0, 20).join(" ");
   })();

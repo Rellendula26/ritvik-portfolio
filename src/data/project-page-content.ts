@@ -7,6 +7,7 @@ import { recruiterStatus } from "@/data/recruiter-status";
 export type PageLink = { label: string; href: string };
 
 export type ProjectPageContent = {
+  slug: string;
   title: string;
   description?: string;
   role?: string;
@@ -19,7 +20,10 @@ export type ProjectPageContent = {
   links: PageLink[];
   overview?: string;
   diagram?: CaseStudyMedia;
+  subsystems: { name: string; role: string }[];
+  dataFlow?: string;
   contribution?: string;
+  depthNote?: string;
   decisions: string[];
   decisionRows: { decision: string; alternative: string; why: string }[];
   broke: string[];
@@ -48,6 +52,20 @@ function clipWords(text: string, max: number) {
   const words = text.replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
   if (words.length <= max) return words.join(" ");
   return words.slice(0, max).join(" ");
+}
+
+function withoutTrailingLimit(text: string) {
+  const parts = text
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .filter(Boolean);
+  if (parts.length < 2) return text.replace(/\s+/g, " ").trim();
+  const last = parts[parts.length - 1];
+  if (/\b(still|have not|not yet|not finished|open)\b/i.test(last)) {
+    return parts.slice(0, -1).join(" ");
+  }
+  return parts.join(" ");
 }
 
 function firstSentence(text: string) {
@@ -158,8 +176,8 @@ export function buildProjectPageContent(
   };
 
   const experience = project.experienceSlug ? getExperience(project.experienceSlug) : undefined;
-  const descriptionSource = project.oneLine || project.pageLead || "";
-  const description = descriptionSource ? capWords(descriptionSource, 25) : undefined;
+  const descriptionSource = project.pageLead || project.oneLine || "";
+  const description = descriptionSource ? firstSentence(descriptionSource) : undefined;
   if (!description) gap("description", "No one-line description on the project.");
 
   const role = experience?.role;
@@ -192,7 +210,7 @@ export function buildProjectPageContent(
 
   const overviewSource =
     caseStudy?.systemOverview.summary || project.overview || caseStudy?.motivation.narrative || caseStudy?.motivation.why || "";
-  const overview = overviewSource ? capWords(overviewSource, 120) : undefined;
+  const overview = overviewSource ? capWords(withoutTrailingLimit(overviewSource), 120) : undefined;
   if (!overview) gap("overview", "No overview text on the project or case study.");
 
   const diagram = caseStudy?.systemOverview.diagram;
@@ -337,8 +355,18 @@ export function buildProjectPageContent(
     gap("figure", "No still image besides the hero. A photo of the bench would break up the text.");
   }
 
+  const subsystems = (caseStudy?.systemOverview.subsystems ?? []).slice(0, 4).map((item) => ({
+    name: item.name,
+    role: capWords(item.role, 24),
+  }));
+  const dataFlow = caseStudy?.systemOverview.dataFlow
+    ? capWords(caseStudy.systemOverview.dataFlow, 40)
+    : undefined;
+  const depthNote = project.technicalNotes?.find((note) => /isolator/i.test(note));
+
   return {
     content: {
+      slug: project.slug,
       title: project.title,
       description,
       role,
@@ -351,7 +379,10 @@ export function buildProjectPageContent(
       links: pageLinks(project),
       overview,
       diagram: showDiagram ? diagram : undefined,
+      subsystems,
+      dataFlow,
       contribution,
+      depthNote,
       decisions,
       decisionRows,
       broke: brokeItems,

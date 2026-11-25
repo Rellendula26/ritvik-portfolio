@@ -9,30 +9,39 @@ type Segment = {
 
 const PARAGRAPHS: Segment[][] = [
   [
-    { text: "I'm an electrical engineering student at Penn. I'm interested in " },
+    { text: "I'm an electrical engineering student at Penn. I bring up boards and the firmware on them: " },
+    { text: "PCB design", accent: true },
+    { text: ", " },
     { text: "embedded systems", accent: true },
     { text: ", " },
-    { text: "electronics", accent: true },
-    { text: ", and " },
     { text: "robotics", accent: true },
-    { text: ", especially " },
-    { text: "medical and surgical robotics", accent: true },
-    { text: "." },
+    { text: ", and the measurement that shows the hardware moved." },
   ],
   [
-    {
-      text: "Persistence is one of my strongest skills. I like walking into a field I don't know and figuring it out as I go. If the path is super easy, there isn't much substance behind the success. That's why I love endurance sports, and why engineering feels the same.",
-    },
+    { text: "At " },
+    { text: "Serpent Robotics", href: "/experiences/serpent-robotics" },
+    { text: " I modified the power and logic boards and brought a servo path up. At " },
+    { text: "BrainChild", href: "/experiences/brainchild-engineering" },
+    { text: " I delivered a client shoe dispenser. At " },
+    { text: "Penn ADAPT", href: "/experiences/penn-adapt" },
+    { text: " one EMG sensor board is built. At " },
+    { text: "GRASP", href: "/experiences/grasp-laboratory" },
+    { text: " I work on a printer toolhead and a line sensor. At " },
+    { text: "Quantum Opus", href: "/experiences/quantum-opus" },
+    { text: " I set up SNSPD benches and read the detector pulse on a scope." },
   ],
   [
-    {
-      text: "I made this site so the decisions and the setbacks stay with the finished version. The ",
-    },
+    { text: "I like walking into a field I don't know yet and figuring it out on the bench. The " },
     { text: "projects", href: "/projects" },
-    {
-      text: " include the decisions and the setbacks.",
-    },
+    { text: " keep the decisions and the setbacks with the result." },
   ],
+];
+
+const FLAGSHIPS = [
+  { href: "/projects/logic-pcb", label: "Logic and power boards" },
+  { href: "/projects/leader-follower-robotic-arm", label: "Leader-follower arm" },
+  { href: "/projects/vend-a-shoe", label: "Vend-A-Shoe" },
+  { href: "/projects/bionic-arm", label: "Bionic arm" },
 ];
 
 const actionClass =
@@ -112,6 +121,16 @@ export default function HomeHeroIntro() {
           GitHub
         </a>
       </div>
+
+      <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm font-medium text-amber-800">
+        {FLAGSHIPS.map((item) => (
+          <li key={item.href}>
+            <Link href={item.href} className="underline decoration-amber-300/80 underline-offset-4 hover:text-amber-900">
+              {item.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
