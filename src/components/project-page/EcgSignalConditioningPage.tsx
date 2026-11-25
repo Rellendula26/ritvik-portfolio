@@ -300,16 +300,25 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-export default function EcgSignalConditioningPage({ project }: { project: Project }) {
+export default function EcgSignalConditioningPage({
+  project,
+  embedded = false,
+}: {
+  project: Project;
+  /** Inside the collapsed engineering log. Skips the recruiter card and the glance. */
+  embedded?: boolean;
+}) {
   const pdf = project.documentLink?.href ?? `${MEDIA}/ecg-project-diary.pdf`;
 
-  return (
-    <ProjectPageShell>
-      <BackToProjects />
-      <ProjectHero project={project} />
-      <div className="mt-8">
-        <PageSummary {...projectSummary(project)} />
-      </div>
+  const body = (
+    <>
+      {embedded ? null : <BackToProjects />}
+      {embedded ? null : <ProjectHero project={project} />}
+      {embedded ? null : (
+        <div className="mt-8">
+          <PageSummary {...projectSummary(project)} />
+        </div>
+      )}
       <AnchorNav items={NAV} />
 
       <div className="mt-10 space-y-12 md:space-y-14">
@@ -628,8 +637,11 @@ export default function EcgSignalConditioningPage({ project }: { project: Projec
           </div>
         </Section>
 
-        <ProjectBrief project={project} className="mt-2" />
+        {embedded ? null : <ProjectBrief project={project} className="mt-2" />}
       </div>
-    </ProjectPageShell>
+    </>
   );
+
+  if (embedded) return body;
+  return <ProjectPageShell>{body}</ProjectPageShell>;
 }

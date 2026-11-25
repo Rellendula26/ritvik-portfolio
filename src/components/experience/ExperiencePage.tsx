@@ -6,14 +6,8 @@ import LazyVideo from "@/components/LazyVideo";
 import CoverFrame from "@/components/media/CoverFrame";
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
-import {
-  EXPERIENCE_KIND_LABELS,
-  type Experience,
-  type ExperienceMedia,
-  type TextRun,
-} from "@/data/experiences";
-import { EXPERIENCE_SUMMARIES } from "@/data/page-summaries";
-import PageSummary from "@/components/project-page/PageSummary";
+import { type Experience, type ExperienceMedia, type TextRun } from "@/data/experiences";
+import { experienceBullets, orgOneLiner, capWords, plainRuns } from "@/data/experience-summary";
 import {
   getProjectBySlug,
   pickProjectPrimaryMedia,
@@ -222,30 +216,23 @@ export default function ExperiencePage({
           }
         >
           <div className="max-w-2xl">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-amber-800">
-              {EXPERIENCE_KIND_LABELS[experience.kind]}
-              <span className="text-stone-300"> · </span>
-              <span className="text-stone-600">{experience.dates}</span>
-              {experience.location ? (
-                <>
-                  <span className="text-stone-300"> · </span>
-                  <span className="text-stone-600">{experience.location}</span>
-                </>
-              ) : null}
-            </p>
-            <h1 className="text-display mt-2 text-4xl text-stone-950 md:text-5xl">
+            <h1 className="text-display text-4xl text-stone-950 md:text-5xl">
+              {experience.role}
+              <span className="text-stone-400"> — </span>
               {experience.org}
             </h1>
-            <p className="mt-2 text-lg font-medium text-stone-700 md:text-xl">{experience.role}</p>
-            {experience.about?.length ? (
-              <p className="mt-3 text-base leading-relaxed text-stone-700 md:text-base">
-                <RichText runs={experience.about} />
-              </p>
-            ) : (
-              <p className="mt-3 text-base leading-relaxed text-stone-800 md:text-lg">
-                {experience.oneLiner}
-              </p>
-            )}
+            <p className="mt-3 text-sm font-medium text-stone-600">
+              {[experience.location, experience.dates].filter(Boolean).join(" · ")}
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-stone-800">{orgOneLiner(experience)}</p>
+            <ul className="mt-4 space-y-2">
+              {experienceBullets(experience).map((bullet) => (
+                <li key={bullet} className="flex gap-3 text-base leading-relaxed text-stone-800">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-700" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
             {experience.externalHref && experience.websiteKind ? (
               <a
                 href={experience.externalHref}
@@ -275,11 +262,59 @@ export default function ExperiencePage({
           ) : null}
         </header>
 
-        {EXPERIENCE_SUMMARIES[experience.slug] ? (
-          <div className="mx-auto mt-8 max-w-2xl">
-            <PageSummary {...EXPERIENCE_SUMMARIES[experience.slug]} />
-          </div>
+        <section className="mx-auto mt-10 max-w-3xl border-t border-stone-200/70 pt-8">
+          <h2 className="text-display text-2xl text-stone-950">Overview</h2>
+          <p className="mt-3 text-base leading-relaxed text-stone-700">
+            {capWords(experience.overview, 120)}
+          </p>
+        </section>
+
+        <section className="mx-auto mt-10 max-w-3xl border-t border-stone-200/70 pt-8">
+          <h2 className="text-display text-2xl text-stone-950">My contribution</h2>
+          <p className="mt-3 text-base leading-relaxed text-stone-700">
+            {capWords(experience.highlights.join(" "), 100)}
+          </p>
+        </section>
+
+        {examples.length || experience.highlights.length > 3 ? (
+          <section className="mx-auto mt-10 max-w-3xl border-t border-stone-200/70 pt-8">
+            <h2 className="text-display text-2xl text-stone-950">Results</h2>
+            <div className="mt-3 space-y-3">
+              {examples.length
+                ? examples.slice(0, 2).map((example) => (
+                    <p key={example.title} className="text-base leading-relaxed text-stone-700">
+                      <span className="font-medium text-stone-950">{example.title}. </span>
+                      {capWords(plainRuns(example.outcome), 40)}
+                    </p>
+                  ))
+                : experience.highlights.slice(3, 5).map((highlight) => (
+                    <p key={highlight} className="text-base leading-relaxed text-stone-700">
+                      {capWords(highlight, 40)}
+                    </p>
+                  ))}
+            </div>
+          </section>
         ) : null}
+
+        {projects.length ? (
+          <section id="projects" className={sectionClass}>
+            <h2 className="text-display text-2xl text-stone-950 md:text-3xl">Related projects</h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {projects.map((project) => (
+                <CompactProjectLink key={project.slug} project={project} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        <details className="mx-auto mt-12 max-w-6xl rounded-[1.5rem] border border-stone-200 bg-white">
+          <summary className="cursor-pointer list-none px-5 py-4 text-lg font-semibold text-stone-950 [&::-webkit-details-marker]:hidden">
+            <span className="mr-2 text-amber-800" aria-hidden>
+              +
+            </span>
+            Full engineering log
+          </summary>
+          <div className="border-t border-stone-200 px-3 py-6 md:px-5">
 
         {hasWorkCopy ? (
           <section id="role" className={sectionClass}>
@@ -377,17 +412,6 @@ export default function ExperiencePage({
           </section>
         ) : null}
 
-        {projects.length ? (
-          <section id="projects" className={sectionClass}>
-            <h2 className="text-display text-2xl text-stone-950 md:text-3xl">Related projects</h2>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {projects.map((project) => (
-                <CompactProjectLink key={project.slug} project={project} />
-              ))}
-            </div>
-          </section>
-        ) : null}
-
         {examples.length ? (
           <section id="challenges" className={sectionClass}>
             <div className={examples.some((example) => example.media) ? undefined : "mx-auto max-w-2xl"}>
@@ -430,6 +454,8 @@ export default function ExperiencePage({
             </div>
           </section>
         ) : null}
+          </div>
+        </details>
       </main>
     </div>
   );

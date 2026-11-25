@@ -2,25 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProjectMediaImage from "@/components/project-page/ProjectMediaImage";
 import ProjectCardVisual from "@/components/visuals/ProjectCardVisual";
-import ProjectBrief from "@/components/project-page/ProjectBrief";
-import ProjectHero from "@/components/project-page/ProjectHero";
+import ProjectPage from "@/components/project-page/ProjectPage";
 import EngineeringCaseStudyLayout from "@/components/project-page/case-study/EngineeringCaseStudyLayout";
 import EcgSignalConditioningPage from "@/components/project-page/EcgSignalConditioningPage";
-import {
-  BackToProjects,
-  ProjectPageShell,
-  SectionLabel,
-} from "@/components/project-page/shared";
+import { SectionLabel } from "@/components/project-page/shared";
+import { buildProjectPageContent } from "@/data/project-page-content";
 import { getCaseStudyBySlug } from "@/data/engineering-case-study";
-import { getExperience } from "@/data/experiences";
 import {
   PROJECTS,
   getProjectBySlug,
   pickProjectPrimaryMedia,
-  type Project,
   type ProjectMedia,
 } from "@/data/projects";
-import Link from "next/link";
 
 function renderMedia(media: ProjectMedia, priority = false) {
   if (media.kind === "visual") {
@@ -108,38 +101,6 @@ function MediaNotes({ media }: { media: ProjectMedia }) {
   );
 }
 
-function ExperienceBacklink({ slug }: { slug: string }) {
-  const experience = getExperience(slug);
-  if (!experience) return null;
-  return (
-    <p className="mt-4 text-sm text-stone-600">
-      Part of{" "}
-      <Link
-        href={`/experiences/${experience.slug}`}
-        className="font-medium text-amber-800 underline decoration-amber-300/80 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
-      >
-        {experience.org}
-      </Link>
-      , {experience.role}.
-    </p>
-  );
-}
-
-function ComingSoonProject({ project }: { project: Project }) {
-  return (
-    <ProjectPageShell>
-      <BackToProjects />
-      <ProjectHero project={project} />
-      {project.experienceSlug ? (
-        <ExperienceBacklink slug={project.experienceSlug} />
-      ) : null}
-      <p className="mt-8 max-w-xl text-sm text-stone-500">Full write-up coming soon.</p>
-      <ProjectBrief project={project} />
-    </ProjectPageShell>
-  );
-}
-
-/** Legacy insight-card layout; used until a project has an EngineeringCaseStudy. */
 function LegacyProjectPage({
   project,
 }: {
@@ -176,12 +137,7 @@ function LegacyProjectPage({
     })) ?? [];
 
   return (
-    <ProjectPageShell>
-      <BackToProjects />
-      <ProjectHero project={project} />
-      {project.experienceSlug ? (
-        <ExperienceBacklink slug={project.experienceSlug} />
-      ) : null}
+    <>
 
       {architectureMedia.length > 0 && (
         <section className="mt-10">
@@ -398,9 +354,7 @@ function LegacyProjectPage({
           </div>
         </section>
       )}
-
-      <ProjectBrief project={project} />
-    </ProjectPageShell>
+    </>
   );
 }
 
@@ -443,19 +397,55 @@ export default async function ProjectDetailPage({
   if (!project) notFound();
 
   if (project.writeUp === "coming-soon") {
-    return <ComingSoonProject project={project} />;
-  }
-
-  // Stage cards, schematic failures, a calculated Bode, and the diary
-  // don't fit the generic case-study blocks. Same hero, nav, frames, and glance.
-  if (slug === "ecg-signal-conditioning") {
-    return <EcgSignalConditioningPage project={project} />;
+    return (
+      <ProjectPage
+        content={buildProjectPageContent(project).content}
+        experienceSlug={project.experienceSlug}
+      />
+    );
   }
 
   const caseStudy = getCaseStudyBySlug(slug);
-  if (caseStudy) {
-    return <EngineeringCaseStudyLayout project={project} caseStudy={caseStudy} />;
-  }
+  const { content } = buildProjectPageContent(project, caseStudy);
+  const log = (
+    <>
+      {project.heroFrames && project.heroFrames.length > 1 ? (
+        <div className="mb-8 grid gap-4 md:grid-cols-2">
+          {project.heroFrames.map((frame) => (
+            <figure
+              key={frame.src}
+              className="overflow-hidden rounded-[2rem] border border-zinc-200 bg-white"
+            >
+              <div className="relative aspect-[4/3] bg-[#f7f1e8]">
+                <ProjectMediaImage
+                  src={frame.src}
+                  alt={frame.alt}
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <figcaption className="border-t border-zinc-200 px-4 py-3 text-xs text-zinc-700">
+                {frame.label}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      ) : null}
+      {slug === "ecg-signal-conditioning" ? (
+        <EcgSignalConditioningPage project={project} embedded />
+      ) : caseStudy ? (
+        <EngineeringCaseStudyLayout project={project} caseStudy={caseStudy} embedded />
+      ) : (
+        <LegacyProjectPage project={project} />
+      )}
+    </>
+  );
 
-  return <LegacyProjectPage project={project} />;
+  return (
+    <ProjectPage
+      content={content}
+      experienceSlug={project.experienceSlug}
+      log={log}
+    />
+  );
 }

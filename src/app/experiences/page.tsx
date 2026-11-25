@@ -20,7 +20,7 @@ export default function ExperiencesPage() {
               Experience
             </h1>
             <p className="mt-4 text-base leading-relaxed text-stone-600">
-              Serpent builds rope-climbing robots. GRASP is the printer and imaging work. ADAPT is the EMG arm. BrainChild is client hardware. Each page says what I did there, and links the project write-ups.
+              Most of my experience is in robotics labs and small hardware teams. At Serpent Robotics, I work on the electronics for a rope-climbing robot; at GRASP, on a multi-axis 3D printer and an imaging system; at Penn ADAPT, on EMG sensing for a bionic arm. At BrainChild, I built hardware for clients. Each role links to the projects behind it.
             </p>
           </div>
         </Reveal>

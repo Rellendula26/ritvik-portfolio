@@ -1,14 +1,13 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
-  EXPERIENCE_KIND_LABELS,
-  EXPERIENCE_TRACK_LABELS,
   experienceHref,
   type Experience,
 } from "@/data/experiences";
+import { getProjectsForExperience } from "@/data/projects";
+import { experienceBullets, orgOneLiner } from "@/data/experience-summary";
 import CoverFrame from "@/components/media/CoverFrame";
 import {
   revealReduced,
@@ -23,22 +22,23 @@ function cx(...classes: Array<string | false | undefined>) {
 export default function ExperienceCard({
   experience,
   index = 0,
-  showResult = false,
 }: {
   experience: Experience;
   index?: number;
-  /** Experience directory only. Homepage cards keep the one-line summary. */
+  /** Kept so existing call sites compile. The card always uses the same fields. */
   showResult?: boolean;
 }) {
-  const router = useRouter();
   const reduce = useReducedMotion();
-  const kindLabel = EXPERIENCE_KIND_LABELS[experience.kind];
-  const trackLabel = EXPERIENCE_TRACK_LABELS[experience.track];
   const href = experienceHref(experience.slug);
-
-  function go() {
-    router.push(href);
-  }
+  const meta = [experience.location, experience.dates].filter(Boolean).join(" · ");
+  const projects = [
+    ...getProjectsForExperience(experience.slug).map((project) => ({
+      label: project.title,
+      href: project.href,
+    })),
+    ...(experience.relatedProjects ?? []),
+  ].filter((project, index, all) => all.findIndex((item) => item.href === project.href) === index);
+  const bullets = experienceBullets(experience);
 
   return (
     <motion.div
@@ -49,20 +49,9 @@ export default function ExperienceCard({
       transition={{ ...transitionBase, delay: index * 0.07 }}
     >
       <article
-        role="link"
-        tabIndex={0}
-        onClick={go}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            go();
-          }
-        }}
-        data-cursor
         className={cx(
-          "group relative grid cursor-pointer overflow-hidden rounded-2xl border border-stone-200/80 bg-white/85",
+          "group relative grid overflow-hidden rounded-2xl border border-stone-200/80 bg-white/85",
           "shadow-sm transition-[transform,box-shadow,border-color] duration-300 ease-out",
-          "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700",
           "md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)]"
         )}
       >
@@ -80,34 +69,48 @@ export default function ExperienceCard({
         </div>
 
         <div className="flex flex-col justify-center px-5 py-6 md:px-8 md:py-8">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-800">
-            {kindLabel}
-            <span className="text-stone-300"> · </span>
-            <span className="text-stone-500">{experience.dates}</span>
-          </p>
-          <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-500">
-            {trackLabel}
-            {experience.location ? ` · ${experience.location}` : ""}
-          </p>
-          <h3 className="text-display mt-2 text-2xl text-stone-950 md:text-3xl">
-            {experience.org}
+          <h3 className="text-display text-2xl text-stone-950 md:text-3xl">
+            <Link
+              href={href}
+              className="focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+            >
+              {experience.role}
+              <span className="text-stone-400"> — </span>
+              {experience.org}
+            </Link>
           </h3>
-          <p className="mt-1 text-sm font-medium text-stone-700 md:text-base">
-            {experience.role}
-          </p>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-stone-600 line-clamp-3">
-            {experience.oneLiner}
-          </p>
-          {showResult && experience.highlights[0] ? (
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-stone-800 line-clamp-3">
-              {experience.highlights[0]}
+          {meta ? (
+            <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-stone-500">
+              {meta}
             </p>
           ) : null}
-
-          <div className="mt-6 flex items-center gap-2 text-sm font-medium text-amber-800 transition-colors group-hover:text-amber-950">
-            Open this role
-            <ArrowRight className="btn-arrow h-4 w-4" />
-          </div>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-stone-700">
+            {orgOneLiner(experience)}
+          </p>
+          {bullets.length ? (
+            <ul className="mt-3 max-w-xl space-y-1.5">
+              {bullets.map((bullet) => (
+                <li key={bullet} className="flex gap-2 text-sm leading-relaxed text-stone-800">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-700" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {projects.length ? (
+            <ul className="mt-4 flex flex-wrap gap-2">
+              {projects.map((project) => (
+                <li key={project.href}>
+                  <Link
+                    href={project.href}
+                    className="inline-flex rounded-full border border-stone-200 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-stone-700 hover:border-amber-300 hover:bg-amber-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700"
+                  >
+                    {project.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : null}
         </div>
       </article>
     </motion.div>
