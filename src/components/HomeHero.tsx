@@ -64,10 +64,10 @@ export default function HomeHero() {
       <div className="grid items-start gap-8 md:grid-cols-2 md:gap-12 lg:gap-16">
         <HomeHeroIntro />
 
-        <div className="group relative flex min-h-[380px] md:min-h-[420px]">
+        <div className="group relative">
           <div className="pointer-events-none absolute -inset-3 rounded-[2rem] bg-amber-200/20 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
-          <div className="relative flex h-full w-full flex-col overflow-hidden rounded-3xl border border-stone-200/80 bg-white p-4 shadow-md transition-shadow duration-500 group-hover:shadow-lg">
-            <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl">
+          <div className="relative flex w-full flex-col overflow-hidden rounded-3xl border border-stone-200/80 bg-white p-4 shadow-md transition-shadow duration-500 group-hover:shadow-lg">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-[#f3ebe1]">
               <Image
                 src="/ritvik.jpg"
                 alt="Ritvik Ellendula"
